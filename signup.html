@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Multi-Actor E-commerce</title>
+    <title>Sign Up - Multi-Actor E-commerce</title>
     <!-- Bootstrap CSS (Local File) -->
     <link href="assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom CSS -->
@@ -34,12 +34,15 @@
     </nav>
 
     <main class="d-flex justify-content-center align-items-center">
-      <!-- Login Form -->
-      <div class="container my-5 p-5 ">
-        <div class="row justify-content-center" >
-          <div class="col-md-6 p-5 bg-body-secondary rounded" style="height: 55vh; width: 450px;">
-            <h2 class="text-center mb-4">Login</h2>
-            <form id="login-form">
+      <!-- Sign Up Form -->
+      <div class="container my-5 p-5">
+        <div class="row justify-content-center">
+          <div
+            class="col-md-6 p-5 bg-body-secondary rounded"
+            style="height: 55vh; width: 450px;"
+          >
+            <h2 class="text-center mb-4">Sign Up</h2>
+            <form id="signup-form">
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" required />
@@ -53,11 +56,12 @@
                   required
                 />
               </div>
-              <button type="submit" class="btn btn-primary w-100">Login</button>
+              <!-- Role is hidden and defaulted to customer -->
+              <input type="hidden" id="role" value="customer" />
+              <button type="submit" class="btn btn-primary w-100">
+                Sign Up
+              </button>
             </form>
-            <p class="text-center mt-3">
-              Don't have an account? <a href="signup.html">Sign Up</a>
-            </p>
           </div>
         </div>
       </div>
