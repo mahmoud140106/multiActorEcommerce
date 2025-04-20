@@ -8,12 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadFeaturedProducts() {
     let products = ProductManager.getAllProducts();
 
-    products = products.sort(() => 0.5 - Math.random()).slice(0, 4);
+    products = products
+      .filter((product) => product.isFeatured)
+      .sort(() => 0.5 - Math.random())
+      // .slice(0, 4);
 
+      console.log(products)
     products.forEach((product, index) => {
-      product.discountedPrice = index === 2 ? product.price * 0.75 : null;
-      product.isOnSale = index === 2;
-
       const card = document.createElement("div");
       card.className = "col";
       card.innerHTML = `
