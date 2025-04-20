@@ -6,8 +6,17 @@
     <title>Home - Multi-Actor E-commerce</title>
     <!-- Bootstrap CSS (Local File) -->
     <link href="assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <!-- Custom CSS -->
     <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/home.css" rel="stylesheet" />
   </head>
   <body>
     <!-- Navbar -->
@@ -34,30 +43,158 @@
     </nav>
 
     <main>
-      <!-- Banner -->
-      <div
-        class="d-flex justify-content-center align-items-center text-center"
-        style="
-          background-image: url('assets/images/banner.jpg');
-          height: 82.8vh;
-          background-size: cover;
-          background-position: center;
-          color: white;
-        "
-      >
-        <div class="container"></div>
+      <!-- Hero Banner (Carousel) -->
+      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#heroCarousel"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="https://images.unsplash.com/photo-1555529771-835f59fc5efe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+              class="d-block w-100"
+              alt="Summer Sale"
+              style="height: 80vh; object-fit: cover;"
+            />
+            <div class="carousel-caption d-none d-md-flex">
+              <h1>Summer Sale - Up to 50% Off</h1>
+              <p>Discover the latest fashion trends at unbeatable prices.</p>
+              <a
+                href="customer/catalog.html"
+                class="btn btn-primary btn-lg btn-gradient"
+                >Shop Now</a
+              >
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+              class="d-block w-100"
+              alt="New Arrivals"
+              style="height: 80vh; object-fit: cover;"
+            />
+            <div class="carousel-caption d-none d-md-flex">
+              <h1>New Arrivals</h1>
+              <p>Explore our latest collection of stylish clothing.</p>
+              <a
+                href="customer/catalog.html"
+                class="btn btn-primary btn-lg btn-gradient"
+                >Browse Collection</a
+              >
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+              class="d-block w-100"
+              alt="Free Shipping"
+              style="height: 80vh; object-fit: cover;"
+            />
+            <div class="carousel-caption d-none d-md-flex">
+              <h1>Shop the Latest Trends</h1>
+              <p>Unleash your style with our new arrivals!</p>
+              <a
+                href="customer/catalog.html"
+                class="btn btn-primary btn-lg btn-gradient"
+                >Start Shopping</a
+              >
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#heroCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#heroCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
 
-      <div
-        class="container my-5 d-flex justify-content-center align-items-center text-center border border-1 p-5"
-      >
-        <p>featured products</p>
-      </div>
+      <!-- Featured Products -->
+      <section class="container my-5 ">
+        <div class="d-flex justify-content-center justify-content-md-between align-items-center gap-2 mx-1 mb-4 flex-wrap">
+          <h2 class="mb-0">Featured Products</h2>
+          <a
+            href="customer/catalog.html"
+            class="sectionbtn border border-1"
+          
+          >
+            View All Products <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+        <div id="featuredProducts" class="row row-cols-1 row-cols-md-2 row-cols-lg-4  g-4">
+          <!-- Products will be populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Why Shop With Us -->
+      <section class="bg-light py-5">
+        <div class="container">
+          <h2 class="text-center mb-4">Why Shop With Us?</h2>
+          <div class="row text-center">
+            <div class="col-md-4">
+              <i
+                class="fas fa-tshirt fa-3x mb-3"
+                style="color: var(--primary-color);"
+              ></i>
+              <h5>Wide Variety</h5>
+              <p>Outfits for every style and occasion</p>
+            </div>
+            <div class="col-md-4">
+              <i
+                class="fas fa-check-circle fa-3x mb-3"
+                style="color: var(--primary-color);"
+              ></i>
+              <h5>Quality Guarantee</h5>
+              <p>High-quality products</p>
+            </div>
+            <div class="col-md-4">
+              <i
+                class="fas fa-headset fa-3x mb-3"
+                style="color: var(--primary-color);"
+              ></i>
+              <h5>24/7 Support</h5>
+              <p>We're here to help</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-
-    
-    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div
+      id="toast-container"
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+    >
       <!-- Toasts will be dynamically inserted here -->
     </div>
     <!-- Footer -->
@@ -72,6 +209,6 @@
     <!-- Custom JS -->
 
     <script type="module" src="./assets/js/global.js"></script>
-    
+    <script type="module" src="./assets/js/home.js"></script>
   </body>
 </html>
