@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     products = products
       .filter((product) => product.isFeatured)
       .sort(() => 0.5 - Math.random())
-      // .slice(0, 4);
+      // .slice(0, 4);   
 
       console.log(products)
     products.forEach((product, index) => {
