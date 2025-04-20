@@ -11,6 +11,7 @@
     />
     <!-- Custom CSS -->
     <link href="../assets/css/style.css" rel="stylesheet" />
+    
   </head>
   <body>
     <!-- Navbar -->
@@ -38,10 +39,55 @@
 
     <main>
       <!-- Admin Dashboard Content -->
-      <div class="container my-5">
-        <div class="row">
-          <div class="col-md-12">
-            <h1>Welcome, admin!</h1>
+      <div class="container my-4">
+        <!-- Summary Cards -->
+        <div class="row g-4 mb-4">
+          <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+              <div class="card-body">
+                <h5 class="card-title">Total Products</h5>
+                <p class="display-6" id="totalProducts">0</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+              <div class="card-body">
+                <h5 class="card-title">Categories</h5>
+                <p class="display-6" id="totalCategories">0</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+              <div class="card-body">
+                <h5 class="card-title">Average Price</h5>
+                <p class="display-6" id="avgPrice">$0</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+              <div class="card-body">
+                <h5 class="card-title">Total Stock</h5>
+                <p class="display-6" id="totalStock">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Navigation -->
+        <div class="row g-4">
+          <div class="col-12">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">Manage Store</h5>
+                <div class="d-flex gap-2">
+                  <a href="products.html" class="btn btn-primary"
+                    >Manage Products</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -50,14 +96,15 @@
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
       <div class="container">
-        <p>footer</p>
+        <p>© 2025 Multi-Actor E-commerce. All rights reserved.</p>
       </div>
     </footer>
 
     <!-- Bootstrap JS (Local File) -->
     <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-    <script src="../assets/js/global.js"></script>
-    <script src="../assets/js/admin-dashboard.js"></script>
+    <script type="module" src="../assets/js/admin-dashboard.js"></script>
+    
+    <script type="module" src="../assets/js/global.js"></script>
   </body>
 </html>

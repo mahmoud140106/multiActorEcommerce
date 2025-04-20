@@ -1,27 +1,26 @@
-document.getElementById("signup-form")?.addEventListener("submit", function (e) {
-  e.preventDefault();
+import { UserManager } from "./userManager.js";
+import { StorageManager } from "./storageManager.js";
+import { showToast } from './toast.js';
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const role = "customer";
+document
+  .getElementById("signup-form")
+  ?.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  const newUser = { email, password, role };
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const role = "customer";
 
-  let users = JSON.parse(localStorage.getItem("users")) || [];
+    const exists = UserManager.getUserByEmail(email);
+    if (exists) {
+      showToast("Email already registered!", "error");
+      return;
+    }
 
-  const exists = users.find((user) => user.email === email);
-  if (exists) {
-    alert("Email already registered!");
-    return;
-  }
-
-  users.push(newUser);
-  localStorage.setItem("users", JSON.stringify(users));
-
-  alert("Account created successfully!");
-  window.location.href = "login.html";
-});
-
+    UserManager.createUser(email, password, role);
+    showToast("Account created successfully!", "success");
+    window.location.href = "login.html";
+  });
 
 document.getElementById("login-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -29,22 +28,21 @@ document.getElementById("login-form")?.addEventListener("submit", (e) => {
   const password = document.getElementById("password").value;
 
   console.log("Email:", email, "Password:", password);
-  const users = JSON.parse(localStorage.getItem("users")) || [];
-  const user = users.find((u) => u.email === email && u.password === password);
+  const user = UserManager.getUserByEmail(email);
 
-  console.log("Users:", users);
-  if (!user) {
-    alert("Invalid email or password!");
+  console.log("User:", user);
+  if (!user || user.password !== password) {
+    showToast("Invalid email or password!", "error");
     return;
   }
 
-  localStorage.setItem("currentUser", JSON.stringify(user));
+  StorageManager.save("currentUser", user);
 
   if (user.role === "customer") {
-    window.location.href = "index.html";
+    window.location.href = "/index.html";
   } else if (user.role === "seller") {
-    window.location.href = "seller/dashboard.html";
+    window.location.href = "/seller/dashboard.html";
   } else if (user.role === "admin") {
-    window.location.href = "admin/dashboard.html";
+    window.location.href = "/admin/dashboard.html";
   }
 });
