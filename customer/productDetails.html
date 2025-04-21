@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - Multi-Actor E-commerce</title>
-    <!-- Bootstrap CSS (Local File) -->
-    <link href="assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Details - OmniShop</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="../assets/libs/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Font Awesome CDN -->
     <link
       rel="stylesheet"
@@ -15,8 +18,8 @@
       referrerpolicy="no-referrer"
     />
     <!-- Custom CSS -->
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <link href="assets/css/home.css" rel="stylesheet" />
+    <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="../assets/css/productDetails.css" rel="stylesheet" />
   </head>
   <body>
     <!-- Navbar -->
@@ -172,216 +175,126 @@
         <!-- Toasts will be dynamically inserted here -->
       </div>
     </nav>
-
-    <!-- Hero Section (only for unauthenticated users or customers on homepage) -->
-    <section class="row container-fluid mx-auto mt-0 mt-md-4" id="hero-section">
-      <div class="w-40 ms-auto">
-        <h1 class="mb-5 fw-bolder maincaption">
-          Discover Quality Products for Every Need
-        </h1>
-        <p class="lead text-muted fs-4 herocaption">
-          Browse our wide range of products designed to enhance your lifestyle.
-        </p>
-        <div class="row justify-content-start gap-3 container-fluid">
-          <button
-            class="w-30 btn btn-dark p-3 my-4"
-            style="min-width: max-content;"
-          >
-            Shop now
-          </button>
-          <button
-            class="w-30 btn btn-outline-dark p-3 my-4"
-            style="min-width: max-content;"
-          >
-            Learn More
-          </button>
+    <form method="get" action="cart.html" class="container mt-4">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-12 text-center py-2">
+          <h3 class="text-uppercase" id="productName"></h3>
+          <input type="text" id="productId" name="productId" hidden />
         </div>
-
-        <!-- Counter Section -->
-        <div
-          class="row justify-content-between mt-5 flex-nowrap"
-          id="counterSection"
-        >
-          <div class="col-4 p-2 p-sm-1">
-            <span class="fw-bold fs-2 counter" data-target="250000">0</span>
-            <p class="lead text-muted herocaption text-nowrap">Customers</p>
+        <div class="row container mt-2 ">
+          <div class="col-12 col-lg-5 ps-0">
+            <div class="carousel slide w-100 pt-4" id="carouselExampleControls" data-bs-ride="false">
+              <div class="carousel-inner ratio ratio-1x1" id="carouselImages"></div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark rounded-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-dark rounded-3" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+            <div class="d-flex justify-content-center gap-3 flex-wrap" id="carouselThumbnails"></div>
           </div>
-          <div class="col-4 p-2 p-sm-1">
-            <span class="fw-bold fs-2 counter" data-target="300">0</span>
-            <p class="lead text-muted herocaption text-nowrap">
-              Reviews
-            </p>
-          </div>
-          <div class="col-4 p-2 p-sm-1">
-            <span class="fw-bold fs-2 counter" data-target="30">0</span>
-            <p class="lead text-muted herocaption text-nowrap">
-              Shops
-            </p>
+          <div class="col-12 col-lg-7 p-3 p-md-5">
+            <div class="mb-3">
+              <h4 class="text-dark text-opacity-70 fw-semibold" id="category">
+                Category:
+              </h4>
+            </div>
+            <div class="mb-3 ps-2">
+              <h6 class="text-dark text-opacity-70 fw-semibold">
+                Price: <span id="price" class="text-danger fw-bold"></span>
+              </h6>
+            </div>
+            <div class="mb-3 ps-2">
+              <h6 class="text-dark text-opacity-70 fw-semibold">
+                Sizes: <span id="sizes" class="text-dark"></span>
+              </h6>
+            </div>
+            <div class="mb-4">
+              <h4 class="text-dark fw-semibold">Description</h4>
+              <p class="text-dark text-opacity-70 ps-2" id="description"></p>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <span
+                    class="input-group-text bg-dark text-white border-0 fw-semibold"
+                    >Count</span
+                  >
+                  <input
+                    name="productCount"
+                    type="number"
+                    min="1"
+                    value="1"
+                    class="form-control text-end"
+                    aria-label="Product count"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <input
+                  id="addToCart"
+                  type="submit"
+                  value="Add to Cart"
+                  class="btn btn-dark w-100 text-uppercase fw-semibold"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="w-40 me-auto d-none d-md-block">
-        <img
-          class="w-100"
-          src="https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-          alt="Kids Collection"
-        />
+    </form>
+    <section class="container my-5">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h3 class="text-dark fw-semibold mb-3">Reviews</h3>
+          <div id="reviewsList" class="p-3 bg-light rounded"></div>
+        </div>
+        <div class="col-md-6">
+          <h4 class="text-dark fw-semibold mb-3">Write a Review</h4>
+          <form id="reviewForm" class="p-3 bg-white rounded">
+            <div class="row g-3 mb-3">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Your Name"
+                  id="nameInput"
+                  required
+                />
+              </div>
+              <div class="col">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Your Email"
+                  id="emailInput"
+                  required
+                />
+              </div>
+            </div>
+            <div class="mb-3">
+              <textarea
+                class="form-control"
+                id="reviewInput"
+                placeholder="Write your review..."
+                rows="5"
+                required
+              ></textarea>
+            </div>
+            <input
+              type="submit"
+              value="Submit Review"
+              class="btn btn-dark w-100 text-uppercase fw-semibold"
+            />
+          </form>
+        </div>
       </div>
     </section>
-    <main>
-      <!-- Hero Banner (Carousel)
-      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img
-              src="https://images.unsplash.com/photo-1555529771-835f59fc5efe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-              class="d-block w-100"
-              alt="Summer Sale"
-              style="height: 80vh; object-fit: cover;"
-            />
-            <div class="carousel-caption d-none d-md-flex">
-              <h1>Summer Sale - Up to 50% Off</h1>
-              <p>Discover the latest fashion trends at unbeatable prices.</p>
-              <a
-                href="customer/catalog.html"
-                class="btn btn-primary btn-lg btn-gradient"
-                >Shop Now</a
-              >
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-              class="d-block w-100"
-              alt="New Arrivals"
-              style="height: 80vh; object-fit: cover;"
-            />
-            <div class="carousel-caption d-none d-md-flex">
-              <h1>New Arrivals</h1>
-              <p>Explore our latest collection of stylish clothing.</p>
-              <a
-                href="customer/catalog.html"
-                class="btn btn-primary btn-lg btn-gradient"
-                >Browse Collection</a
-              >
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-              class="d-block w-100"
-              alt="Free Shipping"
-              style="height: 80vh; object-fit: cover;"
-            />
-            <div class="carousel-caption d-none d-md-flex">
-              <h1>Shop the Latest Trends</h1>
-              <p>Unleash your style with our new arrivals!</p>
-              <a
-                href="customer/catalog.html"
-                class="btn btn-primary btn-lg btn-gradient"
-                >Start Shopping</a
-              >
-            </div>
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div> -->
-
-      <!-- Featured Products -->
-      <section class="container mt-5">
-        <div
-          class="d-flex justify-content-center justify-content-md-between align-items-center gap-2 mx-1 mb-4 flex-wrap"
-        >
-          <h2 class="mb-0">Featured Products</h2>
-          <a
-            href="customer/catalog.html"
-            class="sectionbtn btn btn-outline-dark py-2 border border-1"
-          >
-            View All Products <i class="fas fa-arrow-right ms-1"></i>
-          </a>
-        </div>
-        <div
-          id="featuredProducts"
-          class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"
-        >
-          <!-- Products will be populated by JavaScript -->
-        </div>
-      </section>
-
-      <!-- Why Shop With Us -->
-      <section class="bg-light py-5">
-        <div class="container">
-          <h2 class="text-center mb-4">Why Shop With Us?</h2>
-          <div class="row text-center">
-            <div class="col-md-4">
-              <i
-                class="fas fa-tshirt fa-3x mb-3"
-                style="color: var(--primary-color);"
-              ></i>
-              <h5>Wide Variety</h5>
-              <p>Outfits for every style and occasion</p>
-            </div>
-            <div class="col-md-4">
-              <i
-                class="fas fa-check-circle fa-3x mb-3"
-                style="color: var(--primary-color);"
-              ></i>
-              <h5>Quality Guarantee</h5>
-              <p>High-quality products</p>
-            </div>
-            <div class="col-md-4">
-              <i
-                class="fas fa-headset fa-3x mb-3"
-                style="color: var(--primary-color);"
-              ></i>
-              <h5>24/7 Support</h5>
-              <p>We're here to help</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
     <!-- Footer -->
     <footer class="bg-dark text-light pt-5 pb-0">
       <div class="container">
@@ -506,13 +419,11 @@
         </div>
       </div>
     </footer>
-
-    <!-- Bootstrap JS (Local File) -->
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-
-    <script type="module" src="./assets/js/auth.js"></script>
-    <script type="module" src="./assets/js/global.js"></script>
-    <script type="module" src="./assets/js/home.js"></script>
+    <script type="module" src="../assets/js/productDetails.js"></script>
+    <script type="module" src="../assets/js/auth.js"></script>
+    <script type="module" src="../assets/js/global.js"></script>
   </body>
 </html>

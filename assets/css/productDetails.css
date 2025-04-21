@@ -1,0 +1,10 @@
+
+.imglabel img {
+  border: 2px solid transparent;
+  transition: border 0.3s;
+  cursor: pointer;
+}
+
+.imglabel img:hover {
+  opacity: 0.9;
+}
