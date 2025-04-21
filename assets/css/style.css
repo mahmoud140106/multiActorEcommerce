@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  --primary-color: #4f46e5;
+  --primary-color: #f1c121;
   --secondary-color: #6b7280;
   --gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
   --background: #f8fafc;
@@ -24,7 +23,18 @@ body {
 main {
   flex: 1;
 }
+.omnishop-logo {
+  font-family: cursive;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, #0000, #1f2937, #868585);
+  padding: 5px 10px;
+  border-radius: 10px;
+}
 
+.bgmodal{
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fefefe;
+}
 footer {
   flex-shrink: 0;
 }
@@ -188,4 +198,9 @@ table th:hover {
   .table td {
     font-size: 0.8rem;
   }
+}
+
+.hover-light:hover {
+  color: #f8f9fa !important;
+  transition: color 0.3s ease;
 }

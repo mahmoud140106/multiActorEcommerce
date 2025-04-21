@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     products = products
       .filter((product) => product.isFeatured)
-      .sort(() => 0.5 - Math.random())
-      // .slice(0, 4);   
+      .sort(() => 0.5 - Math.random());
+    // .slice(0, 4);
 
-      console.log(products)
+    console.log(products);
     products.forEach((product, index) => {
       const card = document.createElement("div");
       card.className = "col";
@@ -68,4 +68,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize
   loadFeaturedProducts();
+
+  // Counter Animation
+
+  function animateCounter(counter, target, duration) {
+    let start = 0;
+    const increment = target / (duration / 50);
+    const interval = setInterval(() => {
+      start += increment;
+      if (start >= target) {
+        start = target;
+        clearInterval(interval);
+      }
+
+      if (target === 250000) {
+        counter.textContent = Math.floor(start / 1000) + "k";
+      } else {
+        counter.textContent = Math.floor(start);
+      }
+    }, 50);
+  }
+
+  const counters = document.querySelectorAll(".counter");
+  counters.forEach((counter) => {
+    const target = parseInt(counter.getAttribute("data-target"));
+    animateCounter(counter, target, 2000);
+  });
 });

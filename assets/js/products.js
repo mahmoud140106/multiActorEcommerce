@@ -1,3 +1,4 @@
+// assets/js/products.js
 import { ProductManager } from "./productManager.js";
 import { showToast } from "./toast.js";
 
@@ -34,28 +35,25 @@ document.addEventListener("DOMContentLoaded", () => {
     paginatedProducts.forEach((product) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-                <td>...${product.id % 1000}</td>
-                <td class="d-none d-md-table-cell"><img src="${
-                  product.image
-                }" alt="${product.name}" 
-     onerror="this.onerror=null; this.src='https://dummyimage.com/50x50/cccccc/000000&text=No+Img';" 
-     style="height: 50px; width: 50px;">
-</td>
-                <td>${product.name}</td>
-                <td>${product.category}</td>
-                <td class="d-none d-md-table-cell">$${product.price.toFixed(
-                  2
-                )}</td>
-                <td class="d-none d-md-table-cell">${product.stock}</td>
-                <td>
-                    <button class="btn btn-sm btn-outline-primary rounded-circle m-1 m-md-0" onclick="openEditProductModal(${
-                      product.id
-                    })"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger rounded-circle m-1 m-md-0" onclick="deleteProduct(${
-                      product.id
-                    })"><i class="fas fa-trash-alt"></i></button>
-                </td>
-            `;
+        <td>...${product.id % 1000}</td>
+        <td class="d-none d-md-table-cell"><img src="${
+          product.image
+        }" alt="${product.name}" 
+        onerror="this.onerror=null; this.src='https://dummyimage.com/50x50/cccccc/000000&text=No+Img';" 
+        style="height: 50px; width: 50px;"></td>
+        <td>${product.name}</td>
+        <td>${product.category}</td>
+        <td class="d-none d-md-table-cell">$${product.price.toFixed(2)}</td>
+        <td class="d-none d-md-table-cell">${product.stock}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary rounded-circle m-1 m-md-0" onclick="openEditProductModal(${
+            product.id
+          })"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-sm btn-danger rounded-circle m-1 m-md-0" onclick="deleteProduct(${
+            product.id
+          })"><i class="fas fa-trash-alt"></i></button>
+        </td>
+      `;
       tbody.appendChild(row);
     });
 
@@ -68,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
     pagination.innerHTML = "";
     const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
 
-    // Previous button
     const prevLi = document.createElement("li");
     prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
     prevLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${
@@ -76,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })"><i class="fas fa-chevron-left"></i></a>`;
     pagination.appendChild(prevLi);
 
-    // Page numbers
     for (let i = 1; i <= pageCount; i++) {
       const li = document.createElement("li");
       li.className = `page-item ${i === currentPage ? "active" : ""}`;
@@ -84,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
       pagination.appendChild(li);
     }
 
-    // Next button
     const nextLi = document.createElement("li");
     nextLi.className = `page-item ${
       currentPage === pageCount ? "disabled" : ""
@@ -122,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return sortDirection === "asc" ? valA - valB : valB - valA;
     });
 
-    // Update sort indicators
     document
       .querySelectorAll("th span")
       .forEach((span) => (span.innerHTML = ""));
@@ -145,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProductsTable();
   };
 
-  // Image handling
   function handleImageUpload(file, callback) {
     if (file) {
       const reader = new FileReader();
@@ -166,11 +159,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Add or update product
   document.getElementById("productForm").addEventListener("submit", (e) => {
     e.preventDefault();
-    const id =
-      parseInt(document.getElementById("productId").value) || Date.now();
+    const id = parseInt(document.getElementById("productId").value);
     const file = document.getElementById("productImage").files[0];
 
     handleImageUpload(file, (imageData) => {
@@ -186,11 +177,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const image = imageData || ProductManager.getProduct(id)?.image || "";
 
-      if (ProductManager.getProduct(id)) {
+      if (!isNaN(id) && ProductManager.getProduct(id)) {
         ProductManager.updateProduct(id, name, category, price, stock, image);
         showToast("Product updated successfully", "success");
       } else {
-        ProductManager.createProduct(id, name, category, price, stock, image);
+        const newId = Date.now();
+        ProductManager.createProduct(newId, name, category, price, stock, image);
         showToast("Product added successfully", "success");
       }
 
@@ -199,20 +191,35 @@ document.addEventListener("DOMContentLoaded", () => {
       bootstrap.Modal.getInstance(
         document.getElementById("productModal")
       ).hide();
-      document.getElementById("productForm").reset();
+
+      document.getElementById("productName").value = "";
+      document.getElementById("productCategory").value = "";
+      document.getElementById("productPrice").value = "";
+      document.getElementById("productStock").value = "";
+      document.getElementById("productImage").value = "";
       document.getElementById("imagePreview").style.display = "none";
     });
   });
 
   window.openAddProductModal = () => {
     document.getElementById("productModalLabel").textContent = "Add Product";
-    document.getElementById("productForm").reset();
     document.getElementById("productId").value = "";
+    document.getElementById("productName").value = "";
+    document.getElementById("productCategory").value = "";
+    document.getElementById("productPrice").value = "";
+    document.getElementById("productStock").value = "";
+    document.getElementById("productImage").value = "";
     document.getElementById("imagePreview").style.display = "none";
+    new bootstrap.Modal(document.getElementById("productModal")).show();
   };
 
   window.openEditProductModal = (id) => {
-    const product = ProductManager.getProduct(id);
+    const productId = parseInt(id); 
+    const product = ProductManager.getProduct(productId);
+    if (!product) {
+      showToast("Product not found.", "error");
+      return;
+    }
     document.getElementById("productModalLabel").textContent = "Edit Product";
     document.getElementById("productId").value = product.id;
     document.getElementById("productName").value = product.name;
@@ -227,8 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.deleteProduct = (id) => {
-    const productIdToDelete = id;
-
+    const productIdToDelete = parseInt(id);
     const confirmDeleteModal = new bootstrap.Modal(
       document.getElementById("confirmDeleteModal")
     );
@@ -239,11 +245,9 @@ document.addEventListener("DOMContentLoaded", () => {
       showToast("Product deleted successfully", "success");
       filteredProducts = [...ProductManager.getAllProducts()];
       renderProductsTable();
-
       confirmDeleteModal.hide();
     };
   };
 
-  // Initial load
   loadProducts();
 });

@@ -21,18 +21,15 @@
     <!-- Custom CSS -->
     <link href="../assets/css/style.css" rel="stylesheet" />
 
-    <!-- Toastr CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-
-<!-- Toastr JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
       <div class="container">
-        <a class="navbar-brand" href="../index.html">E-commerce</a>
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <i class="fas fa-shopping-bag me-2"></i>
+          <span class="omnishop-logo">OmniShop</span>
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -49,6 +46,134 @@
             <!-- JavaScript will populate this dynamically -->
           </ul>
         </div>
+      </div>
+
+      <!-- Login Modal -->
+      <div
+        class="modal fade"
+        id="loginModal"
+        tabindex="-1"
+        aria-labelledby="loginModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content bgmodal rounded p-4"
+            style="width: 450px; min-height: 55vh;"
+          >
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
+                Login
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="login-email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="login-email"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="login-password" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="login-password"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Login
+                </button>
+              </form>
+              <p class="text-center mt-3">
+                Don't have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#signupModal"
+                  data-bs-dismiss="modal"
+                  >Sign Up</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign Up Modal -->
+      <div
+        class="modal fade"
+        id="signupModal"
+        tabindex="-1"
+        aria-labelledby="signupModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content bgmodal rounded p-4"
+            style="width: 450px; min-height: 55vh;"
+          >
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
+                Sign Up
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="signup-form">
+                <div class="mb-3">
+                  <label for="signup-email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="signup-email"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="signup-password" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="signup-password"
+                    required
+                  />
+                </div>
+                <input type="hidden" id="role" value="customer" />
+                <button type="submit" class="btn btn-primary w-100">
+                  Sign Up
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="toast-container"
+        class="toast-container position-fixed bottom-0 end-0 p-3"
+      >
+        <!-- Toasts will be dynamically inserted here -->
       </div>
     </nav>
 
@@ -102,17 +227,24 @@
                       >
                         Category <span id="sort-category"></span>
                       </th>
-                      <th class="d-none d-md-table-cell" onclick="sortTable('price')" style="cursor: pointer;">
+                      <th
+                        class="d-none d-md-table-cell"
+                        onclick="sortTable('price')"
+                        style="cursor: pointer;"
+                      >
                         Price <span id="sort-price"></span>
                       </th>
-                      <th class="d-none d-md-table-cell" onclick="sortTable('stock')" style="cursor: pointer;">
+                      <th
+                        class="d-none d-md-table-cell"
+                        onclick="sortTable('stock')"
+                        style="cursor: pointer;"
+                      >
                         Stock <span id="sort-stock"></span>
                       </th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody id="productsTableBody"></tbody>
-                  
                 </table>
                 <nav>
                   <ul class="pagination" id="pagination"></ul>
@@ -197,10 +329,18 @@
                     id="imagePreview"
                     src=""
                     alt="Preview"
-                    style="width: 100px; height: 100px;object-fit: cover; margin-top: 10px; display: none;"
+                    style="
+                      width: 100px;
+                      height: 100px;
+                      object-fit: cover;
+                      margin-top: 10px;
+                      display: none;
+                    "
                   />
                 </div>
-                <button type="submit" class="btn btn-primary btn-gradient">Save</button>
+                <button type="submit" class="btn btn-primary btn-gradient">
+                  Save
+                </button>
               </form>
             </div>
           </div>
@@ -252,11 +392,6 @@
       </div>
     </main>
 
-
-    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
-      <!-- Toasts will be dynamically inserted here -->
-    </div>
-    
     <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
       <div class="container">
@@ -269,6 +404,7 @@
     <!-- Custom JS -->
 
     <script type="module" src="../assets/js/global.js"></script>
+    <script type="module" src="../assets/js/auth.js"></script>
     <script type="module" src="../assets/js/products.js"></script>
   </body>
 </html>

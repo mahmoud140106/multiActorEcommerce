@@ -1,14 +1,14 @@
 import { UserManager } from "./userManager.js";
 import { StorageManager } from "./storageManager.js";
-import { showToast } from './toast.js';
+import { showToast } from "./toast.js";
 
 document
   .getElementById("signup-form")
   ?.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+    const email = document.getElementById("signup-email").value.trim();
+    const password = document.getElementById("signup-password").value.trim();
     const role = "customer";
 
     const exists = UserManager.getUserByEmail(email);
@@ -19,13 +19,14 @@ document
 
     UserManager.createUser(email, password, role);
     showToast("Account created successfully!", "success");
-    window.location.href = "login.html";
+
+    window.location.href = "/index.html";
   });
 
 document.getElementById("login-form")?.addEventListener("submit", (e) => {
   e.preventDefault();
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
 
   console.log("Email:", email, "Password:", password);
   const user = UserManager.getUserByEmail(email);

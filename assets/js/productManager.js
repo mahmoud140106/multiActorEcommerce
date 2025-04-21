@@ -120,10 +120,11 @@ function initializeDefaultProducts() {
       {
         isOnSale: true,
         isFeatured: true,
+        discountedPrice: 14.99,
       }
     ),
     new Product(
-      16,
+      2,
       "Fames Primis",
       "Sweaters",
       49.99,
@@ -132,30 +133,29 @@ function initializeDefaultProducts() {
       {
         isOnSale: true,
         isFeatured: true,
+        discountedPrice: 39.99,
       }
     ),
     new Product(
-      18,
+      3,
       "White Sneakers",
       "Shoes",
       59.99,
       30,
-
       "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
       { isFeatured: true }
     ),
     new Product(
-      1,
+      4,
       "White Casual T-Shirt",
       "T-Shirts",
       15.99,
       60,
-
       "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
       { isFeatured: true }
     ),
     new Product(
-      2,
+      5,
       "Black Slim Jeans",
       "Jeans",
       39.99,
@@ -165,7 +165,7 @@ function initializeDefaultProducts() {
       { isFeatured: true }
     ),
     new Product(
-      11,
+      6,
       "Beige Trench Coat",
       "Coats",
       79.99,
@@ -174,15 +174,15 @@ function initializeDefaultProducts() {
       { isFeatured: true }
     ),
     new Product(
-      15,
+      7,
       "Gray Track Pants",
       "Pants",
       29.99,
       50,
-      "https://images.unsplash.com/photo-1604176354204-9268737828e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      "https://images.unsplash.com/photo-1604176354204-9268737828e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"
     ),
     new Product(
-      24,
+      8,
       "skirt",
       "clothes",
       19.99,
@@ -191,7 +191,7 @@ function initializeDefaultProducts() {
       { isFeatured: true }
     ),
     new Product(
-      24,
+      9,
       "Morbi",
       "Shoes",
       19.99,

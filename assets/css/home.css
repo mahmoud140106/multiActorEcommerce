@@ -1,16 +1,79 @@
 /* assets/css/home.css */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-:root {
-  --primary-color: #4f46e5;
-  --secondary-color: #6b7280;
-  --gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
-  --background: #f8fafc;
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --modal-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  --transition: all 0.3s ease;
-  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
+/* hero*/
+
+.maincaption {
+  font-size: 5rem;
+  font-family: cursive;
+}
+.w-40 {
+  width: 40%;
+}
+.w-15 {
+  width: 15%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+#hero-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background: none;
+}
+#hero-section .w-40 h1,
+#hero-section .w-40 p {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  @media (max-width: 768px) {
+    #hero-section {
+      padding: 0 !important;
+    }
+    #hero-section .w-40 {
+      width: 100% !important;
+      margin: 0 auto;
+      background-image: url("https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 0px 20px;
+      position: relative;
+    }
+
+    #hero-section .w-40::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+      z-index: 1;
+    }
+
+    #hero-section .w-40 * {
+      position: relative;
+      z-index: 2;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+    .maincaption {
+      font-size: 2.5rem;
+    }
+    .herocaption {
+      color: #cac8c8 !important;
+      font-size: smaller;
+    }
+  }
+  .navbar-nav {
+    text-align: center;
+  }
 }
 
 /* Hero Banner (Carousel) */
@@ -54,21 +117,9 @@
   margin-bottom: 1.5rem;
 }
 /* btn*/
-.sectionbtn {
-  color: #1f2937;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: var(--transition);
-}
+
 .sectionbtn i {
   transform: rotate(-35deg);
-}
-.sectionbtn:hover {
-  background-color: var(--primary-color);
-  color: #fefefe;
 }
 
 /* Featured Products */
@@ -116,7 +167,6 @@ section h2 {
   filter: brightness(1.1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-
 
 .card-body {
   /* padding: 1rem; */
