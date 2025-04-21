@@ -1,11 +1,17 @@
 
-.imglabel img {
+#carouselImages img:hover {
+  scale:1.1 ;
+  transition: all 0.3s;
+}
+
+#carouselThumbnails img:hover {
+  opacity: 0.9;
   border: 2px solid transparent;
   transition: border 0.3s;
   cursor: pointer;
 }
-
-.imglabel img:hover {
-  opacity: 0.9;
+.imglabel img.active-thumbnail{
+  border: 3px solid black;
+  scale:1.1 ;
+  transition: all 0.3s;
 }
-

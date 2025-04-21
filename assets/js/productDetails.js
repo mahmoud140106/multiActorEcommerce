@@ -68,13 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
         carouselThumbnails.appendChild(thumbnail);
       });
     }
-
+ 
     // Handle thumbnail active state
     const thumbnails = document.querySelectorAll(".imglabel img");
     thumbnails.forEach((thumb) => {
       thumb.addEventListener("click", () => {
-        thumbnails.forEach((img) => img.parentElement.classList.remove("active"));
-        thumb.parentElement.classList.add("active");
+        thumbnails.forEach((img) => img.classList.remove("active-thumbnail"));
+        thumb.classList.toggle("active-thumbnail");
       });
     });
   } catch (error) {
