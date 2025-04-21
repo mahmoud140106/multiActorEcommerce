@@ -1,0 +1,39 @@
+.bottomImgs{
+    position: absolute; 
+    left: 1200px; 
+    bottom: 400px;
+   display: flex;
+   flex-direction: column;
+   gap: 70px;
+    
+    
+}
+
+.bottomImgs :hover{
+    opacity: 1;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    
+}
+
+.imglabel img.active-thumbnail {
+    border: 1px solid black;  /* Adjust color/thickness if needed */
+    border-radius: 5px;
+    opacity: 1;
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+  .carousel-inner img:hover {
+    transform: scale(1.02); 
+  }
+  @media all and (min-width: 800px) {
+    .bottomImgs{
+        position: absolute; 
+        left: 915px; 
+        bottom: 77px;
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+    }
+}
