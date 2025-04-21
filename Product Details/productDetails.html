@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="productDetails.js" > </script>
+    <link rel="stylesheet" href="productDetails.css">
+
+    <title>Product Details</title>
+</head>
+<body>
+
+  <form  method="get" action="cart.html">
+      <div class="card   mt-2">
+          <div class="card-header bg-dark bg-gradient text-light py-4">
+              <div class="row">
+                  <div class="col-12 text-center">
+                      <h3 class="text-light text-uppercase" id="productName"></h3>
+                      <p class="text-light-50 fw-semibold mb-0" id="gender">for  </p>
+                      <input type="text"  id="productId" name="productId" hidden/>
+                  </div>
+              </div>
+          </div>
+          <div class="card-body">
+              <div class="py-3">
+                  <div class="row">
+                      <div class="col-6 col-md-2 offset-lg-1 pb-1">
+                        <input type="button" value="Back to home" onclick="redirectToHome()" class="btn btn-outline-dark bg-gradient mb-5 fw-semibold btn-sm text-uppercase"/>
+                          
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-12 col-lg-3 offset-lg-1  ">
+                        <div class="col-12">
+                                <div class="col-6 col-md-12 ">
+                                  <div id="carouselExampleControls" class="carousel slide w-75"  data-bs-ride="false" >
+                                    <div  class="carousel-inner align-content-center " >
+                                      <div id="img1" class="carousel-item  active " >
+                                        <img   class="d-block w-100  img1" style="height: 250px ;"  >
+                                      </div>
+                                    
+                                      <div id="img2" class="carousel-item " >
+                                        <img  class="d-block w-100 img2" style="height: 250px ;" >
+                                      </div>
+                                      <div id="img3" class="carousel-item" >
+                                        <img  class="d-block w-100 img3" style="height: 250px ;" >
+                                      </div>
+                                    </div>
+                                    
+                                    <button  class="carousel-control-prev " type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                      <span class="carousel-control-prev-icon bg-dark rounded-3" aria-hidden="true"></span>
+                                      <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                      <span class="carousel-control-next-icon bg-dark rounded-3" aria-hidden="true"></span>
+                                      <span class="visually-hidden">Next</span>
+                                    </button>
+                                  </div>
+                                </div>
+                            
+                                  <div class=" carousel-indicators bottomImgs  justify-content-center mt-4 "  >
+                                    <label class="mx-lg-5 imglabel "  data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"  >
+                                      <img  class="  img1" style="height: 100px; width: 100px;" data-bs-target="#img1">
+                                    </label>
+                                    <label class="mx-lg-5 imglabel"  data-bs-target="#carouselExampleControls"  data-bs-slide-to="1" aria-label="Slide 2">
+                                      <img  class=" img2" style="height: 100px; width: 100px;" data-bs-target="#img2">
+                                    </label>
+                                    <label class="mx-lg-5 imglabel"  data-bs-target="#carouselExampleControls" data-bs-slide-to="2" aria-label="Slide 3">
+                                      <img  class=" img3" style="height: 100px; width: 100px;" data-bs-target="#img3">
+                                    </label>
+                                  </div>
+                              
+                        </div>
+                      </div> 
+                     
+                      <div class="col-12 col-lg-6 offset-lg-1" >
+  
+                          
+                          <div >
+                              <h4 class="text-dark text-opacity-70 " id="category">Category : </h4>
+                          </div>
+                          <div class=" ps-2">
+                              <h6 class="text-dark text-opacity-70  pb-2">
+                                   Price:
+                                  <span  id="price" class="text-danger">
+                                     
+                                  </span>
+                              </h6>
+                          </div>
+                          <div class=" ps-2">
+                            <h6 class="text-dark text-opacity-70  pb-2">
+                                 Size:
+                                <span  id="size" class="text-dark">
+                                   
+                                </span>
+                            </h6>
+                        </div>
+                         
+                          <div>
+                            <h4>Description</h4>
+                            <p class="text-dark text-opacity-70 ps-2" id="description"></p>
+                          </div>
+  
+                         
+                          <div class="row pl-2 mb-3">
+                              <div class="col-md-4">
+                                  <div class="input-group mb-3">
+                                      <span class="input-group-text bg-dark text-white border-0 fw-semibold"
+                                            id="inputGroup-sizing-default">
+                                          Count
+                                      </span>
+                                      <input  name="productCount" type="number" min="1" value="1" class="form-control text-end"
+                                             aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+  
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-12 col-md-6">
+                                <input id="addToCart" type="submit" value="Add to Cart "  class="btn btn-dark bg-gradient  w-100 mt-5 text-uppercase fw-semibold ">
+                                
+                              </div>
+                          </div>
+                      </div>
+  
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+  </form>
+  
+  
+
+    <div class="btn-group col-2 offset-1 mt-5" >
+      <button type="button" class="btn btn-dark dropdown-toggle  " onclick="showReviews()">
+        Reviews
+      </button>
+      
+    </div>
+    <pre>
+
+
+        
+    </pre>
+    <section id="reviewSection" class="container offset-lg-1 mt-2 row d-none">
+      <div class="col-6">
+        <h3>Reviews</h3>
+        <div>
+          <ul id="reviewsList" class="list-group list-group-flush">
+            
+
+          </ul>
+
+        </div>
+      </div>
+
+
+      <form  class="col-6 ">
+        <p class="mb-1 ">Your email address will not be published. Required fields are marked <span class="text-danger">*</span></p>
+
+        
+        <div class="d-flex col-12 g-1 mb-2">
+  
+              <input id="nameInput" class="col-5" type="text"  placeholder="Name*" name="nameInput"  required>
+  
+              <input id="emailInput" class="col-5 ms-3 ms-s-5" name="email" type="email" placeholder="Email*"    required="">
+         
+        </div>
+        <textarea id="reviewInput" class="col-11" rows="7"  placeholder="Write a review... *" required></textarea>
+        <input type="button" value="Submit" class="col-11 rounded-2 bg-dark text-light" onclick="addReview()"/>
+      </form>
+      <pre>
+
+
+
+
+
+      </pre>
+    </section>
+
+  
+
+  
+</body>
+</html>
