@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Products - Multi-Actor E-commerce</title>
-    <!-- Bootstrap CSS (Local File) -->
     <link
       href="../assets/libs/bootstrap/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Font Awesome CDN -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -17,13 +15,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-
-    <!-- Custom CSS -->
     <link href="../assets/css/style.css" rel="stylesheet" />
-
   </head>
   <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="index.html">
@@ -42,13 +36,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <!-- JavaScript will populate this dynamically -->
-          </ul>
+          <ul class="navbar-nav ms-auto"></ul>
         </div>
       </div>
-
-      <!-- Login Modal -->
       <div
         class="modal fade"
         id="loginModal"
@@ -112,8 +102,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Sign Up Modal -->
       <div
         class="modal fade"
         id="signupModal"
@@ -168,17 +156,12 @@
           </div>
         </div>
       </div>
-
       <div
         id="toast-container"
         class="toast-container position-fixed bottom-0 end-0 p-3"
-      >
-        <!-- Toasts will be dynamically inserted here -->
-      </div>
+      ></div>
     </nav>
-
     <main>
-      <!-- Products Management -->
       <div class="container my-4">
         <div class="row mb-2">
           <div class="col-12">
@@ -236,6 +219,13 @@
                       </th>
                       <th
                         class="d-none d-md-table-cell"
+                        onclick="sortTable('discount')"
+                        style="cursor: pointer;"
+                      >
+                        Discount<span id="sort-discount"></span>
+                      </th>
+                      <th
+                        class="d-none d-md-table-cell"
                         onclick="sortTable('stock')"
                         style="cursor: pointer;"
                       >
@@ -254,8 +244,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Product Modal -->
       <div
         class="modal fade"
         id="productModal"
@@ -303,8 +291,22 @@
                   <input
                     type="number"
                     step="0.01"
+                    min="0"
                     class="form-control"
                     id="productPrice"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="productDiscount" class="form-label"
+                    >Discount (%)</label
+                  >
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    class="form-control"
+                    id="productDiscount"
                     required
                   />
                 </div>
@@ -312,31 +314,25 @@
                   <label for="productStock" class="form-label">Stock</label>
                   <input
                     type="number"
+                    min="0"
                     class="form-control"
                     id="productStock"
                     required
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="productImage" class="form-label">Image</label>
+                  <label for="productImage" class="form-label">Images</label>
                   <input
                     type="file"
                     class="form-control"
                     id="productImage"
                     accept="image/*"
+                    multiple
                   />
-                  <img
+                  <div
                     id="imagePreview"
-                    src=""
-                    alt="Preview"
-                    style="
-                      width: 100px;
-                      height: 100px;
-                      object-fit: cover;
-                      margin-top: 10px;
-                      display: none;
-                    "
-                  />
+                    style="margin-top: 10px; display: none;"
+                  ></div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-gradient">
                   Save
@@ -346,8 +342,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Confirmation Modal -->
       <div
         class="modal fade"
         id="confirmDeleteModal"
@@ -391,18 +385,12 @@
         </div>
       </div>
     </main>
-
-    <!-- Footer -->
     <footer class="bg-dark text-white text-center py-3">
       <div class="container">
         <p>© 2025 Multi-Actor E-commerce. All rights reserved.</p>
       </div>
     </footer>
-
-    <!-- Bootstrap JS (Local File) -->
     <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-
     <script type="module" src="../assets/js/global.js"></script>
     <script type="module" src="../assets/js/auth.js"></script>
     <script type="module" src="../assets/js/products.js"></script>

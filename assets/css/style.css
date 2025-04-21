@@ -170,12 +170,12 @@ table th:hover {
 }
 
 .pagination .page-item.active .page-link {
-  background: var(--primary-color);
+  background: var(--gradient);
   color: #ffffff;
 }
 
 .pagination .page-item .page-link:hover {
-  background: var(--primary-color);
+  background: var(--gradient);
   color: #ffffff;
 }
 

@@ -15,6 +15,7 @@ function restrictAccess() {
       "/index.html",
       "/customer/catalog.html",
       "/customer/cart.html",
+      "/customer/productDetails.html",
       "/customer/profile.html",
     ],
     seller: [
@@ -24,7 +25,7 @@ function restrictAccess() {
       "/orders.html",
     ],
     admin: ["/index.html", "/admin/dashboard.html", "/admin/products.html"],
-    guest: ["/index.html", "/customer/catalog.html"],
+    guest: ["/index.html", "/customer/catalog.html", "/customer/productDetails.html"],
   };
 
   if (currentUser) {
