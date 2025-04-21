@@ -349,6 +349,7 @@ function initializeDefaultProducts() {
       ],
       {
         description: "Durable hiking boots for outdoor adventures.",
+        isFeatured: true,
         brand: "TrailBlazer",
         colors: ["Brown", "Black"],
         sizes: ["40", "41", "42"],
@@ -367,6 +368,7 @@ function initializeDefaultProducts() {
       {
         description: "Casual canvas sneakers for everyday wear.",
         brand: "EasyStep",
+        isFeatured: true,
         colors: ["White", "Blue"],
         sizes: ["38", "39", "40"],
       }
