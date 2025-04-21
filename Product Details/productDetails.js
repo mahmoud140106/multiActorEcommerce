@@ -24,7 +24,6 @@ document.getElementById('size').innerText = product.size;
 document.getElementById('gender').innerText +=  product.gender;
 document.getElementById('description').innerText = product.description;
 product.image.forEach((image , index ) => {
-    console.log(image)
   document.querySelectorAll(`.img${index + 1}`)[0].src = `${image}`;
   document.querySelectorAll(`.img${index + 1}`)[0].alt = `${product.name}`;
   document.querySelectorAll(`.img${index + 1}`)[0].title = `${product.name} Image${index + 1}`;
@@ -52,10 +51,6 @@ const thumbnails = document.querySelectorAll(".imglabel img");
   
     
 
-  
-
-
-
    
 }//end of load
 
@@ -65,4 +60,37 @@ function redirectToHome(){
     window.location.href = "index.html";
 }
 
+function showReviews(){                //show reviews section
+    let reviewSection = document.getElementById('reviewSection');
+    reviewSection.classList.toggle( 'd-none');
+}
 
+function addReview(){              
+
+    // validate name and email
+    let name = document.getElementById('nameInput').value;
+    
+    if(!/^[A-Za-z\s]{3,}$/.test(name)) {
+        alert('Please enter a valid name with at least 3 characters.');
+        return;
+    }
+    let email = document.getElementById('emailInput').value;
+    if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    
+    //add review to reviews list
+
+    review = document.getElementById('reviewInput').value;  
+    let li = document.createElement('li');  
+    li.innerText = review;
+    let reviewsList = document.getElementById('reviewsList');  
+    reviewsList.appendChild(li);
+
+        //clear input fields
+
+    document.getElementById('nameInput').value = '';  
+    document.getElementById('emailInput').value = '';
+    document.getElementById('reviewInput').value = '';
+}

@@ -4,7 +4,7 @@
     bottom: 400px;
    display: flex;
    flex-direction: column;
-   gap: 70px;
+   gap: 75px;
     
     
 }
@@ -27,7 +27,7 @@
   .carousel-inner img:hover {
     transform: scale(1.02); 
   }
-  @media all and (min-width: 800px) {
+  @media all and (min-width: 990px) {
     .bottomImgs{
         position: absolute; 
         left: 915px; 
@@ -36,4 +36,17 @@
         flex-direction: row;
         gap: 0;
     }
+}
+  @media all and (max-width: 900px) {
+    
+    #carouselExampleControls{
+      width: 200px !important;
+    }
+}
+
+@media all and (min-width: 900px ), (max-width: 980px) {
+    
+  #carouselExampleControls{
+    width: 200px !important;
+  }
 }
