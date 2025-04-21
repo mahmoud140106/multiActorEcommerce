@@ -1,4 +1,3 @@
-// assets/js/products.js
 import { ProductManager } from "./productManager.js";
 import { showToast } from "./toast.js";
 
@@ -9,14 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let sortColumn = "id";
   let sortDirection = "asc";
 
-  // Load products
   function loadProducts() {
     const products = ProductManager.getAllProducts();
     filteredProducts = [...products];
     renderProductsTable();
   }
 
-  // Render products table
   function renderProductsTable() {
     const tbody = document.getElementById("productsTableBody");
     tbody.innerHTML = "";
@@ -37,13 +34,15 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <td>...${product.id % 1000}</td>
         <td class="d-none d-md-table-cell"><img src="${
-          product.image
+          product.images[0] ||
+          "https://dummyimage.com/50x50/cccccc/000000&text=No+Img"
         }" alt="${product.name}" 
         onerror="this.onerror=null; this.src='https://dummyimage.com/50x50/cccccc/000000&text=No+Img';" 
         style="height: 50px; width: 50px;"></td>
         <td>${product.name}</td>
         <td>${product.category}</td>
         <td class="d-none d-md-table-cell">$${product.price.toFixed(2)}</td>
+        <td class="d-none d-md-table-cell">$${product.discount.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">${product.stock}</td>
         <td>
           <button class="btn btn-sm btn-outline-primary rounded-circle m-1 m-md-0" onclick="openEditProductModal(${
@@ -60,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderPagination();
   }
 
-  // Render pagination
   function renderPagination() {
     const pagination = document.getElementById("pagination");
     pagination.innerHTML = "";
@@ -84,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nextLi.className = `page-item ${
       currentPage === pageCount ? "disabled" : ""
     }`;
-    nextLi.innerHTML = `<a class="page-link ms-1 rounded-circle " href="#" onclick="changePage(${
+    nextLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${
       currentPage + 1
     })"><i class="fas fa-chevron-right"></i></a>`;
     pagination.appendChild(nextLi);
@@ -139,35 +137,67 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProductsTable();
   };
 
-  function handleImageUpload(file, callback) {
-    if (file) {
+  function handleImageUpload(files, callback) {
+    const imageDataUrls = [];
+    let loadedCount = 0;
+
+    if (!files || files.length === 0) {
+      callback([]);
+      return;
+    }
+
+    Array.from(files).forEach((file) => {
       const reader = new FileReader();
-      reader.onload = (e) => callback(e.target.result);
+      reader.onload = (e) => {
+        imageDataUrls.push(e.target.result);
+        loadedCount++;
+        if (loadedCount === files.length) {
+          callback(imageDataUrls);
+        }
+      };
       reader.readAsDataURL(file);
+    });
+  }
+
+  function renderImagePreview(images) {
+    const previewContainer = document.getElementById("imagePreview");
+    previewContainer.innerHTML = "";
+    if (images && images.length) {
+      images.forEach((image) => {
+        const img = document.createElement("img");
+        img.src = image;
+        img.alt = "Preview";
+        img.style.height = "100px";
+        img.style.width = "100px";
+        img.style.objectFit = "cover";
+        img.style.margin = "5px";
+        previewContainer.appendChild(img);
+      });
+      previewContainer.style.display = "block";
     } else {
-      callback("");
+      previewContainer.style.display = "none";
     }
   }
 
   document.getElementById("productImage").addEventListener("change", (e) => {
-    const file = e.target.files[0];
-    const preview = document.getElementById("imagePreview");
-    handleImageUpload(file, (imageData) => {
-      preview.src =
-        imageData || "https://dummyimage.com/50x50/cccccc/000000&text=No+Img";
-      preview.style.display = imageData ? "block" : "none";
+    const files = e.target.files;
+    handleImageUpload(files, (imageDataUrls) => {
+      renderImagePreview(imageDataUrls);
     });
   });
 
   document.getElementById("productForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const id = parseInt(document.getElementById("productId").value);
-    const file = document.getElementById("productImage").files[0];
+    const files = document.getElementById("productImage").files;
 
-    handleImageUpload(file, (imageData) => {
+    handleImageUpload(files, (imageDataUrls) => {
       const name = document.getElementById("productName").value;
       const category = document.getElementById("productCategory").value;
       const price = parseFloat(document.getElementById("productPrice").value);
+      const discount = parseFloat(
+        document.getElementById("productDiscount").value
+      );
       const stock = parseInt(document.getElementById("productStock").value);
 
       if (isNaN(price) || isNaN(stock)) {
@@ -175,14 +205,26 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const image = imageData || ProductManager.getProduct(id)?.image || "";
+      const images = imageDataUrls.length
+        ? imageDataUrls
+        : ProductManager.getProduct(id)?.images || [];
 
       if (!isNaN(id) && ProductManager.getProduct(id)) {
-        ProductManager.updateProduct(id, name, category, price, stock, image);
+        ProductManager.updateProduct(id, name, category, price, stock, images, {
+          discount,
+        });
         showToast("Product updated successfully", "success");
       } else {
         const newId = Date.now();
-        ProductManager.createProduct(newId, name, category, price, stock, image);
+        ProductManager.createProduct(
+          newId,
+          name,
+          category,
+          price,
+          stock,
+          images,
+          { discount }
+        );
         showToast("Product added successfully", "success");
       }
 
@@ -195,9 +237,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("productName").value = "";
       document.getElementById("productCategory").value = "";
       document.getElementById("productPrice").value = "";
+      document.getElementById("productDiscount").value = "";
       document.getElementById("productStock").value = "";
       document.getElementById("productImage").value = "";
-      document.getElementById("imagePreview").style.display = "none";
+      renderImagePreview([]);
     });
   });
 
@@ -207,14 +250,15 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("productName").value = "";
     document.getElementById("productCategory").value = "";
     document.getElementById("productPrice").value = "";
+    document.getElementById("productDiscount").value = "";
     document.getElementById("productStock").value = "";
     document.getElementById("productImage").value = "";
-    document.getElementById("imagePreview").style.display = "none";
+    renderImagePreview([]);
     new bootstrap.Modal(document.getElementById("productModal")).show();
   };
 
   window.openEditProductModal = (id) => {
-    const productId = parseInt(id); 
+    const productId = parseInt(id);
     const product = ProductManager.getProduct(productId);
     if (!product) {
       showToast("Product not found.", "error");
@@ -225,11 +269,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("productName").value = product.name;
     document.getElementById("productCategory").value = product.category;
     document.getElementById("productPrice").value = product.price;
+    document.getElementById("productDiscount").value = product.discount;
     document.getElementById("productStock").value = product.stock;
-    const preview = document.getElementById("imagePreview");
-    preview.src =
-      product.image || "https://dummyimage.com/50x50/cccccc/000000&text=No+Img";
-    preview.style.display = product.image ? "block" : "none";
+    renderImagePreview(product.images || []);
     new bootstrap.Modal(document.getElementById("productModal")).show();
   };
 
