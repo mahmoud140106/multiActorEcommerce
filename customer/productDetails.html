@@ -194,7 +194,7 @@
                 <span class="visually-hidden">Next</span>
               </button>
             </div>
-            <div class="d-flex justify-content-center gap-3 flex-wrap" id="carouselThumbnails"></div>
+            <div class="d-flex justify-content-center gap-3 flex-wrap " id="carouselThumbnails"></div>
           </div>
           <div class="col-12 col-lg-7 p-3 p-md-5">
             <div class="mb-3">
@@ -248,15 +248,64 @@
         </div>
       </div>
     </form>
-    <section class="container my-5">
+
+    <div class="btn-group col-2 offset-1 mt-5" >
+      <button type="button" class="btn btn-dark dropdown-toggle  " id="reviewsBtn" >
+        Reviews
+      </button>
+      
+    </div>
+    <pre>
+
+
+        
+    </pre>
+    <!-- <section  class="container offset-lg-1 mt-2 row d-none">
+      <div class="col-6">
+        <h3>Reviews</h3>
+        <div>
+          <ul id="reviewsList" class="list-group list-group-flush">
+            
+
+          </ul>
+
+        </div>
+      </div>
+
+
+      <form  class="col-6 ">
+
+        
+        <div class="d-flex col-12 g-1 mb-2">
+  
+              <input id="nameInput" class="col-5" type="text"  placeholder="Name*" name="nameInput"  required>
+  
+              <input id="emailInput" class="col-5 ms-3 ms-s-5" name="email" type="email" placeholder="Email*"    required="">
+         
+        </div>
+        <textarea id="reviewInput" class="col-11" rows="7"  placeholder="Write a review... *" required></textarea>
+        <input type="button" value="Submit" class="col-11 rounded-2 bg-dark text-light" id="submitBtn" />
+      </form>
+      <pre>
+
+
+
+
+
+      </pre>
+    </section> -->
+
+    <section class="container my-5" id="reviewSection">
       <div class="row g-4">
         <div class="col-md-6">
           <h3 class="text-dark fw-semibold mb-3">Reviews</h3>
-          <div id="reviewsList" class="p-3 bg-light rounded"></div>
+          <ul id="reviewsList" class="p-3 bg-light rounded "></ul>
         </div>
         <div class="col-md-6">
           <h4 class="text-dark fw-semibold mb-3">Write a Review</h4>
           <form id="reviewForm" class="p-3 bg-white rounded">
+            <p class="mb-1 ">Your email address will not be published. Required fields are marked <span class="text-danger">*</span></p>
+
             <div class="row g-3 mb-3">
               <div class="col">
                 <input
@@ -287,14 +336,16 @@
               ></textarea>
             </div>
             <input
-              type="submit"
+              type="button"
               value="Submit Review"
               class="btn btn-dark w-100 text-uppercase fw-semibold"
+              id="submitBtn"
             />
           </form>
         </div>
       </div>
     </section>
+
     <!-- Footer -->
     <footer class="bg-dark text-light pt-5 pb-0">
       <div class="container">
