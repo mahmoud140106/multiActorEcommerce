@@ -1,0 +1,32 @@
+
+body {
+    background-color: white;
+}
+.checkout-summary {
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* position: absolute;
+    height: 20hv; */
+    
+}
+.product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+#sameAddressDiv, #differentAddressDiv ,button{
+    height: 50px;
+}
+@media all and (min-width: 800px) {
+    .checkout-summary {
+       
+        height: 100vh; 
+        overflow-y: auto;
+        position:fixed ;
+    }
+    
+    
+}
