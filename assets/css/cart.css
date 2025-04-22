@@ -1,0 +1,148 @@
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --dark-color: #212529;
+    --light-color: #f8f9fa;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+/* Cart Items */
+.cart-item {
+    transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.divider {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 0 1.5rem;
+}
+
+/* Color Options */
+.color-option {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+    cursor: pointer;
+    border: 1px solid #dee2e6;
+    position: relative;
+}
+
+.color-option.selected::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 1px solid var(--primary-color);
+    border-radius: 50%;
+}
+
+/* Product Cards */
+.product-card {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    transition: all 0.3s ease;
+}
+
+.product-card:hover img {
+    opacity: 0.9;
+}
+
+/* Buttons */
+.btn {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.btn-outline-dark:hover {
+    background-color: var(--dark-color);
+}
+
+/* Inputs */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Badges */
+.badge {
+    font-size: 0.6rem;
+}
+
+/* Footer */
+footer a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: rgb(206, 206, 206) !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .sticky-top {
+        position: static !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .cart-item {
+        flex-direction: column;
+    }
+    
+    .cart-item img {
+        margin-bottom: 1rem;
+        width: 100% !important;
+    }
+    
+    .cart-item .text-end {
+        text-align: left !important;
+        margin-top: 1rem;
+    }
+    
+    .cart-item .col-md-6 {
+        padding-left: 0 !important;
+    }
+}
