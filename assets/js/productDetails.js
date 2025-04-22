@@ -68,13 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
         carouselThumbnails.appendChild(thumbnail);
       });
     }
-
+ 
     // Handle thumbnail active state
     const thumbnails = document.querySelectorAll(".imglabel img");
     thumbnails.forEach((thumb) => {
       thumb.addEventListener("click", () => {
-        thumbnails.forEach((img) => img.parentElement.classList.remove("active"));
-        thumb.parentElement.classList.add("active");
+        thumbnails.forEach((img) => img.classList.remove("active-thumbnail"));
+        thumb.classList.toggle("active-thumbnail");
       });
     });
   } catch (error) {
@@ -83,3 +83,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
+document.getElementById('reviewsBtn').addEventListener('click', showReviews); //show reviews section
+
+
+function showReviews(){                //show reviews section
+  let reviewSection = document.getElementById('reviewSection');
+  reviewSection.classList.toggle( 'd-none');
+}
+
+
+document.getElementById('submitBtn').addEventListener('click', addReview); //add review to reviews list
+function addReview(){              
+
+  // validate name and email
+  let name = document.getElementById('nameInput').value;
+  
+  if(!/^[A-Za-z\s]{3,}$/.test(name)) {
+      alert('Please enter a valid name with at least 3 characters.');
+      return;
+  }
+  let email = document.getElementById('emailInput').value;
+  if(!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+  }
+  
+  //add review to reviews list
+
+  let review = document.getElementById('reviewInput').value;  
+  let li = document.createElement('li');  
+  li.innerText = review;
+  let reviewsList = document.getElementById('reviewsList');  
+  reviewsList.appendChild(li);
+
+      //clear input fields
+
+  document.getElementById('nameInput').value = '';  
+  document.getElementById('emailInput').value = '';
+  document.getElementById('reviewInput').value = '';
+}
