@@ -106,56 +106,56 @@ export class UserManager {
     const adminRole = "admin";
 
     console.log("initializeDefaultAdmin: Checking for default admin");
-    const exists = UserManager.getUserByEmail(adminEmail);
-    if (!exists) {
-      UserManager.createUser(
-        adminUserName,
-        adminEmail,
-        adminPassword,
-        adminRole
-      );
-      console.log("initializeDefaultAdmin: Default admin created");
-    } else {
-      console.log("initializeDefaultAdmin: Default admin already exists");
-    }
+  //   const exists = UserManager.getUserByEmail(adminEmail);
+  //   if (!exists) {
+  //     UserManager.createUser(
+  //       adminUserName,
+  //       adminEmail,
+  //       adminPassword,
+  //       adminRole
+  //     );
+  //     console.log("initializeDefaultAdmin: Default admin created");
+  //   } else {
+  //     console.log("initializeDefaultAdmin: Default admin already exists");
+  //   }
   }
 }
 
-// function initializeDefaultSellers() {
-//   const defaultUsers = [
-//     {
-//       id: 1,
-//       userName: "AdminUser",
-//       email: "admin@ecommerce.com",
-//       password: "admin123",
-//       role: "admin",
-//     },
-//     {
-//       id: 2,
-//       userName: "SellerOne",
-//       email: "seller1@ecommerce.com",
-//       password: "seller123",
-//       role: "seller",
-//     },
-//     {
-//       id: 3,
-//       userName: "SellerTwo",
-//       email: "seller2@ecommerce.com",
-//       password: "seller123",
-//       role: "seller",
-//     },
-//     {
-//       id: 4,
-//       userName: "SellerThree",
-//       email: "seller3@ecommerce.com",
-//       password: "seller123",
-//       role: "seller",
-//     },
-//   ];
+function initializeDefaultSellers() {
+  const defaultUsers = [
+    {
+      id: 1,
+      userName: "AdminUser",
+      email: "admin@ecommerce.com",
+      password: "admin123",
+      role: "admin",
+    },
+    {
+      id: 2,
+      userName: "SellerOne",
+      email: "seller1@ecommerce.com",
+      password: "seller123",
+      role: "seller",
+    },
+    {
+      id: 3,
+      userName: "SellerTwo",
+      email: "seller2@ecommerce.com",
+      password: "seller123",
+      role: "seller",
+    },
+    {
+      id: 4,
+      userName: "SellerThree",
+      email: "seller3@ecommerce.com",
+      password: "seller123",
+      role: "seller",
+    },
+  ];
 
-//   if (!StorageManager.load("users")) {
-//     StorageManager.save("users", defaultUsers);
-//     console.log("initializeDefaultSellers: Default users initialized");
-//   }
-// }
-// initializeDefaultSellers();
+  if (!StorageManager.load("users")) {
+    StorageManager.save("users", defaultUsers);
+    console.log("initializeDefaultSellers: Default users initialized");
+  }
+}
+initializeDefaultSellers();
