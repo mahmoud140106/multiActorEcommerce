@@ -1,6 +1,7 @@
 import { ProductManager } from "./productManager.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("product details.js loaded");
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = parseInt(urlParams.get("id"));
