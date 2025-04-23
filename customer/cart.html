@@ -22,35 +22,202 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
             <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="/index.html">
-                  <i class="fas fa-shopping-bag me-2"></i>
-                  <span class="omnishop-logo">OmniShop</span>
-                </a>
-                <button
-                  class="navbar-toggler"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#navbarNav"
-                  aria-controls="navbarNav"
-                  aria-expanded="false"
-                  aria-label="Toggle navigation"
-                >
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav ms-auto">
-                    <!-- JavaScript will populate this dynamically -->
-                  </ul>
-                </div>
+              <a class="navbar-brand d-flex align-items-center" href="/index.html">
+                <i class="fas fa-shopping-bag me-2"></i>
+                <span class="omnishop-logo">OmniShop</span>
+              </a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                  <!-- JavaScript will populate this dynamically -->
+                </ul>
+              </div>
             </div>
-
+      
+            <!-- Login Modal -->
+            <div
+              class="modal fade"
+              id="loginModal"
+              tabindex="-1"
+              aria-labelledby="loginModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div
+                  class="modal-content bgmodal rounded p-4"
+                  style="width: 450px; min-height: 55vh;"
+                >
+                  <div class="modal-header border-0">
+                    <h5 class="modal-title w-100 text-center" id="loginModalLabel">
+                      Login
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="login-form">
+                      <div class="mb-3">
+                        <label for="login-email" class="form-label">Email</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="login-email"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="login-password" class="form-label"
+                          >Password</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="login-password"
+                          required
+                        />
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100">
+                        Login
+                      </button>
+                    </form>
+                    <p class="text-center mt-3">
+                      Don't have an account?
+                      <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#signupModal"
+                        data-bs-dismiss="modal"
+                        >Sign Up</a
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Sign Up Modal -->
+            <div
+              class="modal fade"
+              id="signupModal"
+              tabindex="-1"
+              aria-labelledby="signupModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div
+                  class="modal-content bgmodal rounded p-4"
+                  style="width: 450px; min-height: 55vh;"
+                >
+                  <div class="modal-header border-0">
+                    <h5 class="modal-title w-100 text-center" id="signupModalLabel">
+                      Sign Up
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="signup-form">
+                      <div class="mb-3">
+                        <label for="signup-userName" class="form-label">UserName</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="signup-userName"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="signup-email" class="form-label">Email</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="signup-email"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="signup-password" class="form-label"
+                          >Password</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="signup-password"
+                          required
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Register as:</label>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="role"
+                            id="role-customer"
+                            value="customer"
+                            checked
+                          />
+                          <label class="form-check-label" for="role-customer">
+                            Customer
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="role"
+                            id="role-seller"
+                            value="seller"
+                          />
+                          <label class="form-check-label" for="role-seller">
+                            Seller
+                          </label>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100">
+                        Sign Up
+                      </button>
+                    </form>
+                    <p class="text-center mt-3">
+                      Already have an account?
+                      <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#loginModal"
+                        data-bs-dismiss="modal"
+                        >Login</a
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
             <div
               id="toast-container"
               class="toast-container position-fixed bottom-0 end-0 p-3"
             >
               <!-- Toasts will be dynamically inserted here -->
             </div>
-        </nav>
+          </nav>
 
         <!-- Cart Section -->
         <div class="container my-5">
@@ -467,8 +634,8 @@
         <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Custom JS -->
 
-        <!-- <script type="module" src="../assets/js/auth.js"></script>
-        <script type="module" src="../assets/js/global.js"></script> -->
+        <script type="module" src="../assets/js/auth.js"></script>
+        <script type="module" src="../assets/js/global.js"></script>
 
         <!-- problem with linking previous files makes it stuck on home page 
         I guess its because of protected URL
