@@ -3,55 +3,52 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Your Cart - Fashion Haven</title>
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <title>Your Cart - OmniShop</title>
+        <!-- Bootstrap CSS (Local File) -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- Font Awesome CDN -->
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+        />
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="../assets/css/cart.css">
+        <link href="../assets/css/style.css" rel="stylesheet" />
+        <link href="../assets/css/cart.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
             <div class="container">
-                <a class="navbar-brand fw-bold text-primary" href="#">
-                    <i class="fas fa-tshirt me-2"></i>Fashion Haven
+                <a class="navbar-brand d-flex align-items-center" href="/index.html">
+                  <i class="fas fa-shopping-bag me-2"></i>
+                  <span class="omnishop-logo">OmniShop</span>
                 </a>
-                <div class="d-flex align-items-center order-lg-3 ms-auto">
-                    <a href="#" class="text-dark me-3 position-relative">
-                        <i class="fas fa-heart fa-lg"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
-                    </a>
-                    <a href="#" class="text-dark position-relative">
-                        <i class="fas fa-shopping-cart fa-lg"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">2</span>
-                    </a>
-                    <button class="navbar-toggler ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                <button
+                  class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarNav"
+                  aria-controls="navbarNav"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ms-auto">
+                    <!-- JavaScript will populate this dynamically -->
+                  </ul>
                 </div>
-                <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Home</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Women</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Men</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link active fw-bold" href="#">Cart</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Account</a>
-                        </li>
-                    </ul>
-                </div>
+            </div>
+
+            <div
+              id="toast-container"
+              class="toast-container position-fixed bottom-0 end-0 p-3"
+            >
+              <!-- Toasts will be dynamically inserted here -->
             </div>
         </nav>
 
@@ -70,13 +67,13 @@
                             <!-- Cart Item 1 -->
                             <div class="row g-0 align-items-center p-4 cart-item">
                                 <div class="col-md-2">
-                                    <img src="https://source.unsplash.com/random/300x400/?tshirt" alt="T-Shirt" class="img-fluid rounded-3">
+                                    <img src="../assets/images/shopping11.jpg" alt="T-Shirt" class="img-fluid rounded-3">
                                 </div>
                                 <div class="col-md-6 ps-4">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <h5 class="mb-1 fw-semibold">Premium Cotton T-Shirt</h5>
-                                            <p class="text-muted small mb-2">SKU: FH-TS-001</p>
+                                            <p class="text-muted small mb-2">SKU: OS-TS-001</p>
                                         </div>
                                         <button class="btn btn-sm btn-link text-danger p-0">
                                             <i class="fa-solid fa-trash"></i>
@@ -115,7 +112,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 text-end">
-                                    <h4 class="fw-bold text-primary">$59.98</h4>
+                                    <h4 class="fw-bold">$59.98</h4>
                                     <span class="text-success small fw-semibold"><i class="fas fa-check-circle me-1"></i> In Stock</span>
                                 </div>
                             </div>
@@ -125,13 +122,13 @@
                             <!-- Cart Item 2 -->
                             <div class="row g-0 align-items-center p-4 cart-item">
                                 <div class="col-md-2">
-                                    <img src="https://source.unsplash.com/random/300x400/?jeans" alt="Jeans" class="img-fluid rounded-3">
+                                    <img src="../assets/images/shopping12.jpg" alt="Jeans" class="img-fluid rounded-3">
                                 </div>
                                 <div class="col-md-6 ps-4">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <h5 class="mb-1 fw-semibold">Slim Fit Stretch Jeans</h5>
-                                            <p class="text-muted small mb-2">SKU: FH-JN-045</p>
+                                            <p class="text-muted small mb-2">SKU: OS-JN-045</p>
                                         </div>
                                         <button class="btn btn-sm btn-link text-danger p-0">
                                             <i class="fa-solid fa-trash"></i>
@@ -170,7 +167,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 text-end">
-                                    <h4 class="fw-bold text-primary">$49.99</h4>
+                                    <h4 class="fw-bold">$49.99</h4>
                                     <span class="text-success small fw-semibold"><i class="fas fa-check-circle me-1"></i> In Stock</span>
                                 </div>
                             </div>
@@ -178,7 +175,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-between mt-4">
-                        <a href="#" class="btn btn-outline-dark rounded-pill px-4">
+                        <a href="/index.html" class="btn btn-outline-dark rounded-pill px-4">
                             <i class="fas fa-arrow-left me-2"></i>Continue Shopping
                         </a>
                     </div>
@@ -205,7 +202,7 @@
                             
                             <div class="input-group mt-4 mb-3">
                                 <input type="text" class="form-control" placeholder="Promo code">
-                                <button class="btn btn-primary" type="button">Apply</button>
+                                <button class="btn btn-dark" type="button">Apply</button>
                             </div>
                             
                             <div class="alert alert-success py-2 small mb-4" role="alert">
@@ -218,11 +215,11 @@
                                 <strong>Total</strong>
                                 <div>
                                     <span class="text-decoration-line-through text-muted me-2">$122.90</span>
-                                    <span class="fw-bold fs-5 text-primary">$112.90</span>
+                                    <span class="fw-bold fs-5">$112.90</span>
                                 </div>
                             </div>
                             
-                            <button class="btn btn-primary rounded-pill w-100 py-3 fw-semibold mb-3">
+                            <button class="btn btn-dark rounded-pill w-100 py-3 fw-semibold mb-3">
                                 Checkout
                             </button>
                             
@@ -239,51 +236,141 @@
         </div>
 
         <!-- Footer -->
-        <footer class="bg-dark text-white pt-5 pb-4 mt-5">
+        <footer class="bg-dark text-light pt-5 pb-0">
             <div class="container">
-                <div class="row g-4">
-                    <div class="col-lg-4">
-                        <h5 class="fw-bold mb-3"><i class="fas fa-tshirt me-2"></i>Fashion Haven</h5>
-                        <p>Premium fashion for everyone. Quality clothing at affordable prices.</p>
+                <div class="row gy-4">
+                    <!-- About Section -->
+                    <div class="col-md-3 col-12">
+                        <h5 class="mb-3">About Us</h5>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a
+                                href="#"
+                                class="text-secondary text-decoration-none hover-light"
+                                >History</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                href="#"
+                                class="text-secondary text-decoration-none hover-light"
+                                >Team</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                href="#"
+                                class="text-secondary text-decoration-none hover-light"
+                                >Services</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                href="#"
+                                class="text-secondary text-decoration-none hover-light"
+                                >Company</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Contact Us Section -->
+                    <div class="col-md-3 col-12">
+                        <h5 class="mb-3">Contact Us</h5>
+                        <ul class="list-unstyled">
+                            <li class="text-secondary">
+                                811 Egypt. Capitol Heights, MD 2743
+                            </li>
+                            <li>
+                                <a
+                                href="tel:+5662374687"
+                                class="text-secondary text-decoration-none hover-light"
+                                >(566) 237-4687</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                href="mailto:info@email.com"
+                                class="text-secondary text-decoration-none hover-light"
+                                >info@email.com</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Quick Links Section -->
+                    <div class="col-md-3 col-12">
+                        <h5 class="mb-3">Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a
+                                href="#"
+                                class="text-secondary text-decoration-none hover-light"
+                                >Home</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                href="#"
+                                class="text-secondary text-decoration-none hover-light"
+                                >Shop</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                href="#"
+                                class="text-secondary text-decoration-none hover-light"
+                                >Blog</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                href="#"
+                                class="text-secondary text-decoration-none hover-light"
+                                >FAQ</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Social Media Section -->
+                    <div class="col-md-3 col-12">
+                        <h5 class="mb-3">Follow Us</h5>
                         <div class="d-flex gap-3">
-                            <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="text-white"><i class="fab fa-pinterest"></i></a>
+                            <a href="#" class="text-secondary hover-light"
+                                ><i class="fab fa-facebook-f fa-lg"></i
+                            ></a>
+                            <a href="#" class="text-secondary hover-light"
+                                ><i class="fab fa-twitter fa-lg"></i
+                            ></a>
+                            <a href="#" class="text-secondary hover-light"
+                                ><i class="fab fa-instagram fa-lg"></i
+                            ></a>
+                            <a href="#" class="text-secondary hover-light"
+                                ><i class="fab fa-linkedin-in fa-lg"></i
+                            ></a>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-4">
-                        <h6 class="fw-semibold mb-3">Shop</h6>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><a href="#">Women</a></li>
-                            <li class="mb-2"><a href="#">Men</a></li>
-                            <li class="mb-2"><a href="#">Kids</a></li>
-                            <li class="mb-2"><a href="#">Accessories</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-2 col-md-4">
-                        <h6 class="fw-semibold mb-3">Help</h6>
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><a href="#">Contact Us</a></li>
-                            <li class="mb-2"><a href="#">FAQs</a></li>
-                            <li class="mb-2"><a href="#">Shipping</a></li>
-                            <li class="mb-2"><a href="#">Returns</a></li>
-                        </ul>
-                    </div>
                 </div>
-                <hr class="my-4 bg-secondary">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start">
-                        <p class="small mb-0">© 2023 Fashion Haven. All rights reserved.</p>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <p class="small text-muted mb-0">
-                            <a href="#">Privacy Policy</a> | 
-                            <a href="#">Terms of Service</a>
+                <!-- Copyright Section -->
+                <div class="row mt-3 py-3 border-top border-1">
+                    <div class="col-12 text-center">
+                        <p class="text-secondary mb-0">
+                            © 2025 Team4 ITI All Rights Reserved.
                         </p>
                     </div>
                 </div>
             </div>
         </footer>
+
+        <!-- Bootstrap JS (Local File) -->
+        <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Custom JS -->
+
+        <!-- <script type="module" src="../assets/js/auth.js"></script>
+        <script type="module" src="../assets/js/global.js"></script> -->
+
+        <!-- problem with linking previous files makes it stuck on home page 
+        I guess its because of protected URL
+        with this comment it doesn't show the nav links-->
+
+        <script type="module" src="../assets/js/cart.js"></script>
     </body>
 </html>
