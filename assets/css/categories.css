@@ -1,0 +1,103 @@
+:root {
+    --primary-color: #f1c121;
+    --secondary-color: #6b7280;
+    --gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
+    --background: #f8fafc;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --modal-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    --transition: all 0.6s ease-in-out;
+    --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
+  }
+#categories .header h1{
+    font-family: var(--font-family);
+    text-align: center;
+    margin-block: 45px;
+    text-transform: capitalize;
+}
+#categories .header h1::after{
+    content: "";
+    display: block;
+    width: 50px;
+    height: 4px;
+    border-radius: 5px; 
+    background-color: var(--primary-color); 
+    margin: 20px auto 0;
+}
+.card {
+    position: relative;
+    margin: auto;
+    width: 80%; 
+    height: 400px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.card-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 2; /* Ensure it stays on top */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    transform: rotateX(0);
+    transition: var(--transition);
+    overflow: hidden; /* Clip the blurred background */
+}
+
+.blur-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/shopping19.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px);
+}
+
+.cover-text {
+    position: relative;
+    color: var(--primary-color); 
+    font-family: var(--font-family);
+    text-align: center;
+}
+
+.card img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: rotateX(-180deg);
+    backface-visibility: hidden;
+    transition: var(--transition);
+}
+
+.card:hover .card-cover {
+    transform: rotateX(-180deg);
+}
+
+.card:hover img {
+    transform: rotateX(0) scale(1.1);    
+    
+}
+.card:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+}
+.myrow{
+  margin-block: 70px;  
+}
+.pages .page-link{
+    color: black;
+}
+.pages .page-link:hover{
+    color: var(--primary-color);
+}
+.pages .page-link:focus{
+    border: 2px solid var(--primary-color);
+    box-shadow: none;
+}
