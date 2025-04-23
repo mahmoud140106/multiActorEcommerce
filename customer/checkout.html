@@ -1,173 +1,541 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/checkout.css">
-    <script src="/assets/js/checkout.js"></script>
-    
-</head>
-<body>
-    <div class="container py-5">
-        
-        <div class="d-flex flex-wrap-reverse flex-lg-wrap g-5">
-            <!-- Left side -->
-            <div class="col-12 col-lg-7  ">
-                <div class="d-flex justify-content-between ">
-                    <h4>Contact</h4>
-                    <a href="#" >Log in</a>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/checkout.css" />
+    <script src="../assets/js/checkout.js"></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/index.html">
+          <i class="fas fa-shopping-bag me-2"></i>
+          <span class="omnishop-logo">OmniShop</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <!-- JavaScript will populate this dynamically -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Login Modal -->
+      <div
+        class="modal fade"
+        id="loginModal"
+        tabindex="-1"
+        aria-labelledby="loginModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content bgmodal rounded p-4"
+            style="width: 450px; min-height: 55vh;"
+          >
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
+                Login
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="login-email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="login-email"
+                    required
+                  />
                 </div>
                 <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="Email or mobile phone number">
-                    <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" checked>
-                        <label class="form-check-label">Email me with news and offers</label>
-                    </div>
+                  <label for="login-password" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="login-password"
+                    required
+                  />
                 </div>
-
-                <h4>Delivery</h4>
-                <form class="row g-3">
-                    <div class="col-md-12">
-                        <select class="form-select">
-                            <option selected>Country/Region</option>
-                            <option>Egypt</option>
-                        </select>
-                    </div>
-                    <div class="d-flex">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="First name (optional)">
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Last name">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <input type="text" class="form-control" placeholder="Address">
-                    </div>
-                    <div class="col-12">
-                        <input type="text" class="form-control" placeholder="Apartment, suite, etc. (optional)">
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" placeholder="City">
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-select">
-                            <option selected>Governorate</option>
-                            <option>Dakahlia</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" placeholder="Postal code (optional)">
-                    </div>
-                    <div class="col-12">
-                        <input type="text" class="form-control" placeholder="Phone number">
-                    </div>
-                    <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox">
-                        <label class="form-check-label">Save this information for next time</label>
-                    </div>
-
-                    <h4 class="mt-5">Shipping method</h4>
-                    <div class="border p-3 rounded d-flex justify-content-between">
-                        <p class="mb-0">(Shipping price is estimated and change based on location)</p>
-                        <strong class="d-block">EGP £90.00</strong>
-                    </div>
-    
-                    <h4 class="mt-5">Payment</h4>
-                    <span>All transactions are secure and encrypted.</span>
-                    <div class="border p-3 rounded">
-                        
-                         <span>Cash on Delivery (COD)</span>
-                       
-                    </div>
-    
-                    <h5 class="mt-4">Billing address</h5>
-                    <div class="form-check  align-content-center rounded-bottom-2 rounded-top-2" id="sameAddressDiv" >
-                        <input class="form-check-input" type="radio" name="billing" id="sameAddress">
-                        <label class="form-check-label" for="sameAddress">
-                            Same as shipping address
-                        </label>
-                    </div>
-                    <div class="form-check  align-content-center rounded-bottom-2 rounded-top-2" id="differentAddressDiv" >
-                        <input class="form-check-input" type="radio" name="billing" id="differentAddress" >
-                        <label class="form-check-label" for="differentAddress">
-                            Use a different billing address
-                        </label>
-                    </div>
-                    <!-- Billing Address Fields (disabled visually as example) -->
-                    <div class="row g-3 d-none"id="billingAddress" >
-                        <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="Country/Region" disabled>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="First name (optional)" disabled>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Last name" disabled>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Address" disabled>
-                        </div>
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Apartment, suite, etc. (optional)" disabled>
-                        </div>
-                        
-                        <div class="row g-2 mb-3">
-                            <div class="col">
-                            <input type="text" class="form-control" placeholder="City">
-                            </div>
-                            <div class="col">
-                            <select class="form-select">
-                                <option selected>Dakahlia</option>
-                            </select>
-                            </div>
-                            <div class="col">
-                            <input type="text" class="form-control" placeholder="Postal code (optional)">
-                            </div>
-                        </div>
-                    
-                        <div class="mb-4">
-                            <input type="text" class="form-control" placeholder="Get Order Update">
-                        </div>
-                    </div>
-                                    
-                         
-                        <!-- Complete Order Button -->
-                        <button type="submit" class="btn btn-complete w-100 bg-primary text-light">Complete order</button>      
-    
-                </form>
+                <button type="submit" class="btn btn-primary w-100">
+                  Login
+                </button>
+              </form>
+              <p class="text-center mt-3">
+                Don't have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#signupModal"
+                  data-bs-dismiss="modal"
+                  >Sign Up</a
+                >
+              </p>
             </div>
-           
-            <!-- Right side -->
-            <div class="col-12 col-lg-5 checkout-summary   end-0" >
-                <div >
-                    <div class="d-flex align-items-center mb-3">
-                        <img src="https://via.placeholder.com/60" alt="Product" class="product-image me-3">
-                        <div>
-                            <p class="mb-0">Aqua Degrade Slim Fit Shirt</p>
-                            <small class="text-muted">AQUA / S / SHIRTS</small>
-                        </div>
-                        <span class="ms-auto fw-bold">£895.00</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between">
-                        <span>Subtotal</span>
-                        <span>£895.00</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <span>Shipping</span>
-                        <span>£90.00</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between fw-bold">
-                        <span>Total</span>
-                        <span>EGP £985.00</span>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Sign Up Modal -->
+      <div
+        class="modal fade"
+        id="signupModal"
+        tabindex="-1"
+        aria-labelledby="signupModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content bgmodal rounded p-4"
+            style="width: 450px; min-height: 55vh;"
+          >
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
+                Sign Up
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="signup-form">
+                <div class="mb-3">
+                  <label for="signup-email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="signup-email"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="signup-password" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="signup-password"
+                    required
+                  />
+                </div>
+                <input type="hidden" id="role" value="customer" />
+                <button type="submit" class="btn btn-primary w-100">
+                  Sign Up
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="toast-container"
+        class="toast-container position-fixed bottom-0 end-0 p-3"
+      >
+        <!-- Toasts will be dynamically inserted here -->
+      </div>
+    </nav>
+
+    <div class="container py-5">
+      <div class="d-flex flex-wrap-reverse flex-lg-wrap g-5">
+        <!-- Left side -->
+        <div class="col-12 col-lg-7">
+          <div class="d-flex justify-content-between">
+            <h4>Contact</h4>
+            <a href="#">Log in</a>
+          </div>
+          <div class="mb-3">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Email or mobile phone number"
+            />
+            <div class="form-check mt-2">
+              <input class="form-check-input" type="checkbox" checked />
+              <label class="form-check-label"
+                >Email me with news and offers</label
+              >
+            </div>
+          </div>
+
+          <h4>Delivery</h4>
+          <form class="row g-3">
+            <div class="col-md-12">
+              <select class="form-select">
+                <option selected>Country/Region</option>
+                <option>Egypt</option>
+              </select>
+            </div>
+            <div class="d-flex">
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="First name (optional)"
+                />
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Last name"
+                />
+              </div>
+            </div>
+            <div class="col-12">
+              <input type="text" class="form-control" placeholder="Address" />
+            </div>
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Apartment, suite, etc. (optional)"
+              />
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" placeholder="City" />
+            </div>
+            <div class="col-md-4">
+              <select class="form-select">
+                <option selected>Governorate</option>
+                <option>Dakahlia</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Postal code (optional)"
+              />
+            </div>
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Phone number"
+              />
+            </div>
+            <div class="form-check mt-2">
+              <input class="form-check-input" type="checkbox" />
+              <label class="form-check-label"
+                >Save this information for next time</label
+              >
+            </div>
+
+            <h4 class="mt-5">Shipping method</h4>
+            <div class="border p-3 rounded d-flex justify-content-between">
+              <p class="mb-0">
+                (Shipping price is estimated and change based on location)
+              </p>
+              <strong class="d-block">EGP £90.00</strong>
+            </div>
+
+            <h4 class="mt-5">Payment</h4>
+            <span>All transactions are secure and encrypted.</span>
+            <div class="border p-3 rounded">
+              <span>Cash on Delivery (COD)</span>
+            </div>
+
+            <h5 class="mt-4">Billing address</h5>
+            <div
+              class="form-check align-content-center rounded-bottom-2 rounded-top-2"
+              id="sameAddressDiv"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                name="billing"
+                id="sameAddress"
+              />
+              <label class="form-check-label" for="sameAddress">
+                Same as shipping address
+              </label>
+            </div>
+            <div
+              class="form-check align-content-center rounded-bottom-2 rounded-top-2"
+              id="differentAddressDiv"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                name="billing"
+                id="differentAddress"
+              />
+              <label class="form-check-label" for="differentAddress">
+                Use a different billing address
+              </label>
+            </div>
+            <!-- Billing Address Fields (disabled visually as example) -->
+            <div class="row g-3 d-none" id="billingAddress">
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Country/Region"
+                  disabled
+                />
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="First name (optional)"
+                  disabled
+                />
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Last name"
+                  disabled
+                />
+              </div>
+              <div class="col-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Address"
+                  disabled
+                />
+              </div>
+              <div class="col-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Apartment, suite, etc. (optional)"
+                  disabled
+                />
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="City" />
+                </div>
+                <div class="col">
+                  <select class="form-select">
+                    <option selected>Dakahlia</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Postal code (optional)"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Get Order Update"
+                />
+              </div>
+            </div>
+
+            <!-- Complete Order Button -->
+            <button
+              type="submit"
+              class="btn btn-complete w-100 bg-primary text-light"
+            >
+              Complete order
+            </button>
+          </form>
+        </div>
+
+        <!-- Right side -->
+        <div class="col-12 col-lg-5 checkout-summary end-0">
+          <div>
+            <div class="d-flex align-items-center mb-3">
+              <img
+                src="https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/01/product-image-15-600x600.webp"
+                alt="Product"
+                class="product-image me-3"
+              />
+              <div>
+                <p class="mb-0">Aqua Degrade Slim Fit Shirt</p>
+                <small class="text-muted">AQUA / S / SHIRTS</small>
+              </div>
+              <span class="ms-auto fw-bold">£895.00</span>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between">
+              <span>Subtotal</span>
+              <span>£895.00</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Shipping</span>
+              <span>£90.00</span>
+            </div>
+            <hr />
+            <div class="d-flex justify-content-between fw-bold">
+              <span>Total</span>
+              <span>EGP £985.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light pt-5 pb-0">
+      <div class="container">
+        <div class="row gy-4">
+          <!-- About Section -->
+          <div class="col-md-3 col-12">
+            <h5 class="mb-3">About Us</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >History</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Team</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Company</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Contact Us Section -->
+          <div class="col-md-3 col-12">
+            <h5 class="mb-3">Contact Us</h5>
+            <ul class="list-unstyled">
+              <li class="text-secondary">
+                811 Egypt. Capitol Heights, MD 2743
+              </li>
+              <li>
+                <a
+                  href="tel:+5662374687"
+                  class="text-secondary text-decoration-none hover-light"
+                  >(566) 237-4687</a
+                >
+              </li>
+              <li>
+                <a
+                  href="mailto:info@email.com"
+                  class="text-secondary text-decoration-none hover-light"
+                  >info@email.com</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Quick Links Section -->
+          <div class="col-md-3 col-12">
+            <h5 class="mb-3">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Shop</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Blog</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >FAQ</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Social Media Section -->
+          <div class="col-md-3 col-12">
+            <h5 class="mb-3">Follow Us</h5>
+            <div class="d-flex gap-3">
+              <a href="#" class="text-secondary hover-light"
+                ><i class="fab fa-facebook-f fa-lg"></i
+              ></a>
+              <a href="#" class="text-secondary hover-light"
+                ><i class="fab fa-twitter fa-lg"></i
+              ></a>
+              <a href="#" class="text-secondary hover-light"
+                ><i class="fab fa-instagram fa-lg"></i
+              ></a>
+              <a href="#" class="text-secondary hover-light"
+                ><i class="fab fa-linkedin-in fa-lg"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <!-- Copyright Section -->
+        <div class="row mt-3 py-3 border-top border-1">
+          <div class="col-12 text-center">
+            <p class="text-secondary mb-0">
+              © 2025 Team4 ITI All Rights Reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- custom js  -->
+    <script type="module" src="../assets/js/auth.js"></script>
+    <script type="module" src="../assets/js/global.js"></script>
+  </body>
 </html>

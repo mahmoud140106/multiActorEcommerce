@@ -191,7 +191,7 @@ table th:hover {
   top: 0;
   right: 0;
   padding: 20px;
-  z-index: 1050;
+  z-index: 2050;
 }
 @media (max-width: 768px) {
   .table th,
