@@ -103,3 +103,4 @@ document.addEventListener("DOMContentLoaded", () => {
     animateCounter(counter, target, 2000);
   });
 });
+
