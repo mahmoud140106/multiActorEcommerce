@@ -21,6 +21,7 @@ function restrictAccess() {
       "/customer/productDetails.html",
       "/customer/profile.html",
       "/customer/checkout.html",
+      "/customer/wishlist.html"
     ],
     seller: [
       "/index.html",

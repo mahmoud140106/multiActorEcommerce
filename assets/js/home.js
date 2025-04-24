@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .slice(0, 8);
 
     console.log(products);
-    // let category=CategoryManager.getCategory(product.categoryId)
 
     products.forEach((product, index) => {
       const card = document.createElement("div");
@@ -29,8 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
              style="height: 300px; object-fit: cover;" 
              onerror="this.src='https://dummyimage.com/500x250/cccccc/000000&text=No+Image';">
       </a>
-      <div class="card-icons position-absolute top-0 end-0 p-2">
-        <button title="Add to Wishlist" class="btn btn-light btn-sm rounded-circle m-1"><i class="far fa-heart"></i></button>
+      <div id ="wishlist-html" class="card-icons position-absolute top-0 end-0 p-2">
+        <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${product.id}"><i class="far fa-heart"></i></button>
         <button title="Quick View" class="btn btn-light btn-sm rounded-circle m-1"><i class="far fa-eye"></i></button>
         <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1"><i class="fas fa-shopping-cart"></i></button>
       </div>
@@ -63,14 +62,136 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         </div>
         <span class="position-absolute top-50 start-50 translate-middle text-muted">|</span>
-        <button class="add-to-cart" onclick="addToCart(${
-          product.id
-        })">Add to cart</button>
+        <button class="add-to-cart" data-id="${product.id}">Add to cart</button>
       </div>
     </div>
   </div>
 `;
       featuredProductsContainer.appendChild(card);
+    });
+
+    // Add event listeners to "Add to Cart" buttons
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const productId = parseInt(button.getAttribute('data-id'));
+        const product = products.find(p => p.id === productId);
+        addToCart(product);
+      });
+    });
+
+    // Add event listeners to "Add to Wishlist" buttons
+  document.querySelectorAll('.add-to-wishlist').forEach(button => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const productId = parseInt(button.getAttribute('data-id'));
+      const product = products.find(p => p.id === productId);
+      if (product) {
+        addToWishlist(product);
+      }
+    });
+  });
+  }
+
+  // Function to add product to cart
+  function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Format the product data to match what cart.js expects
+    const cartItem = {
+      id: product.id,
+      name: product.name,
+      sku: product.sku || `SKU-${product.id}`, // Fallback if no SKU
+      price: product.discountedPrice || product.price,
+      image: product.images ? product.images[0] : product.image, // Handle both formats
+      quantity: 1
+    };
+    
+    // Check if product already exists in cart
+    const existingItemIndex = cart.findIndex(item => 
+      item.id === cartItem.id && item.sku === cartItem.sku && item.price === cartItem.price
+    );
+    
+    if (existingItemIndex !== -1) {
+      cart[existingItemIndex].quantity += 1;
+    } else {
+      cart.push(cartItem);
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // Show toast notification
+    showToast(`${cartItem.name} added to cart!`);
+  }
+  // Function to add product to wishlist
+  function addToWishlist(product) {
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    
+    const wishlistItem = {
+      id: product.id,
+      name: product.name,
+      sku: product.sku || `SKU-${product.id}`,
+      price: product.discountedPrice || product.price,
+      image: product.images ? product.images[0] : product.image,
+      quantity: 1
+    };
+    
+    // Check if product already exists in wishlist
+    const existingItemIndex = wishlist.findIndex(item => 
+      item.id === wishlistItem.id && item.sku === wishlistItem.sku && item.price === wishlistItem.price
+    );
+    
+    // Find the specific button that was clicked
+    const wishlistButton = event.currentTarget;
+    
+    if (existingItemIndex !== -1) {
+      // Remove from wishlist
+      wishlist.splice(existingItemIndex, 1);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      showToast(`${wishlistItem.name} removed from wishlist!`);
+      
+      // Update button appearance
+      wishlistButton.innerHTML = '<i class="far fa-heart"></i>';
+      wishlistButton.classList.remove('btn-clicked');
+      wishlistButton.classList.add('btn-light');
+    } else {
+      // Add to wishlist
+      wishlist.push(wishlistItem);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      showToast(`${wishlistItem.name} added to wishlist!`);
+      
+      // Update button appearance
+      wishlistButton.innerHTML = '<i class="fas fa-heart"></i>';
+      wishlistButton.classList.remove('btn-light');
+      wishlistButton.classList.add('btn-clicked');
+    }
+  }
+
+  // Function to show toast notifications
+  function showToast(message) {
+    const toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+      console.error('Toast container not found');
+      return;
+    }
+    
+    const toastId = `toast-${Date.now()}`;
+    const toastHTML = `
+      <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">OmniShop</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">${message}</div>
+      </div>
+    `;
+    toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+    
+    const toastElement = document.getElementById(toastId);
+    const toast = new bootstrap.Toast(toastElement, { delay: 2000 });
+    toast.show();
+    
+    toastElement.addEventListener('hidden.bs.toast', () => {
+      toastElement.remove();
     });
   }
 
@@ -78,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadFeaturedProducts();
 
   // Counter Animation
-
   function animateCounter(counter, target, duration) {
     let start = 0;
     const increment = target / (duration / 50);
@@ -103,4 +223,3 @@ document.addEventListener("DOMContentLoaded", () => {
     animateCounter(counter, target, 2000);
   });
 });
-

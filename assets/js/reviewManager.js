@@ -83,4 +83,61 @@ export class ReviewManager {
       }
     );
   }
+
+  static getAllReviews() {
+    return StorageManager.load("reviews") || [];
+  }
 }
+
+export function initializeDefaultReviews() {
+  const defaultReviews = [
+    new Review(
+      Date.now() + 1,
+      1,
+      2,
+      4,
+      "Really great product, very happy with the quality!",
+      new Date()
+    ),
+    new Review(
+      Date.now() + 2,
+      1,
+      3,
+      5,
+      "Amazing purchase, totally exceeded my expectations!",
+      new Date()
+    ),
+    new Review(
+      Date.now() + 3,
+      2,
+      4,
+      3,
+      "Decent product, but the delivery took too long.",
+      new Date()
+    ),
+    new Review(
+      Date.now() + 4,
+      2,
+      5,
+      4,
+      "This product is absolutely fantastic! The quality is top-notch, and it performs exactly as advertised. My only minor complaint is that the packaging could have been a bit more secure, but overall, I'm extremely satisfied with this purchase and would highly recommend it to others!",
+      new Date()
+    ),
+  ];
+
+  const existingReviews = StorageManager.load("reviews") || [];
+  if (existingReviews.length === 0) {
+    StorageManager.save("reviews", defaultReviews);
+
+    const productIds = [
+      ...new Set(defaultReviews.map((review) => review.productId)),
+    ];
+    productIds.forEach((productId) =>
+      ReviewManager.updateProductRating(productId)
+    );
+  }
+
+  return defaultReviews;
+}
+
+initializeDefaultReviews();
