@@ -59,30 +59,4 @@ a:hover{
   color: var(--primary-color);
 }
 
-.styled-slider {
-  -webkit-appearance: none;
-  width: 40%;
-  height: 6px;
-  background: linear-gradient(to right, #d49117 30%, #e0e0e0 30%);
-  border-radius: 5px;
-  outline: none;
-  margin-top: 10px;
-}
 
-.styled-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 14px;
-  width: 14px;
-  border-radius: 50%;
-  background: #d49117;
-  margin-top: -4px;
-  border: none;
-}
-
-.styled-slider::-moz-range-thumb {
-  height: 14px;
-  width: 14px;
-  border-radius: 50%;
-  background: #d49117;
-  border: none;
-}
