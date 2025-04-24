@@ -109,7 +109,11 @@ export function updateNavbar() {
       <li class="nav-item">
         <a class="nav-link hover-light loginsignup" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
       </li>
+      <li class="nav-item" id="searchIcon"><a class="nav-link hover-light" href="/customer/homeSearch.html"><i class="fa-solid fa-magnifying-glass fs-4"></i></a></li>
     `;
+
+
+
   }
 }
 
@@ -170,4 +174,8 @@ for (let i = 4; i < 8; i++) {
         </div>`;
   
 };
+
+
+
+
 

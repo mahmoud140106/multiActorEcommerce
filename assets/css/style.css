@@ -268,9 +268,6 @@ font-family: "Lato", sans-serif;
 }
 
 
-
-
-
 .cardItem:hover{
   .cardCaption{
     top: 50%
@@ -291,11 +288,9 @@ font-family: "Lato", sans-serif;
 }
 
 
-#categoriesSection .carousel-control-next, .carousel-control-prev {
+#categoriesSection .carousel-control-next,#categoriesSection .carousel-control-prev {
   top: 55%;
   bottom: 50%;
-  background-color: #6b7280;
-  color: white;
 }
 
 
@@ -305,9 +300,6 @@ font-family: "Lato", sans-serif;
 
 } 
 #categoriesSection .carousel-control-prev{
-
-  
-
 
    left:-4%;
 
@@ -383,7 +375,7 @@ background-size: cover;
 
 .saleSection{
   background-image:  
-    url("https://preview.free3d.com/img/2017/10/2704898788509615282/ne7e5w2n.jpg");;
+    url("https://mensclubcollection.com/cdn/shop/files/new-in-summer-25-web-cover_1950x.jpg?v=1744108517");;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
