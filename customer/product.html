@@ -1,0 +1,1062 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Page</title>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../assets/css/product.css" />
+  
+</head>
+<body>
+  <nav>
+    <div class="nav-left">NAV</div>
+    <div class="nav-right">
+      <button>Wishlist</button>
+      <!-- <button><i class="fa-solid fa-cart-shopping"></i</button> -->
+      <button>Cart</button>
+      <!-- <button><i class="fa-solid fa-heart"></i></button> -->
+    </div>
+  </nav>
+
+  <main class="container">
+ <button id="toggleSidebar">Categories</button>
+    <aside class="sidebar" id="">
+      <h3>Categories</h3>
+      <h4>Filter</h4>
+      <label><input type="checkbox" id="filterPrice"> price</label><br>
+      <label><input type="checkbox" id="filterBestSeller"> BestSeller</label>
+    </aside>
+
+    <section class="products" id="">
+      <div class="product-card" data-price="600" data-best-seller="false">
+        <div class="product-image" id="img1">
+          <img src="../assets/images/shopping12.jpg" alt="" style="width: 200px;">
+        </div>
+
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+          
+
+           
+
+          </ul>
+          <div class="price">
+            <del class="del">$800.00</del>
+
+            <span class="span">$600.00</span>
+          </div>
+
+          <h3>
+            <a href="#" class="card-title">Facial cleanser</a>
+          </h3>
+
+          <div class="card-rating">
+
+            <div class="rating-wrapper" aria-label="5 start rating">
+              <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+              <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+              <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+              <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+              <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            </div>
+
+            <p class="rating-text">5170 reviews</p>
+
+          </div>
+
+        </div>
+
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+      </div>
+
+      <div class="product-card" data-price="400" data-best-seller="true">
+        <div class="product-image" id="img2">
+          <img src="../assets/images/shopping17.jpg" alt="" style="width: 200px;">
+  </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <span class="span">$400.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Bio-shroom Rejuvenating Serum</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">5170 reviews</p>
+
+        </div>
+
+      </div>
+
+      </div>
+
+      <div class="product-card" data-price="200" data-best-seller="true">
+        <div class="product-image"  id="img3">
+          <img src="../assets/images/shopping13.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <span class="span">$200.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">4800 reviews</p>
+
+        </div>
+
+      </div>
+
+      </div>
+
+      <div class="product-card" data-price="700" data-best-seller="true">
+        <div class="product-image"  id="img4">
+          <img src="../assets/images/shopping6.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <span class="span">$700.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Facial cleanser</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">8170 reviews</p>
+
+        </div>
+
+      </div>
+
+      </div>
+
+      <div class="product-card" data-price="400" data-best-seller="true">
+        <div class="product-image" id="img5">
+          <img src="../assets/images/shopping16.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$600.00</del>
+
+          <span class="span">$400.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+
+          </div>
+
+          <p class="rating-text">9970 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="80" data-best-seller="true">
+        <div class="product-image" id="img6">
+          <img src="../assets/images/shopping14.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$100.00</del>
+
+          <span class="span">$80.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"style="color:rgb(255, 110, 97) ;"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star" style="color:rgb(255, 110, 97) ;"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">6470 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="300" data-best-seller="true" >
+        <div class="product-image" id="img7">
+          <img src="../assets/images/shopping8.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$500.00</del>
+
+          <span class="span">$300.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">3376 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="650" data-best-seller="true">
+        <div class="product-image" id="img8">
+          <img src="../assets/images/shopping8.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$700.00</del>
+
+          <span class="span">$650.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">6670 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="200" data-best-seller="true">
+        <div class="product-image" id="img9">
+          <img src="../assets/images/shopping4.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$300.00</del>
+
+          <span class="span">$200.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">8270 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="4000" data-best-seller="true">
+        <div class="product-image" id="img10">
+          <img src="../assets/images/shopping10.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$6000.00</del>
+
+          <span class="span">$4000.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star" style="color:rgb(255, 110, 97) ;"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star" style="color:rgb(255, 110, 97) ;"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">7100 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="200" data-best-seller="true">
+        <div class="product-image" id="img11">
+          <img src="../assets/images/shopping9.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$400.00</del>
+
+          <span class="span">$200.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">3350 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="1000" data-best-seller="true">
+        <div class="product-image" id="img12">
+          <img src="../assets/images/shopping2.webp" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$1500.00</del>
+
+          <span class="span">$1000.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">9100 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="200" data-best-seller="true">
+        <div class="product-image" id="img13">
+          <img src="../assets/images/shopping19.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$300.00</del>
+
+          <span class="span">$200.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">8190 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="150" data-best-seller="true">
+        <div class="product-image" id="img14">
+          <img src="../assets/images/shopping11.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$200.00</del>
+
+          <span class="span">$150.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">1700 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+      <div class="product-card" data-price="500" data-best-seller="true">
+        <div class="product-image" id="img15">
+          <img src="../assets/images/shopping13.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$800.00</del>
+
+          <span class="span">$500.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star-half-stroke"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">2170 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+
+
+      <div class="product-card" data-price="500" data-best-seller="true">
+        <div class="product-image" id="img16">
+          <img src="../assets/images/shopping16.jpg" alt="" style="width: 200px;">
+        </div>
+        <ul class="card-action-list">
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-1">
+                <ion-icon name="cart-outline"><i class="fa-solid fa-cart-shopping"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-1">Add to Cart</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-2">
+                <ion-icon class="heart-outline"><i class="fa-solid fa-heart"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-2">Add to Whishlist</div>
+            </li>
+
+            <li class="card-action-item">
+              <button class="card-action-btn" aria-labelledby="card-label-3">
+                <ion-icon class="eye-outline"><i class="fa-solid fa-eye"></i></ion-icon>
+              </button>
+
+              <div class="card-action-tooltip" id="card-label-3">Quick View</div>
+            </li>
+
+           
+
+          </ul>
+        <!-- <button class="wishlist-btn">♥</button> -->
+        <!-- <button class="cart-btn">Add to Cart</button> -->
+        <div class="price">
+          <del class="del">$600.00</del>
+
+          <span class="span">$500.00</span>
+        </div>
+
+        <h3>
+          <a href="#" class="card-title">Coffee Bean Caffeine Eye Cream</a>
+        </h3>
+
+        <div class="card-rating">
+
+          <div class="rating-wrapper" aria-label="5 start rating">
+            <ion-icon name="star" ><i class="fa-solid fa-star"></i></ion-icon>
+            <!-- <button class="star"><i class="fa-solid fa-star"></i></button> -->
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star"></i></ion-icon>
+            <ion-icon name="star" aria-hidden="true"><i class="fa-solid fa-star" style="color:rgb(255, 110, 97) ;"></i></ion-icon>
+          </div>
+
+          <p class="rating-text">5000 reviews</p>
+
+        </div>
+
+      </div>
+      </div>
+    </section>
+    <pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </pre>
+  </main>
+  <!-- <div id="quickViewModal" class="modal" style="opacity: 0;" > -->
+  <div id="quickViewModal" class="modal"  >
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <img src="images/shopping17.jpg" id="modalImage" alt="">
+      <h2 id="modalTitle">title: t-shirt</h2>
+      <p id="modelPrice">price:<br>200$</p>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+
+
