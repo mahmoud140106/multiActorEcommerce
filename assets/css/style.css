@@ -286,6 +286,31 @@ font-family: "Lato", sans-serif;
 
 #categoriesSection .carousel-control-prev-icon  , #categoriesSection .carousel-control-next-icon{
   transform: translateY(50%) ;
+  
+  
+}
+
+
+#categoriesSection .carousel-control-next, .carousel-control-prev {
+  top: 55%;
+  bottom: 50%;
+  background-color: #6b7280;
+  color: white;
+}
+
+
+#categoriesSection .carousel-control-next{
+
+ right:-4%;
+
+} 
+#categoriesSection .carousel-control-prev{
+
+  
+
+
+   left:-4%;
+
 }
 
 
@@ -357,15 +382,13 @@ background-size: cover;
 
 
 .saleSection{
-  background-image: linear-gradient(#2a7bb19c), 
-    url("https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2019/12/banner-03.jpg");;
+  background-image:  
+    url("https://preview.free3d.com/img/2017/10/2704898788509615282/ne7e5w2n.jpg");;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-blend-mode: overlay;
   
-
 }
 
 
