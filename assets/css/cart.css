@@ -1,39 +1,4 @@
-/* Cart Page Styles - Matching index.html theme */
-:root {
-    --primary-color: #eeb702e3; /* Primary color for buttons and highlights */
-    --secondary-color: #6b7280; /* Secondary color for text and borders */
-    --dark-color: #212529;
-    --light-color: #f8f9fa;
-}
 
-body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-/* Navbar styling to match index.html */
-.navbar {
-    padding: 1rem 0;
-    background-color: var(--dark-color) !important;
-}
-
-.navbar-brand {
-    font-size: 1.5rem;
-}
-
-.omnishop-logo {
-    font-weight: 600;
-    font-size: 1.5rem;
-}
-
-.nav-link {
-    font-weight: 500;
-}
-
-.nav-link.active {
-    font-weight: 600;
-}
 
 /* Cart Items */
 .cart-item {
@@ -105,25 +70,6 @@ body {
 /* Badges */
 .badge {
     font-size: 0.6rem;
-}
-
-/* Footer */
-footer {
-    background-color: var(--dark-color);
-}
-
-footer a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: rgb(206, 206, 206) !important;
-}
-
-.hover-light:hover {
-    color: #f8f9fa !important;
 }
 
 /* Modal styles to match index.html */
@@ -202,9 +148,4 @@ footer a:hover {
     font-size: 16px;
     border-radius: 4px;
     transition: all 0.3s ease;
-}
-
-/* Toast container from index.html */
-.toast-container {
-    z-index: 1060;
 }

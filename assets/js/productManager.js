@@ -1,10 +1,11 @@
 import { StorageManager } from "./storageManager.js";
+import { CategoryManager } from "./categoryManager.js";
 
 export class Product {
   constructor(
     id,
     name,
-    category,
+    categoryId,
     price,
     stock,
     images,
@@ -27,7 +28,7 @@ export class Product {
   ) {
     this.id = id;
     this.name = name;
-    this.category = category;
+    this.categoryId = categoryId;
     this.price = price;
     this.stock = stock;
     this.images = Array.isArray(images) ? images : [images];
@@ -48,13 +49,17 @@ export class Product {
     this.numReviews = numReviews;
     this.soldCount = soldCount;
   }
+
+  getCategory() {
+    return CategoryManager.getCategory(this.categoryId);
+  }
 }
 
 export class ProductManager {
   static createProduct(
     id,
     name,
-    category,
+    categoryId,
     price,
     stock,
     images,
@@ -64,7 +69,7 @@ export class ProductManager {
     const product = new Product(
       id,
       name,
-      category,
+      categoryId,
       price,
       stock,
       images,
@@ -84,7 +89,7 @@ export class ProductManager {
   static updateProduct(
     id,
     name,
-    category,
+    categoryId,
     price,
     stock,
     images,
@@ -97,7 +102,7 @@ export class ProductManager {
         ? new Product(
             id,
             name,
-            category,
+            categoryId,
             price,
             stock,
             images,
@@ -119,28 +124,34 @@ export class ProductManager {
     return StorageManager.load("products") || [];
   }
 
+  static getProductsByCategory(categoryId) {
+    const products = StorageManager.load("products") || [];
+    return products.filter((product) => product.categoryId === categoryId);
+  }
+
   static getProductsBySeller(sellerId) {
     const products = StorageManager.load("products") || [];
     return products.filter((product) => product.sellerId === sellerId);
   }
+
   static getAllProductsForAdmin() {
     return StorageManager.load("products") || [];
   }
 }
+
 function initializeDefaultProducts() {
   const sellerIds = {
-    admin: 1, // Admin
-    sellerOne: 2, // SellerOne
-    sellerTwo: 3, // SellerTwo
-    sellerThree: 4, // SellerThree
+    admin: 1,
+    sellerOne: 2,
+    sellerTwo: 3,
+    sellerThree: 4,
   };
 
   const defaultProducts = [
-    // SellerOne (id: 2)
     new Product(
       1,
       "Cotton T-Shirt",
-      "Shirts",
+      1,
       19.99,
       50,
       [
@@ -160,7 +171,7 @@ function initializeDefaultProducts() {
     new Product(
       2,
       "Wool Sweater",
-      "Sweaters",
+      6,
       49.99,
       25,
       [
@@ -177,10 +188,11 @@ function initializeDefaultProducts() {
         sizes: ["M", "L", "XL"],
       }
     ),
+
     new Product(
       3,
       "White Sneakers",
-      "Shoes",
+      5,
       59.99,
       30,
       [
@@ -199,7 +211,7 @@ function initializeDefaultProducts() {
     new Product(
       4,
       "Polo Shirt",
-      "Shirts",
+      1,
       29.99,
       40,
       [
@@ -216,11 +228,10 @@ function initializeDefaultProducts() {
         sizes: ["S", "M", "L"],
       }
     ),
-    // SellerTwo (id: 3)
     new Product(
       5,
       "Denim Jacket",
-      "Jackets",
+      3,
       69.99,
       20,
       [
@@ -240,7 +251,7 @@ function initializeDefaultProducts() {
     new Product(
       6,
       "Black Slim Jeans",
-      "Jeans",
+      2,
       39.99,
       40,
       [
@@ -259,7 +270,7 @@ function initializeDefaultProducts() {
     new Product(
       7,
       "Floral Skirt",
-      "Skirts",
+      4,
       24.99,
       35,
       [
@@ -275,139 +286,19 @@ function initializeDefaultProducts() {
         sizes: ["S", "M", "L"],
       }
     ),
-    // SellerThree (id: 4)
     new Product(
       8,
-      "Running Shoes",
-      "Shoes",
-      69.99,
-      25,
-      [
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-        "https://images.pexels.com/photos/2529147/pexels-photo-2529147.jpeg?auto=compress&cs=tinysrgb&w=600",
-      ],
-      sellerIds.sellerThree,
+      "White shirt",
+      1,
+      24.99,
+      35,
+      ["/assets/images/shopping7.jpg", "/assets/images/shopping6.jpg"],
+      sellerIds.sellerTwo,
       {
-        description: "High-performance running shoes for athletes.",
-        brand: "SpeedStep",
-        colors: ["Black", "Red"],
-        sizes: ["39", "40", "41", "42"],
-      }
-    ),
-    new Product(
-      9,
-      "Hiking Boots",
-      "Shoes",
-      89.99,
-      15,
-      [
-        "https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/01/product-image-21-600x600.webp",
-        "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=600",
-      ],
-      sellerIds.sellerThree,
-      {
-        description: "Durable hiking boots for outdoor adventures.",
+        description: "Chic floral skirt for summer outings.",
         isFeatured: true,
-        brand: "TrailBlazer",
-        colors: ["Brown", "Black"],
-        sizes: ["40", "41", "42"],
-      }
-    ),
-    new Product(
-      10,
-      "Canvas Sneakers",
-      "Shoes",
-      49.99,
-      25,
-      [
-        "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-        "https://images.pexels.com/photos/1240892/pexels-photo-1240892.jpeg?auto=compress&cs=tinysrgb&w=600",
-      ],
-      sellerIds.sellerThree,
-      {
-        description: "Casual canvas sneakers for everyday wear.",
-        isFeatured: true,
-        brand: "EasyStep",
-        colors: ["White", "Blue"],
-        sizes: ["38", "39", "40"],
-      }
-    ),
-    new Product(
-      11,
-      "A-Line Skirt",
-      "Skirts",
-      34.99,
-      25,
-      [
-        "https://images.pexels.com/photos/1631181/pexels-photo-1631181.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      ],
-      sellerIds.sellerThree,
-      {
-        description: "Elegant A-line skirt for versatile styling.",
-        discount: 0.15,
-        isFeatured: true,
-        brand: "ChicStyle",
-        colors: ["Black", "Red"],
-        sizes: ["S", "M", "L"],
-      }
-    ),
-    // Admin (id: 1)
-    new Product(
-      12,
-      "Leather Jacket",
-      "Jackets",
-      99.99,
-      15,
-      [
-        "https://images.pexels.com/photos/1124465/pexels-photo-1124465.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.unsplash.com/photo-1514989940723-e8e51635b782?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      ],
-      sellerIds.admin,
-      {
-        description: "Premium leather jacket for a bold look.",
-        discount: 0.1,
-        isFeatured: true,
-        brand: "BoldWear",
-        colors: ["Black", "Brown"],
-        sizes: ["M", "L", "XL"],
-      }
-    ),
-    new Product(
-      13,
-      "Chino Pants",
-      "Jeans",
-      44.99,
-      30,
-      [
-        "https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      ],
-      sellerIds.admin,
-      {
-        description: "Comfortable chino pants for casual or formal wear.",
-        isFeatured: false,
-        brand: "SmartFit",
-        colors: ["Beige", "Navy"],
-        sizes: ["30", "32", "34"],
-      }
-    ),
-    new Product(
-      14,
-      "Knit Cardigan",
-      "Sweaters",
-      54.99,
-      20,
-      [
-        "https://images.pexels.com/photos/7679725/pexels-photo-7679725.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.unsplash.com/photo-1604176354204-9268737828e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      ],
-      sellerIds.admin,
-      {
-        description: "Cozy knit cardigan for cooler days.",
-        isFeatured: false,
-        brand: "WarmKnit",
-        colors: ["Green", "Cream"],
+        brand: "SummerVibe",
+        colors: ["Multicolor"],
         sizes: ["S", "M", "L"],
       }
     ),

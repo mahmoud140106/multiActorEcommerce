@@ -1,3 +1,4 @@
+import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -22,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Set product details
     document.getElementById("productId").value = product.id;
     document.getElementById("productName").textContent = product.name || "Unknown Product";
-    document.getElementById("category").textContent = `Category: ${product.category || "N/A"}`;
+    document.getElementById("category").textContent = `Category: ${CategoryManager.getCategory(product.categoryId).name || "N/A"}`;
     document.getElementById("price").textContent = product.discountedPrice
       ? `$${product.discountedPrice.toFixed(2)}`
       : `$${product.price.toFixed(2)}`;

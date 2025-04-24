@@ -1,6 +1,7 @@
 import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
 import { UserManager } from "./userManager.js";
+import { CategoryManager } from "./categoryManager.js";
 import { showToast } from "./toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -58,18 +59,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const paginatedProducts = filteredProducts.slice(start, end);
 
     paginatedProducts.forEach((product) => {
+      const category = CategoryManager.getCategory(product.categoryId);
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>...${product.id % 1000}</td>
         ${isAdmin ? `<td>${UserManager.getUserNameById(product.sellerId) || "Unknown"}</td>` : ""}
         <td class="d-none d-md-table-cell"><img src="${
           product.images[0] ||
-          "https://dummyimage.com/50x50/cccccc/ Booking.com 000000&text=No+Img"
+          "https://dummyimage.com/50x50/cccccc/000000&text=No+Img"
         }" alt="${product.name}" 
         onerror="this.onerror=null; this.src='https://dummyimage.com/50x50/cccccc/000000&text=No+Img';" 
         style="height: 50px; width: 50px;"></td>
         <td>${product.name}</td>
-        <td>${product.category}</td>
+        <td>${category ? category.name : "Unknown"}</td>
         <td class="d-none d-md-table-cell">$${product.price.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">$${product.discount.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">${product.stock}</td>
@@ -139,6 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (column === "sellerId") {
         valA = UserManager.getUserNameById(a.sellerId) || "";
         valB = UserManager.getUserNameById(b.sellerId) || "";
+      } else if (column === "categoryId") {
+        const catA = CategoryManager.getCategory(a.categoryId);
+        const catB = CategoryManager.getCategory(b.categoryId);
+        valA = catA ? catA.name : "";
+        valB = catB ? catB.name : "";
       }
 
       if (typeof valA === "string") {
@@ -165,13 +172,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const products = isAdmin
       ? ProductManager.getAllProductsForAdmin()
       : ProductManager.getProductsBySeller(currentUser.id);
-    filteredProducts = products.filter(
-      (p) =>
+    filteredProducts = products.filter((p) => {
+      const category = CategoryManager.getCategory(p.categoryId);
+      return (
         p.name.toLowerCase().includes(query) ||
-        p.category.toLowerCase().includes(query) ||
+        (category && category.name.toLowerCase().includes(query)) ||
         (isAdmin &&
           UserManager.getUserNameById(p.sellerId)?.toLowerCase().includes(query))
-    );
+      );
+    });
     currentPage = 1;
     renderProductsTable();
   };
@@ -263,6 +272,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function populateCategorySelect() {
+    const categorySelect = document.getElementById("productCategory");
+    if (!categorySelect) return;
+    categorySelect.innerHTML = `<option value="" disabled selected>Select category</option>`;
+    const categories = CategoryManager.getAllCategories();
+    categories.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.textContent = category.name;
+      categorySelect.appendChild(option);
+    });
+  }
+
   document.getElementById("productForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const id = parseInt(document.getElementById("productId").value);
@@ -277,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     handleImageUpload(files, urlInput, (imagePaths) => {
       const name = document.getElementById("productName").value;
-      const category = document.getElementById("productCategory").value;
+      const categoryId = parseInt(document.getElementById("productCategory").value);
       const price = parseFloat(document.getElementById("productPrice").value);
       const discount = parseFloat(
         document.getElementById("productDiscount").value
@@ -294,8 +316,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      if (isNaN(price) || isNaN(stock)) {
-        showToast("Please enter valid price and stock.", "error");
+      if (isNaN(price) || isNaN(stock) || isNaN(categoryId)) {
+        showToast("Please enter valid price, stock, and category.", "error");
         return;
       }
 
@@ -304,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
         : ProductManager.getProduct(id)?.images || [];
 
       if (!isNaN(id) && ProductManager.getProduct(id)) {
-        ProductManager.updateProduct(id, name, category, price, stock, images, sellerId, {
+        ProductManager.updateProduct(id, name, categoryId, price, stock, images, sellerId, {
           discount,
         });
         showToast("Product updated successfully", "success");
@@ -313,7 +335,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ProductManager.createProduct(
           newId,
           name,
-          category,
+          categoryId,
           price,
           stock,
           images,
@@ -321,7 +343,6 @@ document.addEventListener("DOMContentLoaded", () => {
           { discount }
         );
         showToast("Product added successfully", "success");
-        // new bootstrap.Modal(document.getElementById("productModal")).hide();
       }
 
       filteredProducts = isAdmin
@@ -331,7 +352,6 @@ document.addEventListener("DOMContentLoaded", () => {
       bootstrap.Modal.getInstance(
         document.getElementById("productModal")
       ).hide();
-      // window.location.reload();
 
       document.getElementById("productName").value = "";
       document.getElementById("productCategory").value = "";
@@ -375,8 +395,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       populateSellerSelect();
     }
+    populateCategorySelect();
     renderImagePreview([], []);
-    // new bootstrap.Modal(document.getElementById("productModal")).show();
   };
 
   window.openEditProductModal = (id) => {
@@ -389,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("productModalLabel").textContent = "Edit Product";
     document.getElementById("productId").value = product.id;
     document.getElementById("productName").value = product.name;
-    document.getElementById("productCategory").value = product.category;
+    document.getElementById("productCategory").value = product.categoryId;
     document.getElementById("productPrice").value = product.price;
     document.getElementById("productDiscount").value = product.discount;
     document.getElementById("productStock").value = product.stock;
@@ -401,6 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sellerIdInput.value = product.sellerId;
       }
     }
+    populateCategorySelect();
     renderImagePreview(null, product.images || []);
     new bootstrap.Modal(document.getElementById("productModal")).show();
   };
