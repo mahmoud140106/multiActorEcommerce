@@ -1,5 +1,5 @@
-// assets/js/home.js
 import { ProductManager } from "./productManager.js";
+import { CategoryManager } from "./categoryManager.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const featuredProductsContainer = document.getElementById("featuredProducts");
@@ -10,10 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     products = products
       .filter((product) => product.isFeatured)
-      .sort(() => 0.5 - Math.random());
-    // .slice(0, 4);
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 8);
 
     console.log(products);
+    // let category=CategoryManager.getCategory(product.categoryId)
+
     products.forEach((product, index) => {
       const card = document.createElement("div");
       card.className = "col";
@@ -28,9 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
              onerror="this.src='https://dummyimage.com/500x250/cccccc/000000&text=No+Image';">
       </a>
       <div class="card-icons position-absolute top-0 end-0 p-2">
-        <button class="btn btn-light btn-sm rounded-circle m-1"><i class="far fa-heart"></i></button>
-        <button class="btn btn-light btn-sm rounded-circle m-1"><i class="far fa-eye"></i></button>
-        <button class="btn btn-light btn-sm rounded-circle m-1"><i class="fas fa-shopping-cart"></i></button>
+        <button title="Add to Wishlist" class="btn btn-light btn-sm rounded-circle m-1"><i class="far fa-heart"></i></button>
+        <button title="Quick View" class="btn btn-light btn-sm rounded-circle m-1"><i class="far fa-eye"></i></button>
+        <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1"><i class="fas fa-shopping-cart"></i></button>
       </div>
       ${
         product.isOnSale
@@ -39,12 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     </div>
     <div class="card-body p-0 my-3 text-center">
-      <a href="productDetails.html?id=${
+      <a href="/customer/productDetails.html?id=${
         product.id
       }" class="text-decoration-none">
         <h5 class="card-title mb-1">${product.name}</h5>
       </a>
-      <p class="card-text text-secondary mb-2">${product.category}</p>
+      <p class="card-text text-secondary mb-2">${CategoryManager.getCategory(product.categoryId).name}</p>
       <div class="p-3 border-top position-relative border-1 d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center">
           <span class="">$${

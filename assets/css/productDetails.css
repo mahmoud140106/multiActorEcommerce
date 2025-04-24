@@ -1,10 +1,60 @@
+:root {
+  --primary-color: #eeb702e3; /* Primary color for buttons and highlights */
+  --secondary-color: #6b7280; /* Secondary color for text and borders */
+  --dark-color: #212529;
+  --light-color: #f8f9fa;
+}
 
-.imglabel img {
+/*images*/
+#carouselImages img:hover {
+  scale:1.1 ;
+  transition: all 0.3s;
+}
+
+#carouselThumbnails img:hover {
+  opacity: 0.9;
   border: 2px solid transparent;
   transition: border 0.3s;
   cursor: pointer;
 }
+.imglabel img.active-thumbnail{
+  border: 3px solid black;
+  scale:1.1 ;
+  transition: all 0.3s;
+}
+/* Buttons */
+.btn {
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
 
-.imglabel img:hover {
+.btn-dark {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-dark:hover {
   opacity: 0.9;
+}
+
+.btn-dark:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.heroBtn {
+  width: fit-content;
+}
+
+/* Inputs */
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.25);
+}
+/*anchor tags*/
+a{
+  color: var(--dark-color);
+}
+a:hover{
+  color: var(--primary-color);
 }

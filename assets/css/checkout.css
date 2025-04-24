@@ -1,0 +1,82 @@
+:root {
+    --primary-color: #eeb702e3; /* Primary color for buttons and highlights */
+    --secondary-color: #6b7280; /* Secondary color for text and borders */
+    --dark-color: #212529;
+    --light-color: #f8f9fa;
+}
+
+
+body {
+    background-color: white;
+}
+.checkout-summary {
+    background-color: lightgray;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* position: absolute;
+    height: 20hv; */
+    
+}
+.product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+#sameAddressDiv, #differentAddressDiv ,button{
+    height: 50px;
+}
+
+/* Buttons */
+.btn {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-dark {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-dark:hover {
+    opacity: 0.9;
+}
+
+.btn-dark:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.heroBtn {
+    width: fit-content;
+}
+
+/* Inputs */
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.25);
+}
+#summaryImgDiv{
+    width:150px;
+}
+#summaryImgDiv:hover{
+cursor:pointer;
+scale:1.1;
+}
+a{
+    color: var(--dark-color);
+}
+a:hover{
+    color: var(--primary-color);
+}
+@media all and (min-width: 800px) {
+    .checkout-summary {
+       
+        height: 100vh; 
+        overflow-y: auto;
+        position:fixed ;
+    }
+    
+    
+}
