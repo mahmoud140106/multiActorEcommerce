@@ -11,7 +11,7 @@ export class Review {
     this.createdAt = createdAt;
   }
 }
-
+ 
 export class ReviewManager {
   static addReview(productId, userId, rating, comment) {
     if (rating < 1 || rating > 5) {
