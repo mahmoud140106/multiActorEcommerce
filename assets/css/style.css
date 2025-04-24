@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-
-:root {
+     
+:root {  
   --primary-color: #f1c121;
   --secondary-color: #6b7280;
   --gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
@@ -204,3 +204,181 @@ table th:hover {
   color: #f8f9fa !important;
   transition: color 0.3s ease;
 }
+
+
+#infiniteCarouselSlides div{
+  width: 25%;
+}
+
+
+
+
+
+
+
+
+/* body style */
+body,h1{
+  
+
+font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.bg-black{
+  background-color: black;
+}
+
+
+#hero-section{
+  margin-top: 0px !important;
+}
+
+
+
+
+
+
+/* categories section style  */
+
+
+
+#categoriesSection{
+  width: 90%;
+}
+
+
+.cardItem{
+  width: 22% ;
+  padding: 0;
+}
+
+
+.cardCaption{
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 1s;
+}
+
+
+.cardDetails{
+  opacity: 0 ;
+}
+
+
+
+
+
+.cardItem:hover{
+  .cardCaption{
+    top: 50%
+
+  }
+
+  .cardDetails{
+  opacity: 1 ;
+}
+
+}
+
+
+#categoriesSection .carousel-control-prev-icon  , #categoriesSection .carousel-control-next-icon{
+  transform: translateY(50%) ;
+}
+
+
+
+
+
+
+
+/* carouselSlides after header style */
+
+
+@keyframes CarouselSlideOfHeader{
+
+  0%{
+
+    transform: translateX(0%);
+
+  }
+
+  100%{
+
+    transform: translateX(-100%);
+
+  }
+
+}
+
+
+.carouselSlideContent {
+  animation-name:CarouselSlideOfHeader;
+  animation-duration: 15s ;
+  animation-iteration-count: infinite;
+}
+
+
+#carouselSlidesOnly{
+  background-color: black;
+}
+
+#carouselSlidesOnly .textStroke{
+  text-shadow: -1px -1px 0 white, 
+                       1px -1px 0 whitesmoke, 
+                      -1px 1px 0 whitesmoke, 
+                       1px 1px 0 whitesmoke;
+
+}
+
+
+
+
+
+
+
+
+/* Reviews section style  */
+
+#ReviewSection{
+background-image: url('https://themewagon.github.io/Bookly/images/banner-image-bg.jpg');
+background-position: center;
+background-size: cover;
+}
+
+
+
+
+
+/* sale section style  */
+
+
+
+.saleSection{
+  background-image: linear-gradient(#2a7bb19c), 
+    url("https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2019/12/banner-03.jpg");;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

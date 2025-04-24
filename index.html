@@ -14,13 +14,24 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
+
+    <!-- google font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet">
+
+
+
     <!-- Custom CSS -->
     <link href="assets/css/style.css" rel="stylesheet" />
     <link href="assets/css/home.css" rel="stylesheet" />
   </head>
-  <body>
+  <body class="overflow-x-hidden">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black py-2 mb-0">
       <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="/index.html">
           <i class="fas fa-shopping-bag me-2"></i>
@@ -174,17 +185,17 @@
     </nav>
 
     <!-- Hero Section (only for unauthenticated users or customers on homepage) -->
-    <section class="row container-fluid mx-auto mt-0 mt-md-4" id="hero-section">
+    <section class="row  container-fluid mx-auto mt-0 mt-md-4 bg-light" id="hero-section">
       <div class="w-40 ms-auto">
-        <h1 class="mb-5 fw-bolder maincaption">
+        <h1 class="mb-5 fw-bolder maincaption text-black">
           Discover Quality Products for Every Need
         </h1>
-        <p class="lead text-muted fs-4 herocaption">
+        <p class="lead text-muted fs-4 herocaption text-black">
           Browse our wide range of products designed to enhance your lifestyle.
         </p>
         <div class="row justify-content-start gap-3 container-fluid">
           <button
-            class="w-30 btn btn-dark p-3 my-4"
+            class="w-30 btn btn-outline-light btn-dark border-black p-3 my-4"
             style="min-width: max-content;"
           >
             Shop now
@@ -224,11 +235,354 @@
       <div class="w-40 me-auto d-none d-md-block">
         <img
           class="w-100"
-          src="https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+          src="https://mensclubcollection.com/cdn/shop/files/0E9A5556copy_540x.jpg?v=1745338947"
           alt="Kids Collection"
         />
       </div>
     </section>
+
+
+
+    <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" data-bs-interval="100">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="./assets/images/amex.png" class="d-block w-25" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./assets/images/banner.jpg" class="d-block w-25" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./assets/images/shopping16.jpg" class="d-block w-25" alt="...">
+        </div>
+      </div>
+    </div> -->
+
+
+
+<!-- carouselSlides after header  -->
+    <section class="mt-2">
+      <div id="carouselSlidesOnly"  >
+        <div class="carouselSlideContent ">
+          
+          <div class="d-flex ">
+            <div class=" w-25 text-center">
+              <span class="text-light fs-1 ">MOFASA</span>
+              <span class="textStroke  fs-1 ">:)2025</span>
+            </div>
+            <div class=" w-25 text-center">
+              <span class="text-light fs-1 ">MOFASA</span>
+              <span class="textStroke  fs-1 ">:)2025</span>
+            </div>
+            <div class=" w-25 text-center">
+              <span class="text-light fs-1 ">MOFASA</span>
+              <span class=" textStroke  fs-1 ">:)2025</span>
+            </div>
+            <div class=" w-25 text-center">
+              <span class="text-light fs-1 ">MOFASA</span>
+              <span class=" textStroke fs-1 ">:)2025</span>
+            </div>
+
+            
+            </div>
+            </div>
+        
+          </div>
+
+
+
+         
+           
+    
+    </section>
+    
+
+
+
+
+
+    <!-- categories section -->
+
+    <section class="container-fluid vh-100 d-flex align-items-center " >
+    <div id="categoriesSection" class="carousel slide m-auto">
+      <div class="d-flex justify-content-between px-4 my-4  ">
+        <h2>Categories</h2>
+        <button class="btn btn-light p-2 border-1 border-dark">View All</button>
+      </div>
+
+
+      <div class="carousel-inner ">
+
+
+        <div class="carousel-item active">
+          <div class="row justify-content-evenly   ">
+            <div class="card  cardItem  cardItem       position-relative ">
+              <img src="https://mensclubcollection.com/cdn/shop/files/R6A5512_1024x1024.jpg?v=1744805191" class="rounded w-100" alt="...">
+          
+              <div class="cardCaption position-absolute text-center">
+                <h5 class="imgcontainer text-light">COAT</h5>
+                <div class="cardDetails text-light ">
+                  <p class="text-light ">0 product</p>
+                  <button class=" btn p-3 btn-light ">View</button>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="card  cardItem p-0   position-relative  ">
+              <img
+                src="https://mensclubcollection.com/cdn/shop/files/R6A5402_be820f66-61e2-4265-be0d-d839feafa8bf_1024x1024.jpg?v=1744804914"
+                class="rounded w-100" alt="...">
+          
+              <div class="cardCaption position-absolute text-center">
+                <h5 class="imgcontainer text-light">BLAZER</h5>
+                <div class="cardDetails text-light">
+                  <p class="text-light ">0 product</p>
+                  <button class=" btn p-3 btn-light ">View</button>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="card  cardItem p-0  position-relative  ">
+              <img src="https://mensclubcollection.com/cdn/shop/files/R6A7424_1024x1024.jpg?v=1745338796" class=" rounded w-100" alt="...">
+          
+              <div class="cardCaption position-absolute text-center">
+                <h5 class="imgcontainer text-light">ALL DENIM</h5>
+                <div class="cardDetails text-light">
+                  <p class="text-light ">0 product</p>
+                  <button class=" btn p-3 btn-light ">View</button>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="card  cardItem p-0  position-relative  ">
+              <img src="https://mensclubcollection.com/cdn/shop/files/0E9A5090copy_1024x1024.jpg?v=1745338897" class="rounded w-100 "
+                alt="...">
+          
+              <div class="cardCaption position-absolute text-center">
+                <h5 class="imgcontainer text-light">Shirt</h5>
+                <div class="cardDetails text-light">
+                  <p class="text-light ">0 product</p>
+                  <button class=" btn p-3 btn-light ">View</button>
+                </div>
+              </div>
+            </div>
+          
+          
+          
+          </div>
+        </div>
+
+
+        <div class="carousel-item ">
+          <div class="row justify-content-evenly">
+            <div class="card  cardItem  position-relative ">
+              <img src="https://mensclubcollection.com/cdn/shop/files/UntitledSession20403copy_1024x1024.jpg?v=1745338851" class="rounded" alt="...">
+          
+              <div class="cardCaption position-absolute text-center">
+                <h5 class="imgcontainer text-light">JACKET</h5>
+                <div class="cardDetails text-light ">
+                  <p class="text-light ">0 product</p>
+                  <button class=" btn p-3 btn-light ">View</button>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="card  cardItem   position-relative  ">
+              <img
+                src="https://mensclubcollection.com/cdn/shop/files/Untitled_Session20653_copy._234610f2-9566-415f-895a-1b196eb202ad.jpg?v=1745338571&width=1066"
+                class="rounded" alt="...">
+          
+              <div class="cardCaption position-absolute text-center">
+                <h5 class="imgcontainer text-light">SWEAT SHIRT</h5>
+                <div class="cardDetails text-light">
+                  <p class="text-light ">0 product</p>
+                  <button class=" btn p-3 btn-light ">View</button>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="card  cardItem  position-relative  ">
+              <img src="https://mensclubcollection.com/cdn/shop/files/0E9A6303_1024x1024.jpg?v=1745339197" class=" rounded" alt="...">
+          
+              <div class="cardCaption position-absolute text-center">
+                <h5 class="imgcontainer text-light">HOODIE</h5>
+                <div class="cardDetails text-light">
+                  <p class="text-light ">0 product</p>
+                  <button class=" btn p-3 btn-light ">View</button>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="card  cardItem  position-relative  ">
+              <img src="https://mensclubcollection.com/cdn/shop/files/DSC07258.jpg?v=1745338765&width=1066" class="rounded "
+                alt="...">
+          
+              <div class="cardCaption position-absolute text-center">
+                <h5 class="imgcontainer text-light">CASUAL VEST</h5>
+                <div class="cardDetails text-light">
+                  <p class="text-light ">0 product</p>
+                  <button class=" btn p-3 btn-light ">View</button>
+                </div>
+              </div>
+            </div>
+          
+          
+          
+          </div>
+        </div>
+
+        
+      </div>
+
+   
+
+
+      <button class="carousel-control-prev " type="button" data-bs-target="#categoriesSection" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon rounded-5  bg-dark " aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next " type="button" data-bs-target="#categoriesSection" data-bs-slide="next">
+        <span class="carousel-control-next-icon rounded-5  bg-dark " aria-hidden="true"></span>
+        <span class="visually-hidden ">Next</span>
+      </button>
+    </div>
+
+
+
+
+    </section>
+
+
+
+   
+
+<!-- Sale Section -->
+
+
+    <section id="saleSection"  >
+
+
+      
+        <div class="container d-flex   align-items-center container-fluid vh-100 saleSection ">
+          <div class="d-flex flex-column   w-50 text-light p-5 ">
+            <span class="p-3 fs-5">Limited Time Offer</span>
+            <h2 class="text-light p-3 fs-1 ">Special Edition</h2>
+            <p class="p-3 lead text-light">SALE UP TO 70% OFF FOR ALL CLOTHES & FASHION ITEMS, ON ALL BRANDS.</p>
+            <p class="p-3 fs-5">Buy This T-shirt At 20% Discount, Use Code OFF20</p>
+            <button class="btn d-inline border border-3 w-25 btn-outline-light fs-5 ms-3">Shop Now</button>
+          </div>
+        </div>
+
+     
+        
+    </section>
+
+
+
+    <!-- Reviews section  -->
+    
+    <section  class="p-0 d-flex align-items-center   container   vh-100  bg-light ">
+
+      <div class=" text-center w-100 p-5" id="ReviewSection">
+        
+          <p class="headingStyle">TESTIMONAIL</p>
+          <p class="h3 text-black">Hear From Our Happy Customers</p>
+          <p class="h5 text-black">Share some details here. This is Flexible section where you can share anything you want.</p>
+        
+          <div id="carouselReview" class="carousel slide  m-auto p-5  d-flex justify-content-center">
+            <div class="carousel-inner carouselReviews text-center    d-flex justify-content-center ">
+              <div class="carousel-item active  p-5 w-50 border border-3 m-auto bg-light ">
+                <span><i class="fa-solid fa-star text-warning"></i> <i class="fa-solid fa-star text-warning"></i> <i
+                    class="fa-solid fa-star text-warning"></i> <i class="fa-solid fa-star text-warning"></i> <i
+                    class="fa-solid fa-star text-warning"></i></span>
+                <p class="my-3 lead ">I recently used Florist for my daughter's wedding, and I couldn't have been happier with
+                  the results. The wedding
+                  florals were breathtaking, and the team went above and beyond to bring.</p>
+                <div class="d-flex justify-content-center">
+                  <img class="rounded-circle"
+                    src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01.jpg"
+                    alt="">
+                  <div class="ms-3">
+                    <span>Steve Smith</span><br>
+                    <span class="lead">Wedding Planner</span>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="carousel-item   p-5 w-50 border border-3  m-auto bg-light ">
+                <span><i class="fa-solid fa-star text-warning"></i> <i class="fa-solid fa-star text-warning"></i> <i
+                    class="fa-solid fa-star text-warning"></i> <i class="fa-solid fa-star text-warning"></i> <i
+                    class="fa-solid fa-star text-warning"></i></span>
+                <p class="my-3 lead ">I've been a loyal customer of Florist for years, and they never cease to amaze me. The
+                  flowers are always fresh, the
+                  arrangements are stunning, and the service is top-notch.</p>
+                <div class="d-flex justify-content-center">
+                  <img class="rounded-circle"
+                    src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01-1.jpg"
+                    alt="">
+                  <div class="ms-3">
+                    <span>Wade Warren </span><br>
+                    <span class="lead">Designer </span>
+                  </div>
+        
+                </div>
+              </div>
+        
+              <div class="carousel-item   p-5 w-50 border border-3 m-auto bg-light">
+                <span><i class="fa-solid fa-star text-warning"></i> <i class="fa-solid fa-star text-warning"></i> <i
+                    class="fa-solid fa-star text-warning"></i> <i class="fa-solid fa-star text-warning"></i> <i
+                    class="fa-solid fa-star"></i></span>
+                <p class="my-3 lead ">HI , absolutely incredible experience! The attention to detail and personalized service
+                  made our Maldives trip
+                  unforgettable. Highly recommend!</p>
+                <div class="d-flex justify-content-center">
+                  <img class="rounded-circle"
+                    src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-02-1.jpg"
+                    alt="">
+                  <div class="ms-3">
+                    <span>Mila Kunis</span><br>
+                    <span class="lead">Business Owner</span>
+                  </div>
+                </div>
+        
+              </div>
+        
+        
+        
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselReview" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselReview" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+
+      </div>
+
+      
+    </section>
+
+
+
+
+
+
+
+
+  
+
+
+
+
     <main>
       <!-- Hero Banner (Carousel)
       <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -514,6 +868,5 @@
     <script type="module" src="./assets/js/auth.js"></script>
     <script type="module" src="./assets/js/global.js"></script>
     <script type="module" src="./assets/js/home.js"></script>
-    <!-- test -->
   </body>
 </html>
