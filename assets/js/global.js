@@ -15,6 +15,7 @@ function restrictAccess() {
     customer: [
       "/index.html",
       "/customer/catalog.html",
+      "/customer/categories.html",
       "/customer/cart.html",
       "/customer/productDetails.html",
       "/customer/profile.html",
@@ -31,6 +32,7 @@ function restrictAccess() {
       "/index.html",
       "/customer/catalog.html",
       "/customer/productDetails.html",
+      "/customer/categories.html",
     ],
   };
 
