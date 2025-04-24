@@ -4,6 +4,9 @@
   --dark-color: #212529;
   --light-color: #f8f9fa;
 }
+strong{
+  color: var(--primary-color);
+}
 
 /*images*/
 #carouselImages img:hover {
@@ -58,3 +61,20 @@ a{
 a:hover{
   color: var(--primary-color);
 }
+
+.styled-slider {
+  appearance: none;
+  width: 48%;
+  height: 6px;
+  /* background: linear-gradient(to right, #d49117 70%, #e0e0e0 30%); */
+  border-radius: 5px;
+  outline: none;
+  margin-top: 10px;
+}
+
+.styled-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  
+}
+
+
