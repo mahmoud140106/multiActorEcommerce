@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Cart - OmniShop</title>
-    <!-- Bootstrap CSS (Local File) -->
+    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -228,167 +228,15 @@
     <div class="container my-5">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="fw-bold mb-0">Your Shopping Cart</h1>
-        <span class="text-muted">2 items</span>
+        <span class="text-muted" id="cart-item-count">0 items</span>
       </div>
 
       <div class="row g-4">
         <!-- Cart Items -->
         <div class="col-lg-8">
           <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-            <div class="card-body p-0">
-              <!-- Cart Item 1 -->
-              <div class="row g-0 align-items-center p-4 cart-item">
-                <div class="col-md-2">
-                  <img
-                    src="../assets/images/shopping11.jpg"
-                    alt="T-Shirt"
-                    class="img-fluid rounded-3"
-                  />
-                </div>
-                <div class="col-md-6 ps-4">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Premium Cotton T-Shirt</h5>
-                      <p class="text-muted small mb-2">SKU: OS-TS-001</p>
-                    </div>
-                    <button class="btn btn-sm btn-link text-danger p-0">
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </div>
-                  <div class="d-flex flex-wrap gap-3 mb-2">
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Size:</span>
-                      <div class="dropdown">
-                        <button
-                          class="btn btn-sm btn-outline-secondary dropdown-toggle py-0 px-2"
-                          type="button"
-                          data-bs-toggle="dropdown"
-                        >
-                          M
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">XS</a></li>
-                          <li><a class="dropdown-item" href="#">S</a></li>
-                          <li><a class="dropdown-item" href="#">M</a></li>
-                          <li><a class="dropdown-item" href="#">L</a></li>
-                          <li><a class="dropdown-item" href="#">XL</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Color:</span>
-                      <div class="color-option bg-white border selected"></div>
-                      <div class="color-option bg-dark"></div>
-                      <div class="color-option bg-danger"></div>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <div class="input-group input-group-sm w-auto">
-                      <button
-                        class="btn btn-outline-secondary border-end-0 rounded-start"
-                      >
-                        -
-                      </button>
-                      <input
-                        type="text"
-                        class="form-control text-center border-left-0 border-right-0"
-                        value="2"
-                        style="width: 40px;"
-                      />
-                      <button
-                        class="btn btn-outline-secondary border-start-0 rounded-end"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <span class="ms-3 fw-semibold">$29.99</span>
-                  </div>
-                </div>
-                <div class="col-md-4 text-end">
-                  <h4 class="fw-bold">$59.98</h4>
-                  <span class="text-success small fw-semibold"
-                    ><i class="fas fa-check-circle me-1"></i> In Stock</span
-                  >
-                </div>
-              </div>
-
-              <div class="divider"></div>
-
-              <!-- Cart Item 2 -->
-              <div class="row g-0 align-items-center p-4 cart-item">
-                <div class="col-md-2">
-                  <img
-                    src="../assets/images/shopping12.jpg"
-                    alt="Jeans"
-                    class="img-fluid rounded-3"
-                  />
-                </div>
-                <div class="col-md-6 ps-4">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Slim Fit Stretch Jeans</h5>
-                      <p class="text-muted small mb-2">SKU: OS-JN-045</p>
-                    </div>
-                    <button class="btn btn-sm btn-link text-danger p-0">
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </div>
-                  <div class="d-flex flex-wrap gap-3 mb-2">
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Size:</span>
-                      <div class="dropdown">
-                        <button
-                          class="btn btn-sm btn-outline-secondary dropdown-toggle py-0 px-2"
-                          type="button"
-                          data-bs-toggle="dropdown"
-                        >
-                          32
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">28</a></li>
-                          <li><a class="dropdown-item" href="#">30</a></li>
-                          <li><a class="dropdown-item" href="#">32</a></li>
-                          <li><a class="dropdown-item" href="#">34</a></li>
-                          <li><a class="dropdown-item" href="#">36</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Color:</span>
-                      <div class="color-option bg-primary"></div>
-                      <div class="color-option bg-dark selected"></div>
-                      <div class="color-option bg-secondary"></div>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <div class="input-group input-group-sm w-auto">
-                      <button
-                        class="btn btn-outline-secondary border-end-0 rounded-start"
-                      >
-                        -
-                      </button>
-                      <input
-                        type="text"
-                        class="form-control text-center border-left-0 border-right-0"
-                        value="1"
-                        style="width: 40px;"
-                      />
-                      <button
-                        class="btn btn-outline-secondary border-start-0 rounded-end"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <span class="ms-3 fw-semibold">$49.99</span>
-                  </div>
-                </div>
-                <div class="col-md-4 text-end">
-                  <h4 class="fw-bold">$49.99</h4>
-                  <span class="text-success small fw-semibold"
-                    ><i class="fas fa-check-circle me-1"></i> In Stock</span
-                  >
-                </div>
-              </div>
+            <div class="card-body p-0" id="cart-items">
+              <!-- Cart items will be populated dynamically -->
             </div>
           </div>
 
@@ -399,9 +247,9 @@
             >
               <i class="fas fa-arrow-left me-2"></i>Continue Shopping
             </a>
-            <button class="btn btn-danger rounded-pill px-4">
+            <button class="btn btn-danger rounded-pill px-4" id="clear-cart">
               <i class="fas fa-trash-alt me-2"></i>Clear Cart
-          </button>
+            </button>
           </div>
 
           <!-- Wishlist Peek Section -->
@@ -416,8 +264,7 @@
             </div>
 
             <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-              <div class="card-body p-0">
-                <!-- Wishlist Item 1 -->
+              <div class="card-body p-0" id="wishlist-items">
                 <div class="row g-0 align-items-center p-3 cart-item">
                   <div class="col-md-2">
                     <img
@@ -458,7 +305,6 @@
 
                 <div class="divider"></div>
 
-                <!-- Wishlist Item 2 -->
                 <div class="row g-0 align-items-center p-3 cart-item">
                   <div class="col-md-2">
                     <img
@@ -499,7 +345,6 @@
 
                 <div class="divider"></div>
 
-                <!-- Wishlist Item 3 -->
                 <div class="row g-0 align-items-center p-3 cart-item">
                   <div class="col-md-2">
                     <img
@@ -549,16 +394,16 @@
               <h5 class="card-title fw-semibold mb-4">Order Summary</h5>
 
               <div class="d-flex justify-content-between mb-2">
-                <span class="text-muted">Subtotal (2 items)</span>
-                <span>$109.97</span>
+                <span class="text-muted" id="subtotal-label">Subtotal (0 items)</span>
+                <span id="subtotal">$0.00</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span class="text-muted">Shipping</span>
-                <span>$5.99</span>
+                <span id="shipping">$5.99</span>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span class="text-muted">Tax</span>
-                <span>$6.94</span>
+                <span id="tax">$0.00</span>
               </div>
 
               <div class="input-group mt-4 mb-3">
@@ -566,13 +411,14 @@
                   type="text"
                   class="form-control"
                   placeholder="Promo code"
+                  id="promo-code"
                 />
-                <button class="btn btn-dark" type="button">Apply</button>
+                <button class="btn btn-dark" type="button" id="apply-promo">Apply</button>
               </div>
 
-              <div class="alert alert-success py-2 small mb-4" role="alert">
+              <div class="alert alert-success py-2 small mb-4 d-none" role="alert" id="promo-alert">
                 <i class="fas fa-check-circle me-2"></i> You saved
-                <strong>$10.00</strong> with promo code
+                <strong id="promo-savings">$0.00</strong> with promo code
               </div>
 
               <hr />
@@ -580,15 +426,15 @@
               <div class="d-flex justify-content-between mb-4">
                 <strong>Total</strong>
                 <div>
-                  <span class="text-decoration-line-through text-muted me-2"
-                    >$122.90</span
+                  <span class="text-decoration-line-through text-muted me-2 d-none" id="original-total"
+                    >$0.00</span
                   >
-                  <span class="fw-bold fs-5">$112.90</span>
+                  <span class="fw-bold fs-5" id="final-total">$0.00</span>
                 </div>
               </div>
 
               <button
-              onclick="window.location.href='checkout.html'"
+                onclick="window.location.href='checkout.html'"
                 class="btn btn-dark rounded-pill w-100 py-3 fw-semibold mb-3"
               >
                 Checkout
@@ -629,7 +475,6 @@
     <footer class="bg-dark text-light pt-5 pb-0">
       <div class="container">
         <div class="row gy-4">
-          <!-- About Section -->
           <div class="col-md-3 col-12">
             <h5 class="mb-3">About Us</h5>
             <ul class="list-unstyled">
@@ -663,7 +508,6 @@
               </li>
             </ul>
           </div>
-          <!-- Contact Us Section -->
           <div class="col-md-3 col-12">
             <h5 class="mb-3">Contact Us</h5>
             <ul class="list-unstyled">
@@ -678,15 +522,10 @@
                 >
               </li>
               <li>
-                <a
-                  href="mailto:info@email.com"
-                  class="text-secondary text-decoration-none hover-light"
-                  >info@email.com</a
-                >
+                <a href="mailto:support@omnishop.com" class="text-secondary text-decoration-none hover-light">support@omnishop.com</a>
               </li>
             </ul>
           </div>
-          <!-- Quick Links Section -->
           <div class="col-md-3 col-12">
             <h5 class="mb-3">Quick Links</h5>
             <ul class="list-unstyled">
@@ -720,7 +559,6 @@
               </li>
             </ul>
           </div>
-          <!-- Social Media Section -->
           <div class="col-md-3 col-12">
             <h5 class="mb-3">Follow Us</h5>
             <div class="d-flex gap-3">
@@ -739,7 +577,6 @@
             </div>
           </div>
         </div>
-        <!-- Copyright Section -->
         <div class="row mt-3 py-3 border-top border-1">
           <div class="col-12 text-center">
             <p class="text-secondary mb-0">
@@ -750,17 +587,11 @@
       </div>
     </footer>
 
-    <!-- Bootstrap JS (Local File) -->
-    <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-
     <script type="module" src="../assets/js/auth.js"></script>
     <script type="module" src="../assets/js/global.js"></script>
-
-    <!-- problem with linking previous files makes it stuck on home page 
-        I guess its because of protected URL
-        with this comment it doesn't show the nav links-->
-
     <script type="module" src="../assets/js/cart.js"></script>
   </body>
 </html>
