@@ -1,10 +1,10 @@
 import { ProductManager } from "./productManager.js";
-
+let productId;
 document.addEventListener("DOMContentLoaded", () => {
   console.log("product details.js loaded");
   try {
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = parseInt(urlParams.get("id"));
+     productId = parseInt(urlParams.get("id"));
 
     if (isNaN(productId)) {
       console.error("Invalid product ID:", urlParams.get("id"));
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Error loading product details:", error);
     document.querySelector(".container.mt-4").innerHTML = "<p>Error loading product details.</p>";
   }
-});
+});  //end of load 
 
 
 document.getElementById('reviewsBtn').addEventListener('click', showReviews); //show reviews section
@@ -123,4 +123,9 @@ function addReview(){
   document.getElementById('nameInput').value = '';  
   document.getElementById('emailInput').value = '';
   document.getElementById('reviewInput').value = '';
+}
+
+document.getElementById("buyItNow").addEventListener("click", redirectToChechout); // Redirect to checkout page when "Buy It Now" is clicked
+function redirectToChechout(){
+  window.location.href = "checkout.html?id=" + productId; // Redirect to checkout page with product ID
 }

@@ -27,7 +27,7 @@
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet" href="../assets/css/checkout.css" />
-    <script src="../assets/js/checkout.js"></script>
+    <script type="module" src="../assets/js/checkout.js"></script>
   </head>
   <body>
     <!-- Navbar -->
@@ -396,31 +396,29 @@
         <!-- Right side -->
         <div class="col-12 col-lg-5 checkout-summary end-0">
           <div>
-            <div class="d-flex align-items-center mb-3">
-              <img
-                src="https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/01/product-image-15-600x600.webp"
-                alt="Product"
-                class="product-image me-3"
-              />
-              <div>
-                <p class="mb-0">Aqua Degrade Slim Fit Shirt</p>
-                <small class="text-muted">AQUA / S / SHIRTS</small>
+            <div class="d-flex align-items-center mb-3 " >
+              <div id="summaryImgDiv" class="me-2">
+               
               </div>
-              <span class="ms-auto fw-bold">£895.00</span>
+              <div>
+                <p class="mb-0" id="productName"></p>
+                <small class="text-muted" id="Productdetails"></small>
+              </div>
+              <span class="ms-auto fw-bold Subtotal" ></span>
             </div>
             <hr />
             <div class="d-flex justify-content-between">
               <span>Subtotal</span>
-              <span>£895.00</span>
+              <span class="Subtotal"></span>
             </div>
             <div class="d-flex justify-content-between">
               <span>Shipping</span>
-              <span>£90.00</span>
+              <span>$90.00</span>
             </div>
             <hr />
             <div class="d-flex justify-content-between fw-bold">
               <span>Total</span>
-              <span>EGP £985.00</span>
+              <span id="totalPrice"></span>
             </div>
           </div>
         </div>
