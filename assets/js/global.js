@@ -3,7 +3,7 @@ import { StorageManager } from "./storageManager.js";
 
 (function initializeDefaultAdmin() {
   UserManager.initializeDefaultAdmin();
-})();
+})();    
 
 // Protect routes
 function restrictAccess() {
