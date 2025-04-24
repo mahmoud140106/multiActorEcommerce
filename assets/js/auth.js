@@ -56,13 +56,18 @@ function signup(userName, email, password, role) {
     document.getElementById("signup-email").value = "";
     document.getElementById("signup-password").value = "";
     document.querySelector('input[name="role"][value="customer"]').checked = true;
+    openLoginModal(email);
   } catch (error) {
     showToast(error.message, "error");
   }
 }
 
-window.openLoginModal = () => {
-  new bootstrap.Modal(document.getElementById("loginModal")).show();
+window.openLoginModal = (email = "") => {
+  const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
+  if (email) {
+    document.getElementById("login-email").value = email;
+  }
+  loginModal.show();
 };
 
 window.openSignupModal = () => {
