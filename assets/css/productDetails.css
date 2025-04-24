@@ -77,4 +77,21 @@ a:hover{
   
 }
 
+/* Stars Rating */
+
+
+.star {
+  /* font-size: 2em; */
+  color: gray;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.star:hover,
+.star.selected ,
+.starRating
+{
+  color: gold;
+}
+
 
