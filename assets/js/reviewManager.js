@@ -96,7 +96,7 @@ export function initializeDefaultReviews() {
       1,
       2,
       4,
-      "Really great product, very happy with the quality!",
+      "I recently used Florist for my daughter's wedding, and I couldn't have been happier with the results. The wedding florals were breathtaking, and the team went above and beyond to bring.",
       new Date()
     ),
     new Review(
@@ -104,7 +104,7 @@ export function initializeDefaultReviews() {
       1,
       3,
       5,
-      "Amazing purchase, totally exceeded my expectations!",
+      "I've been a loyal customer of Florist for years, and they never cease to amaze me. The flowers are always fresh, the arrangements are stunning, and the service is top-notch.",
       new Date()
     ),
     new Review(
@@ -112,17 +112,9 @@ export function initializeDefaultReviews() {
       2,
       4,
       3,
-      "Decent product, but the delivery took too long.",
+      "HI , absolutely incredible experience! The attention to detail and personalized service made our Maldives trip unforgettable. Highly recommend!",
       new Date()
-    ),
-    new Review(
-      Date.now() + 4,
-      2,
-      5,
-      4,
-      "This product is absolutely fantastic! The quality is top-notch, and it performs exactly as advertised. My only minor complaint is that the packaging could have been a bit more secure, but overall, I'm extremely satisfied with this purchase and would highly recommend it to others!",
-      new Date()
-    ),
+    )
   ];
 
   const existingReviews = StorageManager.load("reviews") || [];

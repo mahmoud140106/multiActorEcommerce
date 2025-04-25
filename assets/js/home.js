@@ -222,4 +222,51 @@ document.addEventListener("DOMContentLoaded", () => {
     const target = parseInt(counter.getAttribute("data-target"));
     animateCounter(counter, target, 2000);
   });
+
+
+
+
+  //Dynamic categories in home page 
+
+let categories = CategoryManager.getAllCategories();
+let categoriesActiveSlide = document.getElementById("activeSlide");
+let categoriesNextSlide = document.getElementById("nextSlide");
+
+for (let i = 0; i < 4; i++) {
+
+  categoriesActiveSlide.innerHTML +=
+    `<div class="card  cardItem p-0  position-relative  ">
+          <img src="${categories[i].image}" class="rounded w-100 " alt="...">
+    
+          <div class="cardCaption position-absolute text-center">
+            <h5 class="imgContainer text-light">${categories[i].name}</h5>
+            <div class="cardDetails text-light">
+              <p class="text-light ">0 product</p>
+              <button class=" btn p-3 btn-light ">View</button>
+            </div>
+          </div>
+        </div>`; 
+};
+
+
+for (let i = 4; i < 8; i++) {
+
+  categoriesNextSlide.innerHTML += ` <div class="card  cardItem  position-relative ">
+          <img src="${categories[i].image}" class="rounded" alt="...">
+    
+          <div class="cardCaption position-absolute text-center">
+            <h5 class="imgContainer text-light">${categories[i].name}</h5>
+            <div class="cardDetails text-light ">
+              <p class="text-light ">0 product</p>
+              <button class=" btn p-3 btn-light ">View</button>
+            </div>
+          </div>
+        </div>`;
+  
+};
 });
+
+
+
+
+//Dynamic reviews in home page
