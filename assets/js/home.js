@@ -1,6 +1,7 @@
 import { ProductManager } from "./productManager.js";
 import { CategoryManager } from "./categoryManager.js";
-import {ReviewManager } from "./reviewManager.js"
+import { ReviewManager } from "./reviewManager.js"
+import { UserManager} from "./userManager.js"
 
 document.addEventListener("DOMContentLoaded", () => {
   const featuredProductsContainer = document.getElementById("featuredProducts");
@@ -227,13 +228,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  //Dynamic categories in home page 
+//Dynamic categories in home page 
 
 let categories = CategoryManager.getAllCategories();
 let categoriesActiveSlide = document.getElementById("activeSlide");
 let categoriesNextSlide = document.getElementById("nextSlide");
 
+  
 for (let i = 0; i < 4; i++) {
+
+  let categoryId = categories[i].id;
+
+  let productsOfCategory = ProductManager.getProductsByCategory(categoryId);
+ 
+  
+  
+ 
+  
 
   categoriesActiveSlide.innerHTML +=
     `<div class="card  cardItem p-0  position-relative  ">
@@ -242,7 +253,7 @@ for (let i = 0; i < 4; i++) {
           <div class="cardCaption position-absolute text-center">
             <h5 class="imgContainer text-light">${categories[i].name}</h5>
             <div class="cardDetails text-light">
-              <p class="text-light ">0 product</p>
+              <p class="text-light ">${productsOfCategory.length} product</p>
               <button class=" btn p-3 btn-light ">View</button>
             </div>
           </div>
@@ -252,13 +263,21 @@ for (let i = 0; i < 4; i++) {
 
 for (let i = 4; i < 8; i++) {
 
+
+  let productId = categories[i].id;
+
+  let productsOfCategory = ProductManager.getProductsByCategory(productId);
+
+
+  
+
   categoriesNextSlide.innerHTML += ` <div class="card  cardItem  position-relative ">
           <img src="${categories[i].image}" class="rounded" alt="...">
     
           <div class="cardCaption position-absolute text-center">
             <h5 class="imgContainer text-light">${categories[i].name}</h5>
             <div class="cardDetails text-light ">
-              <p class="text-light ">0 product</p>
+              <p class="text-light ">${productsOfCategory.length} product</p>
               <button class=" btn p-3 btn-light ">View</button>
             </div>
           </div>
@@ -266,6 +285,9 @@ for (let i = 4; i < 8; i++) {
   
 };
 });
+
+
+
 
 
 
@@ -281,6 +303,9 @@ carouselAllReviews.innerHTML += `<div id="activeCarouselItem" class="carousel-it
 let activeCarouselItem = document.getElementById('activeCarouselItem');
 let carouselItems = document.getElementsByClassName('carouselItems');
 
+
+
+
 for (let index = 0; index < 5; index++) {
   if (index < reviews[0].rating) {
     
@@ -294,6 +319,12 @@ for (let index = 0; index < 5; index++) {
 };
 
 
+let activeReviewUserId = reviews[0].userId;
+let activeReviewUserName= UserManager.getUserNameById(activeReviewUserId);
+
+
+
+
 activeCarouselItem.innerHTML += `
                 <p class="my-3 lead ">${reviews[0].comment}</p>
                 <div class="d-flex justify-content-center">
@@ -301,7 +332,7 @@ activeCarouselItem.innerHTML += `
                     src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01.jpg"
                     alt="">
                   <div class="ms-3">
-                    <span>Steve Smith</span><br>
+                    <span>${activeReviewUserName}</span><br>
                     <span class="lead">Wedding Planner</span>
                   </div>
                 </div>
@@ -309,7 +340,10 @@ activeCarouselItem.innerHTML += `
 
 
 
- for (let i = 1; i < reviews.length; i++) {
+for (let i = 1; i < reviews.length; i++) {
+   
+  let reviewUserId = reviews[i].userId;
+  let reviewUserName= UserManager.getUserNameById(reviewUserId);
 
  carouselAllReviews.innerHTML += ` <div  class="carousel-item  carouselItems p-5 w-50 border border-3  m-auto bg-light "></div>`;
    for (let index = 0; index < 5; index++) {
@@ -332,7 +366,7 @@ carouselItems[i-1].innerHTML += `<p class="my-3 lead ">${reviews[i].comment}</p>
                     src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01-1.jpg"
                     alt="">
                   <div class="ms-3">
-                    <span>Wade Warren </span><br>
+                    <span>${reviewUserName} </span><br>
                     <span class="lead">Designer </span>
                   </div>
         
