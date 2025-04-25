@@ -1,5 +1,6 @@
 import { ProductManager } from "./productManager.js";
 import { CategoryManager } from "./categoryManager.js";
+import {ReviewManager } from "./reviewManager.js"
 
 document.addEventListener("DOMContentLoaded", () => {
   const featuredProductsContainer = document.getElementById("featuredProducts");
@@ -222,4 +223,136 @@ document.addEventListener("DOMContentLoaded", () => {
     const target = parseInt(counter.getAttribute("data-target"));
     animateCounter(counter, target, 2000);
   });
+
+
+
+
+  //Dynamic categories in home page 
+
+let categories = CategoryManager.getAllCategories();
+let categoriesActiveSlide = document.getElementById("activeSlide");
+let categoriesNextSlide = document.getElementById("nextSlide");
+
+for (let i = 0; i < 4; i++) {
+
+  categoriesActiveSlide.innerHTML +=
+    `<div class="card  cardItem p-0  position-relative  ">
+          <img src="${categories[i].image}" class="rounded w-100 " alt="...">
+    
+          <div class="cardCaption position-absolute text-center">
+            <h5 class="imgContainer text-light">${categories[i].name}</h5>
+            <div class="cardDetails text-light">
+              <p class="text-light ">0 product</p>
+              <button class=" btn p-3 btn-light ">View</button>
+            </div>
+          </div>
+        </div>`; 
+};
+
+
+for (let i = 4; i < 8; i++) {
+
+  categoriesNextSlide.innerHTML += ` <div class="card  cardItem  position-relative ">
+          <img src="${categories[i].image}" class="rounded" alt="...">
+    
+          <div class="cardCaption position-absolute text-center">
+            <h5 class="imgContainer text-light">${categories[i].name}</h5>
+            <div class="cardDetails text-light ">
+              <p class="text-light ">0 product</p>
+              <button class=" btn p-3 btn-light ">View</button>
+            </div>
+          </div>
+        </div>`;
+  
+};
 });
+
+
+
+
+//Dynamic reviews in home page
+
+let reviews = ReviewManager.getAllReviews();
+
+let carouselAllReviews = document.getElementById("carouselAllReviews");
+
+carouselAllReviews.innerHTML += `<div id="activeCarouselItem" class="carousel-item active  p-5 w-50 border border-3 m-auto bg-light "></div>`;
+
+let activeCarouselItem = document.getElementById('activeCarouselItem');
+let carouselItems = document.getElementsByClassName('carouselItems');
+
+for (let index = 0; index < 5; index++) {
+  if (index < reviews[0].rating) {
+    
+    activeCarouselItem.innerHTML += `<span> <i class="fa-solid fa-star text-warning"></i></span>`
+  }
+  else {
+    activeCarouselItem.innerHTML += `<span> <i class="fa-solid fa-star "></i></span>`
+
+  }
+  
+};
+
+
+activeCarouselItem.innerHTML += `
+                <p class="my-3 lead ">${reviews[0].comment}</p>
+                <div class="d-flex justify-content-center">
+                  <img class="rounded-circle"
+                    src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01.jpg"
+                    alt="">
+                  <div class="ms-3">
+                    <span>Steve Smith</span><br>
+                    <span class="lead">Wedding Planner</span>
+                  </div>
+                </div>
+              `;
+
+
+
+ for (let i = 1; i < reviews.length; i++) {
+
+ carouselAllReviews.innerHTML += ` <div  class="carousel-item  carouselItems p-5 w-50 border border-3  m-auto bg-light "></div>`;
+   for (let index = 0; index < 5; index++) {
+   
+     if (index < reviews[i].rating) {
+    
+        carouselItems[i-1].innerHTML +=`<span> <i class="fa-solid fa-star text-warning"></i></span>`
+  }
+  else {
+        carouselItems[i-1].innerHTML +=`<span> <i class="fa-solid fa-star"></i></span>`
+
+  }
+
+   
+};
+
+carouselItems[i-1].innerHTML += `<p class="my-3 lead ">${reviews[i].comment}</p>
+                <div class="d-flex justify-content-center">
+                  <img class="rounded-circle"
+                    src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01-1.jpg"
+                    alt="">
+                  <div class="ms-3">
+                    <span>Wade Warren </span><br>
+                    <span class="lead">Designer </span>
+                  </div>
+        
+                </div>`;
+
+  
+}
+
+   
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
