@@ -56,10 +56,8 @@ body {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.25);
 }
-#summaryImgDiv{
-    width:150px;
-}
-#summaryImgDiv:hover{
+
+.summaryImg:hover{
 cursor:pointer;
 scale:1.1;
 }
