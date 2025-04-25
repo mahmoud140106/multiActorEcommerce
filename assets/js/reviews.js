@@ -1,9 +1,10 @@
 import { ReviewManager } from "./reviewManager.js";
 import { StorageManager } from "./storageManager.js";
-let reviewsList;
+
 window.addEventListener('load', () =>{
 let productId = new URLSearchParams(window.location.search).get('id'); // Get product ID from URL
-getreviews(productId); // Get reviews for the product
+let user = StorageManager.load("currentUser"); // Get current user from storage
+getreviews(productId,user.userName); // Get reviews for the product
 removeHighlight(); // Remove highlight from stars
 
 }); //end of load
@@ -11,54 +12,58 @@ removeHighlight(); // Remove highlight from stars
 
 
 //get reviews for the product
-function getreviews(productId){
+function getreviews(productId,userName){
 
-  reviewsList= document.getElementById("reviewsList");
-  document.getElementById("reviewsList").textContent = ""; // Clear previous reviews
- let reviews = ReviewManager.getReviewsByProduct(productId); // Get reviews for the product
- if (reviews.length == 0) {
-    
-     reviewsList.textContent = "No reviews available for this product yet." ;
-     return;
-   }
-
-  //  reviews.forEach((review,index) => {
-    // Carousel item
-  //   const carouselItem = document.createElement("div");
-  //   carouselItem.className = `carousel-item ${index === 0 ? "active" : ""}`;
-  //   carouselItem.innerHTML = `
-    
-  //                 <div class="carousel-item active  p-5 col-lg-12 border border-3 m-auto bg-light " 
-  //                  style="width: 400px; position: relative;right: 200px;">
-                          
-  //                         <p class="my-3 lead "> </p>
-  //                         <div class="d-flex justify-content-center">
-                           
-  //                           <div class="ms-3">
-  //                             <span></span><br>
-  //                             <span class="lead"></span>
-  //                           </div>
-  //                         </div>
-  //                   </div>
-
-
-
-    
-  //   `;
-  //   reviewsList.appendChild(carouselItem);
-  // });
-
- reviews.forEach(review=>{
-     reviewsList.innerHTML += `
-     <div class="review-item">
-        
-         <li>${review.comment} ${review.rating}  <i class="fa-solid fa-star starRating " ></i>
-         </li>
-      </div>
-     
-     `
   
- })
+ let reviews = ReviewManager.getReviewsByProduct(productId); // Get reviews for the product
+
+ // Render carousel images dynamically
+ const carouselReviews = document.getElementById("carouselReviews");
+//  carouselReviews.innerHTML = "";
+
+ if (!reviews || reviews.length  === 0) {
+  console.warn("No reviews found for product:", productId);
+  carouselReviews.innerHTML = `
+    <div class="carousel-item active">
+    <p> "No reviews available for this product yet."</p>
+    </div>
+  `;
+} 
+else{
+ reviews.forEach((review, index) => {
+  // Carousel item
+  const carouselItem = document.createElement("div");
+  carouselItem.className = `carousel-item ${index === 0 ? "active" : ""}`;
+
+  let divReviewItem = document.createElement("div");
+  divReviewItem.className = "review-item";
+  let ratingStarsSpan = document.createElement("span");
+
+  for (let i = 0; i < review.rating; i++) {
+    let star = document.createElement("i");
+    star.className = "fa-solid fa-star starRating"; // Create star element
+    ratingStarsSpan.appendChild(star); // Append star to the span
+  }
+  let reviewComment = document.createElement("p");
+  reviewComment.textContent = review.comment; // Set review comment
+
+  let reviewUser = document.createElement("strong");
+  reviewUser.textContent = userName; // Set review user name
+
+
+divReviewItem.appendChild(ratingStarsSpan); // Append stars to review item
+divReviewItem.appendChild(reviewComment); // Append review comment to review item
+divReviewItem.appendChild(reviewUser); // Append review user name to review item
+
+  carouselItem.appendChild(divReviewItem); // Append review item to carousel item
+  carouselReviews.appendChild(carouselItem); // Append carousel item to carousel reviews
+     
+  
+ });
+}
+
+
+
  
 
 }
@@ -71,6 +76,7 @@ document.getElementById('submitBtn').addEventListener('click', addReview);
 function addReview(){              
     let user = StorageManager.load("currentUser"); // Get current user from storage
     let ratingValue = document.querySelectorAll('.star.selected').length; // Get selected rating value
+    console.log(ratingValue);
     if(user==null){
       location.href = "/index.html"; // Redirect to login page if user is not logged in
       alert("Please login to add a review.");
@@ -78,12 +84,9 @@ function addReview(){
     }
     let reviewComment= document.getElementById('reviewInput').value ;
     ReviewManager.addReview(productId.value,user.id,ratingValue,reviewComment); // Add review to storage
-    getreviews(productId.value); // Refresh reviews list
+    getreviews(productId.value,user.userName); // Refresh reviews list
   
 
- 
-
-  
   document.getElementById('reviewInput').value = '';
 }
 
@@ -103,7 +106,6 @@ stars.forEach(star => {
 
   star.addEventListener('click', () => {
     setRating(star.getAttribute('data-value'));
-    // addReview(star.getAttribute('data-value'));
   });
 });
 
