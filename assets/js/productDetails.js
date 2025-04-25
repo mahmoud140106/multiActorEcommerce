@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("price").textContent = product.discountedPrice
       ? `$${product.discountedPrice.toFixed(2)}`
       : `$${product.price.toFixed(2)}`;
-    document.getElementById("sizes").textContent = product.sizes?.length
-      ? product.sizes.join(", ")
-      : "N/A";
+    // document.getElementById("sizes").textContent = product.sizes?.length
+    //   ? product.sizes.join(", ")
+    //   : "N/A";
       // document.getElementById("sku").textContent = product.sku || "N/A";
     document.getElementById("descriptionSection").innerHTML += `<br/> ${product.description}
     
