@@ -3,8 +3,8 @@ import { StorageManager } from "./storageManager.js";
 
 window.addEventListener('load', () =>{
 let productId = new URLSearchParams(window.location.search).get('id'); // Get product ID from URL
-let user = StorageManager.load("currentUser"); // Get current user from storage
-getreviews(productId,user.userName); // Get reviews for the product
+
+getreviews(productId); // Get reviews for the product
 removeHighlight(); // Remove highlight from stars
 
 }); //end of load
@@ -12,11 +12,11 @@ removeHighlight(); // Remove highlight from stars
 
 
 //get reviews for the product
-function getreviews(productId,userName){
+function getreviews(productId){
 
   
  let reviews = ReviewManager.getReviewsByProduct(productId); // Get reviews for the product
-
+  console.log(reviews)
  // Render carousel images dynamically
  const carouselReviews = document.getElementById("carouselReviews");
 //  carouselReviews.innerHTML = "";
@@ -48,8 +48,9 @@ else{
   reviewComment.textContent = review.comment; // Set review comment
 
   let reviewUser = document.createElement("strong");
-  reviewUser.textContent = userName; // Set review user name
-
+ let userId= review.userId;
+ let user = StorageManager.load("users").find(user => user.id === userId); // Find user by ID
+  reviewUser.textContent = user ? user.userName : "Unknown User"; // Set review user name
 
 divReviewItem.appendChild(ratingStarsSpan); // Append stars to review item
 divReviewItem.appendChild(reviewComment); // Append review comment to review item
@@ -76,7 +77,6 @@ document.getElementById('submitBtn').addEventListener('click', addReview);
 function addReview(){              
     let user = StorageManager.load("currentUser"); // Get current user from storage
     let ratingValue = document.querySelectorAll('.star.selected').length; // Get selected rating value
-    console.log(ratingValue);
     if(user==null){
       location.href = "/index.html"; // Redirect to login page if user is not logged in
       alert("Please login to add a review.");
@@ -84,7 +84,7 @@ function addReview(){
     }
     let reviewComment= document.getElementById('reviewInput').value ;
     ReviewManager.addReview(productId.value,user.id,ratingValue,reviewComment); // Add review to storage
-    getreviews(productId.value,user.userName); // Refresh reviews list
+    getreviews(productId.value); // Refresh reviews list
   
 
   document.getElementById('reviewInput').value = '';
