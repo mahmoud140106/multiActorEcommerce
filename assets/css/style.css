@@ -387,12 +387,53 @@ background-size: cover;
 
 
 
+/* Search Style Modal in Home */
 
 
 
+#SearchHomeModal .modal-dialog {
+ max-width: 100%;
+ max-height: 100vh;
+  margin:0;
+}
+
+#SearchHomeModal .modal{
+  max-height: 100vh;
+}
+
+#SearchHomeModal .modal-content {
+    border-radius: 0px;
+    border: 0;
+}
+
+
+#SearchHomeModal .btn-close{
+  position: absolute;
+  right: 1%;
+  top: 2vh !important;
+
+}
 
 
 
+#closeButton{
+    top: 5vh !important;
+    right: 3% ;
+}
+
+
+#searchInput::placeholder{
+  color: black;
+}
+
+#searchInput{
+  border: none;
+  border-bottom: 2px solid black ;
+}
+
+#searchInput:focus{
+  border: 0;
+}
 
 
 

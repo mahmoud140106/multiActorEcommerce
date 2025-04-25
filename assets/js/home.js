@@ -341,6 +341,12 @@ carouselItems[i-1].innerHTML += `<p class="my-3 lead ">${reviews[i].comment}</p>
   
 }
 
+
+
+
+
+
+
    
               
 

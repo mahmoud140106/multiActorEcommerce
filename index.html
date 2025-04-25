@@ -344,7 +344,22 @@
 
 
 
+    <!-- Featured Products -->
+    <section class="container mt-5">
+      <div class="d-flex justify-content-center justify-content-md-between align-items-center gap-2 mx-1 mb-4 flex-wrap">
+        <h2 class="mb-0">Featured Products</h2>
+        <a href="customer/product.html" class="sectionbtn btn btn-outline-dark py-2 border border-1">
+          View All Products <i class="fas fa-arrow-right ms-1"></i>
+        </a>
+      </div>
+      <div id="featuredProducts" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <!-- Products will be populated by JavaScript -->
+      </div>
+    </section>
 
+
+
+    
 
     <!-- categories section -->
 
@@ -461,6 +476,17 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     <main>
       <!-- Hero Banner (Carousel)
       <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -561,26 +587,7 @@
 
 
 
-      <!-- Featured Products -->
-      <section class="container mt-5">
-        <div
-          class="d-flex justify-content-center justify-content-md-between align-items-center gap-2 mx-1 mb-4 flex-wrap"
-        >
-          <h2 class="mb-0">Featured Products</h2>
-          <a
-            href="customer/product.html"
-            class="sectionbtn btn btn-outline-dark py-2 border border-1"
-          >
-            View All Products <i class="fas fa-arrow-right ms-1"></i>
-          </a>
-        </div>
-        <div
-          id="featuredProducts"
-          class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"
-        >
-          <!-- Products will be populated by JavaScript -->
-        </div>
-      </section>
+      
 
       <!-- Why Shop With Us -->
       <section class="bg-light py-5">
@@ -617,6 +624,33 @@
     </main>
 
 
+
+
+
+<!-- Search Modal in Home-->
+
+    <section id="SearchHomeModal" class="modal fade w-100  vh-100   "  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog h-100  ">
+        <div class="modal-content   h-100  p-5 ">
+            
+            <button id="closeButton" type="button" class="btn-close fs-5 " data-bs-dismiss="modal" aria-label="Close"></button>
+
+           <div class="modal-body p-0 ">
+
+
+            <div class="h-100 d-flex justify-content-center align-items-center  ">
+             
+            
+              <input class=" w-50  fs-3 form-control input-group" type="search" name="search"  id="searchInput"
+                placeholder="Type To Search">
+                <span class="input-group-text" id="basic-addon2">@example.com</span>
+            
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
 
 
 
