@@ -92,4 +92,15 @@ a:hover{
   color: gold;
 }
 
-
+@media all and (min-width:950px){
+  #reviewSection{
+    position: relative;
+    right: 200px;
+  }
+}
+@media all and (min-width:200px){
+  #reviewSection{
+    position: relative;
+    right: 200px;
+  }
+}
