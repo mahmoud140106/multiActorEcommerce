@@ -247,7 +247,7 @@ for (let i = 0; i < 4; i++) {
   
 
   categoriesActiveSlide.innerHTML +=
-    `<div class="card  cardItem p-0  position-relative  ">
+    `<div class="card cardItem p-0  position-relative  ">
           <img src="${categories[i].image}" class="rounded w-100 " alt="...">
     
           <div class="cardCaption position-absolute text-center">

@@ -318,7 +318,7 @@ font-family: "Lato", sans-serif;
 
   0%{
 
-    transform: translateX(0%);
+    transform: translateX(100%);
 
   }
 
@@ -438,3 +438,28 @@ background-size: cover;
 
 
 
+
+
+
+@media (max-width: 1350px) {
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  
+}
+
+@media (max-width: 800px ) {
+  .cardItem{
+    width: 40% !important;
+    
+  }
+
+  #categoriesSection{
+    /* height: fit-content !important; */
+  }
+
+  #activeCarouselItem{
+    width: 100% !important;
+  }
+}
