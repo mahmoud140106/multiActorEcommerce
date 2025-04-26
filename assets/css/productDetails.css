@@ -4,6 +4,9 @@
   --dark-color: #212529;
   --light-color: #f8f9fa;
 }
+strong{
+  color: var(--primary-color);
+}
 
 /*images*/
 #carouselImages img:hover {
@@ -57,4 +60,47 @@ a{
 }
 a:hover{
   color: var(--primary-color);
+}
+
+.styled-slider {
+  appearance: none;
+  width: 48%;
+  height: 6px;
+  border-radius: 5px;
+  outline: none;
+  margin-top: 10px;
+}
+
+.styled-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  
+}
+
+/* Stars Rating */
+
+
+.star {
+  color: gray;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.star :hover,
+.star.selected ,
+.starRating
+{
+  color: gold;
+}
+
+@media all and (min-width:950px){
+  #reviewSection{
+    position: relative;
+    right: 200px;
+  }
+}
+@media all and (min-width:200px){
+  #reviewSection{
+    position: relative;
+    right: 200px;
+  }
 }

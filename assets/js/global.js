@@ -3,7 +3,7 @@ import { StorageManager } from "./storageManager.js";
 
 (function initializeDefaultAdmin() {
   UserManager.initializeDefaultAdmin();
-})();    
+})();
 
 // Protect routes
 function restrictAccess() {
@@ -20,6 +20,7 @@ function restrictAccess() {
       "/customer/productDetails.html",
       "/customer/profile.html",
       "/customer/checkout.html",
+      "/customer/wishlist.html",
     ],
     seller: [
       "/index.html",
@@ -58,23 +59,31 @@ export function updateNavbar() {
   console.log("updateNavbar: Starting execution");
   const currentUser = StorageManager.load("currentUser");
   const navLinks = document.querySelector(".navbar-nav");
+  const navbar = document.querySelector(".navbar");
   const heroSection = document.querySelector("#hero-section");
 
   console.log("updateNavbar - Current User:", currentUser);
   console.log("updateNavbar - Nav Links Element:", navLinks);
   console.log("updateNavbar - Current Path:", window.location.pathname);
 
-  if (!navLinks) {
-    console.error("updateNavbar: .navbar-nav element not found!");
+  if (!navLinks || !navbar) {
+    // console.error("updateNavbar: .navbar-nav or .navbar element not found!");
     return;
   }
 
-  navLinks.innerHTML = ""; 
+  if (currentUser && (currentUser.role === "admin" || currentUser.role === "seller")) {
+    navbar.classList.add("d-none");
+    return;
+  }
+
+  navbar.classList.remove("d-none");
+  navLinks.innerHTML = "";
   if (currentUser && currentUser.role) {
     console.log("updateNavbar: Updating for role", currentUser.role);
     if (currentUser.role === "customer") {
       if (heroSection) {
-        heroSection.style.display = window.location.pathname === "/index.html" ? "flex" : "none";
+        heroSection.style.display =
+          window.location.pathname === "/index.html" ? "flex" : "none";
       }
       navLinks.innerHTML = `
         <li class="nav-item"><a class="nav-link hover-light" href="/index.html">Home</a></li>
@@ -99,7 +108,8 @@ export function updateNavbar() {
     }
   } else {
     if (heroSection) {
-      heroSection.style.display = window.location.pathname === "/index.html" ? "flex" : "none";
+      heroSection.style.display =
+        window.location.pathname === "/index.html" ? "flex" : "none";
     }
     navLinks.innerHTML = `
       <li class="nav-item"><a class="nav-link hover-light" href="/index.html">Home</a></li>
@@ -107,6 +117,7 @@ export function updateNavbar() {
       <li class="nav-item">
         <a class="nav-link hover-light loginsignup" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
       </li>
+      <li class="nav-item" id="searchIcon"><a class="nav-link hover-light" href="#" data-bs-toggle="modal" data-bs-target="#SearchHomeModal"><i class="fa-solid fa-magnifying-glass fs-4"></i></a></li>
     `;
   }
 }
@@ -122,4 +133,24 @@ document.addEventListener("DOMContentLoaded", () => {
   window.logout = logout;
   updateNavbar();
   restrictAccess();
+
+  // Sidebar toggle logic
+  const sidebar = document.querySelector(".sidebar");
+  const toggleButton = document.querySelector(".sidebar-toggle");
+  if (sidebar && toggleButton) {
+    toggleButton.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener("click", (e) => {
+      if (
+        window.innerWidth <= 769 &&
+        !sidebar.contains(e.target) &&
+        !toggleButton.contains(e.target)
+      ) {
+        sidebar.classList.remove("active");
+      }
+    });
+  }
 });

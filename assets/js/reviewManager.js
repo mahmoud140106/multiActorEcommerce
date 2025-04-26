@@ -83,4 +83,53 @@ export class ReviewManager {
       }
     );
   }
+
+  static getAllReviews() {
+    return StorageManager.load("reviews") || [];
+  }
 }
+
+export function initializeDefaultReviews() {
+  const defaultReviews = [
+    new Review(
+      Date.now() + 1,
+      1,
+      2,
+      4,
+      "I recently used Florist for my daughter's wedding, and I couldn't have been happier with the results. The wedding florals were breathtaking, and the team went above and beyond to bring.",
+      new Date()
+    ),
+    new Review(
+      Date.now() + 2,
+      1,
+      3,
+      5,
+      "I've been a loyal customer of Florist for years, and they never cease to amaze me. The flowers are always fresh, the arrangements are stunning, and the service is top-notch.",
+      new Date()
+    ),
+    new Review(
+      Date.now() + 3,
+      2,
+      4,
+      3,
+      "HI , absolutely incredible experience! The attention to detail and personalized service made our Maldives trip unforgettable. Highly recommend!",
+      new Date()
+    )
+  ];
+
+  const existingReviews = StorageManager.load("reviews") || [];
+  if (existingReviews.length === 0) {
+    StorageManager.save("reviews", defaultReviews);
+
+    const productIds = [
+      ...new Set(defaultReviews.map((review) => review.productId)),
+    ];
+    productIds.forEach((productId) =>
+      ReviewManager.updateProductRating(productId)
+    );
+  }
+
+  return defaultReviews;
+}
+
+initializeDefaultReviews();
