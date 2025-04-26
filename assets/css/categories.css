@@ -101,3 +101,12 @@
     border: 2px solid var(--primary-color);
     box-shadow: none;
 }
+.active>.page-link{
+    background-color: #f1c121; 
+    color: black;
+    border: 1px solid var(--primary-color);
+}
+.active>.page-link:hover{
+    border: 1px solid black;
+    color: black;
+}

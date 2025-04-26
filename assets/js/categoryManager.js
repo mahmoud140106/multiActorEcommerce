@@ -41,7 +41,7 @@ export class CategoryManager {
 }
 
 // Initialize default categories
-function initializeDefaultCategories() {
+export function initializeDefaultCategories() {
   const defaultCategories = [
     new Category(1, "Shirts", "https://example.com/shirts.jpg"),
     new Category(2, "Pants", "https://example.com/pants.jpg"),
