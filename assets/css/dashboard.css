@@ -1,0 +1,274 @@
+/* General Body Styles */
+:root {
+  --primary-color: #f1c121;
+  --main-color: #253036;
+  --hover-color: #69777c;
+  --secondary-color: #6b7280;
+  --gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
+  --background: #f8fafc;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --modal-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --transition: all 0.3s ease;
+  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  color: #1f2937;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  padding-top: 20px;
+  overflow-y: auto;
+  z-index: 1000;
+  background: var(--main-color);
+  transition: transform 0.3s ease;
+  border-right: 1px solid gray;
+}
+
+.sidebar .nav-link {
+  color: #adb5bd;
+  padding: 10px 15px;
+  margin-top: 8px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link :focus,
+.sidebar .nav-link.active {
+  color: #fff;
+  background-color: #495057;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar .navbar-brand {
+  padding-left: 15px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.omnishop-logo {
+  font-family: cursive;
+  font-size: 1.5rem;
+  background: linear-gradient(90deg, transparent, var(--main-color), #868585);
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+/* Main Content */
+main {
+  flex: 1;
+  margin-left: 240px;
+  transition: margin-left 0.3s ease;
+  padding: 16px;
+}
+
+/* Container Fluid */
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Toggle Button for Mobile */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1010;
+  background: #324047;
+  border: none;
+  border-radius: 10%;
+  padding: 4px 10px;
+  color: #fff;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
+  transition: background 0.3s, transform 0.2s;
+}
+
+.sidebar-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 769px) {
+  .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    width: 240px;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  main {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+}
+
+/* Summary Cards Styles */
+.card {
+  border: none;
+  border-radius: 12px;
+  /* background: #ffffff; */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Modal Styles */
+.bgmodal {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fefefe;
+}
+
+.modal-content {
+  border-radius: 10px;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  padding: 10px;
+  font-size: 1rem;
+}
+table th {
+  background: #f1f5f9;
+  color: var(--secondary-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+table tr:hover {
+  background: #f8fafc;
+}
+
+table img {
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+table th:hover {
+  background: #e5e7eb;
+  cursor: pointer;
+}
+
+.modal-content {
+  border-radius: 10px;
+}
+#imagePreview {
+  border-radius: 5px;
+  object-fit: cover;
+}
+#pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .page-link {
+  border: none;
+  border-radius: 50%;
+  margin: 0 6px;
+  color: #ffffff;
+  background: var(--main-color);
+  box-shadow: var(--card-shadow);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.pagination .page-item.active .page-link {
+  background: var(--hover-color);
+  color: #ffffff;
+}
+
+.pagination .page-item .page-link:hover {
+  background: var(--hover-color);
+  color: #ffffff;
+}
+
+.input-group .form-control {
+  border-radius: 5px 0 0 5px;
+}
+
+.alert ul {
+  margin-bottom: 0;
+}
+#toast-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  z-index: 2050;
+}
+@media (max-width: 769px) {
+  .table th,
+  .table td {
+    font-size: 0.8rem;
+  }
+}
+
+.hover-light:hover {
+  color: #f8f9fa !important;
+  transition: color 0.3s ease;
+}
+
+/* dashboard.css */
+canvas {
+  max-width: 100% !important;
+  height: 300px !important;
+  /* background-color: red; */
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.row.g-4 {
+  margin-bottom: 2rem;
+}

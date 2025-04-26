@@ -1,9 +1,11 @@
+import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
-
+let productId;
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("product details.js loaded");
   try {
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = parseInt(urlParams.get("id"));
+     productId = parseInt(urlParams.get("id"));
 
     if (isNaN(productId)) {
       console.error("Invalid product ID:", urlParams.get("id"));
@@ -17,18 +19,31 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".container.mt-4").innerHTML = "<p>Product not found.</p>";
       return;
     }
-
+    console.log(product)
     // Set product details
     document.getElementById("productId").value = product.id;
     document.getElementById("productName").textContent = product.name || "Unknown Product";
-    document.getElementById("category").textContent = `Category: ${product.category || "N/A"}`;
+    document.getElementById("category").textContent = `Category: ${CategoryManager.getCategory(product.categoryId).name || "N/A"}`;
     document.getElementById("price").textContent = product.discountedPrice
       ? `$${product.discountedPrice.toFixed(2)}`
       : `$${product.price.toFixed(2)}`;
-    document.getElementById("sizes").textContent = product.sizes?.length
-      ? product.sizes.join(", ")
-      : "N/A";
-    document.getElementById("description").textContent = product.description || "No description available";
+      document.getElementById("stockCount").textContent= `${product.stock} in stock` // Random stock count between 1 and 100
+      document.querySelector(".styled-slider").style.background =`linear-gradient(to right, #d49117 ${product.stock}%, #e0e0e0 ${30}%)`;
+    // document.getElementById("sizes").textContent = product.sizes?.length
+    //   ? product.sizes.join(", ")
+    //   : "N/A";
+      // document.getElementById("sku").textContent = product.sku || "N/A";
+      let productRating=document.getElementById('productRating');
+      for (let i = 0; i < product.rating; i++) {
+        let star = document.createElement("i");
+        star.className = "fa-solid fa-star starRating"; // Create star element
+        productRating.appendChild(star); // Append star to the span
+      }
+    document.getElementById("descriptionSection").innerHTML += `<br/> ${product.description}
+    
+    <br/> <strong>Brand:</strong> ${product.brand || "N/A"}   
+    <br/> <strong>Colors:</strong> ${product.colors?.length ? product.colors.join(", ") : "N/A"}`
+     || "No description available";
 
     // Render carousel images dynamically
     const carouselImages = document.getElementById("carouselImages");
@@ -68,18 +83,47 @@ document.addEventListener("DOMContentLoaded", () => {
         carouselThumbnails.appendChild(thumbnail);
       });
     }
-
+ 
     // Handle thumbnail active state
     const thumbnails = document.querySelectorAll(".imglabel img");
     thumbnails.forEach((thumb) => {
       thumb.addEventListener("click", () => {
-        thumbnails.forEach((img) => img.parentElement.classList.remove("active"));
-        thumb.parentElement.classList.add("active");
+        thumbnails.forEach((img) => img.classList.remove("active-thumbnail"));
+        thumb.classList.toggle("active-thumbnail");
       });
     });
   } catch (error) {
     console.error("Error loading product details:", error);
     document.querySelector(".container.mt-4").innerHTML = "<p>Error loading product details.</p>";
   }
-});
+
+
+});  //end of load 
+
+
+document.getElementById('reviewsBtn').addEventListener('click', showReviews); //show reviews section
+
+
+function showReviews(){                //show reviews section
+  let reviewSection = document.getElementById('reviewSection');
+  reviewSection.classList.remove( 'd-none');
+  descriptionSection.classList.add( 'd-none');
+}
+
+document.getElementById('descriptionBtn').addEventListener('click', showDescription); 
+
+
+function showDescription(){                //show description section
+  let descriptionSection = document.getElementById('descriptionSection');
+  descriptionSection.classList.remove( 'd-none');
+  reviewSection.classList.add( 'd-none');
+}
+
+
+
+document.getElementById("buyItNow").addEventListener("click", redirectToChechout); // Redirect to checkout page when "Buy It Now" is clicked
+function redirectToChechout(){
+  window.location.href = "checkout.html?id=" + productId; // Redirect to checkout page with product ID
+}
+
 

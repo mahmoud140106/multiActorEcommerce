@@ -1,0 +1,105 @@
+# Multi-Actor E-commerce System
+
+<details>
+<summary>ملف storageManager.js</summary>
+
+عبارة عن كلاس اسمه `StorageManager` فيه 3 فانكشنز:
+
+- `save` بيحفظ بيانات في الـ localStorage بيستخدم `setItem` وبيحول البيانات لـ JSON.
+- `load` بيجيب البيانات من الـ localStorage بيستخدم `getItem` ويرجعها بعد ما يحولها من JSON، لو مفيش بيانات بيرجع `null`.
+- `remove` بيمسح بيانات من الـ localStorage بيستخدم `removeItem`.
+
+</details>
+
+<details>
+<summary>ملف toast.js</summary>
+
+فيه فانكشن اسمها `showToast` بتعمل إشعار (Toast) يظهر للمستخدم:
+
+- بتاخد رسالة ونوع (زي "success" أو "error").
+
+</details>
+
+<details>
+<summary>ملف userManager.js</summary>
+
+فيه كلاسين:
+
+- `User` وده كلاس بيعرف بيانات يوزر زي (id, userName, email, password, role).
+- `UserManager` وده كلاس بيدير يوزرز وبيحتوي على فانكشنز زي:
+  - `createUser` بتعمل يوزر جديد بعد ما تتحقق من صحة البيانات (الإيميل مش موجود قبل كده، الرول صحيح، إلخ) وبعدين بتحفظه في الـ localStorage.
+  - `getUser` بتجيب يوزر بناءً على الـ id.
+  - `getUserNameById` بتجيب اسم اليوزر بناءً على الـ id.
+  - `getUserByEmail` بتجيب اليوزر بناءً على الإيميل.
+  - `updateUser` بتحدث بيانات يوزر موجود بناءً على الـ id.
+  - `deleteUser` بتمسح يوزر من الـ localStorage بناءً على الـ id.
+  - `getAllUsers` بتجيب كل اليوزرز المحفوظين.
+  - `initializeDefaultAdmin` بتعمل أدمن افتراضي لو مش موجود (بإيميل "admin@ecommerce.com").
+
+</details>
+
+<details>
+<summary>ملف productManager.js</summary>
+
+فيه كلاسين:
+
+- `Product` وده كلاس بيعرف بيانات المنتج زي (id, name, category, price, stock, images, sellerId) وبيانات إضافية زي الوصف، الخصم، التاريخ، إلخ.
+- `ProductManager` وده كلاس بيدير المنتجات وبيحتوي على فانكشنز زي:
+  - `createProduct` بتعمل منتج جديد وبتحفظه في الـ localStorage.
+  - `getProduct` بتجيب منتج بناءً على الـ id.
+  - `updateProduct` بتحدث بيانات منتج موجود بناءً على الـ id.
+  - `deleteProduct` بتمسح منتج من الـ localStorage بناءً على الـ id.
+  - `getAllProducts` بتجيب كل المنتجات المحفوظة.
+  - `getProductsBySeller` بتجيب المنتجات الخاصة ببائع معين بناءً على الـ sellerId.
+  - `getAllProductsForAdmin` بتجيب كل المنتجات للأدمن.
+
+</details>
+
+<details>
+<summary>ملف products.js</summary>
+
+الملف ده بيتعامل مع صفحة المنتجات للبائعين والأدمن:
+
+- بيحمل المنتجات من `ProductManager` بناءً على دور المستخدم (أدمن أو بائع) لو ادمن هيعرض كل المنتجات لو سلر هيعرض المنتجات الخاصه بيه بس
+- بيعرض المنتجات في جدول مع بيانات زي (الـ id، الصورة، الاسم، الفئة، السعر، الخصم، المخزون).
+- لو الأدمن هو اللي بيشوف، بيضيف عمود لاسم البائع.
+- فيه حجات زي  (sort) و (search)  و (pagination).
+- بيسمح بإضافة منتج جديد أو تعديل منتج موجود أو حذفه، مع التعامل مع الصور (رفع صور أو إضافة لينك الصور) جزء اللينك ده هنلغيه قدام عاملة دلوقتي بس علشان نضيف منه 
+- بيستخدم `showToast` عشان يظهر إشعارات للمستخدم بعد العمليات زي الإضافة أو الحذف.
+
+</details>
+
+<details>
+<summary>ملف home.js</summary>
+
+الملف ده بيتعامل مع الصفحة الرئيسية للموقع:
+
+- بيحمل المنتجات المميزة (Featured Products) من `ProductManager` وبيختار 8 منتجات بشكل عشوائي.
+- بيعرض المنتجات دي في كروت (Cards) تحتوي على (صورة المنتج، الاسم، الفئة، السعر، الخصم لو موجود).
+- بيحتوي على أنيميشن لعدادات (Counters) زي عدد المستخدمين أو المبيعات، بيزود الأرقام تدريجياً بست انترفال.
+
+</details>
+
+<details>
+<summary>ملف global.js</summary>
+
+الملف ده بيتعامل مع الجزء العام من الموقع زي الـ Navbar والتحكم في الوصول للصفحات:
+
+- بيحدد المسارات المسموحة لكل دور (كستومر، سلر، أدمن، جيست).
+- فانكشن `updateNavbar` بتحدث شريط التنقل بناءً على دور المستخدم (يعني لو كستومر بيظهر روابط زي "Catalog" و"Cart"، لو أدمن بيظهر "Dashboard" و"Products").
+- فانكشن `restrictAccess` بتتحكم في الوصول للصفحات، لو المستخدم مش مسموح له بصفحة معينة بتعيده للصفحة المناسبة.
+- فانكشن `logout` بتمسح بيانات المستخدم من الـ localStorage وبتعمل تحديث للـ Navbar وترجع للصفحة الرئيسية.
+
+</details>
+
+<details>
+<summary>ملف auth.js</summary>
+
+الملف ده بيتعامل مع لوجن وساين اب :
+
+- فانكشن `login` بتتحقق من الإيميل والباسورد، لو صح بتحفظ المستخدم في الـ localStorage وبتروح للصفحة المناسبة بناءً على الرول (كستومر، سلر، أدمن)
+- فانكشن `signup` بتعمل يوزر جديد باستخدام `UserManager` وبعدين بتطلب منه يسجل دخول.
+- بيستخدم `showToast` عشان يظهر إشعارات زي "Login successful" أو "Invalid email".
+- فيه فانكشنز زي `openLoginModal` و`openSignupModal` بتفتح ال (Modals) لل اللوجن او الساين اب.
+
+</details>

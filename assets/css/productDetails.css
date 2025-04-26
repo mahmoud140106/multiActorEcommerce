@@ -1,10 +1,106 @@
+:root {
+  --primary-color: #eeb702e3; /* Primary color for buttons and highlights */
+  --secondary-color: #6b7280; /* Secondary color for text and borders */
+  --dark-color: #212529;
+  --light-color: #f8f9fa;
+}
+strong{
+  color: var(--primary-color);
+}
 
-.imglabel img {
+/*images*/
+#carouselImages img:hover {
+  scale:1.1 ;
+  transition: all 0.3s;
+}
+
+#carouselThumbnails img:hover {
+  opacity: 0.9;
   border: 2px solid transparent;
   transition: border 0.3s;
   cursor: pointer;
 }
+.imglabel img.active-thumbnail{
+  border: 3px solid black;
+  scale:1.1 ;
+  transition: all 0.3s;
+}
+/* Buttons */
+.btn {
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
 
-.imglabel img:hover {
+.btn-dark {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-dark:hover {
   opacity: 0.9;
+}
+
+.btn-dark:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.heroBtn {
+  width: fit-content;
+}
+
+/* Inputs */
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.25);
+}
+/*anchor tags*/
+a{
+  color: var(--dark-color);
+}
+a:hover{
+  color: var(--primary-color);
+}
+
+.styled-slider {
+  appearance: none;
+  width: 48%;
+  height: 6px;
+  border-radius: 5px;
+  outline: none;
+  margin-top: 10px;
+}
+
+.styled-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  
+}
+
+/* Stars Rating */
+
+
+.star {
+  color: gray;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.star :hover,
+.star.selected ,
+.starRating
+{
+  color: gold;
+}
+
+@media all and (min-width:950px){
+  #reviewSection{
+    position: relative;
+    right: 200px;
+  }
+}
+@media all and (min-width:200px){
+  #reviewSection{
+    position: relative;
+    right: 200px;
+  }
 }
