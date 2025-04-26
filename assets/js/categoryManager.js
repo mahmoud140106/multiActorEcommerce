@@ -43,7 +43,7 @@ export class CategoryManager {
 }
 
 // Initialize default categories
-function initializeDefaultCategories() {
+export function initializeDefaultCategories() {
   const defaultCategories = [
     new Category(1, "COAT", "https://mensclubcollection.com/cdn/shop/files/R6A5512_1024x1024.jpg?v=1744805191" ),
     new Category(2, "BLAZER", "https://mensclubcollection.com/cdn/shop/files/R6A5402_be820f66-61e2-4265-be0d-d839feafa8bf_1024x1024.jpg?v=1744804914"),

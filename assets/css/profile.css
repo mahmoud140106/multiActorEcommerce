@@ -1,234 +1,313 @@
 :root {
-    --primary-color: #f1c121;
-    --secondary-color: #6b7280;
-    --gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
-    --background: #f8fafc;
-    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --modal-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    --transition: all 0.6s ease-in-out;
-    --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      sans-serif;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    margin: 0;
-    font-family: var(--font-family);
-    background-color: var(--background);
-  }
-  
-  
-  section {
-    padding: 20px;
-  }
- 
-  .sidebar {
-    background-color: #fff;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    height: 100vh;
-    box-shadow: var(--card-shadow);
-  }
-  
-  .sidebar .profile {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .sidebar .profile-pic {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: var(--primary-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 24px;
-    margin: 0 auto 10px;
-    position: relative;
-    overflow: hidden;
-  }
+--primary-color: #f1c121;
+--secondary-color: #6b7280;
+--gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
+--background: #f8fafc;
+--card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+--modal-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+--transition: all 0.6s ease-in-out;
+--font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+sans-serif;
+}
 
-  .sidebar .profile-pic::after{
-    content: '+';
-    font-weight: 100;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 54px;
-    opacity: 0;            
-    transition: opacity 0.3s ease; 
-  }
+* {
+box-sizing: border-box;
+margin: 0;
+font-family: var(--font-family);
+}
 
-  .profile-pic:hover::after {
-    opacity: 1;
-  }
+.container-fluid {
+padding: 20px;
+}
 
-  .sidebar .profile-name {
-    font-weight: bold;
-    color: var(--secondary-color);
-  }
-  
-  .sidebar .profile-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebar .profile-list li {
-    padding: 10px 15px;
-    cursor: pointer;
-    color: var(--secondary-color);
-    margin-bottom: 5px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .sidebar .profile-list li:hover,
-  .sidebar .profile-list li.active {
-    background-color: var(--primary-color);
-    color: #fff;
-  }
-  
-  
-  .main {
-    padding: 20px;
-  }
+/* sidebar */
+.sidebar {
+background-color: #fff;
+padding: 20px;
+border-right: 1px solid #ddd;
+height: 100vh;
+box-shadow: var(--card-shadow);
+}
+.sidebar .profile {
+text-align: center;
+margin-bottom: 20px;
+}
 
-  .account-details {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: var(--card-shadow);
-    width: 90%;
-    margin: 0 auto;
-  }
-  
-  .account-details h2 {
-    color: var(--secondary-color);
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  
-  .account-details p {
-    margin-bottom: 20px;
-    font-size: 14px;
-    color: var(--secondary-color);
-  }
-  
-  /* Form Styling */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    margin-bottom: 5px;
-    font-size: 12px;
-    color: var(--secondary-color);
-    letter-spacing: 0.5px;
-  }
-  
-  .form-group input,
-  .form-group select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  .save-btn {
-    background-color: var(--primary-color);
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .save-btn:hover {
-    background-color: #d4a11d;
-  }
-  .order-section {
-    padding: 20px;
-  }
-  
-  .order-section h2 {
-    margin-bottom: 20px;
-    color: var(--secondary-color);
-    text-transform: uppercase;
-  }
-  
-  .order-card {
-    display: flex;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: var(--card-shadow);
-    margin-bottom: 20px;
-    padding: 20px;
-    gap: 20px;
-    align-items: flex-start;
-  }
-  
-  .order-img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    flex-shrink: 0;
-  }
-  
-  .order-details {
-    flex: 1;
-  }
-  
-  .order-details h5 {
-    margin-bottom: 5px;
-    color: var(--secondary-color);
-  }
-  
-  .order-details p {
-    margin: 4px 0;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  @media (max-width: 768px) {
-    .order-card {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-  
-    .order-img {
-      width: 100%;
-      height: auto;
-      max-width: 300px;
-    }
-  
-    .order-details {
-      text-align: left;
-      width: 100%;
-    }
-  }
-  
+.sidebar .profile-pic {
+width: 80px;
+height: 80px;
+border-radius: 50%;
+background-color: var(--primary-color);
+display: flex;
+align-items: center;
+justify-content: center;
+color: #fff;
+font-size: 24px;
+margin: 0 auto 10px;
+position: relative;
+overflow: hidden;
+background-size: cover;
+background-position: center; 
+cursor: pointer;
+}
+
+.sidebar .profile-pic::after{
+content: '+';
+font-weight: 100;
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5); 
+color: #fff;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 54px;
+opacity: 0;            
+transition: opacity 0.3s ease; 
+}
+
+.profile-pic:hover::after {
+opacity: 1;
+}
+
+.sidebar .profile-name {
+font-weight: bold;
+color: var(--secondary-color);
+}
+
+.sidebar .profile-list {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+
+.sidebar .profile-list li {
+padding: 10px 15px;
+cursor: pointer;
+color: var(--secondary-color);
+margin-bottom: 5px;
+border-radius: 5px;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar .profile-list li:hover,
+.sidebar .profile-list li.active {
+background-color: var(--primary-color);
+color: #fff;
+}
+
+/* main (sections) */
+.main {
+padding: 30px;
+border-radius: 8px;
+background-color: #fff;
+box-shadow: var(--card-shadow);
+height: 100vh;
+width: 70%;
+margin-left: 10px;
+overflow-y: auto;
+}
+
+/* my details section */
+
+.account-details h2 {
+color: var(--secondary-color);
+margin-bottom: 15px;
+letter-spacing: 1px;
+text-transform: uppercase;
+}
+
+.account-details p {
+margin-bottom: 20px;
+font-size: 14px;
+color: var(--secondary-color);
+}
+
+form {
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+}
+
+.form-group label {
+margin-bottom: 5px;
+font-size: 12px;
+color: var(--secondary-color);
+letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select {
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: 5px;
+font-size: 14px;
+}
+
+.save-btn {
+background-color: var(--primary-color);
+color: #fff;
+border: none;
+padding: 12px;
+border-radius: 5px;
+font-size: 14px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.save-btn:hover {
+background-color: #d4a11d;
+}
+
+/* order section */
+.order-section {
+padding: 20px;
+}
+
+.order-section h2 {
+margin-bottom: 20px;
+color: var(--secondary-color);
+text-transform: uppercase;
+}
+
+.order-card {
+display: flex;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: var(--card-shadow);
+margin-bottom: 20px;
+padding: 20px;
+gap: 20px;
+align-items: flex-start;
+}
+
+.order-img {
+width: 120px;
+height: 120px;
+object-fit: cover;
+border-radius: 8px;
+flex-shrink: 0;
+}
+
+.order-details {
+flex: 1;
+}
+
+.order-details h5 {
+margin-bottom: 5px;
+color: var(--secondary-color);
+}
+
+.order-details p {
+margin: 4px 0;
+font-size: 14px;
+color: #555;
+}
+
+@media (max-width: 768px) {
+.order-card {
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.order-img {
+width: 100%;
+height: auto;
+max-width: 300px;
+}
+
+.order-details {
+text-align: left;
+width: 100%;
+}
+}
+
+/* Account Overview */
+.account-overview h2 {
+color: var(--secondary-color);
+margin-bottom: 20px;
+letter-spacing: 1px;
+text-transform: uppercase;
+}
+
+.account-overview p {
+color: var(--secondary-color);
+margin-bottom: 25px;
+font-size: 14px;
+}
+
+.user-info p strong,
+.membership-status p strong,
+.subscription p strong {
+font-size: 16px;
+font-weight: bold;
+color: var(--secondary-color);
+text-transform: uppercase;
+}
+
+.user-info p span,
+.membership-status p span,
+.subscription p span {
+font-size: 14px;
+color: #555;
+}
+
+/* payment section */
+
+
+.payment-method h2 {
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.payment-method p {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--secondary-color);
+}
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px; /* Make the text slightly larger for better visibility */
+  font-weight: bold; /* Bold for emphasis */
+  color: var(--secondary-color);
+}
+
+.payment-option input[type="radio"] {
+  accent-color: var(--primary-color); /* Matches your primary color */
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.save-btn:hover {
+  background-color: #d4a11d;
+}
