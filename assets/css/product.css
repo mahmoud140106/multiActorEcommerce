@@ -24,7 +24,7 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     height: 100vh;
-    background: url("images/shopping10.jpg");
+    background: url("../images/shopping10.jpg");
     background-repeat: no-repeat;
     background-size: cover;
    background-attachment: fixed;  
