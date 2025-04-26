@@ -3,12 +3,31 @@
   margin: 0px;
 } */
 
+/* body { font-family: Arial, sans-serif; padding: 20px; } */
+/* .filters { margin-bottom: 20px; }
+.filters select, .filters button { margin-right: 10px; padding: 5px; } */
+/* .product-list { display: flex; flex-wrap: wrap; gap: 20px; } */
+/* .product { border: 1px solid #ccc; padding: 10px; width: 200px; text-align: center; } */
 
+/* body { font-family: Arial; margin: 0; padding: 20px; } */
+.filters {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+.filters select {
+  margin: 0 10px;
+  padding: 5px 10px;
+}
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     height: 100vh;
+    background: url("images/shopping10.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+   background-attachment: fixed;  
     overflow-y: scroll;
   }
   
@@ -21,10 +40,29 @@ body {
   }
   
   .container {
+    /* background: url("images/shopping10.jpg");
+    background-repeat: no-repeat;
+     background-size: cover;
+    background-attachment: fixed;    */
     display: flex;
   }
   
-  .sidebar {
+  .search-container {
+    text-align: center;
+    margin-bottom: 30px;
+    
+  }
+
+  #searchInput {
+    width: 60%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  /* .sidebar {
     width: 200px;
     padding: 1rem;
     background-color: #f4f4f4;
@@ -34,10 +72,10 @@ body {
   }
   .products.full-width{
     margin-left: 0;
-  }
+  } */
   
   .products  {
-    background: url("images/shopping10.jpg");
+    /* background: url("images/shopping10.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -140,7 +178,7 @@ body {
 
 
 .card-action-btn:is(:hover, :focus) {
-  background: rgb(255, 110, 97);
+  background:#1F2937;
   color:whitesmoke;
 }
 
@@ -237,20 +275,23 @@ body {
     }
      .card-title:is(:hover, :focus) {
       text-decoration: underline;
-      color:rgb(255, 110, 97) ;
+      color:#1F2937 ;
     }
 
     .card-rating .rating-wrapper {
       gap: 2px;
       /* color: rgb(255, 110, 97); */
-      color: red;
+      color: #1F2937;
       font-size: 15px;
     }
     .star{
       border: none;
       background-color: whitesmoke;
-      color: red;
+      color:#1F2937;
     }
     #toggleSidebar{
       overflow: hidden;
     }
+    /* .fa-solid, .fas {
+      font-weight: 900;
+      color: #1F2937} */

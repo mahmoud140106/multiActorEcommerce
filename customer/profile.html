@@ -125,30 +125,29 @@
     </div>
   </nav>
 
-  <main>
-    <section>
+
+<section>
       <div class="container-fluid">
         <div class="row">
           <!-- Sidebar -->
           <div class="col-3 sidebar">
             <div class="profile">
-              <div class="profile-pic">JD</div>
+              <div class="profile-pic" id="profile-pic-container">JD</div>
+              <input type="file" id="profile-pic-input" accept="image/*" style="display: none;">
               <div class="profile-name">
                 <p>Hi, <br> John Doe</p>
               </div>
             </div>
             <ul class="profile-list">
               <li class="active">My details</li>
-              <li>Account overview</li>
               <li>My orders</li>
-              <li>Address book</li>
+              <li>Account overview</li>
               <li>Payment methods</li>
-              <li>Contact preferences</li>
             </ul>
           </div>
 
           <!-- Main Content -->
-          <div class="col-9 main">
+          <div class="my-details col-9 main">
             <div class="account-details">
               <h2>MY DETAILS</h2>
               <p>
@@ -186,7 +185,6 @@
 
           <div class="order-section col-9 main d-none">
             <h2>My Orders</h2>
-          
             <div class="order-card">
               <img src="../assets/images/shopping16.jpg" alt="Product Image" class="order-img" />
               <div class="order-details">
@@ -221,9 +219,40 @@
               </div>
             </div>
           </div>
-          
-    </section>
-  </main>
+
+          <div class="overview-section col-9 main d-none">
+            <div class="account-overview">
+              <h2>ACCOUNT OVERVIEW</h2>
+              <p>Here's a snapshot of your account details:</p>
+              <div class="user-info">
+                <p><strong>Name:</strong> <span>John Doe</span></p>
+                <p><strong>Email Address:</strong> <span>email@gmail.com</span></p>
+              </div>
+              <div class="subscription">
+                <p><strong>Date of Birth:</strong> <span>Not provided</span></p>
+                <p><strong>Mostly Interested In:</strong> <span>Not specified</span></p>
+              </div>
+            </div>      
+          </div>
+
+          <div class="payment-section col-9 main d-none">
+            <div class="payment-method">
+              <h2>CHOOSE A PAYMENT METHOD</h2>
+              <p>You will not be charged until you review this order on the next page.</p>
+              <div class="payment-options">
+                <label class="payment-option">
+                  <input type="radio" name="payment" checked>
+                  <span>Cash on Delivery (COD)</span>
+                </label>
+                <p class="payment-note">Card payments are coming soon.</p>
+              </div>
+              <button class="save-btn" id="payment-btn">Continue to COD</button>
+            </div>
+          </div>
+ 
+</section>
+
+
 
   <footer class="bg-dark text-light pt-5 pb-0">
     <div class="container">
@@ -303,6 +332,7 @@
 
   <script type="module" src="../assets/js/auth.js"></script>
   <script type="module" src="../assets/js/global.js"></script>
+  <script  src="../assets/js/profile.js"></script>
 </body>
 
 </html>

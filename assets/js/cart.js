@@ -10,7 +10,7 @@ function renderCart() {
     const originalTotalElement = document.getElementById('original-total');
     const promoAlert = document.getElementById('promo-alert');
     const promoSavings = document.getElementById('promo-savings');
-  
+  console.log(cart);
     cartItemsContainer.innerHTML = '';
     let totalItems = 0;
     let subtotal = 0;
@@ -192,6 +192,19 @@ function renderCart() {
       toastElement.remove();
     });
   }
+
+document.getElementById("checkout-button").addEventListener('click',()=>{
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (cart.length === 0) {
+    showToast('Your cart is empty. Please add items to your cart before checking out.');
+    return;
+  }
+  else{
+    window.location.href = './checkout.html'; // Redirect to checkout page
+
+  }
+})
+  
   
   document.addEventListener('DOMContentLoaded', () => {
     renderCart();

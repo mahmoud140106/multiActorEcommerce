@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".container.mt-4").innerHTML = "<p>Product not found.</p>";
       return;
     }
-
+    console.log(product)
     // Set product details
     document.getElementById("productId").value = product.id;
     document.getElementById("productName").textContent = product.name || "Unknown Product";
@@ -27,10 +27,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("price").textContent = product.discountedPrice
       ? `$${product.discountedPrice.toFixed(2)}`
       : `$${product.price.toFixed(2)}`;
+      document.getElementById("stockCount").textContent= `${product.stock} in stock` // Random stock count between 1 and 100
+      document.querySelector(".styled-slider").style.background =`linear-gradient(to right, #d49117 ${product.stock}%, #e0e0e0 ${30}%)`;
     // document.getElementById("sizes").textContent = product.sizes?.length
     //   ? product.sizes.join(", ")
     //   : "N/A";
       // document.getElementById("sku").textContent = product.sku || "N/A";
+      let productRating=document.getElementById('productRating');
+      for (let i = 0; i < product.rating; i++) {
+        let star = document.createElement("i");
+        star.className = "fa-solid fa-star starRating"; // Create star element
+        productRating.appendChild(star); // Append star to the span
+      }
     document.getElementById("descriptionSection").innerHTML += `<br/> ${product.description}
     
     <br/> <strong>Brand:</strong> ${product.brand || "N/A"}   
@@ -89,9 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".container.mt-4").innerHTML = "<p>Error loading product details.</p>";
   }
 
-  let stockCount = Math.floor(Math.random() * 10) + 1;
-document.getElementById("stockCount").textContent= `${stockCount} in stock` // Random stock count between 1 and 100
-document.querySelector(".styled-slider").style.background =`linear-gradient(to right, #d49117 ${stockCount*10}%, #e0e0e0 ${30}%)`;
+
 });  //end of load 
 
 
@@ -119,4 +125,5 @@ document.getElementById("buyItNow").addEventListener("click", redirectToChechout
 function redirectToChechout(){
   window.location.href = "checkout.html?id=" + productId; // Redirect to checkout page with product ID
 }
+
 

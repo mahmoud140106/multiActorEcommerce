@@ -184,9 +184,9 @@
       </div>
     </nav>
 
-    <div class="container  py-5">
+    <div class="container py-5">
       <div class="d-flex row flex-column-reverse flex-lg-row g-5">
-                <!-- Left side -->
+        <!-- Left side -->
         <div class="col-12 col-lg-7">
           <div class="d-flex justify-content-between">
             <h4>Contact</h4>
@@ -275,7 +275,7 @@
               <p class="mb-0">
                 (Shipping price is estimated and change based on location)
               </p>
-              <strong class="d-block">EGP £90.00</strong>
+              <strong class="d-block">$ 90.00</strong>
             </div>
 
             <h4 class="mt-5">Payment</h4>
@@ -386,7 +386,7 @@
             <!-- Complete Order Button -->
             <button
               type="submit"
-              class="btn btn-complete w-100  btn-sm btn-dark text-light"
+              class="btn btn-complete w-100 btn-sm btn-dark text-light"
             >
               Complete order
             </button>
@@ -394,26 +394,30 @@
         </div>
 
         <!-- Right side -->
-        <div class="col-12 col-lg-5 checkout-summary ">
+        <div class="col-12 col-lg-5 checkout-summary">
           <div>
-            <div class="d-flex align-items-center mb-3 " >
-              <div id="summaryImgDiv" class="me-2">
+
+            <div class="  mb-3 " id="summary" >
+              <!-- <div id="summaryImgDiv" class="me-2">
                
               </div>
+
               <div>
                 <p class="mb-0" id="productName"></p>
                 <small class="text-muted" id="Productdetails"></small>
               </div>
-              <span class="ms-auto fw-bold Subtotal" ></span>
+
+              <span class="ms-auto fw-bold Subtotal" ></span> -->
+
             </div>
             <hr />
             <div class="d-flex justify-content-between">
               <span>Subtotal</span>
-              <span class="Subtotal"></span>
+              <span id="Subtotal"></span>
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between" >
               <span>Shipping</span>
-              <span>90.00</span>
+              <span  id="shipping">$90.00</span>
             </div>
             <hr />
             <div class="d-flex justify-content-between fw-bold">
