@@ -1,12 +1,13 @@
 import { StorageManager } from "./storageManager.js";
 
 export class User {
-  constructor(id, userName, email, password, role) {
+  constructor(id, userName, email, password, role, createdAt = new Date()) {
     this.id = id;
     this.userName = userName;
     this.email = email;
     this.password = password;
     this.role = role;
+    this.createdAt = createdAt;
   }
 }
 
@@ -106,51 +107,79 @@ export class UserManager {
     const adminRole = "admin";
 
     console.log("initializeDefaultAdmin: Checking for default admin");
-  //   const exists = UserManager.getUserByEmail(adminEmail);
-  //   if (!exists) {
-  //     UserManager.createUser(
-  //       adminUserName,
-  //       adminEmail,
-  //       adminPassword,
-  //       adminRole
-  //     );
-  //     console.log("initializeDefaultAdmin: Default admin created");
-  //   } else {
-  //     console.log("initializeDefaultAdmin: Default admin already exists");
-  //   }
+    //   const exists = UserManager.getUserByEmail(adminEmail);
+    //   if (!exists) {
+    //     UserManager.createUser(
+    //       adminUserName,
+    //       adminEmail,
+    //       adminPassword,
+    //       adminRole
+    //     );
+    //     console.log("initializeDefaultAdmin: Default admin created");
+    //   } else {
+    //     console.log("initializeDefaultAdmin: Default admin already exists");
+    //   }
   }
 }
 
 function initializeDefaultSellers() {
   const defaultUsers = [
-    {
-      id: 1,
-      userName: "AdminUser",
-      email: "admin@ecommerce.com",
-      password: "admin123",
-      role: "admin",
-    },
-    {
-      id: 2,
-      userName: "SellerOne",
-      email: "seller1@ecommerce.com",
-      password: "seller123",
-      role: "seller",
-    },
-    {
-      id: 3,
-      userName: "SellerTwo",
-      email: "seller2@ecommerce.com",
-      password: "seller123",
-      role: "seller",
-    },
-    {
-      id: 4,
-      userName: "SellerThree",
-      email: "seller3@ecommerce.com",
-      password: "seller123",
-      role: "seller",
-    },
+    new User(
+      1,
+      "AdminUser",
+      "admin@ecommerce.com",
+      "admin123",
+      "admin",
+      new Date("2025-01-01")
+    ),
+    new User(
+      2,
+      "SellerOne",
+      "seller1@ecommerce.com",
+      "seller123",
+      "seller",
+      new Date("2025-01-10")
+    ),
+    new User(
+      3,
+      "SellerTwo",
+      "seller2@ecommerce.com",
+      "seller123",
+      "seller",
+      new Date("2025-02-20")
+    ),
+    new User(
+      4,
+      "SellerThree",
+      "seller3@ecommerce.com",
+      "seller123",
+      "seller",
+      new Date("2025-03-30")
+    ),
+    new User(
+      5,
+      "CustomerOne",
+      "c1@ecommerce.com",
+      "12345",
+      "customer",
+      new Date("2025-01-15")
+    ),
+    new User(
+      6,
+      "CustomerTwo",
+      "c2@ecommerce.com",
+      "12345",
+      "customer",
+      new Date("2025-02-10")
+    ),
+    new User(
+      7,
+      "CustomerThree",
+      "c3@ecommerce.com",
+      "12345",
+      "customer",
+      new Date("2025-12-26")
+    ),
   ];
 
   if (!StorageManager.load("users")) {

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - Multi-Actor E-commerce</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
     <!-- Bootstrap CSS (Local File) -->
     <link
       href="../assets/libs/bootstrap/css/bootstrap.min.css"
@@ -18,152 +20,145 @@
       referrerpolicy="no-referrer"
     />
     <!-- Custom CSS -->
-    <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="../assets/css/dashboard.css" rel="stylesheet" />
   </head>
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-      <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="/index.html">
-          <i class="fas fa-shopping-bag me-2"></i>
-          <span class="omnishop-logo">OmniShop</span>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <!-- JavaScript will populate this dynamically -->
-          </ul>
-        </div>
-      </div>
+    <!-- Sidebar Toggle Button -->
+    <button
+      class="sidebar-toggle"
+      aria-label="Toggle Sidebar"
+      title="Show Menu"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <main>
+      <!-- Sidebar -->
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Sidebar -->
+          <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="position-sticky pt-3">
+              <a
+                class="navbar-brand d-flex align-items-center text-white mt-3 mb-3 ps-3"
+                href="/index.html"
+              >
+                <i class="fas fa-shopping-bag me-2"></i>
+                <span class="omnishop-logo">OmniShop</span>
+              </a>
+              <ul class="nav flex-column navbar-nav ps-3">
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/dashboard.html">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/products.html">
+                    <i class="fas fa-box-open me-2"></i>Products
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
 
-      <!-- Login Modal -->
-      <div
-        class="modal fade"
-        id="loginModal"
-        tabindex="-1"
-        aria-labelledby="loginModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
-                Login
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="login-form">
-                <div class="mb-3">
-                  <label for="login-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="login-email"
-                    required
-                  />
+          <!-- Main Content -->
+          <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4 my-4">
+            <!-- Summary Cards -->
+            <div class="row g-2 g-md-4 mb-3">
+              <div class="col-md-3">
+                <div class="card shadow-sm text-center">
+                  <div class="card-body">
+                    <h5 class="card-title">Total Products</h5>
+                    <p class="display-6" id="totalProducts">0</p>
+                  </div>
                 </div>
-                <div class="mb-3">
-                  <label for="login-password" class="form-label"
-                    >Password</label
-                  >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="login-password"
-                    required
-                  />
+              </div>
+              <div class="col-md-3">
+                <div class="card shadow-sm text-center">
+                  <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <p class="display-6" id="totalCategories">0</p>
+                  </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Login
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Don't have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#signupModal"
-                  data-bs-dismiss="modal"
-                  >Sign Up</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card shadow-sm text-center">
+                  <div class="card-body">
+                    <h5 class="card-title">Total Reviews</h5>
+                    <p class="display-6" id="totalReviews">0</p>
+                  </div>
+                </div>
+              </div>
 
-      <!-- Sign Up Modal -->
-      <div
-        class="modal fade"
-        id="signupModal"
-        tabindex="-1"
-        aria-labelledby="signupModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
-                Sign Up
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="signup-form">
-                <div class="mb-3">
-                  <label for="signup-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="signup-email"
-                    required
-                  />
+              <div class="col-md-3">
+                <div class="card shadow-sm text-center">
+                  <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="display-6" id="totalUsers">0</p>
+                  </div>
                 </div>
-                <div class="mb-3">
-                  <label for="signup-password" class="form-label"
-                    >Password</label
-                  >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signup-password"
-                    required
-                  />
-                </div>
-                <input type="hidden" id="role" value="customer" />
-                <button type="submit" class="btn btn-primary w-100">
-                  Sign Up
-                </button>
-              </form>
+              </div>
             </div>
-          </div>
+            <!-- Charts Section -->
+            <div class="row g-4 mb-4">
+              <div class="col-md-6">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <h5 class="card-title">Products per Category</h5>
+                    <div
+                      class="d-flex justify-content-center align-items-center flex-column"
+                    >
+                      <canvas id="productsPerCategoryChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      Sales by Category
+                    </h5>
+                    <div
+                      class="d-flex justify-content-center align-items-center flex-column"
+                    >
+                      <canvas id="salesPerCategoryChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <h5 class="card-title">User Growth Over Time</h5>
+                    <div
+                      class="d-flex justify-content-center align-items-center flex-column"
+                    >
+                      <canvas id="userRolesChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card shadow-sm">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      Ratings Distribution
+                    </h5>
+                    <div
+                      class="d-flex justify-content-center align-items-center flex-column"
+                    >
+                      <canvas id="ratingsDistributionChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
         </div>
       </div>
 
@@ -173,71 +168,9 @@
       >
         <!-- Toasts will be dynamically inserted here -->
       </div>
-    </nav>
-
-    <main>
-      <!-- Admin Dashboard Content -->
-      <div class="container my-4">
-        <!-- Summary Cards -->
-        <div class="row g-4 mb-4">
-          <div class="col-md-3">
-            <div class="card shadow-sm text-center">
-              <div class="card-body">
-                <h5 class="card-title">Total Products</h5>
-                <p class="display-6" id="totalProducts">0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card shadow-sm text-center">
-              <div class="card-body">
-                <h5 class="card-title">Categories</h5>
-                <p class="display-6" id="totalCategories">0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card shadow-sm text-center">
-              <div class="card-body">
-                <h5 class="card-title">Average Price</h5>
-                <p class="display-6" id="avgPrice">$0</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card shadow-sm text-center">
-              <div class="card-body">
-                <h5 class="card-title">Total Stock</h5>
-                <p class="display-6" id="totalStock">0</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Navigation -->
-        <div class="row g-4">
-          <div class="col-12">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title">Manage Store</h5>
-                <div class="d-flex gap-2">
-                  <a href="products.html" class="btn btn-primary"
-                    >Manage Products</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3">
-      <div class="container">
-        <p>© 2025 Multi-Actor E-commerce. All rights reserved.</p>
-      </div>
-    </footer>
-    <!-- Bootstrap JS (Local File) -->
+    <!-- Bootstrap JS -->
     <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script type="module" src="../assets/js/admin-dashboard.js"></script>
