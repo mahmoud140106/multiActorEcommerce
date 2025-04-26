@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
-     
-:root {  
+
+:root {
   --primary-color: #f1c121;
   --secondary-color: #6b7280;
   --gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
@@ -31,7 +31,7 @@ main {
   border-radius: 10px;
 }
 
-.bgmodal{
+.bgmodal {
   background-color: rgba(0, 0, 0, 0.4);
   color: #fefefe;
 }
@@ -205,236 +205,160 @@ table th:hover {
   transition: color 0.3s ease;
 }
 
-
-#infiniteCarouselSlides div{
+#infiniteCarouselSlides div {
   width: 25%;
 }
 
-
-
-
-
-
-
-
 /* body style */
-body,h1{
-  
-
-font-family: "Lato", sans-serif;
+body,
+h1 {
+  font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: normal;
 }
 
-.bg-black{
+.bg-black {
   background-color: black;
 }
 
-
-#hero-section{
+#hero-section {
   margin-top: 0px !important;
 }
 
-
-
-
-
-
 /* categories section style  */
 
-
-
-#categoriesSection{
+#categoriesSection {
   width: 90%;
 }
 
-
-.cardItem{
-  width: 22% ;
+.cardItem {
+  width: 22%;
   padding: 0;
 }
 
-
-.cardCaption{
+.cardCaption {
   top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition: all 1s;
 }
 
-
-.cardDetails{
-  opacity: 0 ;
+.cardDetails {
+  opacity: 0;
 }
 
-
-.cardItem:hover{
-  .cardCaption{
-    top: 50%
-
+.cardItem:hover {
+  .cardCaption {
+    top: 50%;
   }
 
-  .cardDetails{
-  opacity: 1 ;
+  .cardDetails {
+    opacity: 1;
+  }
 }
 
+#categoriesSection .carousel-control-prev-icon,
+#categoriesSection .carousel-control-next-icon {
+  transform: translateY(50%);
 }
 
-
-#categoriesSection .carousel-control-prev-icon  , #categoriesSection .carousel-control-next-icon{
-  transform: translateY(50%) ;
-  
-  
-}
-
-
-#categoriesSection .carousel-control-next,#categoriesSection .carousel-control-prev {
+#categoriesSection .carousel-control-next,
+#categoriesSection .carousel-control-prev {
   top: 55%;
   bottom: 50%;
 }
 
-
-#categoriesSection .carousel-control-next{
-
- right:-4%;
-
-} 
-#categoriesSection .carousel-control-prev{
-
-   left:-4%;
-
+#categoriesSection .carousel-control-next {
+  right: -4%;
 }
-
-
-
-
-
-
+#categoriesSection .carousel-control-prev {
+  left: -4%;
+}
 
 /* carouselSlides after header style */
 
-
-@keyframes CarouselSlideOfHeader{
-
-  0%{
-
+@keyframes CarouselSlideOfHeader {
+  0% {
     transform: translateX(0%);
-
   }
 
-  100%{
-
+  100% {
     transform: translateX(-100%);
-
   }
-
 }
 
-
 .carouselSlideContent {
-  animation-name:CarouselSlideOfHeader;
-  animation-duration: 15s ;
+  animation-name: CarouselSlideOfHeader;
+  animation-duration: 15s;
   animation-iteration-count: infinite;
 }
 
-
-#carouselSlidesOnly{
+#carouselSlidesOnly {
   background-color: black;
 }
 
-#carouselSlidesOnly .textStroke{
-  text-shadow: -1px -1px 0 white, 
-                       1px -1px 0 whitesmoke, 
-                      -1px 1px 0 whitesmoke, 
-                       1px 1px 0 whitesmoke;
-
+#carouselSlidesOnly .textStroke {
+  text-shadow: -1px -1px 0 white, 1px -1px 0 whitesmoke, -1px 1px 0 whitesmoke,
+    1px 1px 0 whitesmoke;
 }
-
-
-
-
-
-
-
 
 /* Reviews section style  */
 
-#ReviewSection{
-background-image: url('https://themewagon.github.io/Bookly/images/banner-image-bg.jpg');
-background-position: center;
-background-size: cover;
+#ReviewSection {
+  background-image: url("https://themewagon.github.io/Bookly/images/banner-image-bg.jpg");
+  background-position: center;
+  background-size: cover;
 }
-
-
-
-
 
 /* sale section style  */
 
 /* https://mensclubcollection.com/cdn/shop/collections/cover-collection-for-hoodie.jpg?v=1735559439 */
 
-.saleSection{
-  background-image:  
-    url("https://mensclubcollection.com/cdn/shop/files/new-in-summer-25-web-cover_1950x.jpg?v=1744108517");;
+.saleSection {
+  background-image: url("https://mensclubcollection.com/cdn/shop/files/new-in-summer-25-web-cover_1950x.jpg?v=1744108517");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  
 }
-
-
-
-
 
 /* Search Style Modal in Home */
 
-
-
 #SearchHomeModal .modal-dialog {
- max-width: 100%;
- max-height: 100vh;
-  margin:0;
+  max-width: 100%;
+  max-height: 100vh;
+  margin: 0;
 }
 
-#SearchHomeModal .modal{
+#SearchHomeModal .modal {
   max-height: 100vh;
 }
 
 #SearchHomeModal .modal-content {
-    border-radius: 0px;
-    border: 0;
-}
-
-
-#SearchHomeModal .btn-close{
-  position: absolute;
-  right: 1%;
-  top: 2vh !important;
-
-}
-
-
-
-#closeButton{
-    top: 5vh !important;
-    right: 3% ;
-}
-
-
-#searchInput::placeholder{
-  color: black;
-}
-
-#searchInput{
-  border: none;
-  border-bottom: 2px solid black ;
-}
-
-#searchInput:focus{
+  border-radius: 0px;
   border: 0;
 }
 
+#SearchHomeModal .btn-close {
+  position: absolute;
+  right: 1%;
+  top: 2vh !important;
+}
 
+#closeButton {
+  top: 5vh !important;
+  right: 3%;
+}
 
+#searchInput::placeholder {
+  color: black;
+}
 
+#searchInput {
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+#searchInput:focus {
+  border: 0;
+}

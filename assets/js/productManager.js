@@ -166,6 +166,7 @@ function initializeDefaultProducts() {
         brand: "BasicWear",
         colors: ["White", "Black"],
         sizes: ["S", "M", "L"],
+        soldCount:5
       }
     ),
     new Product(
@@ -186,6 +187,7 @@ function initializeDefaultProducts() {
         brand: "CozyKnit",
         colors: ["Gray", "Navy"],
         sizes: ["M", "L", "XL"],
+        soldCount:3
       }
     ),
 
@@ -206,6 +208,7 @@ function initializeDefaultProducts() {
         brand: "StepUp",
         colors: ["White"],
         sizes: ["38", "39", "40", "41"],
+        soldCount:2
       }
     ),
     new Product(
@@ -226,6 +229,7 @@ function initializeDefaultProducts() {
         brand: "SportyWear",
         colors: ["Red", "Blue", "White"],
         sizes: ["S", "M", "L"],
+        soldCount:8
       }
     ),
     new Product(
@@ -246,6 +250,7 @@ function initializeDefaultProducts() {
         brand: "UrbanWear",
         colors: ["Blue"],
         sizes: ["M", "L", "XL"],
+        soldCount:8
       }
     ),
     new Product(
@@ -265,6 +270,7 @@ function initializeDefaultProducts() {
         brand: "TrendyFit",
         colors: ["Black"],
         sizes: ["30", "32", "34"],
+        soldCount:8
       }
     ),
     new Product(
@@ -284,6 +290,7 @@ function initializeDefaultProducts() {
         brand: "SummerVibe",
         colors: ["Multicolor"],
         sizes: ["S", "M", "L"],
+        soldCount:8
       }
     ),
     new Product(
@@ -300,6 +307,7 @@ function initializeDefaultProducts() {
         brand: "SummerVibe",
         colors: ["Multicolor"],
         sizes: ["S", "M", "L"],
+        soldCount:8
       }
     ),
   ];

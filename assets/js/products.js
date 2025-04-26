@@ -4,7 +4,24 @@ import { UserManager } from "./userManager.js";
 import { CategoryManager } from "./categoryManager.js";
 import { showToast } from "./toast.js";
 
+// active link
 document.addEventListener("DOMContentLoaded", () => {
+  const currentPath = window.location.pathname;
+
+  const navLinks = document.querySelectorAll(".sidebar .nav-link");
+
+  navLinks.forEach((link) => {
+    const linkPath = link.getAttribute("href");
+
+    if (currentPath.includes(linkPath) && linkPath !== "#") {
+      link.classList.add("active");
+    } else if (currentPath === "/" && linkPath.includes("index.html")) {
+      link.classList.add("active");
+    }
+  });
+
+  // /////////////////
+
   let filteredProducts = [];
   let currentPage = 1;
   const itemsPerPage = 5;
@@ -15,7 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadProducts() {
     const currentUser = StorageManager.load("currentUser");
     if (!currentUser || !["seller", "admin"].includes(currentUser.role)) {
-      showToast("You must be logged in as a Seller or Admin to view products.", "error");
+      showToast(
+        "You must be logged in as a Seller or Admin to view products.",
+        "error"
+      );
       window.location.href = "/index.html";
       return;
     }
@@ -35,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const sellerUsernameHeader = document.createElement("th");
       sellerUsernameHeader.id = "sellerUsernameHeader";
       sellerUsernameHeader.style.cursor = "pointer";
+      sellerUsernameHeader.classList.add("d-none", "d-md-table-cell");
       sellerUsernameHeader.onclick = () => sortTable("sellerId");
       sellerUsernameHeader.innerHTML = `Seller Name <span id="sort-sellerId"></span>`;
       thead.insertBefore(sellerUsernameHeader, thead.children[1]);
@@ -49,7 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (filteredProducts.length === 0) {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td colspan="${isAdmin ? 9 : 8}" class="text-center">No products available</td>
+        <td colspan="${
+          isAdmin ? 9 : 8
+        }" class="text-center">No products available</td>
       `;
       tbody.appendChild(row);
       return;
@@ -63,7 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>...${product.id % 1000}</td>
-        ${isAdmin ? `<td>${UserManager.getUserNameById(product.sellerId) || "Unknown"}</td>` : ""}
+        ${
+          isAdmin
+            ? `<td class="d-none d-md-table-cell">${
+                UserManager.getUserNameById(product.sellerId) || "Unknown"
+              }</td>`
+            : ""
+        }
         <td class="d-none d-md-table-cell"><img src="${
           product.images[0] ||
           "https://dummyimage.com/50x50/cccccc/000000&text=No+Img"
@@ -178,7 +207,9 @@ document.addEventListener("DOMContentLoaded", () => {
         p.name.toLowerCase().includes(query) ||
         (category && category.name.toLowerCase().includes(query)) ||
         (isAdmin &&
-          UserManager.getUserNameById(p.sellerId)?.toLowerCase().includes(query))
+          UserManager.getUserNameById(p.sellerId)
+            ?.toLowerCase()
+            .includes(query))
       );
     });
     currentPage = 1;
@@ -232,7 +263,8 @@ document.addEventListener("DOMContentLoaded", () => {
         img.style.objectFit = "cover";
         img.style.margin = "5px";
         img.onerror = () => {
-          img.src = "https://dummyimage.com/100x100/cccccc/000000&text=Invalid+URL";
+          img.src =
+            "https://dummyimage.com/100x100/cccccc/000000&text=Invalid+URL";
         };
         previewContainer.appendChild(img);
       });
@@ -292,14 +324,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const urlInput = document.getElementById("imageUrls").value;
     const currentUser = StorageManager.load("currentUser");
     if (!currentUser || !["seller", "admin"].includes(currentUser.role)) {
-      showToast("You must be logged in as a Seller or Admin to add/edit products.", "error");
+      showToast(
+        "You must be logged in as a Seller or Admin to add/edit products.",
+        "error"
+      );
       window.location.href = "/index.html";
       return;
     }
 
     handleImageUpload(files, urlInput, (imagePaths) => {
       const name = document.getElementById("productName").value;
-      const categoryId = parseInt(document.getElementById("productCategory").value);
+      const categoryId = parseInt(
+        document.getElementById("productCategory").value
+      );
       const price = parseFloat(document.getElementById("productPrice").value);
       const discount = parseFloat(
         document.getElementById("productDiscount").value
@@ -309,7 +346,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isAdmin) {
         const sellerIdInput = document.getElementById("productSellerId");
-        sellerId = sellerIdInput ? parseInt(sellerIdInput.value) : currentUser.id;
+        sellerId = sellerIdInput
+          ? parseInt(sellerIdInput.value)
+          : currentUser.id;
         if (!sellerId || isNaN(sellerId)) {
           showToast("Please select a valid seller.", "error");
           return;
@@ -326,9 +365,18 @@ document.addEventListener("DOMContentLoaded", () => {
         : ProductManager.getProduct(id)?.images || [];
 
       if (!isNaN(id) && ProductManager.getProduct(id)) {
-        ProductManager.updateProduct(id, name, categoryId, price, stock, images, sellerId, {
-          discount,
-        });
+        ProductManager.updateProduct(
+          id,
+          name,
+          categoryId,
+          price,
+          stock,
+          images,
+          sellerId,
+          {
+            discount,
+          }
+        );
         showToast("Product updated successfully", "success");
       } else {
         const newId = Date.now();
@@ -380,7 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("imageUrls").value = "";
     if (isAdmin) {
       const form = document.getElementById("productForm");
-      let sellerSelectContainer = document.getElementById("sellerSelectContainer");
+      let sellerSelectContainer = document.getElementById(
+        "sellerSelectContainer"
+      );
       if (!sellerSelectContainer) {
         const sellerSelectDiv = document.createElement("div");
         sellerSelectDiv.className = "mb-3";
@@ -391,7 +441,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <option value="" disabled selected>Select seller</option>
           </select>
         `;
-        form.insertBefore(sellerSelectDiv, form.querySelector(".mb-3:last-child"));
+        form.insertBefore(
+          sellerSelectDiv,
+          form.querySelector(".mb-3:last-child")
+        );
       }
       populateSellerSelect();
     }
@@ -413,7 +466,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("productPrice").value = product.price;
     document.getElementById("productDiscount").value = product.discount;
     document.getElementById("productStock").value = product.stock;
-    document.getElementById("imageUrls").value = product.images ? product.images.join(", ") : "";
+    document.getElementById("imageUrls").value = product.images
+      ? product.images.join(", ")
+      : "";
     if (isAdmin) {
       const sellerIdInput = document.getElementById("productSellerId");
       if (sellerIdInput) {
