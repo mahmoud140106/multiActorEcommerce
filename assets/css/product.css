@@ -28,6 +28,7 @@ body {
   }
   
   .container {
+    
     display: flex;
   }
   
@@ -163,8 +164,7 @@ body {
 
 
 .card-action-btn:is(:hover, :focus) {
-  /* background:#1F2937; */
-  background:#FFC107;
+  background:#1F2937;
   color:whitesmoke;
 }
 
@@ -261,8 +261,7 @@ body {
     }
      .card-title:is(:hover, :focus) {
       text-decoration: underline;
-      /* color:#1F2937 ; */
-      color: #FFC107;
+      color:#1F2937 ;
     }
 
     .card-rating .rating-wrapper {
