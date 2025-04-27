@@ -1,12 +1,23 @@
 import { ReviewManager } from "./reviewManager.js";
 import { StorageManager } from "./storageManager.js";
-
+let productId;
 window.addEventListener('load', () =>{
-let productId = new URLSearchParams(window.location.search).get('id'); // Get product ID from URL
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+     productId = parseInt(urlParams.get("id"));
 
+    if (isNaN(productId)) {
+      console.error("Invalid product ID:", urlParams.get("id"));
+      document.querySelector(".container.mt-4").innerHTML = "<p>Invalid product ID.</p>";
+      return;
+    }
+  
 getreviews(productId); // Get reviews for the product
 removeHighlight(); // Remove highlight from stars
-
+  }catch (error) {
+    console.error("Error loading product details:", error);
+    document.querySelector(".container.mt-4").innerHTML = "<p>Error loading product details.</p>";
+  }
 }); //end of load
 
 
