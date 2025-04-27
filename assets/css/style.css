@@ -277,9 +277,13 @@ h1 {
 
 /* carouselSlides after header style */
 
-@keyframes CarouselSlideOfHeader {
-  0% {
-    transform: translateX(0%);
+
+@keyframes CarouselSlideOfHeader{
+
+  0%{
+
+    transform: translateX(100%);
+
   }
 
   100% {
@@ -361,4 +365,29 @@ h1 {
 
 #searchInput:focus {
   border: 0;
+}
+
+
+
+
+
+
+
+@media (max-width: 1350px) {
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  
+}
+
+@media (max-width: 800px ) {
+  .cardItem{
+    width: 40% !important;
+    
+  }
+
+  #activeCarouselItem{
+    width: 100% !important;
+  }
 }
