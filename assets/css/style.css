@@ -373,44 +373,55 @@ h1 {
 
 
 
+
+
+
 @media (max-width: 1350px) {
   h1 {
     font-size: 2.5rem !important;
-  }
-
-  
+  } 
 }
 
-@media (max-width: 970px ) {
+
+
+
+@media (max-width: 990px ) {
   .cardItem{
-    width: 40% !important;
+    width: 35% !important;
     
   }
-   .cat{
+ .categoryItems, .saleSection{
     height: auto !important;
+    margin-bottom: 30px;
   }
-
 
   #activeCarouselItem{
     width: 100% !important;
   }
-}
-
-@media (max-width: 735px ) {
-  .cardItem{
-    width:60% !important;
-    
-  }
-
-
-  .cat{
-    height: auto !important;
-  }
 
 
   #saleSection{
-    height: auto !important;
+    font-size: 1rem;    
   }
+
+  #saleSection #saleSectionDetails{
+        width: 90% !important;
+       }
+
+
+
+
+}
+
+
+
+
+@media (max-width: 735px ) {
+  .cardItem{
+    width:55% !important;
+    
+  }
+
 
  
 }
