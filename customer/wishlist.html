@@ -4,21 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Wishlist - OmniShop</title>
-    <!-- Bootstrap CSS (Local File) -->
+    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Font Awesome CDN -->
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
     />
     <!-- Custom CSS -->
     <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="../assets/css/home.css" rel="stylesheet" />
     <link href="../assets/css/cart.css" rel="stylesheet" />
   </head>
   <body>
@@ -47,6 +45,175 @@
         </div>
       </div>
 
+      <!-- Login Modal -->
+      <div
+        class="modal fade"
+        id="loginModal"
+        tabindex="-1"
+        aria-labelledby="loginModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content bgmodal rounded p-4"
+            style="width: 450px; min-height: 55vh;"
+          >
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
+                Login
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="login-email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="login-email"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="login-password" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="login-password"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Login
+                </button>
+              </form>
+              <p class="text-center mt-3">
+                Don't have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#signupModal"
+                  data-bs-dismiss="modal"
+                  >Sign Up</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign Up Modal -->
+      <div
+        class="modal fade"
+        id="signupModal"
+        tabindex="-1"
+        aria-labelledby="signupModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content bgmodal rounded p-4"
+            style="width: 450px; min-height: 55vh;"
+          >
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
+                Sign Up
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="signup-form">
+                <div class="mb-3">
+                  <label for="signup-userName" class="form-label"
+                    >UserName</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="signup-userName"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="signup-email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="signup-email"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="signup-password" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="signup-password"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Register as:</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="role"
+                      id="role-customer"
+                      value="customer"
+                      checked
+                    />
+                    <label class="form-check-label" for="role-customer">
+                      Customer
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="role"
+                      id="role-seller"
+                      value="seller"
+                    />
+                    <label class="form-check-label" for="role-seller">
+                      Seller
+                    </label>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Sign Up
+                </button>
+              </form>
+              <p class="text-center mt-3">
+                Already have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginModal"
+                  data-bs-dismiss="modal"
+                  >Login</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div
         id="toast-container"
         class="toast-container position-fixed bottom-0 end-0 p-3"
@@ -61,7 +228,7 @@
         <h1 class="fw-bold mb-0">
           Your Wishlist <i class="far fa-heart text-danger ms-2"></i>
         </h1>
-        <span class="text-muted">5 items</span>
+        <span class="text-muted">0 items</span> <!-- Will be updated dynamically -->
       </div>
 
       <div class="row g-4">
@@ -69,258 +236,15 @@
         <div class="col-lg-9">
           <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
             <div class="card-body p-0">
-              <!-- Wishlist Item 1 -->
-              <div class="row g-0 align-items-center p-4 wishlist-item">
-                <div class="col-md-2">
-                  <img
-                    src="../assets/images/shopping10.jpg"
-                    alt="Sneakers"
-                    class="img-fluid rounded-3"
-                  />
-                </div>
-                <div class="col-md-6 ps-4">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Running Sneakers</h5>
-                      <p class="text-muted small mb-2">SKU: OS-SN-021</p>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-wrap gap-3 mb-2">
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Size:</span>
-                      <div class="dropdown">
-                        <button
-                          class="btn btn-sm btn-outline-secondary dropdown-toggle py-0 px-2"
-                          type="button"
-                          data-bs-toggle="dropdown"
-                        >
-                          42
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">39</a></li>
-                          <li><a class="dropdown-item" href="#">40</a></li>
-                          <li><a class="dropdown-item" href="#">41</a></li>
-                          <li><a class="dropdown-item" href="#">42</a></li>
-                          <li><a class="dropdown-item" href="#">43</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Color:</span>
-                      <div class="color-option bg-primary selected"></div>
-                      <div class="color-option bg-dark"></div>
-                      <div class="color-option bg-secondary"></div>
-                    </div>
-                  </div>
-                  <div class="d-flex mt-2">
-                    <h5 class="fw-semibold">$79.99</h5>
-                    <span class="text-success ms-3 small fw-semibold mt-1"
-                      ><i class="fas fa-check-circle me-1"></i> In Stock</span
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4 text-end">
-                  <div class="d-flex flex-column gap-2">
-                    <button class="btn btn-dark">
-                      <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                    </button>
-                    <button class="btn btn-outline-danger">
-                      <i class="fas fa-trash-alt me-2"></i> Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="divider"></div>
-
-              <!-- Wishlist Item 2 -->
-              <div class="row g-0 align-items-center p-4 wishlist-item">
-                <div class="col-md-2">
-                  <img
-                    src="../assets/images/shopping07.jpg"
-                    alt="Backpack"
-                    class="img-fluid rounded-3"
-                  />
-                </div>
-                <div class="col-md-6 ps-4">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Laptop Backpack</h5>
-                      <p class="text-muted small mb-2">SKU: OS-BP-103</p>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-wrap gap-3 mb-2">
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Color:</span>
-                      <div class="color-option bg-dark selected"></div>
-                      <div class="color-option bg-primary"></div>
-                      <div class="color-option bg-danger"></div>
-                    </div>
-                  </div>
-                  <div class="d-flex mt-2">
-                    <h5 class="fw-semibold">$45.99</h5>
-                    <span class="text-success ms-3 small fw-semibold mt-1"
-                      ><i class="fas fa-check-circle me-1"></i> In Stock</span
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4 text-end">
-                  <div class="d-flex flex-column gap-2">
-                    <button class="btn btn-dark">
-                      <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                    </button>
-                    <button class="btn btn-outline-danger">
-                      <i class="fas fa-trash-alt me-2"></i> Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="divider"></div>
-
-              <!-- Wishlist Item 3 -->
-              <div class="row g-0 align-items-center p-4 wishlist-item">
-                <div class="col-md-2">
-                  <img
-                    src="../assets/images/shopping09.jpg"
-                    alt="Smart Watch"
-                    class="img-fluid rounded-3"
-                  />
-                </div>
-                <div class="col-md-6 ps-4">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Smart Watch</h5>
-                      <p class="text-muted small mb-2">SKU: OS-SW-078</p>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-wrap gap-3 mb-2">
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Color:</span>
-                      <div class="color-option bg-dark selected"></div>
-                      <div class="color-option bg-secondary"></div>
-                      <div class="color-option bg-white border"></div>
-                    </div>
-                  </div>
-                  <div class="d-flex mt-2">
-                    <h5 class="fw-semibold">$129.99</h5>
-                    <span class="text-success ms-3 small fw-semibold mt-1"
-                      ><i class="fas fa-check-circle me-1"></i> In Stock</span
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4 text-end">
-                  <div class="d-flex flex-column gap-2">
-                    <button class="btn btn-dark">
-                      <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                    </button>
-                    <button class="btn btn-outline-danger">
-                      <i class="fas fa-trash-alt me-2"></i> Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="divider"></div>
-
-              <!-- Wishlist Item 4 -->
-              <div class="row g-0 align-items-center p-4 wishlist-item">
-                <div class="col-md-2">
-                  <img
-                    src="../assets/images/shopping05.jpg"
-                    alt="Wireless Headphones"
-                    class="img-fluid rounded-3"
-                  />
-                </div>
-                <div class="col-md-6 ps-4">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Wireless Headphones</h5>
-                      <p class="text-muted small mb-2">SKU: OS-WH-356</p>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-wrap gap-3 mb-2">
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Color:</span>
-                      <div class="color-option bg-white border selected"></div>
-                      <div class="color-option bg-dark"></div>
-                      <div class="color-option bg-danger"></div>
-                    </div>
-                  </div>
-                  <div class="d-flex mt-2">
-                    <h5 class="fw-semibold">$149.99</h5>
-                    <span class="text-success ms-3 small fw-semibold mt-1"
-                      ><i class="fas fa-check-circle me-1"></i> In Stock</span
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4 text-end">
-                  <div class="d-flex flex-column gap-2">
-                    <button class="btn btn-dark">
-                      <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                    </button>
-                    <button class="btn btn-outline-danger">
-                      <i class="fas fa-trash-alt me-2"></i> Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="divider"></div>
-
-              <!-- Wishlist Item 5 -->
-              <div class="row g-0 align-items-center p-4 wishlist-item">
-                <div class="col-md-2">
-                  <img
-                    src="../assets/images/shopping15.jpg"
-                    alt="Desk Lamp"
-                    class="img-fluid rounded-3"
-                  />
-                </div>
-                <div class="col-md-6 ps-4">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Modern Desk Lamp</h5>
-                      <p class="text-muted small mb-2">SKU: OS-DL-224</p>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-wrap gap-3 mb-2">
-                    <div class="d-flex align-items-center">
-                      <span class="text-muted me-2">Color:</span>
-                      <div class="color-option bg-dark"></div>
-                      <div class="color-option bg-white border selected"></div>
-                      <div class="color-option bg-warning"></div>
-                    </div>
-                  </div>
-                  <div class="d-flex mt-2">
-                    <h5 class="fw-semibold">$39.99</h5>
-                    <span class="text-warning ms-3 small fw-semibold mt-1"
-                      ><i class="fas fa-clock me-1"></i> Low Stock</span
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4 text-end">
-                  <div class="d-flex flex-column gap-2">
-                    <button class="btn btn-dark">
-                      <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                    </button>
-                    <button class="btn btn-outline-danger">
-                      <i class="fas fa-trash-alt me-2"></i> Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <!-- Will be populated dynamically by wishlist.js -->
             </div>
           </div>
 
           <div class="d-flex justify-content-between mt-4">
-            <a
-              href="product.html"
-              class="btn btn-outline-dark rounded-pill px-4"
-            >
+            <a href="product.html" class="btn btn-outline-dark rounded-pill px-4">
               <i class="fas fa-arrow-left me-2"></i>Continue Shopping
             </a>
-            <button class="btn btn-danger rounded-pill px-4">
+            <button class="btn btn-danger rounded-pill px-4 clear-wishlist-btn">
               <i class="fas fa-trash-alt me-2"></i>Clear Wishlist
             </button>
           </div>
@@ -330,157 +254,17 @@
         <div class="col-lg-3">
           <div class="card border-0 shadow-sm rounded-3">
             <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4">Wishlist Summary</h5>
-
-              <div class="d-flex justify-content-between mb-2">
-                <span class="text-muted">Total Items</span>
-                <span>5</span>
-              </div>
-              <div class="d-flex justify-content-between mb-2">
-                <span class="text-muted">In Stock</span>
-                <span>4</span>
-              </div>
-              <div class="d-flex justify-content-between mb-4">
-                <span class="text-muted">Low Stock</span>
-                <span>1</span>
-              </div>
-
-              <hr />
-
-              <div class="d-flex justify-content-between mb-3">
-                <strong>Total Value</strong>
-                <span class="fw-bold fs-5">$445.95</span>
-              </div>
-
-              <button
-                class="btn btn-dark rounded-pill w-100 py-3 fw-semibold mb-3"
-              >
-                <i class="fas fa-shopping-cart me-2"></i>Add All to Cart
-              </button>
-
-              <div class="alert alert-info py-2 small mb-0" role="alert">
-                <i class="fas fa-info-circle me-2"></i> Items in your wishlist
-                will be saved for 30 days
-              </div>
+              <!-- Will be populated dynamically by wishlist.js -->
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Similar Products Section -->
+    <!-- Recommended Products Section -->
     <div class="container mb-5">
-      <h3 class="fw-bold mb-4">You Might Also Like</h3>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        <!-- Product 1 -->
-        <div class="col">
-          <div class="card h-100 border-0 shadow-sm rounded-3">
-            <div class="position-relative">
-              <img
-                src="../assets/images/shopping02.jpg"
-                class="card-img-top"
-                alt="Product"
-              />
-              <button
-                class="btn btn-sm btn-outline-dark position-absolute top-0 end-0 m-3 rounded-circle"
-              >
-                <i class="far fa-heart"></i>
-              </button>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title fw-semibold">Leather Crossbody Bag</h5>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-bold">$89.99</span>
-                <button class="btn btn-sm btn-dark">
-                  <i class="fas fa-shopping-cart me-1"></i> Add
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="col">
-          <div class="card h-100 border-0 shadow-sm rounded-3">
-            <div class="position-relative">
-              <img
-                src="../assets/images/shopping03.jpg"
-                class="card-img-top"
-                alt="Product"
-              />
-              <button
-                class="btn btn-sm btn-outline-dark position-absolute top-0 end-0 m-3 rounded-circle"
-              >
-                <i class="far fa-heart"></i>
-              </button>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title fw-semibold">Polarized Sunglasses</h5>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-bold">$59.99</span>
-                <button class="btn btn-sm btn-dark">
-                  <i class="fas fa-shopping-cart me-1"></i> Add
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product 3 -->
-        <div class="col">
-          <div class="card h-100 border-0 shadow-sm rounded-3">
-            <div class="position-relative">
-              <img
-                src="../assets/images/shopping04.jpg"
-                class="card-img-top"
-                alt="Product"
-              />
-              <button
-                class="btn btn-sm btn-outline-dark position-absolute top-0 end-0 m-3 rounded-circle"
-              >
-                <i class="far fa-heart"></i>
-              </button>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title fw-semibold">Portable Bluetooth Speaker</h5>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-bold">$79.99</span>
-                <button class="btn btn-sm btn-dark">
-                  <i class="fas fa-shopping-cart me-1"></i> Add
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Product 4 -->
-        <div class="col">
-          <div class="card h-100 border-0 shadow-sm rounded-3">
-            <div class="position-relative">
-              <img
-                src="../assets/images/shopping06.jpg"
-                class="card-img-top"
-                alt="Product"
-              />
-              <button
-                class="btn btn-sm btn-outline-dark position-absolute top-0 end-0 m-3 rounded-circle"
-              >
-                <i class="far fa-heart"></i>
-              </button>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title fw-semibold">
-                Stainless Steel Water Bottle
-              </h5>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="fw-bold">$24.99</span>
-                <button class="btn btn-sm btn-dark">
-                  <i class="fas fa-shopping-cart me-1"></i> Add
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="row" id="recommendedProducts">
+        <!-- Will be populated dynamically by wishlist.js -->
       </div>
     </div>
 
@@ -488,7 +272,6 @@
     <footer class="bg-dark text-light pt-5 pb-0">
       <div class="container">
         <div class="row gy-4">
-          <!-- About Section -->
           <div class="col-md-3 col-12">
             <h5 class="mb-3">About Us</h5>
             <ul class="list-unstyled">
@@ -522,7 +305,6 @@
               </li>
             </ul>
           </div>
-          <!-- Contact Us Section -->
           <div class="col-md-3 col-12">
             <h5 class="mb-3">Contact Us</h5>
             <ul class="list-unstyled">
@@ -538,14 +320,13 @@
               </li>
               <li>
                 <a
-                  href="mailto:info@email.com"
+                  href="mailto:support@omnishop.com"
                   class="text-secondary text-decoration-none hover-light"
-                  >info@email.com</a
+                  >support@omnishop.com</a
                 >
               </li>
             </ul>
           </div>
-          <!-- Quick Links Section -->
           <div class="col-md-3 col-12">
             <h5 class="mb-3">Quick Links</h5>
             <ul class="list-unstyled">
@@ -579,7 +360,6 @@
               </li>
             </ul>
           </div>
-          <!-- Social Media Section -->
           <div class="col-md-3 col-12">
             <h5 class="mb-3">Follow Us</h5>
             <div class="d-flex gap-3">
@@ -598,7 +378,6 @@
             </div>
           </div>
         </div>
-        <!-- Copyright Section -->
         <div class="row mt-3 py-3 border-top border-1">
           <div class="col-12 text-center">
             <p class="text-secondary mb-0">
@@ -609,7 +388,7 @@
       </div>
     </footer>
 
-    <!-- Bootstrap JS (Local File) -->
+    <!-- Bootstrap JS -->
     <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script type="module" src="../assets/js/auth.js"></script>
