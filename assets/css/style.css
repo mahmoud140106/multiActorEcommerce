@@ -381,13 +381,36 @@ h1 {
   
 }
 
-@media (max-width: 800px ) {
+@media (max-width: 970px ) {
   .cardItem{
     width: 40% !important;
     
   }
+   .cat{
+    height: auto !important;
+  }
+
 
   #activeCarouselItem{
     width: 100% !important;
   }
+}
+
+@media (max-width: 735px ) {
+  .cardItem{
+    width:60% !important;
+    
+  }
+
+
+  .cat{
+    height: auto !important;
+  }
+
+
+  #saleSection{
+    height: auto !important;
+  }
+
+ 
 }
