@@ -393,10 +393,51 @@
       </div>
     </form>
 
-    <div id="recommendationSection">
+    <section id="recommendationSection" class="container mt-2 mb-5">
       <h2>Recommendation For You</h2>
-      <div id="recommendationProducts"></div>
-    </div>
+     
+      <div
+        class="carousel slide w-100 pt-4"
+        id="carouselrecommendationControls"
+        data-bs-ride="carousel"
+      >
+        <div
+          class="carousel-inner ratio ratio-1x1 "
+          id="carouselrecommendationInner"
+        >
+        
+
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselrecommendationControls"
+          data-bs-slide="prev"
+        >
+          <span
+            class="carousel-control-prev-icon btn-dark rounded-3"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselrecommendationControls"
+          data-bs-slide="next"
+        >
+          <span
+            class="carousel-control-next-icon btn-dark rounded-3"
+            aria-hidden="true"
+          ></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    
+    </section>
+
+
+
     <!-- Footer -->
     <footer class="bg-dark text-light pt-5 pb-0">
       <div class="container">

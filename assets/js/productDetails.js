@@ -1,13 +1,16 @@
 import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
 let productId;
-let catProducts;
+let AllProducts;
+let r;
 document.addEventListener("DOMContentLoaded", () => {
   console.log("product details.js loaded");
   try {
     const urlParams = new URLSearchParams(window.location.search);
      productId = parseInt(urlParams.get("id"));
       
+     AllProducts = ProductManager.getAllProducts();
+
     if (isNaN(productId)) {
       console.error("Invalid product ID:", urlParams.get("id"));
       document.querySelector(".container.mt-4").innerHTML = "<p>Invalid product ID.</p>";
@@ -20,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".container.mt-4").innerHTML = "<p>Product not found.</p>";
       return;
     }
-    catProducts = ProductManager.getProductsByCategory(product.categoryId);
-    console.log(catProducts)    // Set product details
+
+       // Set product details
     document.getElementById("productId").value = product.id;
     document.getElementById("productName").textContent = product.name || "Unknown Product";
     document.getElementById("category").textContent = `Category: ${CategoryManager.getCategory(product.categoryId).name || "N/A"}`;
@@ -93,13 +96,73 @@ document.addEventListener("DOMContentLoaded", () => {
         thumb.classList.toggle("active-thumbnail");
       });
     });
-  } catch (error) {
+
+
+// set recommendation products
+ const carouselrecommendationInner = document.getElementById("carouselrecommendationInner");
+ carouselrecommendationInner.innerHTML = "";
+ 
+ 
+for (let j = 0; j < 2; j++) {
+  const carouselItem = document.createElement("div");
+ carouselItem.className = `carousel-item ${j === 0 ? "active" : ""}`;
+ let table = document.createElement('table');
+ let tr= document.createElement('tr');
+ let td;
+for (let i = 0; i < 4; i++) {
+  r = Math.floor(Math.random()*AllProducts.length);
+  if (! AllProducts[r].images ||  AllProducts[r].images.length === 0) {
+  console.warn("No images found for product:", AllProducts[r].id);
+  carouselrecommendationInner.innerHTML = `
+    <div class="carousel-item active">
+      <img src="https://dummyimage.com/500x250/cccccc/000000&text=No+Image" class="d-block w-100" alt="No Image" style="height: 250px; object-fit: cover;">
+    </div>
+  `;
+} 
+else {
+  
+    // Carousel recommendation item
+   
+    td =document.createElement('td');
+    
+    td.innerHTML = `
+   
+            <div class="cursol-img" product-id='${AllProducts[r].id}' >
+                <img src="${AllProducts[r].images[0]}" class="d-block w-100" alt="No Image" style="height: 250px;  object-fit: cover;">
+            </div>
+            <div class="RecomndProduct-name">${AllProducts[r].name}</div>
+            <div class="RecomndProduct-price" >$${AllProducts[r].price}</div>
+         
+    `;
+    tr.appendChild(td);
+   
+  
+}
+
+}
+table.appendChild(tr);
+carouselItem.appendChild(table);
+carouselrecommendationInner.appendChild(carouselItem);
+}
+
+
+  } 
+  catch (error) {
     console.error("Error loading product details:", error);
     document.querySelector(".container.mt-4").innerHTML = "<p>Error loading product details.</p>";
   }
-
+  document.querySelectorAll(".cursol-img").forEach((img)=>
+    img.addEventListener('click',function(){
+      const id= img.getAttribute('product-id');
+      if(id){
+        window.location.href=`productDetails.html?id=${id}`;
+      }
+    })
+    )
 
 });  //end of load 
+
+
 
 
 document.getElementById('reviewsBtn').addEventListener('click', showReviews); //show reviews section

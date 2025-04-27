@@ -30,11 +30,11 @@ window.addEventListener("load", function() {
                   class='card-img-top rounded w-50 summaryImg' 
                   product-id="${productId}"/>
         </div>
-        <div class="w-100" >
+        <div class="w-100  me-5" >
           <p class="mb-0" id="productName">${product.name} </p>
           <small class="text-muted " id="Productdetails">${product.name} / ${product.brand}  </small>
         </div>
-        <span class=" fw-bold Subtotal me-5" >$${product.price.toFixed(2)}</span>
+        <span class=" fw-bold Subtotal text-danger" >$${product.price.toFixed(2)}</span>
       </div>
     <br/>
       `
@@ -55,16 +55,17 @@ window.addEventListener("load", function() {
       summary.innerHTML += 
       `
       <div class="d-flex align-items-center">
-        <div  >
+        <div>
                   <img src='${product.image|| "https://placehold.co/500x600/png"}' 
                   class='card-img-top rounded w-50 summaryImg' 
                   product-id="${product.id}" />
         </div>
-        <div class="w-100" >
+        <div class="w-100 me-5" >
           <p class="mb-0" id="productName${index}">${product.name} </p>
           <small class="text-muted " id="Productdetails">${product.name} / ${product.quantity} pieces </small>
         </div>
-        <span class=" fw-bold Subtotal me-5" >$${product.price.toFixed(2)}</span>
+        <span class=" fw-bold Subtotal text-danger" >$${product.price.toFixed(2)}</span>
+        
       </div>
     <br/>
       `

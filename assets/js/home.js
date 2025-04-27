@@ -127,45 +127,25 @@ document.addEventListener("DOMContentLoaded", () => {
   let categoriesActiveSlide = document.getElementById("activeSlide");
   let categoriesNextSlide = document.getElementById("nextSlide");
 
-
-
-//Dynamic categories in home page 
-
-let categories = CategoryManager.getAllCategories();
-let categoriesActiveSlide = document.getElementById("activeSlide");
-let categoriesNextSlide = document.getElementById("nextSlide");
-
   
-for (let i = 0; i < 4; i++) {
-
-  let categoryId = categories[i].id;
-
-  let productsOfCategory = ProductManager.getProductsByCategory(categoryId);
- 
-  
-  
- 
-  
-
-  categoriesActiveSlide.innerHTML +=
-    `<div class="card cardItem p-0  position-relative  ">
-          <img src="${categories[i].image}" class="rounded w-100 " alt="...">
   for (let i = 0; i < 4; i++) {
+
     let categoryId = categories[i].id;
+
     let productsOfCategory = ProductManager.getProductsByCategory(categoryId);
-    
+  
     categoriesActiveSlide.innerHTML +=
-      `<div class="card cardItem p-0 position-relative">
-          <img src="${categories[i].image}" class="rounded w-100" alt="...">
+      `<div class="card cardItem p-0  position-relative  ">
+            <img src="${categories[i].image}" class="rounded w-100 " alt="...">
     
-          <div class="cardCaption position-absolute text-center">
-            <h5 class="imgContainer text-light">${categories[i].name}</h5>
-            <div class="cardDetails text-light">
-              <p class="text-light">${productsOfCategory.length} product</p>
-              <button class="btn p-3 btn-light">View</button>
+            <div class="cardCaption position-absolute text-center">
+              <h5 class="imgContainer text-light">${categories[i].name}</h5>
+              <div class="cardDetails text-light">
+                <p class="text-light">${productsOfCategory.length} product</p>
+                <button class="btn p-3 btn-light">View</button>
+              </div>
             </div>
-          </div>
-        </div>`; 
+          </div>`; 
   }
 
   for (let i = 4; i < 8; i++) {
