@@ -293,7 +293,8 @@ h1 {
 
 .carouselSlideContent {
   animation-name: CarouselSlideOfHeader;
-  animation-duration: 15s;
+  animation-duration: 20s;
+  animation-timing-function:linear;
   animation-iteration-count: infinite;
 }
 
@@ -373,21 +374,111 @@ h1 {
 
 
 
-@media (max-width: 1350px) {
+
+
+
+
+
+
+@media (max-width: 1400px ) {
   h1 {
-    font-size: 2.5rem !important;
-  }
+    font-weight: bolder;
+    font-size: 3rem  !important;
+  } 
 
-  
-}
-
-@media (max-width: 800px ) {
   .cardItem{
-    width: 40% !important;
+    width: 35% !important;
     
+  }
+ .categoryItems, .saleSection{
+    height: auto !important;
+    margin-bottom: 30px;
   }
 
   #activeCarouselItem{
     width: 100% !important;
   }
+
+
+  #saleSection{
+    font-size: 1rem;    
+  }
+
+  #saleSection #saleSectionDetails{
+        width: 90% !important;
+  }
+
+
+
+
+  .carouselSlideContent span{
+    font-size: 2rem !important;
+  }
+
 }
+
+
+
+@media (max-width: 1100px ) {
+  .cardItem{
+    width:55% !important;
+    
+  }
+
+  h1{
+    font-size: 2rem !important;
+  }
+
+
+ 
+
+ 
+}
+
+
+
+@media (max-width: 950px ) {
+ 
+
+  #headerDetails span ,  #headerDetails p ,  #headerDetails button{
+
+    font-size: 1rem !important;
+  }
+
+   h1{
+    font-size: 1.7rem !important;
+    font-weight: bolder;
+    margin-bottom: 5px !important;
+  }
+
+
+
+
+  .carouselSlideContent span{
+    font-size: 1.5rem !important;
+  }
+
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
