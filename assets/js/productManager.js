@@ -310,6 +310,7 @@ function initializeDefaultProducts() {
         soldCount:8
       }
     ),
+    
   ];
 
   if (!StorageManager.load("products")) {
