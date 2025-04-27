@@ -127,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let categoriesActiveSlide = document.getElementById("activeSlide");
   let categoriesNextSlide = document.getElementById("nextSlide");
 
-<<<<<<< HEAD
 
 
 //Dynamic categories in home page 
@@ -151,7 +150,6 @@ for (let i = 0; i < 4; i++) {
   categoriesActiveSlide.innerHTML +=
     `<div class="card cardItem p-0  position-relative  ">
           <img src="${categories[i].image}" class="rounded w-100 " alt="...">
-=======
   for (let i = 0; i < 4; i++) {
     let categoryId = categories[i].id;
     let productsOfCategory = ProductManager.getProductsByCategory(categoryId);
@@ -159,7 +157,6 @@ for (let i = 0; i < 4; i++) {
     categoriesActiveSlide.innerHTML +=
       `<div class="card cardItem p-0 position-relative">
           <img src="${categories[i].image}" class="rounded w-100" alt="...">
->>>>>>> 997b1e8633bce28b911dea3d8098d552dbb24a4f
     
           <div class="cardCaption position-absolute text-center">
             <h5 class="imgContainer text-light">${categories[i].name}</h5>

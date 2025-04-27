@@ -1,12 +1,13 @@
 import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
 let productId;
+let catProducts;
 document.addEventListener("DOMContentLoaded", () => {
   console.log("product details.js loaded");
   try {
     const urlParams = new URLSearchParams(window.location.search);
      productId = parseInt(urlParams.get("id"));
-
+      
     if (isNaN(productId)) {
       console.error("Invalid product ID:", urlParams.get("id"));
       document.querySelector(".container.mt-4").innerHTML = "<p>Invalid product ID.</p>";
@@ -19,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".container.mt-4").innerHTML = "<p>Product not found.</p>";
       return;
     }
-    console.log(product)
-    // Set product details
+    catProducts = ProductManager.getProductsByCategory(product.categoryId);
+    console.log(catProducts)    // Set product details
     document.getElementById("productId").value = product.id;
     document.getElementById("productName").textContent = product.name || "Unknown Product";
     document.getElementById("category").textContent = `Category: ${CategoryManager.getCategory(product.categoryId).name || "N/A"}`;
@@ -41,10 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     document.getElementById("descriptionSection").innerHTML += `<br/> ${product.description}
     
-    <br/> <strong>Brand:</strong> ${product.brand || "N/A"}   
-    <br/> <strong>Colors:</strong> ${product.colors?.length ? product.colors.join(", ") : "N/A"}`
+   `
      || "No description available";
-
+    //  <br/> <strong>Brand:</strong> ${product.brand || "N/A"}   
+    //  <br/> <strong>Colors:</strong> ${product.colors?.length ? product.colors.join(", ") : "N/A"}
     // Render carousel images dynamically
     const carouselImages = document.getElementById("carouselImages");
     const carouselThumbnails = document.getElementById("carouselThumbnails");
