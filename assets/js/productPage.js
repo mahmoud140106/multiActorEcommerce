@@ -18,13 +18,9 @@ for (let i = 0; i < AllCategories.length ; i++) {
 
 
 
-
-
-
 for (let i = 0; i < allProduct.length; i++) {
 
     
-
 
     productPage.innerHTML += ` <div class="product-card  w-25 " data-price="600" data-best-seller="false">
         <div class="product-image w-100   " id="img1">
@@ -200,4 +196,4 @@ filterCategory.addEventListener("change", function (e) {
 
   
   
-})  
+})
