@@ -99,6 +99,14 @@ window.addEventListener("load", function() {
     this.document.querySelector(`input[name=lastName]`).value=deliveryData.lastName;
     this.document.querySelector(`input[name=address]`).value=deliveryData.address;
     this.document.querySelector(`input[name=City]`).value=deliveryData.City;
+    document.querySelector('select[name=Governorate]').value = 'Select Governorate';
+    this.document.querySelector(`input[name=PhoneNumber]`).value='';
+  }
+  else{
+    this.document.querySelector(`input[name=firstName]`).value='';
+    this.document.querySelector(`input[name=lastName]`).value='';
+    this.document.querySelector(`input[name=address]`).value='';
+    this.document.querySelector(`input[name=City]`).value='';
     document.querySelector('select[name=Governorate]').value = deliveryData.Governorate;
     this.document.querySelector(`input[name=PhoneNumber]`).value=deliveryData.PhoneNumber;
   }

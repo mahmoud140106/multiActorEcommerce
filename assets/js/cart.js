@@ -237,4 +237,17 @@ function renderWishlistPeek() {
 document.addEventListener('DOMContentLoaded', () => {
   renderWishlistPeek();
 
+  
+  //link cart items with product Details page
+
+ let cartItems= document.querySelectorAll('.cart-item');
+ cartItems.forEach((item)=>{
+  item.addEventListener('click',function(){
+    let itemId= item.getAttribute('product-id');
+    window.location.href=`productDetails.html?id=${itemId}`;
+  })
+ })
+
 });
+
+ 
