@@ -1,13 +1,14 @@
 import { StorageManager } from "./storageManager.js";
 
 export class User {
-  constructor(id, userName, email, password, role, createdAt = new Date()) {
+  constructor(id, userName, email, password, role, createdAt = new Date() ,deliveryData) {
     this.id = id;
     this.userName = userName;
     this.email = email;
     this.password = password;
     this.role = role;
     this.createdAt = createdAt;
+    this.deliveryData = deliveryData;
   }
 }
 

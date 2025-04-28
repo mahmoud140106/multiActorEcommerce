@@ -22,7 +22,7 @@ function renderCart() {
   } else {
     cart.forEach((item, index) => {
       const cartItemHTML = `
-        <div class="row g-0 align-items-center p-4 cart-item">
+        <div class="row g-0 align-items-center p-4 cart-item" product-id="${item.id}">
           <div class="col-md-2">
             <img
               src="${item.image}"
@@ -160,4 +160,15 @@ document.addEventListener('DOMContentLoaded', () => {
     CartManager.applyPromoCode(promoInput);
     renderCart();
   });
+
+  //link cart items with product Details page
+
+ let cartItems= document.querySelectorAll('.cart-item');
+ cartItems.forEach((item)=>{
+  item.addEventListener('click',function(){
+    let itemId= item.getAttribute('product-id');
+    window.location.href=`productDetails.html?id=${itemId}`;
+  })
+ })
+ 
 });
