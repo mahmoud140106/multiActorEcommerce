@@ -229,8 +229,8 @@ export const CartManager = {
     const toastId = `toast-${Date.now()}`;
     const toastHTML = `
       <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <div class="toast-header d-flex">
+          <button type="button" class="btn btn-close ms-auto" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">${message}</div>
       </div>
