@@ -206,16 +206,6 @@ section h2 {
   color: #6b7280;
 }
 
-.card .add-to-cart {
-  background: none;
-  border: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #1f2937;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
 .card .add-to-cart:hover {
   color: var(--primary-color);
 }
