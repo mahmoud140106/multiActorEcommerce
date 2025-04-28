@@ -53,7 +53,7 @@ function renderWishlist() {
         const itemHTML = `
             <div class="row g-0 align-items-center p-4 wishlist-item w-100" data-id="${productId}">
                 <div class="col-3 text-center">
-                    <img src="${item.image}" alt="${item.name}" class="img-fluid rounded-3" style="width: 100%; height: auto;">
+                    <img src="${item.image}" alt="${item.name}" class="img-fluid rounded-3">
                 </div>
                 <div class="col-6 ps-4">
                     <div class="d-flex justify-content-between align-items-start">
