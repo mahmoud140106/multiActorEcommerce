@@ -149,3 +149,6 @@
     border-radius: 4px;
     transition: all 0.3s ease;
 }
+.cart-item:hover{
+cursor: pointer;
+}

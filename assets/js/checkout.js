@@ -1,7 +1,8 @@
 import { ProductManager } from "./productManager.js";
+import { StorageManager } from "./storageManager.js";
 
 let productId;
-let summaryImg ;
+let currentUser;
 window.addEventListener("load", function() {
 // try {
     const urlParams = new URLSearchParams(window.location.search);
@@ -87,6 +88,28 @@ window.addEventListener("load", function() {
         }
       });
     });   
+
+     currentUser=StorageManager.load('currentUser');
+    console.log(currentUser)
+    this.document.getElementById('userEmail').value=`${currentUser.email}`;
+   let deliveryData= StorageManager.load(`${currentUser.id}`)   //get the delivery data of the current user
+   console.log(deliveryData)
+   if(deliveryData!=undefined){
+    this.document.querySelector(`input[name=firstName]`).value=deliveryData.firstName;
+    this.document.querySelector(`input[name=lastName]`).value=deliveryData.lastName;
+    this.document.querySelector(`input[name=address]`).value=deliveryData.address;
+    this.document.querySelector(`input[name=City]`).value=deliveryData.City;
+    document.querySelector('select[name=Governorate]').value = 'Select Governorate';
+    this.document.querySelector(`input[name=PhoneNumber]`).value='';
+  }
+  else{
+    this.document.querySelector(`input[name=firstName]`).value='';
+    this.document.querySelector(`input[name=lastName]`).value='';
+    this.document.querySelector(`input[name=address]`).value='';
+    this.document.querySelector(`input[name=City]`).value='';
+    document.querySelector('select[name=Governorate]').value = deliveryData.Governorate;
+    this.document.querySelector(`input[name=PhoneNumber]`).value=deliveryData.PhoneNumber;
+  }
    })//end of load event
    
 
@@ -118,3 +141,27 @@ document.getElementById("sameAddress").addEventListener("click", function() {
         document.getElementById("differentAddressDiv").style.border = "none";
     } 
 });
+
+
+//save delivery data for the user
+let deliveryData= document.querySelectorAll('.deliveryData');
+let deliveryDataUserObj= {};
+deliveryData.forEach((data)=>{
+  data.addEventListener('change',function(e){
+    
+    let objKey = e.target.name;
+    deliveryDataUserObj[objKey]=e.target.value;
+    console.log(deliveryDataUserObj)
+
+  })
+ })
+ document.getElementById('saveInformation').addEventListener('change',function(){
+  if(this.checked){
+    StorageManager.save(`${currentUser.id}`,deliveryDataUserObj);
+    console.log()
+  }
+  else{
+    console.log("clear")
+  }
+ });
+
