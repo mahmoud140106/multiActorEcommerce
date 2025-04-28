@@ -26,7 +26,7 @@ function renderCart() {
           <div class="col-md-2">
             <img
               src="${item.image}"
-              alt="${item.name}"
+              alt="${item.name}" 
               class="img-fluid rounded-3"
             />
           </div>
@@ -160,15 +160,81 @@ document.addEventListener('DOMContentLoaded', () => {
     CartManager.applyPromoCode(promoInput);
     renderCart();
   });
+});
 
-  //link cart items with product Details page
+// Handle wishlist peek
+function renderWishlistPeek() {
+  const wishlist = CartManager.getWishlist();
+  const wishlistItemsContainer = document.getElementById('wishlist-items');
 
- let cartItems= document.querySelectorAll('.cart-item');
- cartItems.forEach((item)=>{
-  item.addEventListener('click',function(){
-    let itemId= item.getAttribute('product-id');
-    window.location.href=`productDetails.html?id=${itemId}`;
-  })
- })
- 
+  wishlistItemsContainer.innerHTML = '';
+
+  if (wishlist.length === 0) {
+    wishlistItemsContainer.innerHTML = '<p class="p-4 text-center">Your wishlist is empty.</p>';
+    return;
+  }
+
+  // Shuffle and take 3 random items
+  const randomItems = wishlist.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+  randomItems.forEach(item => {
+    const itemHTML = `
+      <div class="row g-0 align-items-center p-3 cart-item">
+        <div class="col-md-2">
+          <img
+            src="${item.image}"
+            alt="${item.name}"
+            class="img-fluid rounded-3"
+          />
+        </div>
+        <div class="col-md-6 ps-4">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h5 class="mb-1 fw-semibold">${item.name}</h5>
+              <p class="text-muted small mb-2">SKU: ${item.sku}</p>
+            </div>
+          </div>
+          <div class="d-flex mt-1">
+            <span class="fw-semibold">$${item.price.toFixed(2)}</span>
+            <span class="text-success ms-3 small fw-semibold">
+              <i class="fas fa-check-circle me-1"></i> In Stock
+            </span>
+          </div>
+        </div>
+        <div class="col-md-4 text-end">
+          <div class="d-flex flex-column flex-sm-row justify-content-end gap-2">
+            <button class="btn btn-sm btn-outline-danger remove-wishlist-item" data-id="${item.id}">
+              <i class="fas fa-trash-alt me-1"></i> Remove
+            </button>
+            <button class="btn btn-sm btn-dark add-to-cart" data-id="${item.id}">
+              <i class="fas fa-shopping-cart me-1"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    wishlistItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+  });
+
+  // Add event listeners for buttons
+  document.querySelectorAll('.remove-wishlist-item').forEach(button => {
+    button.addEventListener('click', function() {
+      const productId = this.getAttribute('data-id');
+      CartManager.removeFromWishlist(productId);
+      renderWishlistPeek();
+    });
+  });
+
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', function() {
+      const productId = this.getAttribute('data-id');
+      CartManager.addToCartFromWishlist(productId);
+      renderWishlistPeek();
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderWishlistPeek();
+
 });
