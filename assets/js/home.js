@@ -118,15 +118,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   let target = parseInt(UserManager.getAllUsers().length);
-  animateCounter(counters[0], target, 500);
+  animateCounter(counters[0], target, 1000);
 
 
   target = parseInt(ReviewManager.getAllReviews().length);
-  animateCounter(counters[1], target, 500);
+  animateCounter(counters[1], target, 1000);
 
 
   target = parseInt(CategoryManager.getAllCategories().length);
-  animateCounter(counters[2], target, 500);
+  animateCounter(counters[2], target, 1000);
 
   
   
@@ -296,3 +296,13 @@ document.getElementById("viewCategories").addEventListener("click", function (e)
   window.location.href="/customer/categories.html"
   
 })
+
+
+
+let btnShopNow = document.getElementsByClassName("ShopNow");
+for (let index = 0; index < btnShopNow.length; index++) {
+  btnShopNow[index].addEventListener("click", function () {
+    window.location.href = "../../customer/product.html";
+  })
+  
+}
