@@ -1,5 +1,7 @@
 import { ReviewManager } from "./reviewManager.js";
 import { StorageManager } from "./storageManager.js";
+import { showToast } from "./toast.js";
+
 let productId;
 window.addEventListener('load', () =>{
   try {
@@ -89,8 +91,7 @@ function addReview(){
     let user = StorageManager.load("currentUser"); // Get current user from storage
     let ratingValue = document.querySelectorAll('.star.selected').length; // Get selected rating value
     if(user==null){
-      location.href = "/index.html"; // Redirect to login page if user is not logged in
-      alert("Please login to add a review.");
+     showToast("Please login to add a review.",'error');
       return;
     }
     let reviewComment= document.getElementById('reviewInput').value ;
