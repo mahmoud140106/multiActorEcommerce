@@ -1,5 +1,9 @@
 import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
+import { StorageManager } from "./storageManager.js";
+import { showToast } from "./toast.js";
+
+let user = StorageManager.load("currentUser"); // Get current user from storage
 let productId;
 let AllProducts;
 let r;
@@ -132,7 +136,7 @@ else {
                 <img src="${AllProducts[r].images[0]}" class="d-block w-100" alt="No Image" style="height: 250px;  object-fit: cover;">
             </div>
             <div class="RecomndProduct-name">${AllProducts[r].name}</div>
-            <div class="RecomndProduct-price" >$${AllProducts[r].price}</div>
+            <div class="RecomndProduct-price text-muted" >$${AllProducts[r].price}</div>
          
     `;
     tr.appendChild(td);
@@ -185,10 +189,27 @@ function showDescription(){                //show description section
 }
 
 
+//add to cart function 
+document.getElementById("addTocart").addEventListener("click",function (){
 
-document.getElementById("buyItNow").addEventListener("click", redirectToChechout); // Redirect to checkout page when "Buy It Now" is clicked
-function redirectToChechout(){
+  
+  if (user==null){
+    showToast('Please log in first','error');
+    return;
+  }
+}
+ ); 
+
+
+// Redirect to checkout page when "Buy It Now" is clicked
+document.getElementById("buyItNow").addEventListener("click",function (){
+
+  if (user==null){
+    showToast('Please log in first','error');
+    return;
+  }
   window.location.href = "checkout.html?id=" + productId; // Redirect to checkout page with product ID
 }
+ ); 
 
 
