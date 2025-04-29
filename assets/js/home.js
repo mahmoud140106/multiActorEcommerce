@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <h5 class="imgContainer text-light">${categories[i].name}</h5>
               <div class="cardDetails text-light">
                 <p class="text-light">${productsOfCategory.length} product</p>
-                <button class="btn p-3 btn-light">View</button>
+                <button class="btn p-3 btn-light viewProductsOfCategory"   value="${categories[i].name}">View</button>
               </div>
             </div>
           </div>`; 
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <h5 class="imgContainer text-light">${categories[i].name}</h5>
             <div class="cardDetails text-light">
               <p class="text-light">${productsOfCategory.length} product</p>
-              <button class="btn p-3 btn-light">View</button>
+              <button class="btn p-3 btn-light viewProductsOfCategory"  value="${categories[i].name}">View</button>
             </div>
           </div>
         </div>`;
@@ -225,3 +225,63 @@ for (let i = 1; i < reviews.length; i++) {
     </div>
   `;
 }
+
+
+
+
+let textSearch = '';
+textSearch.toLowerCase()
+
+document.getElementById("searchGo").addEventListener("click", function () {
+  textSearch = document.getElementById("searchInput").value;
+  let pros = ProductManager.getAllProducts();
+
+  for (let i = 0; i < pros.length; i++){
+    if (pros[i].name.toLowerCase().includes(textSearch.toLowerCase())) {
+
+      console.log(pros[i].name);
+
+      
+    }
+  }
+  
+})
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+     let viewAllProductsOfCategory = document.getElementsByClassName("viewProductsOfCategory");
+    
+    for (let i = 0; i < viewAllProductsOfCategory.length; i++){
+
+  viewAllProductsOfCategory[i].addEventListener("click", function (e) {
+  window.location.href = `../../customer/product.html?categoryType=${e.target.value}`;
+      
+
+})
+
+}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById("viewCategories").addEventListener("click", function (e) {
+  console.log(e);
+  
+
+  window.location.href="/customer/categories.html"
+  
+})

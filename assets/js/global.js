@@ -90,7 +90,7 @@ export function updateNavbar() {
       }
       navLinks.innerHTML = `
         <li class="nav-item"><a class="nav-link hover-light" href="/index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="/customer/catalog.html">Catalog</a></li>
+        <li class="nav-item"><a class="nav-link hover-light" href="/customer/product.html">Catalog</a></li>
         <li class="nav-item"><a class="nav-link hover-light" href="/customer/cart.html">Cart</a></li>
         <li class="nav-item"><a class="nav-link hover-light" href="/customer/profile.html">Profile</a></li>
         <li class="nav-item"><a class="nav-link hover-light" href="#" onclick="logout()">Logout</a></li>
@@ -116,7 +116,7 @@ export function updateNavbar() {
     }
     navLinks.innerHTML = `
       <li class="nav-item"><a class="nav-link hover-light" href="/index.html">Home</a></li>
-      <li class="nav-item"><a class="nav-link hover-light" href="/customer/catalog.html">Catalog</a></li>
+      <li class="nav-item"><a class="nav-link hover-light" href="/customer/product.html">Catalog</a></li>
       <li class="nav-item">
         <a class="nav-link hover-light loginsignup" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
       </li>
