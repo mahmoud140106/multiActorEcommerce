@@ -208,7 +208,11 @@
           </div>
 
           <h4>Delivery</h4>
-          <form class="row g-3">
+          <form class="row g-3" action="completedOrder.html">
+            <input type="text" id="customerId" name="customerId" hidden />
+            <input type="text" id="productId" name="productId" hidden />
+            <input type="text" id="productCount" name="productCount" hidden />
+
             <div class="col-md-12">
               <select class="form-select">
                
@@ -350,38 +354,38 @@
             <!-- Billing Address Fields (disabled visually as example) -->
             <div class="row g-3 d-none" id="billingAddress">
               <div class="col-md-12">
-                <input
+                <!-- <input
                   type="text"
                   class="form-control"
                   placeholder="Egypt"
                   disabled
-                />
+                /> -->
               </div>
               <div class="d-flex">
                 <div class="col-md-6">
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control shippingData"
                     placeholder="First name "
                     name="firstName"
-                  />
+                  /> -->
                 </div>
                 <div class="col-md-6">
-                  <input
+                  <!-- <input
                     type="text"
                     class="form-control shippingData"
                     placeholder="Last name"
                     name="lastName"
-                  />
+                  /> -->
                 </div>
               </div>
               <div class="col-12">
-                <input
+                <!-- <input
                   type="text"
                   class="form-control shippingData"
                   placeholder="Address"
                   
-                />
+                /> -->
               </div>
               <!-- <div class="col-12">
                 <input
@@ -394,10 +398,10 @@
 
               <div class="row g-2 mb-3">
                 <div class="col">
-                  <input type="text" class="form-control shippingData" placeholder="City" />
+                  <!-- <input type="text" class="form-control shippingData" placeholder="City" /> -->
                 </div>
                 <div class="col">
-                  <select class="form-select shippingData">
+                  <!-- <select class="form-select shippingData">
                     <option value="">Select Governorate</option>
                     <option value="Cairo">Cairo</option>
                     <option value="Giza">Giza</option>
@@ -409,7 +413,7 @@
                     <option value="Gharbia">Gharbia</option>
                     <option value="Ismailia">Ismailia</option>
                     <option value="Menofia">Menofia</option>
-                  </select>
+                  </select> -->
                 </div>
                 <!-- <div class="col">
                   <input
@@ -428,18 +432,18 @@
                 />
               </div> -->
               <div class="col-12">
-                <input
+                <!-- <input
                   type="text"        
                   class="form-control shippingData"
                   placeholder="Phone number"
                   name="PhoneNumber"
-                />
+                /> -->
               </div>
             </div>
 
             <!-- Complete Order Button -->
             <button
-              type="button"
+              type="submit"
               class="btn btn-complete w-100 btn-sm btn-dark text-light"
               id="completeOrder"
               
