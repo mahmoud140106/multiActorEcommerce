@@ -26,12 +26,13 @@ function renderCart() {
       const quantity = item.quantity || 0;
 
       const cartItemHTML = `
-        <div class="row g-0 align-items-center p-4 cart-item" product-id="${item.id}">
-          <div class="col-md-2">
+        <div class="row g-0 align-items-center p-4 cart-item " >
+          <div class="col-md-2 productDetailsItem"  product-id="${item.id}">
             <img
               src="${item.image}"
               alt="${item.name}" 
-              class="img-fluid rounded-3"
+              class="img-fluid rounded-3 "
+             
             />
           </div>
           <div class="col-md-6 ps-4">
@@ -244,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   //link cart items with product Details page
 
- let cartItems= document.querySelectorAll('.cart-item');
+ let cartItems= document.querySelectorAll('.productDetailsItem');
  cartItems.forEach((item)=>{
   item.addEventListener('click',function(){
     let itemId= item.getAttribute('product-id');
