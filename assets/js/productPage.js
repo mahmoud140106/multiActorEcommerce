@@ -8,12 +8,19 @@ let AllCategories = CategoryManager.getAllCategories();
 
 
 
-function product(item) {
+function product(items) {
   
+    if (items.length==0) {
+    productPage.innerHTML=`<p class="h1 text-danger">No Products yet</p>`
+  }
 
-   productPage.innerHTML = ``;
+    else {
 
-   item.forEach((product, index) => {
+      productPage.innerHTML = ``;
+
+
+
+   items.forEach((product, index) => {
       const card = document.createElement("div");
       card.className = "col";
       card.innerHTML = `
@@ -66,6 +73,12 @@ function product(item) {
       productPage.appendChild(card);
    });
     
+      
+  }
+  
+  
+  
+
     
   }
 
