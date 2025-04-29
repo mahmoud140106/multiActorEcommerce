@@ -1,3 +1,4 @@
+import { ProductManager } from "./productManager.js";
 // cartManager.js
 export const CartManager = {
   // Cart Operations
@@ -25,13 +26,15 @@ export const CartManager = {
     );
     
     if (existingItemIndex !== -1) {
+      // Update quantity if item already exists
       cart[existingItemIndex].quantity += 1;
+      this.showToast(`${cartItem.name} Quantity updated in cart!`);
     } else {
       cart.push(cartItem);
+      this.showToast(`${cartItem.name} added to cart!`);
     }
     
     localStorage.setItem('cart', JSON.stringify(cart));
-    this.showToast(`${cartItem.name} added to cart!`);
     return cartItem;
   },
   
@@ -55,6 +58,11 @@ export const CartManager = {
     } else {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
+    const productId = cart[index].id;
+    const quantityChange = change;
+
+    // Update the stock in ProductManager
+    ProductManager.updateStock(productId, -quantityChange);
     return cart;
   },
   
@@ -148,11 +156,11 @@ export const CartManager = {
   addToCartFromWishlist: function(productId) {
     const wishlist = this.getWishlist();
     const item = wishlist.find(item => item.id == productId);
-    
+
     if (item) {
       let cart = this.getCart();
       const existingItemIndex = cart.findIndex(cartItem => cartItem.id == item.id);
-      
+
       if (existingItemIndex !== -1) {
         cart[existingItemIndex].quantity += 1;
       } else {
@@ -165,7 +173,11 @@ export const CartManager = {
           quantity: 1
         });
       }
-      
+
+      // Remove the item from the wishlist
+      const updatedWishlist = wishlist.filter(wishlistItem => wishlistItem.id != productId);
+      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+
       localStorage.setItem('cart', JSON.stringify(cart));
       this.showToast(`${item.name} added to cart`);
       return item;
@@ -174,13 +186,10 @@ export const CartManager = {
   },
   
   // Function to clear wishlist
-  clearWishlist: function(confirmDialog = true) {
-    if (!confirmDialog || confirm('Are you sure you want to clear your entire wishlist?')) {
-      localStorage.removeItem('wishlist');
-      this.showToast('Wishlist cleared');
-      return true;
-    }
-    return false;
+  clearWishlist: function() {
+    localStorage.removeItem('wishlist');
+    this.showToast('Wishlist cleared');
+    return true;
   },
   
   // Function to add all wishlist items to cart
