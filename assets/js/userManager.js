@@ -1,18 +1,24 @@
 import { StorageManager } from "./storageManager.js";
 
 export class User {
-  constructor(id, userName, email, password, role, createdAt = new Date()) {
+  constructor(id, userName, email, password, role, createdAt = new Date(), profilePicture = "",deliveryData) {
     this.id = id;
     this.userName = userName;
     this.email = email;
     this.password = password;
     this.role = role;
     this.createdAt = createdAt;
+    this.profilePicture = profilePicture;
+    this.deliveryData = deliveryData;
   }
 }
 
 export class UserManager {
-  static createUser(userName, email, password, role) {
+  static getDefaultProfilePicture() {
+    return "./images/anonymous.png"; // THE DEFAULT PP WE'RE YET TO ADD IN THE IMAGES FILE
+  }
+
+  static createUser(userName, email, password, role, profilePicture = "") {
     console.log(
       "createUser: Attempting to create user with userName:",
       userName,
@@ -42,7 +48,9 @@ export class UserManager {
     }
 
     const id = Date.now();
-    const user = new User(id, userName, email, password, role);
+    const newProfilePicture =
+      profilePicture || UserManager.getDefaultProfilePicture();
+    const user = new User(id, userName, email, password, role, new Date(), newProfilePicture);
     let users = StorageManager.load("users") || [];
     users.push(user);
     StorageManager.save("users", users);
@@ -57,11 +65,13 @@ export class UserManager {
     console.log("getUser: Found user:", user);
     return user;
   }
+
   static getUserNameById(id) {
     console.log("getUserNameById: Fetching username for id:", id);
     const user = UserManager.getUser(id);
     return user ? user.userName : null;
   }
+
   static getUserByEmail(email) {
     console.log("getUserByEmail: Fetching user with email:", email);
     const users = StorageManager.load("users") || [];
@@ -70,11 +80,21 @@ export class UserManager {
     return user;
   }
 
-  static updateUser(id, userName, email, password, role) {
+  static updateUser(id, userName, email, password, role, profilePicture = "") {
     console.log("updateUser: Updating user with id:", id);
     let users = StorageManager.load("users") || [];
+    // Get the current user data to keep values (like createdAt and the existing profilePicture)
+    const oldUser = users.find((user) => user.id === id);
+    if (!oldUser) {
+      console.error("updateUser: User not found with id:", id);
+      return;
+    }
+    const newProfilePicture =
+      profilePicture || oldUser.profilePicture || UserManager.getDefaultProfilePicture();
     users = users.map((user) =>
-      user.id === id ? new User(id, userName, email, password, role) : user
+      user.id === id
+        ? new User(id, userName, email, password, role, oldUser.createdAt, newProfilePicture)
+        : user
     );
     StorageManager.save("users", users);
     console.log("updateUser: User updated successfully:", {

@@ -91,7 +91,22 @@ a:hover{
 {
   color: gold;
 }
-
+td{
+  width:400px;
+  text-align: center;
+  padding-right: 30px;
+}
+#carouselrecommendationInner{
+height: 300px;
+}
+.RecomndProduct-price{
+  color: darkred;
+}
+.cursol-img:hover{
+cursor: pointer;
+scale: 1.1;
+transition: all 1s ease;
+}
 @media all and (min-width:950px){
   #reviewSection{
     position: relative;

@@ -27,8 +27,8 @@
 .card {
     position: relative;
     margin: auto;
-    width: 80%; 
-    height: 400px;
+    width: 100%; 
+    height: auto;
     overflow: hidden;
     transition: var(--transition);
 }
@@ -110,3 +110,24 @@
     border: 1px solid black;
     color: black;
 }
+.pagination.pages {
+    flex-wrap: wrap; /* Allow pagination items to break to new lines */
+  }
+  .pages .page-link {
+    padding: 10px; /* Ensure clickable space remains large enough */
+  }
+  
+.col {
+    flex: 1 1 100%;
+  }
+  @media (min-width: 576px) { /* Small screens */
+    .col {
+      flex: 1 1 50%;
+    }
+  }
+  @media (min-width: 768px) { /* Medium screens */
+    .col {
+      flex: 1 1 25%;
+    }
+  }
+  

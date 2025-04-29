@@ -114,46 +114,6 @@ export function initializeDefaultReviews() {
       3,
       "HI , absolutely incredible experience! The attention to detail and personalized service made our Maldives trip unforgettable. Highly recommend!",
       new Date()
-    ),
-    new Review(
-      Date.now() + 3,
-      3,
-      4,
-      3,
-      "HI , absolutely incredible experience! The attention to detail and personalized service made our Maldives trip unforgettable. Highly recommend!",
-      new Date()
-    ),
-    new Review(
-      Date.now() + 3,
-      4,
-      4,
-      3,
-      "HI , absolutely incredible experience! The attention to detail and personalized service made our Maldives trip unforgettable. Highly recommend!",
-      new Date()
-    ),
-    new Review(
-      Date.now() + 3,
-      5,
-      4,
-      3,
-      "HI , absolutely incredible experience! The attention to detail and personalized service made our Maldives trip unforgettable. Highly recommend!",
-      new Date()
-    ),
-    new Review(
-      Date.now() + 3,
-      6,
-      4,
-      3,
-      "HI , absolutely incredible experience! The attention to detail and personalized service made our Maldives trip unforgettable. Highly recommend!",
-      new Date()
-    ),
-    new Review(
-      Date.now() + 3,
-      4,
-      4,
-      3,
-      "HI , absolutely incredible experience! The attention to detail and personalized service made our Maldives trip unforgettable. Highly recommend!",
-      new Date()
     )
   ];
 

@@ -185,32 +185,33 @@
     </nav>
 
     <div class="container py-5">
-      <div class="d-flex row flex-column-reverse flex-lg-row g-5">
+      <div class="d-flex  flex-column-reverse flex-lg-row g-5">
         <!-- Left side -->
-        <div class="col-12 col-lg-7">
+        <div class=" col-12 col-lg-7  ">
           <div class="d-flex justify-content-between">
             <h4>Contact</h4>
-            <a href="#">Log in</a>
+            <!-- <a href="#">Log in</a> -->
           </div>
           <div class="mb-3">
             <input
               type="email"
               class="form-control"
               placeholder="Email or mobile phone number"
+              id="userEmail"
             />
-            <div class="form-check mt-2">
+            <!-- <div class="form-check mt-2">
               <input class="form-check-input" type="checkbox" checked />
               <label class="form-check-label"
                 >Email me with news and offers</label
               >
-            </div>
+            </div> -->
           </div>
 
           <h4>Delivery</h4>
           <form class="row g-3">
             <div class="col-md-12">
               <select class="form-select">
-                <option selected>Country/Region</option>
+               
                 <option>Egypt</option>
               </select>
             </div>
@@ -218,53 +219,84 @@
               <div class="col-md-6">
                 <input
                   type="text"
-                  class="form-control"
-                  placeholder="First name (optional)"
+                  class="form-control deliveryData"
+                  placeholder="First name "
+                  name="firstName"
                 />
               </div>
               <div class="col-md-6">
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control deliveryData"
                   placeholder="Last name"
+                  name="lastName"
                 />
               </div>
             </div>
             <div class="col-12">
-              <input type="text" class="form-control" placeholder="Address" />
+              <input type="text" class="form-control deliveryData" placeholder="Address"  name="address"/>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
               <input
                 type="text"
-                class="form-control"
+                class="form-control deliveryData"
                 placeholder="Apartment, suite, etc. (optional)"
+                name="Apartment"
               />
+            </div> -->
+            <div class="col-md-6">
+              <input type="text" class="form-control deliveryData" placeholder="City"   name="City"/>
             </div>
-            <div class="col-md-4">
-              <input type="text" class="form-control" placeholder="City" />
-            </div>
-            <div class="col-md-4">
-              <select class="form-select">
-                <option selected>Governorate</option>
-                <option>Dakahlia</option>
+            <div class="col-md-6">
+              <select class="form-select deliveryData"  name="Governorate">
+                <option value="">Select Governorate</option>
+                <option value="Cairo">Cairo</option>
+                <option value="Giza">Giza</option>
+                <option value="Alexandria">Alexandria</option>
+                <option value="Dakahlia">Dakahlia</option>
+                <option value="Red Sea">Red Sea</option>
+                <option value="Beheira">Beheira</option>
+                <option value="Fayoum">Fayoum</option>
+                <option value="Gharbia">Gharbia</option>
+                <option value="Ismailia">Ismailia</option>
+                <option value="Menofia">Menofia</option>
+                <option value="Minya">Minya</option>
+                <option value="Qaliubiya">Qaliubiya</option>
+                <option value="New Valley">New Valley</option>
+                <option value="Suez">Suez</option>
+                <option value="Aswan">Aswan</option>
+                <option value="Assiut">Assiut</option>
+                <option value="Beni Suef">Beni Suef</option>
+                <option value="Port Said">Port Said</option>
+                <option value="Damietta">Damietta</option>
+                <option value="Sharkia">Sharkia</option>
+                <option value="South Sinai">South Sinai</option>
+                <option value="Kafr El Sheikh">Kafr El Sheikh</option>
+                <option value="Matrouh">Matrouh</option>
+                <option value="Luxor">Luxor</option>
+                <option value="Qena">Qena</option>
+                <option value="North Sinai">North Sinai</option>
+                <option value="Sohag">Sohag</option>
               </select>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
               <input
                 type="text"
-                class="form-control"
+                class="form-control deliveryData"
                 placeholder="Postal code (optional)"
+                name="PostalCode"
               />
-            </div>
+            </div> -->
             <div class="col-12">
               <input
-                type="text"
-                class="form-control"
+                type="text"        
+                class="form-control deliveryData"
                 placeholder="Phone number"
+                name="PhoneNumber"
               />
             </div>
             <div class="form-check mt-2">
-              <input class="form-check-input" type="checkbox" />
+              <input class="form-check-input" type="checkbox" id="saveInformation"/>
               <label class="form-check-label"
                 >Save this information for next time</label
               >
@@ -279,11 +311,10 @@
             </div>
 
             <h4 class="mt-5">Payment</h4>
-            <span>All transactions are secure and encrypted.</span>
             <div class="border p-3 rounded">
               <span>Cash on Delivery (COD)</span>
             </div>
-
+<!-- 
             <h5 class="mt-4">Billing address</h5>
             <div
               class="form-check align-content-center rounded-bottom-2 rounded-top-2"
@@ -298,8 +329,8 @@
               <label class="form-check-label" for="sameAddress">
                 Same as shipping address
               </label>
-            </div>
-            <div
+            </div> -->
+            <!-- <div
               class="form-check align-content-center rounded-bottom-2 rounded-top-2"
               id="differentAddressDiv"
             >
@@ -312,81 +343,103 @@
               <label class="form-check-label" for="differentAddress">
                 Use a different billing address
               </label>
-            </div>
+            </div> -->
             <!-- Billing Address Fields (disabled visually as example) -->
             <div class="row g-3 d-none" id="billingAddress">
               <div class="col-md-12">
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Country/Region"
+                  placeholder="Egypt"
                   disabled
                 />
               </div>
-              <div class="col-md-6">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="First name (optional)"
-                  disabled
-                />
-              </div>
-              <div class="col-md-6">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Last name"
-                  disabled
-                />
+              <div class="d-flex">
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    class="form-control shippingData"
+                    placeholder="First name "
+                    name="firstName"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <input
+                    type="text"
+                    class="form-control shippingData"
+                    placeholder="Last name"
+                    name="lastName"
+                  />
+                </div>
               </div>
               <div class="col-12">
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control shippingData"
                   placeholder="Address"
-                  disabled
+                  
                 />
               </div>
-              <div class="col-12">
+              <!-- <div class="col-12">
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Apartment, suite, etc. (optional)"
                   disabled
                 />
-              </div>
+              </div> -->
 
               <div class="row g-2 mb-3">
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="City" />
+                  <input type="text" class="form-control shippingData" placeholder="City" />
                 </div>
                 <div class="col">
-                  <select class="form-select">
-                    <option selected>Dakahlia</option>
+                  <select class="form-select shippingData">
+                    <option value="">Select Governorate</option>
+                    <option value="Cairo">Cairo</option>
+                    <option value="Giza">Giza</option>
+                    <option value="Alexandria">Alexandria</option>
+                    <option value="Dakahlia">Dakahlia</option>
+                    <option value="Red Sea">Red Sea</option>
+                    <option value="Beheira">Beheira</option>
+                    <option value="Fayoum">Fayoum</option>
+                    <option value="Gharbia">Gharbia</option>
+                    <option value="Ismailia">Ismailia</option>
+                    <option value="Menofia">Menofia</option>
                   </select>
                 </div>
-                <div class="col">
+                <!-- <div class="col">
                   <input
                     type="text"
                     class="form-control"
                     placeholder="Postal code (optional)"
                   />
-                </div>
+                </div> -->
               </div>
 
-              <div class="mb-4">
+              <!-- <div class="mb-4">
                 <input
                   type="text"
                   class="form-control"
                   placeholder="Get Order Update"
+                />
+              </div> -->
+              <div class="col-12">
+                <input
+                  type="text"        
+                  class="form-control shippingData"
+                  placeholder="Phone number"
+                  name="PhoneNumber"
                 />
               </div>
             </div>
 
             <!-- Complete Order Button -->
             <button
-              type="submit"
+              type="button"
               class="btn btn-complete w-100 btn-sm btn-dark text-light"
+              id="completeOrder"
+              
             >
               Complete order
             </button>
@@ -394,10 +447,10 @@
         </div>
 
         <!-- Right side -->
-        <div class="col-12 col-lg-5 checkout-summary">
+        <div class=" col-11 col-sm-12 col-lg-5 mx-auto  mb-3 ms-lg-5 checkout-summary ">
           <div>
 
-            <div class="  mb-3 " id="summary" >
+            <div class="  mb-3  " id="summary" >
               <!-- <div id="summaryImgDiv" class="me-2">
                
               </div>
@@ -413,16 +466,16 @@
             <hr />
             <div class="d-flex justify-content-between">
               <span>Subtotal</span>
-              <span id="Subtotal"></span>
+              <span class="text-danger" id="Subtotal"></span>
             </div>
             <div class="d-flex justify-content-between" >
               <span>Shipping</span>
-              <span  id="shipping">$90.00</span>
+              <span class="text-danger" id="shipping">$90.00</span>
             </div>
             <hr />
             <div class="d-flex justify-content-between fw-bold">
               <span>Total</span>
-              <span id="totalPrice"></span>
+              <span class="text-danger" id="totalPrice"></span>
             </div>
           </div>
         </div>
@@ -430,7 +483,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light pt-5 pb-0">
+    <footer class="  bg-dark text-light pt-5 pb-0">
       <div class="container">
         <div class="row gy-4">
           <!-- About Section -->
