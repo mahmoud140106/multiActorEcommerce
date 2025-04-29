@@ -132,18 +132,30 @@
           <!-- Sidebar -->
           <div class="col-3 sidebar">
             <div class="profile">
-              <div class="profile-pic" id="profile-pic-container">JD</div>
+              <div class="profile-pic" id="profile-pic-container">U</div>
               <input type="file" id="profile-pic-input" accept="image/*" style="display: none;">
               <div class="profile-name">
-                <p>Hi, <br> John Doe</p>
+                <p>Hi, <br> User123</p>
               </div>
             </div>
             <ul class="profile-list">
-              <li class="active">My details</li>
-              <li>My orders</li>
-              <li>Account overview</li>
-              <li>Payment methods</li>
-            </ul>
+              <li class="active">
+                <i class="fas fa-user"></i>
+                <span>My details</span>
+              </li>
+              <li>
+                <i class="fas fa-shopping-bag"></i>
+                <span>My orders</span>
+              </li>
+              <li>
+                <i class="fas fa-credit-card"></i>
+                <span>Payment methods</span>
+              </li>
+              <li>
+                <i class="fas fa-envelope"></i>
+                <span>Contact Us!</span>
+              </li>
+            </ul>            
           </div>
 
           <!-- Main Content -->
@@ -156,18 +168,14 @@
               </p>
               <form>
                 <div class="form-group">
-                  <label for="first-name">FIRST NAME*</label>
-                  <input type="text" id="first-name" value="John" />
-                </div>
-                <div class="form-group">
-                  <label for="last-name">LAST NAME*</label>
-                  <input type="text" id="last-name" value="Doe" />
+                  <label for="user-name">USER NAME*</label>
+                  <input type="text" id="user-name" value="Username" />
                 </div>
                 <div class="form-group">
                   <label for="email">EMAIL ADDRESS*</label>
                   <input type="email" id="email" value="email@gmail.com" />
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="dob">DATE OF BIRTH*</label>
                   <input type="date" id="dob" />
                 </div>
@@ -177,50 +185,132 @@
                     <option>Womenswear</option>
                     <option>Menswear</option>
                   </select>
-                </div>
+                </div> -->
                 <button type="submit" class="save-btn">Save Changes</button>
               </form>
             </div>
           </div>
 
           <div class="order-section col-9 main d-none">
-            <h2>My Orders</h2>
-            <div class="order-card">
-              <img src="../assets/images/shopping16.jpg" alt="Product Image" class="order-img" />
-              <div class="order-details">
-                <h5 class="order-title">Product Name</h5>
-                <p class="order-desc">product desc, Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-                <p><strong>Category:</strong> Shirts</p>
-                <p><strong>Price:</strong> $199.99</p>
-                <p><strong>Status:</strong> Shipped</p>
-                <p><strong>Order Date:</strong> March 25, 2025</p>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h1 class="fw-bold mb-0">My Orders</h1>
+              <span class="text-muted" id="orders-count">3 orders</span>
+            </div>
+            
+            <!-- Order Card 1 -->
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-3">
+              <div class="card-body p-4">
+                <div class="row g-0 align-items-center">
+                  <!-- Order Image -->
+                  <div class="col-md-2">
+                    <img
+                      src="../assets/images/shopping16.jpg"
+                      alt="Order Image"
+                      class="img-fluid rounded-3 order-img"
+                    />
+                  </div>
+                  <!-- Order Details -->
+                  <div class="col-md-6 ps-4">
+                    <div>
+                      <h5 class="mb-1 fw-semibold">Order #12345</h5>
+                      <p class="text-muted small mb-2">Products: P1, P2, P3, P4</p>
+                      <p class="text-muted small mb-2">Ordered on: March 25, 2025</p>
+                    </div>
+                  </div>
+                  <!-- Price and Status -->
+                  <div class="col-md-4 text-end">
+                    <h4 class="fw-bold">$199.99</h4>
+                    <span class="text-success small fw-semibold">
+                      <i class="fas fa-check-circle me-1"></i> Shipped
+                    </span>
+                  </div>
+                </div>
+                <!-- View More Button -->
+                <div class="text-end mt-3">
+                  <a href="#" class="btn btn-link p-0 text-decoration-none">
+                    View More <i class="fas fa-arrow-right ms-1"></i>
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="order-card">
-              <img src="../assets/images/shopping16.jpg" alt="Product Image" class="order-img" />
-              <div class="order-details">
-                <h5 class="order-title">Product Name</h5>
-                <p class="order-desc">product desc, Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-                <p><strong>Category:</strong> Shirts</p>
-                <p><strong>Price:</strong> $199.99</p>
-                <p><strong>Status:</strong> Shipped</p>
-                <p><strong>Order Date:</strong> March 25, 2025</p>
+            
+            <!-- Order Card 2 -->
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-3">
+              <div class="card-body p-4">
+                <div class="row g-0 align-items-center">
+                  <!-- Order Image -->
+                  <div class="col-md-2">
+                    <img
+                      src="../assets/images/shopping16.jpg"
+                      alt="Order Image"
+                      class="img-fluid rounded-3 order-img"
+                    />
+                  </div>
+                  <!-- Order Details -->
+                  <div class="col-md-6 ps-4">
+                    <div>
+                      <h5 class="mb-1 fw-semibold">Order #12346</h5>
+                      <p class="text-muted small mb-2">Products: P5, P6, P7</p>
+                      <p class="text-muted small mb-2">Ordered on: April 05, 2025</p>
+                    </div>
+                  </div>
+                  <!-- Price and Status -->
+                  <div class="col-md-4 text-end">
+                    <h4 class="fw-bold">$299.99</h4>
+                    <span class="text-success small fw-semibold">
+                      <i class="fas fa-check-circle me-1"></i> Shipped
+                    </span>
+                  </div>
+                </div>
+                <!-- View More Button -->
+                <div class="text-end mt-3">
+                  <a href="#" class="btn btn-link p-0 text-decoration-none">
+                    View More <i class="fas fa-arrow-right ms-1"></i>
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="order-card">
-              <img src="../assets/images/shopping16.jpg" alt="Product Image" class="order-img" />
-              <div class="order-details">
-                <h5 class="order-title">Product Name</h5>
-                <p class="order-desc">product desc, Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-                <p><strong>Category:</strong> Shirts</p>
-                <p><strong>Price:</strong> $199.99</p>
-                <p><strong>Status:</strong> Shipped</p>
-                <p><strong>Order Date:</strong> March 25, 2025</p>
+            
+            <!-- Order Card 3 -->
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-3">
+              <div class="card-body p-4">
+                <div class="row g-0 align-items-center">
+                  <!-- Order Image -->
+                  <div class="col-md-2">
+                    <img
+                      src="../assets/images/shopping16.jpg"
+                      alt="Order Image"
+                      class="img-fluid rounded-3 order-img"
+                    />
+                  </div>
+                  <!-- Order Details -->
+                  <div class="col-md-6 ps-4">
+                    <div>
+                      <h5 class="mb-1 fw-semibold">Order #12347</h5>
+                      <p class="text-muted small mb-2">Products: P8, P9, P10, P11</p>
+                      <p class="text-muted small mb-2">Ordered on: May 10, 2025</p>
+                    </div>
+                  </div>
+                  <!-- Price and Status -->
+                  <div class="col-md-4 text-end">
+                    <h4 class="fw-bold">$399.99</h4>
+                    <span class="text-success small fw-semibold">
+                      <i class="fas fa-check-circle me-1"></i> Shipped
+                    </span>
+                  </div>
+                </div>
+                <!-- View More Button -->
+                <div class="text-end mt-3">
+                  <a href="#" class="btn btn-link p-0 text-decoration-none">
+                    View Details <i class="fas fa-arrow-right ms-1"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
+          
 
-          <div class="overview-section col-9 main d-none">
+          <!-- <div class="overview-section col-9 main d-none">
             <div class="account-overview">
               <h2>ACCOUNT OVERVIEW</h2>
               <p>Here's a snapshot of your account details:</p>
@@ -233,7 +323,7 @@
                 <p><strong>Mostly Interested In:</strong> <span>Not specified</span></p>
               </div>
             </div>      
-          </div>
+          </div> -->
 
           <div class="payment-section col-9 main d-none">
             <div class="payment-method">
@@ -247,6 +337,75 @@
                 <p class="payment-note">Card payments are coming soon.</p>
               </div>
               <button class="save-btn" id="payment-btn">Continue to COD</button>
+            </div>
+          </div>
+
+          <div class="contact-us col-9 main d-none">
+            <div class="contact-section">
+              <h2>CONTACT US</h2>
+              <p>Send us a message and our team will get back to you as soon as possible.</p>
+              
+              <form id="contact-form">
+                <div class="form-group">
+                  <label for="contact-subject">SUBJECT*</label>
+                  <input type="text" id="contact-subject" placeholder="Enter message subject" required />
+                </div>
+                
+                <div class="form-group">
+                  <label for="message-type">MESSAGE TYPE*</label>
+                  <select id="message-type" required>
+                    <option value="">Select a category</option>
+                    <option value="order">Order Issue</option>
+                    <option value="payment">Payment Problem</option>
+                    <option value="account">Account Question</option>
+                    <option value="product">Product Inquiry</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="message-content">YOUR MESSAGE*</label>
+                  <textarea id="message-content" rows="6" placeholder="Tell us how we can help you..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <label for="attach-file">ATTACHMENTS (OPTIONAL)</label>
+                  <input type="file" id="attach-file" class="file-input" />
+                  <p class="file-note">Max file size: 5MB. Supported formats: JPG, PNG, PDF</p>
+                </div>
+                
+                <button type="submit" class="save-btn" id="send-message-btn">Send Message</button>
+              </form>
+              
+              <!-- Message History Section -->
+              <div class="message-history mt-5">
+                <h3>MESSAGE HISTORY</h3>
+                <div class="message-list">
+                  <!-- Message Item -->
+                  <div class="message-item">
+                    <div class="message-header">
+                      <h4>Order Issue: #12345</h4>
+                      <span class="message-date">April 20, 2025</span>
+                    </div>
+                    <div class="message-status">
+                      <span class="status-badge status-open">Open</span>
+                    </div>
+                    <a href="#" class="view-message">View Details</a>
+                  </div>
+                  
+                  <!-- Message Item -->
+                  <div class="message-item">
+                    <div class="message-header">
+                      <h4>Payment Problem</h4>
+                      <span class="message-date">April 15, 2025</span>
+                    </div>
+                    <div class="message-status">
+                      <span class="status-badge status-closed">Closed</span>
+                    </div>
+                    <a href="#" class="view-message">View Details</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
  

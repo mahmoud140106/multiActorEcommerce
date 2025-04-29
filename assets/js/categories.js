@@ -1,51 +1,42 @@
 import { Category, CategoryManager, initializeDefaultCategories } from './categoryManager.js';
 
 let currentPage = 1; 
-const itemsPerPage = 6;
+const itemsPerPage = 8;
 
 function appendCategories() {
     const container = document.getElementById('category-body');
   
     const categories = CategoryManager.getAllCategories();
-
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const paginatedCategories = categories.slice(startIndex, endIndex);
 
-    let row = document.createElement('div');
-    row.className = 'row myrow'; // 1st row
-
+    let row;
     paginatedCategories.forEach((category, index) => {
-    const col = document.createElement('div');
-    col.className = 'col';
+        if (index % 4 === 0) { // Create new row every 4 items
+            row = document.createElement('div');
+            row.className = 'row myrow';
+            container.appendChild(row);
+        }
 
-    col.innerHTML = `
-      <div class="card">
-        <div class="card-cover">
-          <div class="blur-background"></div>
-          <h1 class="cover-text">${category.name}</h1>
-        </div>
-        <img src="${category.image}" class="card-img-top" alt="${category.name}">
-      </div>
-    `;
+        const col = document.createElement('div');
+        col.className = 'col';
+        col.innerHTML = `
+          <div class="card">
+            <div class="card-cover">
+              <div class="blur-background" style="background-image: url(${category.image});"></div>
+              <h1 class="cover-text">${category.name}</h1>
+            </div>
+            <img src="${category.image}" class="card-img-top" alt="${category.name}">
+          </div>
+        `;
 
-    row.appendChild(col); // append the stuff to a col and the cols inside the row
+        row.appendChild(col);
+    });
 
-    // after 3 items append the row to the container and make a new row
-    if ((index + 1) % 3 === 0) {
-      container.appendChild(row);
-      row = document.createElement('div');
-      row.className = 'row myrow'; // make a new row
-    }
-  });
-
-    // append the last row if it contains any columns
-    if (row.children.length > 0) {
-        container.appendChild(row);
-    }
-
-  updatePagination(categories.length);
+    updatePagination(categories.length);
 }
+
 
 function updatePagination(totalItems) {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -99,6 +90,6 @@ function updatePagination(totalItems) {
   }
 
 window.onload = function () {
-    initializeDefaultCategories(); 
+    initializeDefaultCategories();
     appendCategories();
 };
