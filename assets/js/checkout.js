@@ -2,12 +2,7 @@ import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
 import { showToast } from "./toast.js";
 
-let firstNameValue;
-let lastNameValue;
-let addressValue;
-let CityValue;
-let GovernorateValue;
-let PhoneNumberValue;
+
 let productId;
 let currentUser=StorageManager.load('currentUser');
 let deliveryDataUserObj= {};
@@ -18,6 +13,7 @@ window.addEventListener("load", function() {
      productId = parseInt(urlParams.get("id"));
      const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+     this.document.getElementById('customerId').value = currentUser.id;
     const product = ProductManager.getProduct(productId);
     if (!product && !cart) {
       console.error("Product not found ");
@@ -100,19 +96,14 @@ window.addEventListener("load", function() {
     this.document.getElementById('userEmail').value=`${currentUser.email}`;
    let deliveryData= StorageManager.load(`userDeliveryData`)   //get the delivery data of the current user
 
-    firstNameValue=this.document.querySelector(`input[name=firstName]`).value;
-    lastNameValue= this.document.querySelector(`input[name=lastName]`).value;
-    addressValue= this.document.querySelector(`input[name=address]`).value;
-    CityValue= this.document.querySelector(`input[name=City]`).value;
-    GovernorateValue= document.querySelector('select[name=Governorate]').value;
-    PhoneNumberValue= this.document.querySelector(`input[name=PhoneNumber]`).value;
+    this.document.querySelector(`input[name=firstName]`).value='';
+    this.document.querySelector(`input[name=lastName]`).value='';
+     this.document.querySelector(`input[name=address]`).value='';
+     this.document.querySelector(`input[name=City]`).value='';
+     document.querySelector('select[name=Governorate]').value='';
+    this.document.querySelector(`input[name=PhoneNumber]`).value='';
    
-   firstNameValue='';
-   lastNameValue='';
-   addressValue='';
-   CityValue='';
-   GovernorateValue = '';
-   PhoneNumberValue='';
+
 
    if(deliveryData.count!=undefined){
     this.document.querySelector(`input[name=firstName]`).value=deliveryData.firstName;
@@ -198,21 +189,21 @@ deliveryData.forEach((data)=>{
   }
  });
 
-document.getElementById('completeOrder').addEventListener('click',function(){
-  let customerId = currentUser.id;
-    StorageManager.save(`${customerId}`,deliveryDataUserObj);     // save the delivery data of the user in storage with key the id of customer
+// document.getElementById('completeOrder').addEventListener('click',function(){
+//   let customerId = currentUser.id;
+//     StorageManager.save(`${customerId}`,deliveryDataUserObj);     // save the delivery data of the user in storage with key the id of customer
   
-  if(deliveryDataUserObj.firstName==''|| deliveryDataUserObj.lastName=='' || deliveryDataUserObj.address=='' 
-    || deliveryDataUserObj.City=='' || deliveryDataUserObj.Governorate=='' || deliveryDataUserObj.PhoneNumber=='')
-  {
-    showToast('Delivery data is required','error');
+//   console.log(deliveryDataUserObj)
+//   if(deliveryDataUserObj.firstName==''|| deliveryDataUserObj.lastName=='' || deliveryDataUserObj.address=='' || deliveryDataUserObj.City=='' || deliveryDataUserObj.Governorate=='' || deliveryDataUserObj.PhoneNumber=='')
+//   {
+//     showToast('Delivery data is required','error');
   
-  }
-  else{
+//   }
+//   else{
 
-    console.log(deliveryDataUserObj)  
-    window.location.href=`completedOrder.html?customerId=${customerId}`;
-  }
+//     console.log(deliveryDataUserObj)  
+//     window.location.href=`completedOrder.html?customerId=${customerId}`;
+//   }
   
-})
+// })
 
