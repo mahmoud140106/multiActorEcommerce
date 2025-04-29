@@ -229,28 +229,21 @@ for (let i = 1; i < reviews.length; i++) {
 
 
 
-let textSearch = '';
-textSearch.toLowerCase()
+// search about product through home
 
-document.getElementById("searchGo").addEventListener("click", function () {
-  textSearch = document.getElementById("searchInput").value;
-  let pros = ProductManager.getAllProducts();
+document.getElementById("searchGo").addEventListener("click", function (e) {
 
-  for (let i = 0; i < pros.length; i++){
-    if (pros[i].name.toLowerCase().includes(textSearch.toLowerCase())) {
-
-      console.log(pros[i].name);
-
-      
-    }
-  }
+  let searchInputData=document.getElementById("searchInput").value;
   
+  window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
 })
 
 
 
 
 
+// viewAll Products Of specific Category through Home
 
 document.addEventListener("DOMContentLoaded", function () {
      let viewAllProductsOfCategory = document.getElementsByClassName("viewProductsOfCategory");
@@ -276,7 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+// viewAll Categories through Home
 
 document.getElementById("viewCategories").addEventListener("click", function (e) {
   console.log(e);
