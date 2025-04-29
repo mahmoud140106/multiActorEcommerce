@@ -242,7 +242,6 @@ document.getElementById("searchGo").addEventListener("click", function () {
       console.log(pros[i].name);
 
       
-      
     }
   }
   
@@ -258,17 +257,9 @@ document.addEventListener("DOMContentLoaded", function () {
     
     for (let i = 0; i < viewAllProductsOfCategory.length; i++){
 
-  console.log("hi");
-
-
   viewAllProductsOfCategory[i].addEventListener("click", function (e) {
   window.location.href = `../../customer/product.html?categoryType=${e.target.value}`;
-   
-
-
-   
-    
-    
+      
 
 })
 
