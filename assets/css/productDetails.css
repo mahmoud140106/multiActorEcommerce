@@ -44,7 +44,9 @@ strong{
   background-color: var(--secondary-color);
   color: white;
 }
-
+.card-icons button:hover{
+  background-color: var(--primary-color);
+}
 .heroBtn {
   width: fit-content;
 }
@@ -99,9 +101,7 @@ td{
 #carouselrecommendationInner{
 height: 300px;
 }
-.RecomndProduct-price{
-  color: darkred;
-}
+
 .cursol-img:hover{
 cursor: pointer;
 scale: 1.1;

@@ -1,0 +1,57 @@
+import { OrderManager } from "./orderManager.js";
+import{OrderItem} from "./orderManager.js";
+import { StorageManager } from "./storageManager.js";
+import { ProductManager } from "./productManager.js";
+
+const urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams)
+let customerId = parseInt(urlParams.get("customerId"));                 //get customer id from url
+let productId =  parseInt(urlParams.get("productId"));                    //get product id from url
+let productCount =  parseInt(urlParams.get("productCount"));                    //get product count from url
+
+
+//fetch the delivery data of the customer from url
+const customerDeliveryData ={
+    firstName : urlParams.get('firstName'),
+    lastName : urlParams.get('lastName'),
+    address: urlParams.get('address'),
+    City:urlParams.get('City'),
+    Governorate:urlParams.get('Governorate'),
+    PhoneNumber:urlParams.get('PhoneNumber')
+
+}
+// adding the deivery data of user in storage manager
+StorageManager.save('customerDeliveryData',customerDeliveryData);
+
+const cart = JSON.parse(localStorage.getItem('cart')) || [];        //get cart from local storage
+const product= ProductManager.getProduct(productId);                //get product from  storage manager
+let items =[];
+
+// if the items in cart
+if(Number.isNaN(productId)){
+    console.log('from cart')
+cart.forEach((item,index)=>{
+let orderItem= new OrderItem(item.id,item.quantity,item.price);
+
+items[index]=orderItem;
+
+})
+
+OrderManager.createOrder(customerId,items);                                          //create order
+
+}
+
+//if the item is direct from product details
+else {
+    let orderItem= new OrderItem(productId,productCount,product.price);
+    items[0]=orderItem;
+    OrderManager.createOrder(customerId,items);                                          //create order
+
+}
+
+let customerOrders= OrderManager.getOrdersByCustomer(customerId);                   // get customer orders
+
+let orderId = customerOrders[customerOrders.length-1].id;                             //get the id of the last order
+console.log(customerOrders)
+
+document.getElementById('orderId').innerText=orderId;

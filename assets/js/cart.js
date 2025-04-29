@@ -1,6 +1,8 @@
-// Import the CartManager module
+// Import the CartManager and ProductManager modules
 import { CartManager } from './cartManager.js';
+import { ProductManager } from './productManager.js';
 
+// Render the cart items
 function renderCart() {
   const cart = CartManager.getCart();
   const cartItemsContainer = document.getElementById('cart-items');
@@ -21,18 +23,17 @@ function renderCart() {
     cartItemsContainer.innerHTML = '<p class="p-4 text-center">Your cart is empty.</p>';
   } else {
     cart.forEach((item, index) => {
-      // Validate price and quantity
       const price = item.price || 0;
       const quantity = item.quantity || 0;
 
+      // Check stock
+      const stockInfo = ProductManager.checkStockAvailability(item.id);
+      const isOutOfStock = (stockInfo.stock - quantity) <= 0;
+
       const cartItemHTML = `
-        <div class="row g-0 align-items-center p-4 cart-item" product-id="${item.id}">
-          <div class="col-md-2">
-            <img
-              src="${item.image}"
-              alt="${item.name}" 
-              class="img-fluid rounded-3"
-            />
+        <div class="row g-0 align-items-center p-4 cart-item">
+          <div class="col-md-2 productDetailsItem" product-id="${item.id}">
+            <img src="${item.image}" alt="${item.name}" class="img-fluid rounded-3" />
           </div>
           <div class="col-md-6 ps-4">
             <div class="d-flex justify-content-between align-items-start">
@@ -46,34 +47,22 @@ function renderCart() {
             </div>
             <div class="d-flex align-items-center">
               <div class="input-group input-group-sm w-auto">
-                <button
-                  class="btn btn-outline-secondary border-end-0 rounded-start decrease-quantity"
-                  data-index="${index}"
-                >
-                  -
-                </button>
-                <input
-                  type="text"
-                  class="form-control text-center border-left-0 border-right-0"
-                  value="${quantity}"
-                  style="width: 40px;"
-                  readonly
-                />
-                <button
-                  class="btn btn-outline-secondary border-start-0 rounded-end increase-quantity"
-                  data-index="${index}"
-                >
-                  +
-                </button>
+                <button class="btn btn-outline-secondary border-end-0 rounded-start decrease-quantity"
+                        data-index="${index}" ${quantity <= 0 ? 'disabled' : ''}>-</button>
+                <input type="text" class="form-control text-center border-left-0 border-right-0"
+                       value="${quantity}" style="width: 40px;" readonly />
+                <button class="btn btn-outline-secondary border-start-0 rounded-end increase-quantity"
+                        data-index="${index}" ${isOutOfStock ? 'disabled' : ''}>+</button>
               </div>
               <span class="ms-3 fw-semibold">$${price.toFixed(2)}</span>
             </div>
           </div>
           <div class="col-md-4 text-end">
             <h4 class="fw-bold">$${(price * quantity).toFixed(2)}</h4>
-            <span class="text-success small fw-semibold"
-              ><i class="fas fa-check-circle me-1"></i> In Stock</span
-            >
+            <span class="${isOutOfStock ? 'text-danger' : 'text-success'} small fw-semibold">
+              <i class="fas fa-${isOutOfStock ? 'times' : 'check'}-circle me-1"></i>
+              ${isOutOfStock ? 'Out of Stock' : 'In Stock'}
+            </span>
           </div>
         </div>
         ${index < cart.length - 1 ? '<div class="divider"></div>' : ''}
@@ -82,17 +71,16 @@ function renderCart() {
     });
   }
 
-  // Use CartManager to calculate order summary
+  // Update order summary
   const summary = CartManager.calculateOrderSummary();
-
-  // Update order summary display
-  cartItemCount.textContent = `${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''}`;
+  if (cartItemCount) {
+    cartItemCount.textContent = `${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''}`;
+  }
   subtotalLabel.textContent = `Subtotal (${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''})`;
   subtotalElement.textContent = `$${summary.subtotal.toFixed(2)}`;
   taxElement.textContent = `$${summary.tax.toFixed(2)}`;
   shippingElement.textContent = `$${summary.shipping.toFixed(2)}`;
 
-  // Handle promo code display
   if (summary.promoCode === 'OFF10') {
     promoAlert.classList.remove('d-none');
     promoSavings.textContent = `$${summary.discount.toFixed(2)}`;
@@ -105,12 +93,11 @@ function renderCart() {
 
   finalTotalElement.textContent = `$${summary.total.toFixed(2)}`;
 
-  // Add event listeners for cart items
   addCartEventListeners();
+  addProductDetailsNavigation();
 }
 
 function addCartEventListeners() {
-  // Remove item buttons
   document.querySelectorAll('.remove-item').forEach(button => {
     button.addEventListener('click', () => {
       const index = parseInt(button.getAttribute('data-index'));
@@ -119,7 +106,6 @@ function addCartEventListeners() {
     });
   });
 
-  // Increase quantity buttons
   document.querySelectorAll('.increase-quantity').forEach(button => {
     button.addEventListener('click', () => {
       const index = parseInt(button.getAttribute('data-index'));
@@ -128,7 +114,6 @@ function addCartEventListeners() {
     });
   });
 
-  // Decrease quantity buttons
   document.querySelectorAll('.decrease-quantity').forEach(button => {
     button.addEventListener('click', () => {
       const index = parseInt(button.getAttribute('data-index'));
@@ -138,35 +123,15 @@ function addCartEventListeners() {
   });
 }
 
-// Handle checkout button
-document.getElementById("checkout-button")?.addEventListener('click', () => {
-  const cart = CartManager.getCart();
-  if (cart.length === 0) {
-    CartManager.showToast('Your cart is empty. Please add items to your cart before checking out.');
-    return;
-  } else {
-    window.location.href = './checkout.html'; // Redirect to checkout page
-  }
-});
-
-// Initialize cart page
-document.addEventListener('DOMContentLoaded', () => {
-  renderCart();
-  
-  // Add event listeners for cart page buttons
-  document.getElementById('clear-cart')?.addEventListener('click', () => {
-    CartManager.clearCart();
-    renderCart();
+function addProductDetailsNavigation() {
+  document.querySelectorAll('.productDetailsItem').forEach(item => {
+    item.addEventListener('click', function () {
+      let itemId = item.getAttribute('product-id');
+      window.location.href = `productDetails.html?id=${itemId}`;
+    });
   });
-  
-  document.getElementById('apply-promo')?.addEventListener('click', () => {
-    const promoInput = document.getElementById('promo-code').value.trim();
-    CartManager.applyPromoCode(promoInput);
-    renderCart();
-  });
-});
+}
 
-// Handle wishlist peek
 function renderWishlistPeek() {
   const wishlist = CartManager.getWishlist();
   const wishlistItemsContainer = document.getElementById('wishlist-items');
@@ -178,18 +143,16 @@ function renderWishlistPeek() {
     return;
   }
 
-  // Shuffle and take 3 random items
   const randomItems = wishlist.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   randomItems.forEach(item => {
+    const stockInfo = ProductManager.checkStockAvailability(item.id);
+    const isOutOfStock = stockInfo.stock <= 0;
+
     const itemHTML = `
       <div class="row g-0 align-items-center p-3 cart-item">
-        <div class="col-md-2">
-          <img
-            src="${item.image}"
-            alt="${item.name}"
-            class="img-fluid rounded-3"
-          />
+        <div class="col-md-2 productDetailsItem" product-id="${item.id}">
+          <img src="${item.image}" alt="${item.name}" class="img-fluid rounded-3" />
         </div>
         <div class="col-md-6 ps-4">
           <div class="d-flex justify-content-between align-items-start">
@@ -200,8 +163,9 @@ function renderWishlistPeek() {
           </div>
           <div class="d-flex mt-1">
             <span class="fw-semibold">$${item.price.toFixed(2)}</span>
-            <span class="text-success ms-3 small fw-semibold">
-              <i class="fas fa-check-circle me-1"></i> In Stock
+            <span class="${isOutOfStock ? 'text-danger' : 'text-success'} ms-3 small fw-semibold">
+              <i class="fas fa-${isOutOfStock ? 'times' : 'check'}-circle me-1"></i>
+              ${isOutOfStock ? 'Out of Stock' : 'In Stock'}
             </span>
           </div>
         </div>
@@ -210,7 +174,7 @@ function renderWishlistPeek() {
             <button class="btn btn-sm btn-outline-danger remove-wishlist-item" data-id="${item.id}">
               <i class="fas fa-trash-alt me-1"></i> Remove
             </button>
-            <button class="btn btn-sm btn-dark add-to-cart" data-id="${item.id}">
+            <button class="btn btn-sm btn-dark add-to-cart" data-id="${item.id}" ${isOutOfStock ? 'disabled' : ''}>
               <i class="fas fa-shopping-cart me-1"></i> Add to Cart
             </button>
           </div>
@@ -220,9 +184,8 @@ function renderWishlistPeek() {
     wishlistItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
   });
 
-  // Add event listeners for buttons
   document.querySelectorAll('.remove-wishlist-item').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
       const productId = this.getAttribute('data-id');
       CartManager.removeFromWishlist(productId);
       renderWishlistPeek();
@@ -230,28 +193,39 @@ function renderWishlistPeek() {
   });
 
   document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
       const productId = this.getAttribute('data-id');
       CartManager.addToCartFromWishlist(productId);
       renderWishlistPeek();
+      renderCart();
     });
   });
+
+  addProductDetailsNavigation();
 }
 
+// Setup on DOM load
 document.addEventListener('DOMContentLoaded', () => {
+  renderCart();
   renderWishlistPeek();
 
-  
-  //link cart items with product Details page
+  document.getElementById('clear-cart')?.addEventListener('click', () => {
+    CartManager.clearCart();
+    renderCart();
+  });
 
- let cartItems= document.querySelectorAll('.cart-item');
- cartItems.forEach((item)=>{
-  item.addEventListener('click',function(){
-    let itemId= item.getAttribute('product-id');
-    window.location.href=`productDetails.html?id=${itemId}`;
-  })
- })
+  document.getElementById('apply-promo')?.addEventListener('click', () => {
+    const promoInput = document.getElementById('promo-code').value.trim();
+    CartManager.applyPromoCode(promoInput);
+    renderCart();
+  });
 
+  document.getElementById('checkout-button')?.addEventListener('click', () => {
+    const cart = CartManager.getCart();
+    if (cart.length === 0) {
+      CartManager.showToast('Your cart is empty. Please add items to your cart before checking out.');
+    } else {
+      window.location.href = './checkout.html';
+    }
+  });
 });
-
- 

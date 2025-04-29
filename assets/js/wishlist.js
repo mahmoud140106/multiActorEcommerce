@@ -12,10 +12,11 @@ function renderWishlist() {
     const wishlist = CartManager.getWishlist();
     const wishlistContainer = document.querySelector('.card-body.p-0');
     const summaryContainer = document.querySelector('.col-lg-3 .card-body');
-    
+    const headerCount = document.querySelector('#wishlist-item-count');
+
     // Clear existing items
     wishlistContainer.innerHTML = '';
-    
+
     if (wishlist.length === 0) {
         wishlistContainer.innerHTML = `
             <div class="p-4 text-center">
@@ -25,7 +26,7 @@ function renderWishlist() {
                 <a href="product.html" class="btn btn-dark mt-3">Continue Shopping</a>
             </div>
         `;
-        
+
         // Update summary
         summaryContainer.innerHTML = `
             <h5 class="card-title fw-semibold mb-4">Wishlist Summary</h5>
@@ -34,19 +35,20 @@ function renderWishlist() {
                 <p class="mt-2 mb-0">No items in wishlist</p>
             </div>
         `;
+
+        // Update header count
+        if (headerCount) {
+            headerCount.textContent = '0 items';
+        }
+
         return;
     }
-  
+
     let totalValue = 0;
-    let inStockCount = 0;
-    let lowStockCount = 0;
-    
+
     // Generate wishlist items HTML
     wishlist.forEach((item, index) => {
         const productId = item.id;
-        const isLowStock = item.stockStatus === 'low';
-        if (item.stockStatus === 'in') inStockCount++;
-        if (isLowStock) lowStockCount++;
 
         totalValue += item.price * (item.quantity || 1);
 
@@ -64,10 +66,6 @@ function renderWishlist() {
                     </div>
                     <div class="d-flex mt-2">
                         <h5 class="fw-semibold">$${item.price.toFixed(2)}</h5>
-                        <span class="${isLowStock ? 'text-warning' : 'text-success'} ms-3 small fw-semibold mt-1">
-                            <i class="fas ${isLowStock ? 'fa-clock' : 'fa-check-circle'} me-1"></i> 
-                            ${isLowStock ? 'Low Stock' : 'In Stock'}
-                        </span>
                     </div>
                 </div>
                 <div class="col-3 text-end">
@@ -85,7 +83,7 @@ function renderWishlist() {
         `;
         wishlistContainer.insertAdjacentHTML('beforeend', itemHTML);
     });
-  
+
     // Update summary
     summaryContainer.innerHTML = `
         <h5 class="card-title fw-semibold mb-4">Wishlist Summary</h5>
@@ -93,14 +91,6 @@ function renderWishlist() {
         <div class="d-flex justify-content-between mb-2">
             <span class="text-muted">Total Items</span>
             <span>${wishlist.length}</span>
-        </div>
-        <div class="d-flex justify-content-between mb-2">
-            <span class="text-muted">In Stock</span>
-            <span>${inStockCount}</span>
-        </div>
-        <div class="d-flex justify-content-between mb-4">
-            <span class="text-muted">Low Stock</span>
-            <span>${lowStockCount}</span>
         </div>
         
         <hr>
@@ -118,10 +108,12 @@ function renderWishlist() {
             <i class="fas fa-info-circle me-2"></i> Items in your wishlist will be saved for 30 days
         </div>
     `;
-  
+
     // Update header count
-    document.querySelector('.text-muted').textContent = `${wishlist.length} item${wishlist.length !== 1 ? 's' : ''}`;
-  
+    if (headerCount) {
+        headerCount.textContent = `${wishlist.length} item${wishlist.length !== 1 ? 's' : ''}`;
+    }
+
     // Add event listeners after rendering
     addEventListeners();
 }
@@ -198,7 +190,6 @@ function renderRecommendedProducts() {
     sectionTitle.className = "col-12 mb-4";
     sectionTitle.innerHTML = `
       <h3 class="fw-semibold">You May Also Like</h3>
-      <p class="text-muted">Products similar to your wishlist items</p>
     `;
     recommendationsContainer.appendChild(sectionTitle);
     
@@ -259,7 +250,7 @@ function renderRecommendedProducts() {
                     : ""
                 }
               </div>
-              <button class="btn btn-dark" data-id="${product.id}">Add to cart</button>
+              <button class="btn btn-dark add-to-cart" data-id="${product.id}">Add to cart</button>
             </div>
           </div>
         </div>
@@ -282,8 +273,6 @@ function attachRecommendationEventListeners() {
             
             if (product) {
                 CartManager.addToCart(product);
-                // Optionally show a toast notification
-                showToast(`${product.name} added to cart!`, 'success');
             }
         });
     });
@@ -300,9 +289,6 @@ function attachRecommendationEventListeners() {
                 CartManager.addToWishlist(product, event);
                 // Update the UI
                 renderWishlist();
-                renderRecommendedProducts();
-                // Optionally show a toast notification
-                showToast(`${product.name} added to wishlist!`, 'success');
             }
         });
     });

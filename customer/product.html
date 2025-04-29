@@ -1,109 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product Page</title>
 
   <!-- Bootstrap CSS (Local File) -->
-    <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+  <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../assets/css/product.css" />
+  <link rel="stylesheet" href="../assets/css/home.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
 
 
 </head>
 
 <body>
 
-  <nav class="bg-dark">
-    <div class="nav-left">NAV</div>
-    <div class="nav-right">
-      <button class="btn btn-outline-light p-2 me-1">Wishlist</button>
-      <!-- <button><i class="fa-solid fa-cart-shopping"></i</button> -->
-      <button  class="btn btn-outline-light p-2 ">Cart</button>
-      <!-- <button><i class="fa-solid fa-heart"></i></button> -->
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/index.html">
+        <i class="fas fa-shopping-bag me-2"></i>
+        <span class="omnishop-logo">OmniShop</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <!-- JavaScript will populate this dynamically -->
+        </ul>
+      </div>
+    </div>
+  
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bgmodal rounded p-4" style="width: 450px; min-height: 55vh;">
+          <div class="modal-header border-0">
+            <h5 class="modal-title w-100 text-center" id="loginModalLabel">
+              Login
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="login-form">
+              <div class="mb-3">
+                <label for="login-email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="login-email" required />
+              </div>
+              <div class="mb-3">
+                <label for="login-password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="login-password" required />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                Login
+              </button>
+            </form>
+            <p class="text-center mt-3">
+              Don't have an account?
+              <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Sign Up</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Sign Up Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bgmodal rounded p-4" style="width: 450px; min-height: 55vh;">
+          <div class="modal-header border-0">
+            <h5 class="modal-title w-100 text-center" id="signupModalLabel">
+              Sign Up
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="signup-form">
+              <div class="mb-3">
+                <label for="signup-userName" class="form-label">UserName</label>
+                <input type="text" class="form-control" id="signup-userName" required />
+              </div>
+              <div class="mb-3">
+                <label for="signup-email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="signup-email" required />
+              </div>
+              <div class="mb-3">
+                <label for="signup-password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="signup-password" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Register as:</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="role" id="role-customer" value="customer" checked />
+                  <label class="form-check-label" for="role-customer">
+                    Customer
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="role" id="role-seller" value="seller" />
+                  <label class="form-check-label" for="role-seller">
+                    Seller
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                Sign Up
+              </button>
+            </form>
+            <p class="text-center mt-3">
+              Already have an account?
+              <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+      <!-- Toasts will be dynamically inserted here -->
     </div>
   </nav>
-      <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search products...">
-    </div>
-  <div class="filters">
-    <select id="filterCategory">
-      <option value="">All Categories</option>
-      <option value="Hoodies">Hoodies</option>
-      <option value="Coats & Jackets">Coats & Jackets</option>
-      <option value="Jeans">Jeans</option>
-      <option value="Sweaters">Sweaters</option>
-      <option value="T-shirt">T-shirt</option>
+
+
+  <div class="filters container w-75  justify-content-around ">
+    <select name="filterCategory" id="filterCategory" class="w-25 rounded-2">
+
     </select>
 
-    <select id="filterSize">
-      <option value="">All Sizes</option>
-      <option value="small">Small</option>
-      <option value="medium">Medium</option>
-      <option value="large">Large</option>
+    <select id="filterSize" class="w-25 rounded">
+      <option value="AllSizes">All Sizes</option>
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
     </select>
 
-    <select id="filterColor">
-      <option value="">All Colors</option>
-      <option value="white">White</option>
-      <option value="pink">Pink</option>
-      <option value="green">Green</option>
-      <option value="black">black</option>
-      <option value="purple">Purple</option>
-      <option value="brown">Brown</option>
-      <option value="blue">Blue</option>
-    </select>
+
   </div>
 
-  <div class=" search-container w-100 mt-5">
-    <input  type="text" id="searchInput" placeholder="Search products...">
-  </div>
 
-  <div class="filters container w-75  justify-content-around">
-    <select name="filterCategory" id="filterCategory" class="w-25">
-      
-    </select>
 
-    <select id="filterSize "  class="w-25">
-      <option value="">All Sizes</option>
-      <option value="small">Small</option>
-      <option value="medium">Medium</option>
-      <option value="large">Large</option>
-    </select>
+  
 
-    <select id="filterColor">
-      <option value="">All Colors</option>
-      <option value="white">White</option>
-      <option value="pink">Pink</option>
-      <option value="green">Green</option>
-      <option value="black">black</option>
-      <option value="purple">Purple</option>
-      <option value="brown">Brown</option>
-      <option value="blue">Blue</option>
-    </select>
-  </div>
 
-  <main class="">
 
-    <section class="container justify-content-center  ">
-      <div class="products w-100 " id="productPage">
 
+
+    <section class="container   mb-5">
+
+
+      <div id="productPage" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 products  justify-content-center ">
+        <!-- Products will be populated by JavaScript -->
       </div>
+
 
     </section>
 
-  </main>
 
-  <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+      <footer class="bg-dark text-light pt-5 pb-0">
+        <div class="container">
+          <div class="row gy-4">
+            <!-- About Section -->
+            <div class="col-md-3 col-12">
+              <h5 class="mb-3">About Us</h5>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">History</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Team</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Services</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Company</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Contact Us Section -->
+            <div class="col-md-3 col-12">
+              <h5 class="mb-3">Contact Us</h5>
+              <ul class="list-unstyled">
+                <li class="text-secondary">
+                  811 Egypt. Capitol Heights, MD 2743
+                </li>
+                <li>
+                  <a href="tel:+5662374687" class="text-secondary text-decoration-none hover-light">(566) 237-4687</a>
+                </li>
+                <li>
+                  <a href="mailto:info@email.com" class="text-secondary text-decoration-none hover-light">info@email.com</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Quick Links Section -->
+            <div class="col-md-3 col-12">
+              <h5 class="mb-3">Quick Links</h5>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Home</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Shop</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Blog</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">FAQ</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Social Media Section -->
+            <div class="col-md-3 col-12">
+              <h5 class="mb-3">Follow Us</h5>
+              <div class="d-flex gap-3">
+                <a href="#" class="text-secondary hover-light"><i class="fab fa-facebook-f fa-lg"></i></a>
+                <a href="#" class="text-secondary hover-light"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-secondary hover-light"><i class="fab fa-instagram fa-lg"></i></a>
+                <a href="#" class="text-secondary hover-light"><i class="fab fa-linkedin-in fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+          <!-- Copyright Section -->
+          <div class="row mt-3 py-3 border-top border-1">
+            <div class="col-12 text-center">
+              <p class="text-secondary mb-0">
+                © 2025 Team4 ITI All Rights Reserved.
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+
+
+  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="../assets/js/productPage.js"></script>
+  <script type="module" src="../assets/js/global.js"></script>
+
 </body>
 
 </html>
