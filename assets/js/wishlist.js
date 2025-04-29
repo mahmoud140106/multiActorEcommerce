@@ -216,7 +216,7 @@ function renderRecommendedProducts() {
               <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${product.id}">
                 <i class="far fa-heart"></i>
               </button>
-              <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1">
+              <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1 add-to-cart" data-id="${product.id}">
                 <i class="fas fa-shopping-cart"></i>
               </button>
             </div>
