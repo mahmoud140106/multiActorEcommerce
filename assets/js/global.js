@@ -22,6 +22,7 @@ function restrictAccess() {
       "/customer/checkout.html",
       "/customer/wishlist.html",
       "/customer/completedOrder.html",
+      "/customer/product.html",
 
       
     ],
@@ -37,6 +38,7 @@ function restrictAccess() {
       "/customer/catalog.html",
       "/customer/productDetails.html",
       "/customer/categories.html",
+      "/customer/product.html",
     ],
   };
 
