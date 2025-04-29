@@ -28,3 +28,4 @@ let customerOrders= OrderManager.getOrdersByCustomer(customerId);               
 let orderId = customerOrders[customerOrders.length-1].id;                             //get the id of the last order
 
 document.getElementById('orderId').innerText=orderId;
+// console.log(StorageManager.load(`${customerId}`))                //fetch the delivery data of the customer with his id as a key in storage manager
