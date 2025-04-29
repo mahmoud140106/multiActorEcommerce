@@ -7,12 +7,13 @@ let user = StorageManager.load("currentUser"); // Get current user from storage
 let productId;
 let AllProducts;
 let r;
+let productCount;
 document.addEventListener("DOMContentLoaded", () => {
   console.log("product details.js loaded");
   try {
     const urlParams = new URLSearchParams(window.location.search);
      productId = parseInt(urlParams.get("id"));
-      
+      productCount = document.getElementById('productCount').value;
      AllProducts = ProductManager.getAllProducts();
 
     if (isNaN(productId)) {
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ? `$${product.discountedPrice.toFixed(2)}`
       : `$${product.price.toFixed(2)}`;
       document.getElementById('productCount').setAttribute('max',`${product.stock}`);
-      document.getElementById("stockCount").textContent= `${product.stock} in stock` // Random stock count between 1 and 100
+      document.getElementById("stockCount").textContent= `${product.stock} in stock` 
       document.querySelector(".styled-slider").style.background =`linear-gradient(to right, #d49117 ${product.stock}%, #e0e0e0 ${30}%)`;
     // document.getElementById("sizes").textContent = product.sizes?.length
     //   ? product.sizes.join(", ")
@@ -208,7 +209,7 @@ document.getElementById("buyItNow").addEventListener("click",function (){
     showToast('Please log in first','error');
     return;
   }
-  window.location.href = "checkout.html?id=" + productId; // Redirect to checkout page with product ID
+  window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
 }
  ); 
 

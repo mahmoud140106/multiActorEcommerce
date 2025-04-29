@@ -2,7 +2,7 @@ import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
 import { showToast } from "./toast.js";
 
-
+let productCount;
 let productId;
 let currentUser=StorageManager.load('currentUser');
 let deliveryDataUserObj= {};
@@ -11,9 +11,13 @@ window.addEventListener("load", function() {
 // try {
     const urlParams = new URLSearchParams(window.location.search);
      productId = parseInt(urlParams.get("id"));
+     productCount =parseInt(urlParams.get("count"));
      const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
      this.document.getElementById('customerId').value = currentUser.id;
+     this.document.getElementById('productId').value = productId;
+     this.document.getElementById('productCount').value= productCount;
+
     const product = ProductManager.getProduct(productId);
     if (!product && !cart) {
       console.error("Product not found ");
@@ -104,8 +108,9 @@ window.addEventListener("load", function() {
     this.document.querySelector(`input[name=PhoneNumber]`).value='';
    
 
-
-   if(deliveryData.count!=undefined){
+    console.log(deliveryData)
+   if(deliveryData){
+    console.log('from delivery')
     this.document.querySelector(`input[name=firstName]`).value=deliveryData.firstName;
     this.document.querySelector(`input[name=lastName]`).value=deliveryData.lastName;
     this.document.querySelector(`input[name=address]`).value=deliveryData.address;
