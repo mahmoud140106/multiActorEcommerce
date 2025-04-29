@@ -92,8 +92,16 @@ window.addEventListener("load", function() {
 
      
     this.document.getElementById('userEmail').value=`${currentUser.email}`;
-   let deliveryData= StorageManager.load(`${userDeliveryDataKey}`)   //get the delivery data of the current user
-   if(deliveryData!=null){
+   let deliveryData= StorageManager.load(`userDeliveryData`)   //get the delivery data of the current user
+
+   this.document.querySelector(`input[name=firstName]`).value='';
+   this.document.querySelector(`input[name=lastName]`).value='';
+   this.document.querySelector(`input[name=address]`).value='';
+   this.document.querySelector(`input[name=City]`).value='';
+   document.querySelector('select[name=Governorate]').value = '';
+   this.document.querySelector(`input[name=PhoneNumber]`).value='';
+
+   if(deliveryData.count!=undefined){
     this.document.querySelector(`input[name=firstName]`).value=deliveryData.firstName;
     this.document.querySelector(`input[name=lastName]`).value=deliveryData.lastName;
     this.document.querySelector(`input[name=address]`).value=deliveryData.address;
@@ -102,13 +110,9 @@ window.addEventListener("load", function() {
     this.document.querySelector(`input[name=PhoneNumber]`).value= deliveryData.PhoneNumber;
   }
   else{
-    this.document.querySelector(`input[name=firstName]`).value='';
-    this.document.querySelector(`input[name=lastName]`).value='';
-    this.document.querySelector(`input[name=address]`).value='';
-    this.document.querySelector(`input[name=City]`).value='';
-    document.querySelector('select[name=Governorate]').value = '';
-    this.document.querySelector(`input[name=PhoneNumber]`).value='';
+   
   }
+
    })//end of load event
    
 
@@ -166,25 +170,27 @@ deliveryData.forEach((data)=>{
     
     let objKey = e.target.name;
     deliveryDataUserObj[objKey]=e.target.value;
-    console.log(deliveryDataUserObj)
 
   })
  })
 
- let userDeliveryDataKey =currentUser.id;
+
  document.getElementById('saveInformation').addEventListener('change',function(){
   if(this.checked){
-    StorageManager.save(`${userDeliveryDataKey}`,deliveryDataUserObj);     // save the delivery data of the user in storage with key userDeliveryDataKey
+
+    StorageManager.save('userDeliveryData',deliveryDataUserObj);     // save the delivery data of the user in storage
+                                  console.log(deliveryDataUserObj)                              //  with key userDeliveryData to display auto on load if he checked the save information box
+
   }
   else{
-    StorageManager.remove(`${userDeliveryDataKey}`);
+    StorageManager.remove('userDeliveryData');
   }
  });
 
 document.getElementById('completeOrder').addEventListener('click',function(){
   let customerId = currentUser.id;
-  console.log(customerId)
-    // OrderManager.createOrder(customerId,cart)
+    StorageManager.save(`${customerId}`,deliveryDataUserObj);     // save the delivery data of the user in storage with key the id of customer
+    console.log(deliveryDataUserObj)  
     window.location.href=`completedOrder.html?customerId=${customerId}`;
    
   
