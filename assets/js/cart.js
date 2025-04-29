@@ -1,5 +1,6 @@
 // Import the CartManager module
 import { CartManager } from './cartManager.js';
+import { ProductManager } from './productManager.js';
 
 function renderCart() {
   const cart = CartManager.getCart();
@@ -25,9 +26,19 @@ function renderCart() {
       const price = item.price || 0;
       const quantity = item.quantity || 0;
 
+      // Check stock availability using ProductManager
+      const stockInfo = ProductManager.checkStockAvailability(item.id);
+
+      // Debug log to verify the stockInfo object
+      console.log(`Stock info for product ID ${item.id}:`, stockInfo);
+
+      // Update stock availability dynamically
+      const updatedStock = stockInfo.stock - quantity;
+      const isOutOfStock = updatedStock <= 0;
+
       const cartItemHTML = `
-        <div class="row g-0 align-items-center p-4 cart-item" product-id="${item.id}">
-          <div class="col-md-2">
+        <div class="row g-0 align-items-center p-4 cart-item">
+          <div class="col-md-2 productDetailsItem" product-id="${item.id}">
             <img
               src="${item.image}"
               alt="${item.name}" 
@@ -49,6 +60,7 @@ function renderCart() {
                 <button
                   class="btn btn-outline-secondary border-end-0 rounded-start decrease-quantity"
                   data-index="${index}"
+                  ${quantity <= 0 ? 'disabled' : ''}
                 >
                   -
                 </button>
@@ -62,6 +74,7 @@ function renderCart() {
                 <button
                   class="btn btn-outline-secondary border-start-0 rounded-end increase-quantity"
                   data-index="${index}"
+                  ${isOutOfStock ? 'disabled' : ''}
                 >
                   +
                 </button>
@@ -71,9 +84,9 @@ function renderCart() {
           </div>
           <div class="col-md-4 text-end">
             <h4 class="fw-bold">$${(price * quantity).toFixed(2)}</h4>
-            <span class="text-success small fw-semibold"
-              ><i class="fas fa-check-circle me-1"></i> In Stock</span
-            >
+            <span class="${isOutOfStock ? 'text-danger' : 'text-success'} small fw-semibold">
+              <i class="fas fa-${isOutOfStock ? 'times' : 'check'}-circle me-1"></i> ${isOutOfStock ? 'Out of Stock' : 'In Stock'}
+            </span>
           </div>
         </div>
         ${index < cart.length - 1 ? '<div class="divider"></div>' : ''}
@@ -86,7 +99,7 @@ function renderCart() {
   const summary = CartManager.calculateOrderSummary();
 
   // Update order summary display
-  cartItemCount.textContent = `${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''}`;
+  //cartItemCount.textContent = `${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''}`;
   subtotalLabel.textContent = `Subtotal (${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''})`;
   subtotalElement.textContent = `$${summary.subtotal.toFixed(2)}`;
   taxElement.textContent = `$${summary.tax.toFixed(2)}`;
@@ -107,6 +120,9 @@ function renderCart() {
 
   // Add event listeners for cart items
   addCartEventListeners();
+  
+  // Add product details navigation
+  addProductDetailsNavigation();
 }
 
 function addCartEventListeners() {
@@ -134,6 +150,17 @@ function addCartEventListeners() {
       const index = parseInt(button.getAttribute('data-index'));
       CartManager.updateQuantity(index, -1);
       renderCart();
+    });
+  });
+}
+
+// Function to add click handlers for navigating to product details
+function addProductDetailsNavigation() {
+  let cartItems = document.querySelectorAll('.productDetailsItem');
+  cartItems.forEach((item) => {
+    item.addEventListener('click', function() {
+      let itemId = item.getAttribute('product-id');
+      window.location.href = `productDetails.html?id=${itemId}`;
     });
   });
 }
@@ -182,9 +209,13 @@ function renderWishlistPeek() {
   const randomItems = wishlist.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   randomItems.forEach(item => {
+    // Check stock availability for wishlist items too
+    const stockInfo = ProductManager.checkStockAvailability(item.id);
+    const isOutOfStock = stockInfo.stock <= 0;
+    
     const itemHTML = `
       <div class="row g-0 align-items-center p-3 cart-item">
-        <div class="col-md-2">
+        <div class="col-md-2 productDetailsItem" product-id="${item.id}">
           <img
             src="${item.image}"
             alt="${item.name}"
@@ -200,8 +231,9 @@ function renderWishlistPeek() {
           </div>
           <div class="d-flex mt-1">
             <span class="fw-semibold">$${item.price.toFixed(2)}</span>
-            <span class="text-success ms-3 small fw-semibold">
-              <i class="fas fa-check-circle me-1"></i> In Stock
+            <span class="${isOutOfStock ? 'text-danger' : 'text-success'} ms-3 small fw-semibold">
+              <i class="fas fa-${isOutOfStock ? 'times' : 'check'}-circle me-1"></i> 
+              ${isOutOfStock ? 'Out of Stock' : 'In Stock'}
             </span>
           </div>
         </div>
@@ -210,7 +242,8 @@ function renderWishlistPeek() {
             <button class="btn btn-sm btn-outline-danger remove-wishlist-item" data-id="${item.id}">
               <i class="fas fa-trash-alt me-1"></i> Remove
             </button>
-            <button class="btn btn-sm btn-dark add-to-cart" data-id="${item.id}">
+            <button class="btn btn-sm btn-dark add-to-cart" data-id="${item.id}"
+              ${isOutOfStock ? 'disabled' : ''}>
               <i class="fas fa-shopping-cart me-1"></i> Add to Cart
             </button>
           </div>
@@ -234,24 +267,14 @@ function renderWishlistPeek() {
       const productId = this.getAttribute('data-id');
       CartManager.addToCartFromWishlist(productId);
       renderWishlistPeek();
+      renderCart(); // Update cart display when adding from wishlist
     });
   });
+  
+  // Add product details navigation for wishlist items too
+  addProductDetailsNavigation();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   renderWishlistPeek();
-
-  
-  //link cart items with product Details page
-
- let cartItems= document.querySelectorAll('.cart-item');
- cartItems.forEach((item)=>{
-  item.addEventListener('click',function(){
-    let itemId= item.getAttribute('product-id');
-    window.location.href=`productDetails.html?id=${itemId}`;
-  })
- })
-
 });
-
- 

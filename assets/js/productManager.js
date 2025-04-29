@@ -137,6 +137,30 @@ export class ProductManager {
   static getAllProductsForAdmin() {
     return StorageManager.load("products") || [];
   }
+
+  // Function to check stock availability for a product
+  static checkStockAvailability(productId) {
+    const product = this.getProduct(productId);
+    if (!product) {
+      return { available: false, stock: 0 };
+    }
+
+    if (product.stock > 0) {
+      return { available: true, stock: product.stock };
+    } else {
+      return { available: false, stock: 0};
+    }
+  }
+
+  static updateStock(productId, quantityChange) {
+    const products = StorageManager.load("products") || [];
+    const productIndex = products.findIndex((product) => product.id === productId);
+
+    if (productIndex !== -1) {
+      products[productIndex].stock += quantityChange;
+      StorageManager.save("products", products);
+    }
+  }
 }
 
 function initializeDefaultProducts() {
@@ -153,7 +177,7 @@ function initializeDefaultProducts() {
       "Cotton T-Shirt",
       1,
       19.99,
-      50,
+      5,
       [
         "https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/01/product-image-15-600x600.webp",
         "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
@@ -174,7 +198,7 @@ function initializeDefaultProducts() {
       "Wool Sweater",
       6,
       49.99,
-      25,
+      10,
       [
         "https://images.unsplash.com/photo-1604176354204-9268737828e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
         "https://images.pexels.com/photos/45982/pexels-photo-45982.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -196,7 +220,7 @@ function initializeDefaultProducts() {
       "White Sneakers",
       5,
       59.99,
-      30,
+      10,
       [
         "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
         "https://images.pexels.com/photos/19090/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600",
@@ -216,7 +240,7 @@ function initializeDefaultProducts() {
       "Polo Shirt",
       1,
       29.99,
-      40,
+      6,
       [
         "https://images.pexels.com/photos/428340/pexels-photo-428340.jpeg?auto=compress&cs=tinysrgb&w=600",
         "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
@@ -237,7 +261,7 @@ function initializeDefaultProducts() {
       "Denim Jacket",
       3,
       69.99,
-      20,
+      15,
       [
         "https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/02/product-image-34-600x600.webp",
         "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
@@ -258,7 +282,7 @@ function initializeDefaultProducts() {
       "Black Slim Jeans",
       2,
       39.99,
-      40,
+      8,
       [
         "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
         "https://images.pexels.com/photos/720606/pexels-photo-720606.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -278,7 +302,7 @@ function initializeDefaultProducts() {
       "Floral Skirt",
       4,
       24.99,
-      35,
+      12,
       [
         "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
         "https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/02/product-image-40.webp",
@@ -298,7 +322,7 @@ function initializeDefaultProducts() {
       "White shirt",
       1,
       24.99,
-      35,
+      14,
       ["/assets/images/shopping7.jpg", "/assets/images/shopping6.jpg"],
       sellerIds.sellerTwo,
       {
