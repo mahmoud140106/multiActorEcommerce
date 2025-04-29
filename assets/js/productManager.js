@@ -86,6 +86,11 @@ export class ProductManager {
     return products.find((product) => product.id === id);
   }
 
+  static getProductsByName(searchName) {
+    const productsName = StorageManager.load("products") || [];
+    return productsName.filter( (product) =>  product.name.toLowerCase().includes(searchName.toLowerCase()) ); 
+  }
+
   static updateProduct(
     id,
     name,
@@ -128,6 +133,8 @@ export class ProductManager {
     const products = StorageManager.load("products") || [];
     return products.filter((product) => product.categoryId === categoryId);
   }
+
+  
 
   static getProductsBySeller(sellerId) {
     const products = StorageManager.load("products") || [];

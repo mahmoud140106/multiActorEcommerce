@@ -13,6 +13,8 @@
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../assets/css/product.css" />
+  <link rel="stylesheet" href="../assets/css/home.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
 
 
 </head>
@@ -127,16 +129,14 @@
   </div>
 </nav>
 
-  <div class=" search-container w-100 mt-5">
-    <input type="text" id="searchInput" placeholder="Search products...">
-  </div>
 
-  <div class="filters container w-75  justify-content-around">
-    <select name="filterCategory" id="filterCategory" class="w-25">
+
+<div class="filters container   justify-content-around">
+    <select name="filterCategory" id="filterCategory" class="w-25 rounded-2">
 
     </select>
 
-    <select id="filterSize " class="w-25">
+    <select id="filterSize " class="w-25  rounded-2 ">
       <option value="">All Sizes</option>
       <option value="small">Small</option>
       <option value="medium">Medium</option>
@@ -154,10 +154,14 @@
 
 
 
-    <section class="container justify-content-center  ">
-      <div class="products w-100 " id="productPage">
+    <section class=" container">
+      <!-- <div class="products w-100 " id="productPage">
 
-      </div>
+      </div> -->
+
+        <div id="productPage" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4  products justify-content-center">
+          <!-- Products will be populated by JavaScript -->
+        </div>
 
 
     </section>
