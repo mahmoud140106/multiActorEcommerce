@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("price").textContent = product.discountedPrice
       ? `$${product.discountedPrice.toFixed(2)}`
       : `$${product.price.toFixed(2)}`;
+      document.getElementById('productCount').setAttribute('max',`${product.stock}`);
       document.getElementById("stockCount").textContent= `${product.stock} in stock` // Random stock count between 1 and 100
       document.querySelector(".styled-slider").style.background =`linear-gradient(to right, #d49117 ${product.stock}%, #e0e0e0 ${30}%)`;
     // document.getElementById("sizes").textContent = product.sizes?.length

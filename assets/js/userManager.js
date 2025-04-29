@@ -1,7 +1,7 @@
 import { StorageManager } from "./storageManager.js";
 
 export class User {
-  constructor(id, userName, email, password, role, createdAt = new Date(), profilePicture = "") {
+  constructor(id, userName, email, password, role, createdAt = new Date(), profilePicture = "",deliveryData) {
     this.id = id;
     this.userName = userName;
     this.email = email;
@@ -9,6 +9,7 @@ export class User {
     this.role = role;
     this.createdAt = createdAt;
     this.profilePicture = profilePicture;
+    this.deliveryData = deliveryData;
   }
 }
 

@@ -13,16 +13,20 @@ function renderCart() {
   const originalTotalElement = document.getElementById('original-total');
   const promoAlert = document.getElementById('promo-alert');
   const promoSavings = document.getElementById('promo-savings');
-  
-  console.log(cart);
+
+  console.log(cart); // Debugging log to inspect cart items
   cartItemsContainer.innerHTML = '';
-  
+
   if (cart.length === 0) {
     cartItemsContainer.innerHTML = '<p class="p-4 text-center">Your cart is empty.</p>';
   } else {
     cart.forEach((item, index) => {
+      // Validate price and quantity
+      const price = item.price || 0;
+      const quantity = item.quantity || 0;
+
       const cartItemHTML = `
-        <div class="row g-0 align-items-center p-4 cart-item">
+        <div class="row g-0 align-items-center p-4 cart-item" product-id="${item.id}">
           <div class="col-md-2">
             <img
               src="${item.image}"
@@ -51,7 +55,7 @@ function renderCart() {
                 <input
                   type="text"
                   class="form-control text-center border-left-0 border-right-0"
-                  value="${item.quantity}"
+                  value="${quantity}"
                   style="width: 40px;"
                   readonly
                 />
@@ -62,11 +66,11 @@ function renderCart() {
                   +
                 </button>
               </div>
-              <span class="ms-3 fw-semibold">$${item.price.toFixed(2)}</span>
+              <span class="ms-3 fw-semibold">$${price.toFixed(2)}</span>
             </div>
           </div>
           <div class="col-md-4 text-end">
-            <h4 class="fw-bold">$${(item.price * item.quantity).toFixed(2)}</h4>
+            <h4 class="fw-bold">$${(price * quantity).toFixed(2)}</h4>
             <span class="text-success small fw-semibold"
               ><i class="fas fa-check-circle me-1"></i> In Stock</span
             >
@@ -77,17 +81,17 @@ function renderCart() {
       cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHTML);
     });
   }
-  
+
   // Use CartManager to calculate order summary
   const summary = CartManager.calculateOrderSummary();
-  
+
   // Update order summary display
   cartItemCount.textContent = `${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''}`;
   subtotalLabel.textContent = `Subtotal (${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''})`;
   subtotalElement.textContent = `$${summary.subtotal.toFixed(2)}`;
   taxElement.textContent = `$${summary.tax.toFixed(2)}`;
   shippingElement.textContent = `$${summary.shipping.toFixed(2)}`;
-  
+
   // Handle promo code display
   if (summary.promoCode === 'OFF10') {
     promoAlert.classList.remove('d-none');
@@ -98,9 +102,9 @@ function renderCart() {
     promoAlert.classList.add('d-none');
     originalTotalElement.classList.add('d-none');
   }
-  
+
   finalTotalElement.textContent = `$${summary.total.toFixed(2)}`;
-  
+
   // Add event listeners for cart items
   addCartEventListeners();
 }
@@ -237,4 +241,17 @@ function renderWishlistPeek() {
 document.addEventListener('DOMContentLoaded', () => {
   renderWishlistPeek();
 
+  
+  //link cart items with product Details page
+
+ let cartItems= document.querySelectorAll('.cart-item');
+ cartItems.forEach((item)=>{
+  item.addEventListener('click',function(){
+    let itemId= item.getAttribute('product-id');
+    window.location.href=`productDetails.html?id=${itemId}`;
+  })
+ })
+
 });
+
+ 
