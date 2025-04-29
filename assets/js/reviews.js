@@ -2,6 +2,7 @@ import { ReviewManager } from "./reviewManager.js";
 import { StorageManager } from "./storageManager.js";
 import { showToast } from "./toast.js";
 
+let reviews;
 let productId;
 window.addEventListener('load', () =>{
   try {
@@ -13,7 +14,12 @@ window.addEventListener('load', () =>{
       document.querySelector(".container.mt-4").innerHTML = "<p>Invalid product ID.</p>";
       return;
     }
-  
+
+let Allreviews = StorageManager.load('reviews');
+reviews=Allreviews.filter((review) => review.productId === productId);
+// reviews = ReviewManager.getReviewsByProduct(productId); // Get reviews for the product
+console.log(reviews)
+
 getreviews(productId); // Get reviews for the product
 removeHighlight(); // Remove highlight from stars
   }catch (error) {
@@ -28,8 +34,6 @@ removeHighlight(); // Remove highlight from stars
 function getreviews(productId){
 
   
- let reviews = ReviewManager.getReviewsByProduct(productId); // Get reviews for the product
-  console.log(reviews)
  // Render carousel images dynamically
  const carouselReviews = document.getElementById("carouselReviews");
 //  carouselReviews.innerHTML = "";
@@ -85,22 +89,25 @@ divReviewItem.appendChild(reviewUser); // Append review user name to review item
 
 
 //add review to reviews list
-document.getElementById('submitBtn').addEventListener('click', addReview); 
-
-function addReview(){              
+document.getElementById('submitBtn').addEventListener('click', function (){              
     let user = StorageManager.load("currentUser"); // Get current user from storage
     let ratingValue = document.querySelectorAll('.star.selected').length; // Get selected rating value
     if(user==null){
      showToast("Please login to add a review.",'error');
       return;
     }
+    if(ratingValue<1){
+      showToast("Rating must be between 1 and 5 stars.",'error');
+      return;
+    }
     let reviewComment= document.getElementById('reviewInput').value ;
-    ReviewManager.addReview(productId.value,user.id,ratingValue,reviewComment); // Add review to storage
-    getreviews(productId.value); // Refresh reviews list
+    ReviewManager.addReview(productId,user.id,ratingValue,reviewComment); // Add review to storage
+    getreviews(productId); // Refresh reviews list
   
 
   document.getElementById('reviewInput').value = '';
-}
+});
+
 
 // Stars Rating system
 

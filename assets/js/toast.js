@@ -1,4 +1,4 @@
-export function showToast(message, type = "success") {
+export function showToast(message, type = "success") { 
   const toastElement = document.createElement("div");
   toastElement.classList.add(
     "toast",
