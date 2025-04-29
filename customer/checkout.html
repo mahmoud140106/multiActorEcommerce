@@ -311,11 +311,10 @@
             </div>
 
             <h4 class="mt-5">Payment</h4>
-            <span>All transactions are secure and encrypted.</span>
             <div class="border p-3 rounded">
               <span>Cash on Delivery (COD)</span>
             </div>
-
+<!-- 
             <h5 class="mt-4">Billing address</h5>
             <div
               class="form-check align-content-center rounded-bottom-2 rounded-top-2"
@@ -330,8 +329,8 @@
               <label class="form-check-label" for="sameAddress">
                 Same as shipping address
               </label>
-            </div>
-            <div
+            </div> -->
+            <!-- <div
               class="form-check align-content-center rounded-bottom-2 rounded-top-2"
               id="differentAddressDiv"
             >
@@ -344,7 +343,7 @@
               <label class="form-check-label" for="differentAddress">
                 Use a different billing address
               </label>
-            </div>
+            </div> -->
             <!-- Billing Address Fields (disabled visually as example) -->
             <div class="row g-3 d-none" id="billingAddress">
               <div class="col-md-12">
@@ -359,7 +358,7 @@
                 <div class="col-md-6">
                   <input
                     type="text"
-                    class="form-control deliveryData"
+                    class="form-control shippingData"
                     placeholder="First name "
                     name="firstName"
                   />
@@ -367,7 +366,7 @@
                 <div class="col-md-6">
                   <input
                     type="text"
-                    class="form-control deliveryData"
+                    class="form-control shippingData"
                     placeholder="Last name"
                     name="lastName"
                   />
@@ -376,7 +375,7 @@
               <div class="col-12">
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control shippingData"
                   placeholder="Address"
                   
                 />
@@ -392,11 +391,21 @@
 
               <div class="row g-2 mb-3">
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="City" />
+                  <input type="text" class="form-control shippingData" placeholder="City" />
                 </div>
                 <div class="col">
-                  <select class="form-select">
-                    <option selected>Dakahlia</option>
+                  <select class="form-select shippingData">
+                    <option value="">Select Governorate</option>
+                    <option value="Cairo">Cairo</option>
+                    <option value="Giza">Giza</option>
+                    <option value="Alexandria">Alexandria</option>
+                    <option value="Dakahlia">Dakahlia</option>
+                    <option value="Red Sea">Red Sea</option>
+                    <option value="Beheira">Beheira</option>
+                    <option value="Fayoum">Fayoum</option>
+                    <option value="Gharbia">Gharbia</option>
+                    <option value="Ismailia">Ismailia</option>
+                    <option value="Menofia">Menofia</option>
                   </select>
                 </div>
                 <!-- <div class="col">
@@ -418,7 +427,7 @@
               <div class="col-12">
                 <input
                   type="text"        
-                  class="form-control deliveryData"
+                  class="form-control shippingData"
                   placeholder="Phone number"
                   name="PhoneNumber"
                 />
@@ -427,8 +436,10 @@
 
             <!-- Complete Order Button -->
             <button
-              type="submit"
+              type="button"
               class="btn btn-complete w-100 btn-sm btn-dark text-light"
+              id="completeOrder"
+              
             >
               Complete order
             </button>

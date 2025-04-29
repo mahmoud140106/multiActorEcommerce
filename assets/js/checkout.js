@@ -1,14 +1,16 @@
 import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
 
+
 let productId;
-let currentUser;
+let currentUser=StorageManager.load('currentUser');
+let deliveryDataUserObj= {};
+
 window.addEventListener("load", function() {
 // try {
     const urlParams = new URLSearchParams(window.location.search);
      productId = parseInt(urlParams.get("id"));
      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-   
 
     const product = ProductManager.getProduct(productId);
     if (!product && !cart) {
@@ -49,7 +51,6 @@ window.addEventListener("load", function() {
 
 
     else if(cart){
-      console.log(cart)
       let summary= document.getElementById("summary");
       let subtotal=0;
       cart.forEach((product,index)=>{
@@ -89,26 +90,24 @@ window.addEventListener("load", function() {
       });
     });   
 
-     currentUser=StorageManager.load('currentUser');
-    console.log(currentUser)
+     
     this.document.getElementById('userEmail').value=`${currentUser.email}`;
-   let deliveryData= StorageManager.load(`${currentUser.id}`)   //get the delivery data of the current user
-   console.log(deliveryData)
-   if(deliveryData!=undefined){
+   let deliveryData= StorageManager.load(`${userDeliveryDataKey}`)   //get the delivery data of the current user
+   if(deliveryData!=null){
     this.document.querySelector(`input[name=firstName]`).value=deliveryData.firstName;
     this.document.querySelector(`input[name=lastName]`).value=deliveryData.lastName;
     this.document.querySelector(`input[name=address]`).value=deliveryData.address;
     this.document.querySelector(`input[name=City]`).value=deliveryData.City;
-    document.querySelector('select[name=Governorate]').value = 'Select Governorate';
-    this.document.querySelector(`input[name=PhoneNumber]`).value='';
+    document.querySelector('select[name=Governorate]').value = deliveryData.Governorate;
+    this.document.querySelector(`input[name=PhoneNumber]`).value= deliveryData.PhoneNumber;
   }
   else{
     this.document.querySelector(`input[name=firstName]`).value='';
     this.document.querySelector(`input[name=lastName]`).value='';
     this.document.querySelector(`input[name=address]`).value='';
     this.document.querySelector(`input[name=City]`).value='';
-    document.querySelector('select[name=Governorate]').value = deliveryData.Governorate;
-    this.document.querySelector(`input[name=PhoneNumber]`).value=deliveryData.PhoneNumber;
+    document.querySelector('select[name=Governorate]').value = '';
+    this.document.querySelector(`input[name=PhoneNumber]`).value='';
   }
    })//end of load event
    
@@ -119,33 +118,49 @@ window.addEventListener("load", function() {
 //     document.getElementById("summaryImgDiv").innerHTML = " <img src='https://placehold.co/500x600/png' class='card-img-top rounded' />";
 // }
 
-    // Display the billing address form if the user selects "Different Address"
+    // Display the billing address form if the user selects "Different Address" and save shipping data for the user in storage
     // Hide the billing address form if the user selects "Same Address"
-document.getElementById("differentAddress").addEventListener("click", function() {
-    var billingAddress = document.getElementById("billingAddress");
-    if (this.checked) {
-        
-        billingAddress.classList.remove ("d-none");
-        billingAddress.classList.add ("d-block");
-        document.getElementById("differentAddressDiv").style.border = "1px solid #212529";
-        document.getElementById("sameAddressDiv").style.border = "none";} 
-});
 
-document.getElementById("sameAddress").addEventListener("click", function() {
-    var billingAddress = document.getElementById("billingAddress");
-    if (this.checked) {
+//save shipping data for the user
+// let shippingData= document.querySelectorAll('.shippingData');
+
+// document.getElementById("differentAddress").addEventListener("click", function() {
+//     var billingAddress = document.getElementById("billingAddress");
+//     if (this.checked) {
         
-        billingAddress.classList.add ("d-none");
-        billingAddress.classList.remove ("d-block");
-        document.getElementById("sameAddressDiv").style.border = "1px solid #212529";
-        document.getElementById("differentAddressDiv").style.border = "none";
-    } 
-});
+//         billingAddress.classList.remove ("d-none");
+//         billingAddress.classList.add ("d-block");
+//         document.getElementById("differentAddressDiv").style.border = "1px solid #212529";
+//         document.getElementById("sameAddressDiv").style.border = "none";} 
+
+//         shippingData.forEach((data)=>{
+//           data.addEventListener('change',function(e){
+            
+//             let objKey = e.target.name;
+//             shippingDataUserObj[objKey]=e.target.value;
+//             console.log(shippingDataUserObj)
+        
+//           })
+//          })
+// });
+
+// document.getElementById("sameAddress").addEventListener("click", function() {
+//     var billingAddress = document.getElementById("billingAddress");
+//     if (this.checked) {
+        
+//         billingAddress.classList.add ("d-none");
+//         billingAddress.classList.remove ("d-block");
+//         document.getElementById("sameAddressDiv").style.border = "1px solid #212529";
+//         document.getElementById("differentAddressDiv").style.border = "none";
+
+//         shippingDataUserObj=deliveryDataUserObj;
+//     } 
+// });
+
 
 
 //save delivery data for the user
 let deliveryData= document.querySelectorAll('.deliveryData');
-let deliveryDataUserObj= {};
 deliveryData.forEach((data)=>{
   data.addEventListener('change',function(e){
     
@@ -155,13 +170,23 @@ deliveryData.forEach((data)=>{
 
   })
  })
+
+ let userDeliveryDataKey =currentUser.id;
  document.getElementById('saveInformation').addEventListener('change',function(){
   if(this.checked){
-    StorageManager.save(`${currentUser.id}`,deliveryDataUserObj);
-    console.log()
+    StorageManager.save(`${userDeliveryDataKey}`,deliveryDataUserObj);     // save the delivery data of the user in storage with key userDeliveryDataKey
   }
   else{
-    console.log("clear")
+    StorageManager.remove(`${userDeliveryDataKey}`);
   }
  });
+
+document.getElementById('completeOrder').addEventListener('click',function(){
+  let customerId = currentUser.id;
+  console.log(customerId)
+    // OrderManager.createOrder(customerId,cart)
+    window.location.href=`completedOrder.html?customerId=${customerId}`;
+   
+  
+})
 
