@@ -99,9 +99,7 @@ td{
 #carouselrecommendationInner{
 height: 300px;
 }
-.RecomndProduct-price{
-  color: darkred;
-}
+
 .cursol-img:hover{
 cursor: pointer;
 scale: 1.1;
