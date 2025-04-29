@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize
   loadFeaturedProducts();
 
-  // Counter Animation
+    // Counter Animation
   function animateCounter(counter, target, duration) {
     let start = 0;
     const increment = target / (duration / 50);
@@ -115,10 +115,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const counters = document.querySelectorAll(".counter");
-  counters.forEach((counter) => {
-    const target = parseInt(counter.getAttribute("data-target"));
-    animateCounter(counter, target, 2000);
-  });
+
+
+  let target = parseInt(UserManager.getAllUsers().length);
+  animateCounter(counters[0], target, 500);
+
+
+  target = parseInt(ReviewManager.getAllReviews().length);
+  animateCounter(counters[1], target, 500);
+
+
+  target = parseInt(CategoryManager.getAllCategories().length);
+  animateCounter(counters[2], target, 500);
+
+  
+  
+  // counters.forEach((counter) => {
+  //   const target = parseInt(ReviewManager.getAllReviews().length);
+  //   animateCounter(counter, target, 2000);
+  // });
+
+
+
 
   //Dynamic categories in home page 
   let categories = CategoryManager.getAllCategories();
@@ -269,7 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// viewAll Categories through Home
+// view All Categories through Home
 
 document.getElementById("viewCategories").addEventListener("click", function (e) {
   console.log(e);
