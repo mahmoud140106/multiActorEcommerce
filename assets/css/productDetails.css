@@ -44,7 +44,9 @@ strong{
   background-color: var(--secondary-color);
   color: white;
 }
-
+.card-icons button:hover{
+  background-color: var(--primary-color);
+}
 .heroBtn {
   width: fit-content;
 }

@@ -2,6 +2,8 @@ import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
 import { showToast } from "./toast.js";
+import { CartManager } from "./cartManager.js";
+
 
 let user = StorageManager.load("currentUser"); // Get current user from storage
 let productId;
@@ -133,8 +135,12 @@ else {
     
     td.innerHTML = `
    
-            <div class="cursol-img" product-id='${AllProducts[r].id}' >
-                <img src="${AllProducts[r].images[0]}" class="d-block w-100" alt="No Image" style="height: 250px;  object-fit: cover;">
+            <div class="card " >
+                <img src="${AllProducts[r].images[0]}" class="cursol-img card-img-top d-block w-100" alt="No Image" style="height: 250px;  object-fit: cover;"  product-id='${AllProducts[r].id}'>
+                <div id ="wishlist-html" class="card-icons position-absolute top-0 end-0 p-2 d-flex flex-column">
+                  <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${AllProducts[r].id}"><i class="far fa-heart"></i></button>
+                  <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1"><i class="fas fa-shopping-cart"></i></button>
+                </div>
             </div>
             <div class="RecomndProduct-name">${AllProducts[r].name}</div>
             <div class="RecomndProduct-price text-muted" >$${AllProducts[r].price}</div>
@@ -165,6 +171,20 @@ carouselrecommendationInner.appendChild(carouselItem);
       }
     })
     )
+
+
+    
+// Add event listeners to "Add to Wishlist" buttons
+document.querySelectorAll('.add-to-wishlist').forEach(button => {
+  button.addEventListener('click', (event) => {
+    const productId = parseInt(button.getAttribute('data-id'));
+    const product = AllProducts.find(p => p.id === productId);
+    if (product) {
+      CartManager.addToWishlist(product, event);
+    }
+  });
+});
+
 
 });  //end of load 
 
@@ -212,5 +232,4 @@ document.getElementById("buyItNow").addEventListener("click",function (){
   window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
 }
  ); 
-
 
