@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </a>
       <div id ="wishlist-html" class="card-icons position-absolute top-0 end-0 p-2">
         <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${product.id}"><i class="far fa-heart"></i></button>
-        <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1"><i class="fas fa-shopping-cart"></i></button>
+        <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1 add-to-cart" data-id="${product.id}"><i class="fas fa-shopping-cart"></i></button>
       </div>
       ${
         product.isOnSale
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize
   loadFeaturedProducts();
 
-  // Counter Animation
+    // Counter Animation
   function animateCounter(counter, target, duration) {
     let start = 0;
     const increment = target / (duration / 50);
@@ -115,54 +115,120 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const counters = document.querySelectorAll(".counter");
-  counters.forEach((counter) => {
-    const target = parseInt(counter.getAttribute("data-target"));
-    animateCounter(counter, target, 2000);
-  });
+
+
+  let target = parseInt(UserManager.getAllUsers().length);
+  animateCounter(counters[0], target, 1000);
+
+
+  target = parseInt(ReviewManager.getAllReviews().length);
+  animateCounter(counters[1], target, 1000);
+
+
+  target = parseInt(CategoryManager.getAllCategories().length);
+  animateCounter(counters[2], target, 1000);
+
+  
+  
+  // counters.forEach((counter) => {
+  //   const target = parseInt(ReviewManager.getAllReviews().length);
+  //   animateCounter(counter, target, 2000);
+  // });
+
+
+
+
 
   //Dynamic categories in home page 
-  let categories = CategoryManager.getAllCategories();
-  let categoriesActiveSlide = document.getElementById("activeSlide");
-  let categoriesNextSlide = document.getElementById("nextSlide");
+  function renderCategorySlides() {
+  const categories = CategoryManager.getAllCategories();
+  const showCategories = document.getElementById("showCategories");
 
-  
-  for (let i = 0; i < 4; i++) {
+  let cardsPerSlide = 1;
+  const width = window.innerWidth;
 
-    let categoryId = categories[i].id;
+  if (width >= 1000) {
+    cardsPerSlide = 4; 
+  } else if (width >= 768) {
+    cardsPerSlide = 2; 
+  } else {
+    cardsPerSlide = 1; 
+  }
 
-    let productsOfCategory = ProductManager.getProductsByCategory(categoryId);
-  
-    categoriesActiveSlide.innerHTML +=
-      `<div class="card cardItem p-0  position-relative  ">
-            <img src="${categories[i].image}" class="rounded w-100 " alt="...">
-    
+ 
+  let slidesHTML = "";
+  let totalSlides = Math.ceil(categories.length / cardsPerSlide);
+
+  for (let i = 0; i < totalSlides; i++) {
+    const start = i * cardsPerSlide;
+    const end = start + cardsPerSlide;
+    const slideItems = categories.slice(start, end);
+
+    let cardsHTML = slideItems.map(cat => {
+      const products = ProductManager.getProductsByCategory(cat.id);
+      return `
+        <div class="col d-flex justify-content-center w-100">
+          <div class="card cardItem position-relative w-100">
+            <img src="${cat.image}" class="rounded w-100" alt="${cat.name}">
             <div class="cardCaption position-absolute text-center">
-              <h5 class="imgContainer text-light">${categories[i].name}</h5>
+              <h5 class="imgContainer text-light">${cat.name}</h5>
               <div class="cardDetails text-light">
-                <p class="text-light">${productsOfCategory.length} product</p>
-                <button class="btn p-3 btn-light viewProductsOfCategory"   value="${categories[i].name}">View</button>
+                <p>${products.length} product</p>
+                <button class="btn btn-light viewProductsOfCategory" value="${cat.name}">View</button>
               </div>
             </div>
-          </div>`; 
-  }
-
-  for (let i = 4; i < 8; i++) {
-    let productId = categories[i].id;
-    let productsOfCategory = ProductManager.getProductsByCategory(productId);
-
-    categoriesNextSlide.innerHTML += 
-      `<div class="card cardItem position-relative">
-          <img src="${categories[i].image}" class="rounded" alt="...">
-    
-          <div class="cardCaption position-absolute text-center">
-            <h5 class="imgContainer text-light">${categories[i].name}</h5>
-            <div class="cardDetails text-light">
-              <p class="text-light">${productsOfCategory.length} product</p>
-              <button class="btn p-3 btn-light viewProductsOfCategory"  value="${categories[i].name}">View</button>
-            </div>
           </div>
-        </div>`;
+        </div>
+      `;
+    }).join('');
+
+    slidesHTML += `
+      <div class="carousel-item ${i === 0 ? "active" : ""}">
+        <div class="row justify-content-center gap-3">
+          ${cardsHTML}
+        </div>
+      </div>
+    `;
   }
+
+  showCategories.innerHTML = slidesHTML;
+}
+
+renderCategorySlides();
+
+
+window.addEventListener("resize", () => {
+  renderCategorySlides();
+});
+
+
+  
+  // for (let i = 0; i < 4; i++) {
+
+  //   let categoryId = categories[i].id;
+
+  //   let productsOfCategory = ProductManager.getProductsByCategory(categoryId);
+  
+    
+  // }
+
+  // for (let i = 4; i < 8; i++) {
+  //   let productId = categories[i].id;
+  //   let productsOfCategory = ProductManager.getProductsByCategory(productId);
+
+  //   categoriesNextSlide.innerHTML += 
+  //     `<div class="card cardItem position-relative col-12 col-sm-6 col-lg-3 ">
+  //         <img src="${categories[i].image}" class="rounded" alt="...">
+    
+  //         <div class="cardCaption position-absolute text-center">
+  //           <h5 class="imgContainer text-light">${categories[i].name}</h5>
+  //           <div class="cardDetails text-light">
+  //             <p class="text-light">${productsOfCategory.length} product</p>
+  //             <button class="btn p-3 btn-light viewProductsOfCategory"  value="${categories[i].name}">View</button>
+  //           </div>
+  //         </div>
+  //       </div>`;
+  // }
 });
 
 //Dynamic reviews in home page
@@ -186,7 +252,7 @@ let activeReviewUserId = reviews[0].userId;
 let activeReviewUserName = UserManager.getUserNameById(activeReviewUserId);
 
 activeCarouselItem.innerHTML += `
-  <p class="my-3 lead">${reviews[0].comment}</p>
+  <p class="my-3 lead">${reviews[0].comment.slice(0,100)}</p>
   <div class="d-flex justify-content-center">
     <img class="rounded-circle"
       src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01.jpg"
@@ -213,7 +279,7 @@ for (let i = 1; i < reviews.length; i++) {
   }
 
   carouselItems[i-1].innerHTML += `
-    <p class="my-3 lead">${reviews[i].comment}</p>
+    <p class="my-3 lead">${reviews[i].comment.slice(0,100)}</p>
     <div class="d-flex justify-content-center">
       <img class="rounded-circle"
         src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01-1.jpg"
@@ -229,28 +295,21 @@ for (let i = 1; i < reviews.length; i++) {
 
 
 
-let textSearch = '';
-textSearch.toLowerCase()
+// search about product through home
 
-document.getElementById("searchGo").addEventListener("click", function () {
-  textSearch = document.getElementById("searchInput").value;
-  let pros = ProductManager.getAllProducts();
+document.getElementById("searchGo").addEventListener("click", function (e) {
 
-  for (let i = 0; i < pros.length; i++){
-    if (pros[i].name.toLowerCase().includes(textSearch.toLowerCase())) {
-
-      console.log(pros[i].name);
-
-      
-    }
-  }
+  let searchInputData=document.getElementById("searchInput").value;
   
+  window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
 })
 
 
 
 
 
+// viewAll Products Of specific Category through Home
 
 document.addEventListener("DOMContentLoaded", function () {
      let viewAllProductsOfCategory = document.getElementsByClassName("viewProductsOfCategory");
@@ -276,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+// view All Categories through Home
 
 document.getElementById("viewCategories").addEventListener("click", function (e) {
   console.log(e);
@@ -285,3 +344,21 @@ document.getElementById("viewCategories").addEventListener("click", function (e)
   window.location.href="/customer/categories.html"
   
 })
+
+
+
+let btnShopNow = document.getElementsByClassName("ShopNow");
+for (let index = 0; index < btnShopNow.length; index++) {
+  btnShopNow[index].addEventListener("click", function () {
+    window.location.href = "../../customer/product.html";
+  })
+  
+}
+
+document.getElementById("learnMore").addEventListener("click", function () {
+  window.location.href = "../../customer/categories.html";
+  
+})
+
+
+ 

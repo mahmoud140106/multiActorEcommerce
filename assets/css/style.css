@@ -231,6 +231,7 @@ h1 {
   width: 90%;
 }
 
+
 .cardItem {
   width: 22%;
   padding: 0;
@@ -351,13 +352,13 @@ h1 {
   right: 3%;
 }
 
-#searchInput::placeholder {
-  color: black;
-}
+/* #searchInput::placeholder {
+  color: rgba(0, 0, 0, 0.297);
+} */
 
 #searchInput {
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid black; 
 }
 
 #searchInput:focus {
@@ -423,3 +424,8 @@ h1 {
     font-size: 1.5rem !important;
   }
 }
+
+
+
+
+
