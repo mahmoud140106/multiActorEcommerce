@@ -1,5 +1,5 @@
 import { ProductManager } from "./productManager.js";
-// cartManager.js
+
 export const CartManager = {
   // Cart Operations
   getCart: function() {
@@ -46,8 +46,7 @@ export const CartManager = {
   
     localStorage.setItem('cart', JSON.stringify(cart));
     return cartItem;
-  }
-  ,
+  },
   
   // Function to remove item from cart
   removeFromCart: function(index) {
@@ -80,8 +79,7 @@ export const CartManager = {
     cart[index].quantity = newQuantity;
     localStorage.setItem('cart', JSON.stringify(cart));
     return cart;
-  }
-  ,
+  },
   
   // Function to clear cart
   clearCart: function() {
@@ -90,24 +88,20 @@ export const CartManager = {
     this.showToast('Cart cleared.');
   },
   
-  // Function to apply promo code
+  // Updated applyPromoCode function for fixed $10 discount
   applyPromoCode: function(code) {
-    const validCodes = {
-      'OFF10': { discount: 10, type: 'fixed' }
-      // Add more promo codes as needed
-    };
-    
-    if (validCodes[code]) {
+    const validPromoCode = "OFF10";
+    if (code === validPromoCode) {
       localStorage.setItem('promoCode', code);
-      this.showToast('Promo code applied!');
-      return validCodes[code];
+      this.showToast(`Promo code applied! You saved $10.00.`);
+      return true;
     } else {
       localStorage.removeItem('promoCode');
-      this.showToast('Invalid promo code.');
-      return null;
+      this.showToast('Invalid promo code!');
+      return false;
     }
   },
-  
+
   // Wishlist Operations
   getWishlist: function() {
     return JSON.parse(localStorage.getItem('wishlist')) || [];
@@ -280,42 +274,39 @@ export const CartManager = {
     });
   },
   
-  // Calculate order summary
-  calculateOrderSummary: function () {
-    const cart = this.getCart();
-    const promoCode = localStorage.getItem('promoCode');
-    
-    let totalItems = 0;
-    let subtotal = 0;
-    let discount = 0;
+// Calculate order summary
+calculateOrderSummary: function() {
+  const cart = this.getCart();
+  const promoCode = localStorage.getItem('promoCode');
   
-    cart.forEach(item => {
-      const quantity = item.quantity || 0;
-      const price = item.price || item.originalPrice || 0;
-      const originalPrice = item.originalPrice || price;
-      const itemDiscount = (originalPrice - price) * quantity;
+  let totalItems = 0;
+  let subtotal = 0;
   
-      totalItems += quantity;
-      subtotal += price * quantity;
-      discount += itemDiscount;
-    });
+  cart.forEach(item => {
+    totalItems += item.quantity;
+    subtotal += item.price * item.quantity;
+  });
   
-    const shippRate = 0.10;
-    const taxRate = 0.06;
-    const shipping = subtotal * shippRate;
-    const tax = subtotal * taxRate;
+  const shippRate = 0.10; // Flat rate shipping
+  const taxRate = 0.06; // 6% tax
+  const shipping = subtotal * shippRate;
+  const tax = subtotal * taxRate;
   
-    const total = subtotal + shipping + tax;
-  
-    return {
-      totalItems,
-      subtotal,
-      shipping,
-      tax,
-      discount,
-      total: total - discount,
-      promoCode
-    };
+  let discount = 0;
+  if (promoCode === 'OFF10') {
+    discount = 10.00;
   }
   
+  const total = subtotal + shipping + tax - discount;
+  
+  return {
+    totalItems,
+    subtotal,
+    shipping,
+    tax,
+    discount,
+    total,
+    promoCode
+  };
+}
 };
