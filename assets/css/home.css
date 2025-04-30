@@ -244,10 +244,22 @@ section h2 {
 
 
 
+.cardItem{
+  width: 90% !important;
+}
+
 
 @media (max-width: 790px) {
 
+  .cardItem{
+  width: 60% !important;
+}
 
+
+  .car>div>span{
+    font-size: 0.8rem !important;
+   
+  }
   .car>div>span:nth-child(2){
     padding-right: 1rem !important;
   }

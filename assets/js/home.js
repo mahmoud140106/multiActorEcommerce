@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let cardsPerSlide = 1;
   const width = window.innerWidth;
 
-  if (width >= 992) {
+  if (width >= 1000) {
     cardsPerSlide = 4; 
   } else if (width >= 768) {
     cardsPerSlide = 2; 
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let cardsHTML = slideItems.map(cat => {
       const products = ProductManager.getProductsByCategory(cat.id);
       return `
-        <div class="col border border-4 border-info">
+        <div class="col d-flex justify-content-center w-100">
           <div class="card cardItem position-relative w-100">
             <img src="${cat.image}" class="rounded w-100" alt="${cat.name}">
             <div class="cardCaption position-absolute text-center">
@@ -252,7 +252,7 @@ let activeReviewUserId = reviews[0].userId;
 let activeReviewUserName = UserManager.getUserNameById(activeReviewUserId);
 
 activeCarouselItem.innerHTML += `
-  <p class="my-3 lead">${reviews[0].comment}</p>
+  <p class="my-3 lead">${reviews[0].comment.slice(0,100)}</p>
   <div class="d-flex justify-content-center">
     <img class="rounded-circle"
       src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01.jpg"
@@ -279,7 +279,7 @@ for (let i = 1; i < reviews.length; i++) {
   }
 
   carouselItems[i-1].innerHTML += `
-    <p class="my-3 lead">${reviews[i].comment}</p>
+    <p class="my-3 lead">${reviews[i].comment.slice(0,100)}</p>
     <div class="d-flex justify-content-center">
       <img class="rounded-circle"
         src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01-1.jpg"
