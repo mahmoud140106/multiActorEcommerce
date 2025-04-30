@@ -98,6 +98,9 @@ function renderCart() {
   }
 
   finalTotalElement.textContent = `$${summary.total.toFixed(2)}`;
+  
+  // Add event listeners to the newly rendered cart items
+  addCartEventListeners();
 }
 
 function addCartEventListeners() {
@@ -222,8 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
     CartManager.applyPromoCode(promoInput);
     renderCart();
   });
-
-  
 
   document.getElementById('checkout-button')?.addEventListener('click', () => {
     const cart = CartManager.getCart();
