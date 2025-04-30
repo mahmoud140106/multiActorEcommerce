@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // get products for each seller 
 
   loadOrders();
+  window.add
   function loadOrders() {
     const currentUser = StorageManager.load("currentUser");
     if (!currentUser || currentUser.role !== "seller") {
@@ -46,9 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
 
         order.items.forEach((item)=>{
-
-            let productFromStorage=products.find(product=>product.id==item.productId)    //filter products from storage to get seller id
-        //    console.log(productFromStorage)
+        
+            let productFromStorage=products.find(product=>product.id===item.productId)    //filter products from storage to get seller id
+           console.log(productFromStorage)
             if(productFromStorage.sellerId==currentUser.id && productFromStorage.id==item.productId){
                 sellerOrders.push(order);         //filter all orders to get the seller orders
                 
