@@ -115,10 +115,13 @@ for (let j = 0; j < AllCategories.length; j++) {
 let filterProducts = ProductManager.getProductsByCategory(categoryId);
 product(filterProducts);
 
-//default page which will be shown in product page
-if (window.location.href.indexOf("=") == -1) {
+// Ensure all products are displayed by default
+if (window.location.href.indexOf("=") === -1 || categoryId === 0) {
   product(allProduct);
-};
+} else {
+  let filterProducts = ProductManager.getProductsByCategory(categoryId);
+  product(filterProducts);
+}
 
 //change products by option categories in product page
 filterCategory.addEventListener("change", function (e) {
