@@ -153,7 +153,11 @@ export class ProductManager {
   }
 
   static getAllProducts() {
-    return StorageManager.load("products") || [];
+    return (
+      StorageManager.load("products").filter(
+        (product) => product.status === "accepted"
+      ) || []
+    );
   }
 
   static getProductsByCategory(categoryId) {
@@ -185,7 +189,9 @@ export class ProductManager {
 
   static updateStock(productId, quantityChange) {
     const products = StorageManager.load("products") || [];
-    const productIndex = products.findIndex((product) => product.id === productId);
+    const productIndex = products.findIndex(
+      (product) => product.id === productId
+    );
 
     if (productIndex !== -1) {
       products[productIndex].stock += quantityChange;
@@ -222,7 +228,7 @@ function initializeDefaultProducts() {
         colors: ["White", "Black"],
         sizes: ["S", "M", "L"],
         soldCount: 5,
-        status: "accepted", 
+        status: "accepted",
       }
     ),
     new Product(

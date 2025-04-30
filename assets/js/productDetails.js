@@ -16,9 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     productId = parseInt(urlParams.get("id"));
     productCount = document.getElementById("productCount").value;
     AllProducts = ProductManager.getAllProducts();
-    AllProducts = AllProducts.filter(
-      (product) => product.status === "accepted"
-    );
+   
     if (isNaN(productId)) {
       console.error("Invalid product ID:", urlParams.get("id"));
       document.querySelector(".container.mt-4").innerHTML =

@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     products = products
       .filter((product) => product.isFeatured)
-      .filter((product) => product.status === "accepted")
       .sort(() => 0.5 - Math.random())
       .slice(0, 8);
 
@@ -33,10 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
              onerror="this.src='https://dummyimage.com/500x250/cccccc/000000&text=No+Image';">
       </a>
       <div id ="wishlist-html" class="card-icons position-absolute top-0 end-0 p-2">
-        <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${
-          product.id
-        }"><i class="far fa-heart"></i></button>
-        <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1"><i class="fas fa-shopping-cart"></i></button>
+        <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${product.id}"><i class="far fa-heart"></i></button>
+        <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1 add-to-cart" data-id="${product.id}"><i class="fas fa-shopping-cart"></i></button>
       </div>
       ${
         product.isOnSale
@@ -239,7 +236,6 @@ textSearch.toLowerCase();
 document.getElementById("searchGo").addEventListener("click", function () {
   textSearch = document.getElementById("searchInput").value;
   let pros = ProductManager.getAllProducts();
-  pros = pros.filter((product) => product.status === "accepted");
   for (let i = 0; i < pros.length; i++) {
     if (pros[i].name.toLowerCase().includes(textSearch.toLowerCase())) {
       console.log(pros[i].name);

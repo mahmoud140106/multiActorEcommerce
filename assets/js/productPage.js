@@ -2,7 +2,6 @@ import { ProductManager } from "./productManager.js";
 import { CategoryManager } from "./categoryManager.js";
 
 let allProduct = ProductManager.getAllProducts();
-allProduct = allProduct.filter((product) => product.status === "accepted");
 let productPage = document.getElementById("productPage");
 let filterCategory = document.getElementById("filterCategory");
 let AllCategories = CategoryManager.getAllCategories();
