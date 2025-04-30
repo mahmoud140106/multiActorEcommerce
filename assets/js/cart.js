@@ -23,7 +23,8 @@ function renderCart() {
     cartItemsContainer.innerHTML = '<p class="p-4 text-center">Your cart is empty.</p>';
   } else {
     cart.forEach((item, index) => {
-      const price = item.price || 0;
+      const price = item.price ?? item.originalPrice ?? 0;
+
       const quantity = item.quantity || 0;
 
       // Check stock
@@ -54,7 +55,13 @@ function renderCart() {
                 <button class="btn btn-outline-secondary border-start-0 rounded-end increase-quantity"
                         data-index="${index}" ${isOutOfStock ? 'disabled' : ''}>+</button>
               </div>
-              <span class="ms-3 fw-semibold">$${price.toFixed(2)}</span>
+              <span class="ms-3 fw-semibold">
+                ${item.discountAmount && item.discountAmount > 0
+                  ? `<span class="text-decoration-line-through text-muted me-2">$${item.originalPrice.toFixed(2)}</span>
+                    <span class="text-danger">$${price.toFixed(2)}</span>`
+                  : `$${price.toFixed(2)}`
+                }
+              </span>
             </div>
           </div>
           <div class="col-md-4 text-end">

@@ -174,18 +174,25 @@ export class ProductManager {
     return StorageManager.load("products") || [];
   }
 
-  static checkStockAvailability(productId) {
-    const product = this.getProduct(productId);
+  static checkStockAvailability(productId, desiredQuantity = 1) {
+    const products = StorageManager.load("products") || [];
+    const product = products.find((p) => p.id === productId && p.status === "accepted");
+  
     if (!product) {
-      return { available: false, stock: 0 };
+      return { available: false, stock: 0, message: "Product not found or not available." };
     }
-
-    if (product.stock > 0) {
+  
+    if (product.stock >= desiredQuantity) {
       return { available: true, stock: product.stock };
     } else {
-      return { available: false, stock: 0 };
+      return {
+        available: false,
+        stock: product.stock,
+        message: `Only ${product.stock} item(s) available in stock.`,
+      };
     }
   }
+  
 
   static updateStock(productId, quantityChange) {
     const products = StorageManager.load("products") || [];
