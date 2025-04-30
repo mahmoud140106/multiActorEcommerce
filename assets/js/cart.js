@@ -23,7 +23,7 @@ function renderCart() {
     cartItemsContainer.innerHTML = '<p class="p-4 text-center">Your cart is empty.</p>';
   } else {
     cart.forEach((item, index) => {
-      const price = item.price || 0;
+      const price = item.price ?? item.originalPrice ?? 0;
       const quantity = item.quantity || 0;
 
       // Check stock
@@ -54,7 +54,13 @@ function renderCart() {
                 <button class="btn btn-outline-secondary border-start-0 rounded-end increase-quantity"
                         data-index="${index}" ${isOutOfStock ? 'disabled' : ''}>+</button>
               </div>
-              <span class="ms-3 fw-semibold">$${price.toFixed(2)}</span>
+              <span class="ms-3 fw-semibold">
+                ${item.discountAmount && item.discountAmount > 0
+                  ? `<span class="text-decoration-line-through text-muted me-2">$${item.originalPrice.toFixed(2)}</span>
+                    <span class="text-danger">$${price.toFixed(2)}</span>`
+                  : `$${price.toFixed(2)}`
+                }
+              </span>
             </div>
           </div>
           <div class="col-md-4 text-end">
@@ -71,16 +77,16 @@ function renderCart() {
     });
   }
 
-  // Update order summary
+  // Use CartManager to calculate order summary
   const summary = CartManager.calculateOrderSummary();
-  if (cartItemCount) {
-    cartItemCount.textContent = `${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''}`;
-  }
+
+  // Update order summary display
   subtotalLabel.textContent = `Subtotal (${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''})`;
   subtotalElement.textContent = `$${summary.subtotal.toFixed(2)}`;
   taxElement.textContent = `$${summary.tax.toFixed(2)}`;
   shippingElement.textContent = `$${summary.shipping.toFixed(2)}`;
 
+  // Handle promo code display
   if (summary.promoCode === 'OFF10') {
     promoAlert.classList.remove('d-none');
     promoSavings.textContent = `$${summary.discount.toFixed(2)}`;
@@ -92,9 +98,6 @@ function renderCart() {
   }
 
   finalTotalElement.textContent = `$${summary.total.toFixed(2)}`;
-
-  addCartEventListeners();
-  addProductDetailsNavigation();
 }
 
 function addCartEventListeners() {
@@ -219,6 +222,8 @@ document.addEventListener('DOMContentLoaded', () => {
     CartManager.applyPromoCode(promoInput);
     renderCart();
   });
+
+  
 
   document.getElementById('checkout-button')?.addEventListener('click', () => {
     const cart = CartManager.getCart();
