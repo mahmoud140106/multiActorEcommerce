@@ -49,8 +49,8 @@ export class OrderManager {
 
     let total = 0;
     const validatedItems = items.map((item) => {
-      const product = ProductManager.getProduct(item.productId);
-      if (!product) throw new Error(`Product ${item.productId} not found.`);
+      const product =  item.id ? ProductManager.getProduct(item.id) : item;
+      if (!product) throw new Error(`Product ${item.id} not found.`);
       if (product.stock < item.quantity)
         throw new Error(`Insufficient stock for product ${product.name}.`);
 
@@ -84,7 +84,7 @@ export class OrderManager {
       );
 
       return new OrderItem(
-        item.productId,
+       product.id,
         item.quantity,
         // item.size,
         // item.color,

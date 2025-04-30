@@ -1,5 +1,4 @@
 import { OrderManager } from "./orderManager.js";
-import{OrderItem} from "./orderManager.js";
 import { StorageManager } from "./storageManager.js";
 import { ProductManager } from "./productManager.js";
 
@@ -26,17 +25,18 @@ StorageManager.save('customerDeliveryData',customerDeliveryData);
 const cart = JSON.parse(localStorage.getItem('cart')) || [];        //get cart from local storage
 let products = StorageManager.load('products');
 const product= products.find(product=>product.id==productId);                //get product from  storage manager
-console.log(product)
+let productCopy= {...product};                                              // make a copy of the product object to send in the order and keep the main product in my products
 let items =[];
 
 // if the items in cart
 if(Number.isNaN(productId)){
-    // console.log('from cart')
 cart.forEach((item,index)=>{
     console.log(item)
-let orderItem= new OrderItem(item.id,item.quantity,item.price);
 
-items[index]=orderItem;
+items[index]={
+    productCopy,
+    quantity:productCount
+};
 
 })
 
@@ -46,8 +46,12 @@ OrderManager.createOrder(customerId,items);                                     
 
 //if the item is direct from product details
 else {
-    let orderItem= new OrderItem(productId,productCount,product.price);
-    items[0]=orderItem;
+    console.log(product)
+
+    items[0]={
+        productCopy,
+        quantity:productCount
+    };
     OrderManager.createOrder(customerId,items);                                          //create order
 
 }
