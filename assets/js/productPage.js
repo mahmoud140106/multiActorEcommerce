@@ -7,6 +7,7 @@ let filterCategory = document.getElementById("filterCategory");
 let AllCategories = CategoryManager.getAllCategories();
 
 
+// default page which will be shown in product page
 
 function product(items) {
   
@@ -209,13 +210,3 @@ productSize.addEventListener("change", function (e) {
   
   
 });
-
-
-
-
-
-
-
-
-
-
