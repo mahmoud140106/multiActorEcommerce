@@ -30,7 +30,7 @@ function restrictAccess() {
       "/index.html",
       "/seller/dashboard.html",
       "/seller/products.html",
-      "/orders.html",
+      "/seller/orders.html",
     ],
     admin: ["/index.html", "/admin/dashboard.html", "/admin/products.html"],
     guest: [
