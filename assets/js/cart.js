@@ -204,7 +204,6 @@ function renderWishlistPeek() {
     });
   });
 
-  addProductDetailsNavigation();
 }
 
 // Setup on DOM load
@@ -233,4 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = './checkout.html';
     }
   });
+  addProductDetailsNavigation();
+
 });

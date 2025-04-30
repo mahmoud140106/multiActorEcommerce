@@ -40,16 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     let allOrders = OrderManager.getAllOrders()              //get all orders
-    
+    console.log(allOrders)
+
     let products = StorageManager.load('products');         //get all products to get products for each seller by seller id
     allOrders.forEach((order)=>
     {
 
-
         order.items.forEach((item)=>{
 
             let productFromStorage=products.find(product=>product.id==item.productId)    //filter products from storage to get seller id
-            if(productFromStorage.sellerId==currentUser.id){
+           console.log(productFromStorage)
+            if(productFromStorage.sellerId==currentUser.id && productFromStorage.id==item.productId){
                 sellerOrders.push(allOrders.find(product=>product.id==item.productId));         //filter all orders to get the seller orders
                 
             }
