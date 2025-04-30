@@ -7,14 +7,17 @@ import { CartManager } from "./cartManager.js";
 let user = StorageManager.load("currentUser"); // Get current user from storage
 let productId;
 let AllProducts;
+let product;
 let r;
+let productCountInput;
 let productCount;
 document.addEventListener("DOMContentLoaded", () => {
   console.log("product details.js loaded");
   try {
     const urlParams = new URLSearchParams(window.location.search);
     productId = parseInt(urlParams.get("id"));
-    productCount = document.getElementById("productCount").value;
+    productCountInput = document.getElementById("productCount");
+    productCount= productCountInput.value;
     AllProducts = ProductManager.getAllProducts();
    
     if (isNaN(productId)) {
@@ -24,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const product = ProductManager.getProduct(productId);
+     product = ProductManager.getProduct(productId);
     
     if (!product) {
       console.error("Product not found for ID:", productId);
@@ -182,6 +185,17 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   );
 
+
+  //product count 
+  productCountInput.addEventListener('change',function(e){
+   productCountInput.setAttribute('value',`${e.target.value}`);
+   productCount=productCountInput.value;
+    console.log(productCountInput)
+    console.log(productCount)
+
+  })
+
+  
   // Add event listeners to "Add to Wishlist" buttons
   document.querySelectorAll(".add-to-wishlist").forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -220,6 +234,13 @@ document.getElementById("addTocart").addEventListener("click", function () {
     showToast("Please log in first", "error");
     return;
   }
+  if(productCount<1){
+    productCount=1;
+    // console.log('from count 1')
+  }
+  console.log(productCount)
+  CartManager.addToCart(product,productCount);
+  // showToast('Your item Added to cart successfully ' ,'success');
 });
 
 // Redirect to checkout page when "Buy It Now" is clicked
@@ -227,6 +248,9 @@ document.getElementById("buyItNow").addEventListener("click", function () {
   if (user == null) {
     showToast("Please log in first", "error");
     return;
+  }
+  if(productCount<1){
+    productCount=1;
   }
   window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
 });
