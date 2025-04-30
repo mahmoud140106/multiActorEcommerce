@@ -47,7 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }" class="text-decoration-none">
         <h5 class="card-title mb-1">${product.name}</h5>
       </a>
-      <p class="card-text text-secondary mb-2">${CategoryManager.getCategory(product.categoryId).name}</p>
+      <p class="card-text text-secondary mb-2">${
+        CategoryManager.getCategory(product.categoryId).name
+      }</p>
       <div class="p-3 border-top position-relative border-1 d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center">
           <span class="">$${
@@ -63,7 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
               : ""
           }
         </div>
-        <button class="btn btn-dark add-to-cart" data-id="${product.id}">Add to cart</button>
+        <button class="btn btn-dark add-to-cart" data-id="${
+          product.id
+        }">Add to cart</button>
       </div>
     </div>
   </div>
@@ -72,19 +76,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Add event listeners to "Add to Cart" buttons
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-      button.addEventListener('click', () => {
-        const productId = parseInt(button.getAttribute('data-id'));
-        const product = products.find(p => p.id === productId);
+    document.querySelectorAll(".add-to-cart").forEach((button) => {
+      button.addEventListener("click", () => {
+        const productId = parseInt(button.getAttribute("data-id"));
+        const product = products.find((p) => p.id === productId);
         CartManager.addToCart(product);
       });
     });
 
     // Add event listeners to "Add to Wishlist" buttons
-    document.querySelectorAll('.add-to-wishlist').forEach(button => {
-      button.addEventListener('click', (event) => {
-        const productId = parseInt(button.getAttribute('data-id'));
-        const product = products.find(p => p.id === productId);
+    document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const productId = parseInt(button.getAttribute("data-id"));
+        const product = products.find((p) => p.id === productId);
         if (product) {
           CartManager.addToWishlist(product, event);
         }
@@ -95,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize
   loadFeaturedProducts();
 
-  // Counter Animation
+    // Counter Animation
   function animateCounter(counter, target, duration) {
     let start = 0;
     const increment = target / (duration / 50);
@@ -115,25 +119,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const counters = document.querySelectorAll(".counter");
-  counters.forEach((counter) => {
-    const target = parseInt(counter.getAttribute("data-target"));
-    animateCounter(counter, target, 2000);
-  });
 
-  //Dynamic categories in home page 
+
+  let target = parseInt(UserManager.getAllUsers().length);
+  animateCounter(counters[0], target, 1000);
+
+
+  target = parseInt(ReviewManager.getAllReviews().length);
+  animateCounter(counters[1], target, 1000);
+
+
+  target = parseInt(CategoryManager.getAllCategories().length);
+  animateCounter(counters[2], target, 1000);
+
+  
+  
+  // counters.forEach((counter) => {
+  //   const target = parseInt(ReviewManager.getAllReviews().length);
+  //   animateCounter(counter, target, 2000);
+  // });
+
+
+
+
+  //Dynamic categories in home page
   let categories = CategoryManager.getAllCategories();
   let categoriesActiveSlide = document.getElementById("activeSlide");
   let categoriesNextSlide = document.getElementById("nextSlide");
 
-  
   for (let i = 0; i < 4; i++) {
-
     let categoryId = categories[i].id;
 
     let productsOfCategory = ProductManager.getProductsByCategory(categoryId);
-  
-    categoriesActiveSlide.innerHTML +=
-      `<div class="card cardItem p-0  position-relative  ">
+
+    categoriesActiveSlide.innerHTML += `<div class="card cardItem p-0  position-relative  ">
             <img src="${categories[i].image}" class="rounded w-100 " alt="...">
     
             <div class="cardCaption position-absolute text-center">
@@ -143,15 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button class="btn p-3 btn-light viewProductsOfCategory"   value="${categories[i].name}">View</button>
               </div>
             </div>
-          </div>`; 
+          </div>`;
   }
 
   for (let i = 4; i < 8; i++) {
     let productId = categories[i].id;
     let productsOfCategory = ProductManager.getProductsByCategory(productId);
 
-    categoriesNextSlide.innerHTML += 
-      `<div class="card cardItem position-relative">
+    categoriesNextSlide.innerHTML += `<div class="card cardItem position-relative">
           <img src="${categories[i].image}" class="rounded" alt="...">
     
           <div class="cardCaption position-absolute text-center">
@@ -171,8 +189,8 @@ let carouselAllReviews = document.getElementById("carouselAllReviews");
 
 carouselAllReviews.innerHTML += `<div id="activeCarouselItem" class="carousel-item active p-5 w-50 border border-3 m-auto bg-light"></div>`;
 
-let activeCarouselItem = document.getElementById('activeCarouselItem');
-let carouselItems = document.getElementsByClassName('carouselItems');
+let activeCarouselItem = document.getElementById("activeCarouselItem");
+let carouselItems = document.getElementsByClassName("carouselItems");
 
 for (let index = 0; index < 5; index++) {
   if (index < reviews[0].rating) {
@@ -203,16 +221,20 @@ for (let i = 1; i < reviews.length; i++) {
   let reviewUserName = UserManager.getUserNameById(reviewUserId);
 
   carouselAllReviews.innerHTML += `<div class="carousel-item carouselItems p-5 w-50 border border-3 m-auto bg-light"></div>`;
-  
+
   for (let index = 0; index < 5; index++) {
     if (index < reviews[i].rating) {
-      carouselItems[i-1].innerHTML += `<span><i class="fa-solid fa-star text-warning"></i></span>`;
+      carouselItems[
+        i - 1
+      ].innerHTML += `<span><i class="fa-solid fa-star text-warning"></i></span>`;
     } else {
-      carouselItems[i-1].innerHTML += `<span><i class="fa-solid fa-star"></i></span>`;
+      carouselItems[
+        i - 1
+      ].innerHTML += `<span><i class="fa-solid fa-star"></i></span>`;
     }
   }
 
-  carouselItems[i-1].innerHTML += `
+  carouselItems[i - 1].innerHTML += `
     <p class="my-3 lead">${reviews[i].comment}</p>
     <div class="d-flex justify-content-center">
       <img class="rounded-circle"
@@ -229,41 +251,32 @@ for (let i = 1; i < reviews.length; i++) {
 
 
 
-let textSearch = '';
-textSearch.toLowerCase()
+// search about product through home
 
-document.getElementById("searchGo").addEventListener("click", function () {
-  textSearch = document.getElementById("searchInput").value;
-  let pros = ProductManager.getAllProducts();
+document.getElementById("searchGo").addEventListener("click", function (e) {
 
-  for (let i = 0; i < pros.length; i++){
-    if (pros[i].name.toLowerCase().includes(textSearch.toLowerCase())) {
-
-      console.log(pros[i].name);
-
-      
-    }
-  }
+  let searchInputData=document.getElementById("searchInput").value;
   
+  window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
 })
 
 
 
 
 
+// viewAll Products Of specific Category through Home
 
 document.addEventListener("DOMContentLoaded", function () {
-     let viewAllProductsOfCategory = document.getElementsByClassName("viewProductsOfCategory");
-    
-    for (let i = 0; i < viewAllProductsOfCategory.length; i++){
+  let viewAllProductsOfCategory = document.getElementsByClassName(
+    "viewProductsOfCategory"
+  );
 
-  viewAllProductsOfCategory[i].addEventListener("click", function (e) {
-  window.location.href = `../../customer/product.html?categoryType=${e.target.value}`;
-      
-
-})
-
-}
+  for (let i = 0; i < viewAllProductsOfCategory.length; i++) {
+    viewAllProductsOfCategory[i].addEventListener("click", function (e) {
+      window.location.href = `../../customer/product.html?categoryType=${e.target.value}`;
+    });
+  }
 });
 
 
@@ -276,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+// view All Categories through Home
 
 document.getElementById("viewCategories").addEventListener("click", function (e) {
   console.log(e);
@@ -285,3 +298,13 @@ document.getElementById("viewCategories").addEventListener("click", function (e)
   window.location.href="/customer/categories.html"
   
 })
+
+
+
+let btnShopNow = document.getElementsByClassName("ShopNow");
+for (let index = 0; index < btnShopNow.length; index++) {
+  btnShopNow[index].addEventListener("click", function () {
+    window.location.href = "../../customer/product.html";
+  })
+  
+}
