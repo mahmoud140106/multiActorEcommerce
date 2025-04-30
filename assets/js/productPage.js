@@ -220,4 +220,3 @@ productSize.addEventListener("change", function (e) {
 
 
 
-
