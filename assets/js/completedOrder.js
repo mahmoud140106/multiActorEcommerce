@@ -24,13 +24,16 @@ const customerDeliveryData ={
 StorageManager.save('customerDeliveryData',customerDeliveryData);
 
 const cart = JSON.parse(localStorage.getItem('cart')) || [];        //get cart from local storage
-const product= ProductManager.getProduct(productId);                //get product from  storage manager
+let products = StorageManager.load('products');
+const product= products.find(product=>product.id==productId);                //get product from  storage manager
+console.log(product)
 let items =[];
 
 // if the items in cart
 if(Number.isNaN(productId)){
-    console.log('from cart')
+    // console.log('from cart')
 cart.forEach((item,index)=>{
+    console.log(item)
 let orderItem= new OrderItem(item.id,item.quantity,item.price);
 
 items[index]=orderItem;
@@ -53,5 +56,4 @@ let customerOrders= OrderManager.getOrdersByCustomer(customerId);               
 
 let orderId = customerOrders[customerOrders.length-1].id;                             //get the id of the last order
 console.log(customerOrders)
-
 document.getElementById('orderId').innerText=orderId;

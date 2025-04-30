@@ -2,6 +2,7 @@ import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
 import { OrderManager } from "./orderManager.js";
 import { showToast } from "./toast.js";
+import { UserManager } from "./userManager.js";
 
 // active link
 document.addEventListener("DOMContentLoaded", () => {
@@ -19,11 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  let orders;
   let currentPage = 1;
   const itemsPerPage = 5;
   let sortColumn = "id";
   let sortDirection = "asc";
+  let sellerOrders =[];
+  let filteredOrders;
+  // get products for each seller 
 
   loadOrders();
   function loadOrders() {
@@ -36,16 +39,31 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "/index.html";
       return;
     }
-     orders = OrderManager.getOrdersBySeller(currentUser.id);
+    let allOrders = OrderManager.getAllOrders()              //get all orders
+    
+    let products = StorageManager.load('products');         //get all products to get products for each seller by seller id
+    allOrders.forEach((order)=>
+    {
+
+
+        order.items.forEach((item)=>{
+
+            let productFromStorage=products.find(product=>product.id==item.productId)    //filter products from storage to get seller id
+            if(productFromStorage.sellerId==currentUser.id){
+                sellerOrders.push(allOrders.find(product=>product.id==item.productId));         //filter all orders to get the seller orders
+                
+            }
+        })
+    })
+    console.log(sellerOrders)
     renderOrdersTable();
   }
-  console.log(orders)
 
 
   function renderOrdersTable() {
     const tbody = document.getElementById("ordersTableBody");
     tbody.innerHTML = "";
-    if (orders.length === 0) {
+    if (sellerOrders.length === 0) {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td colspan="9" class="text-center">No Orders available</td>
@@ -55,40 +73,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    const paginatedProducts = filteredProducts.slice(start, end);
+    const paginatedOrders = sellerOrders.slice(start, end);
 
-    paginatedProducts.forEach((product) => {
-      const category = CategoryManager.getCategory(product.categoryId);
-      const statusClass = product.status === "pending" ? "bg-warning text-dark" :
-                         product.status === "accepted" ? "bg-success text-white" :
-                         product.status === "rejected" ? "bg-danger text-white" : "bg-secondary text-white";
-      const statusText = product.status ? product.status.charAt(0).toUpperCase() + product.status.slice(1) : "Unknown";
-      const statusContent = product.status === "rejected" && product.rejectReason
-        ? `<span class="badge ${statusClass}" data-bs-toggle="tooltip" data-bs-placement="top" title="${product.rejectReason}">${statusText}</span>`
+    paginatedOrders.forEach((order) => {
+        console.log(order)
+
+      const statusClass = order.status === "pending" ? "bg-warning text-dark" :
+                          order.status === "accepted" ? "bg-success text-white" :
+                          order.status === "rejected" ? "bg-danger text-white" : "bg-secondary text-white";
+      const statusText = order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : "Unknown";
+      const statusContent = order.status === "rejected" && order.rejectReason
+        ? `<span class="badge ${statusClass}" data-bs-toggle="tooltip" data-bs-placement="top" title="${order.rejectReason}">${statusText}</span>`
         : `<span class="badge ${statusClass}">${statusText}</span>`;
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>...${product.id % 1000}</td>
-        <td class="d-none d-md-table-cell"><img src="${
-          product.images[0] ||
-          "https://dummyimage.com/50x50/cccccc/000000&text=No+Img"
-        }" alt="${product.name}" 
-        onerror="this.onerror=null; this.src='https://dummyimage.com/50x50/cccccc/000000&text=No+Img';" 
-        style="height: 50px; width: 50px;"></td>
-        <td>${product.name}</td>
-        <td>${category ? category.name : "Unknown"}</td>
-        <td class="d-none d-md-table-cell">$${product.price.toFixed(2)}</td>
-        <td class="d-none d-md-table-cell">$${product.discount.toFixed(2)}</td>
-        <td class="d-none d-md-table-cell">${product.stock}</td>
+        <td>...${order.id % 1000}</td>
+        <td>${UserManager.getUserNameById(order.customerId)}</td>
+        <td class="d-none d-md-table-cell">$${order.createdAt}</td>
+        <td class="d-none d-md-table-cell">$${order.total}</td>
+        <td class="d-none d-md-table-cell">${order.status}</td>
         <td>${statusContent}</td>
-        <td>
-          <button class="btn btn-sm btn-outline-primary rounded-circle m-1 m-md-0" onclick="openEditProductModal(${
-            product.id
-          })"><i class="fas fa-edit"></i></button>
-          <button class="btn btn-sm btn-danger rounded-circle m-1 m-md-0" onclick="deleteProduct(${
-            product.id
-          })"><i class="fas fa-trash-alt"></i></button>
-        </td>
       `;
       tbody.appendChild(row);
     });
@@ -104,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderPagination() {
     const pagination = document.getElementById("pagination");
     pagination.innerHTML = "";
-    const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
+    const pageCount = Math.ceil(sellerOrders.length / itemsPerPage);
 
     const prevLi = document.createElement("li");
     prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
@@ -131,10 +135,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.changePage = (page) => {
-    if (page < 1 || page > Math.ceil(filteredProducts.length / itemsPerPage))
+    if (page < 1 || page > Math.ceil(sellerOrders.length / itemsPerPage))
       return;
     currentPage = page;
-    renderProductsTable();
+    renderOrdersTable();
   };
 
   window.sortTable = (column) => {
@@ -149,15 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let valA = a[column];
       let valB = b[column];
 
-      if (column === "categoryId") {
-        const catA = CategoryManager.getCategory(a.categoryId);
-        const catB = CategoryManager.getCategory(b.categoryId);
-        valA = catA ? catA.name : "";
-        valB = catB ? catB.name : "";
-      } else if (column === "status") {
-        valA = a.status || "";
-        valB = b.status || "";
-      }
+      
 
       if (typeof valA === "string") {
         return sortDirection === "asc"
@@ -174,295 +170,37 @@ document.addEventListener("DOMContentLoaded", () => {
       sortDirection === "asc" ? "↑" : "↓";
 
     currentPage = 1;
-    renderProductsTable();
+    renderOrdersTable();
   };
 
-  window.searchProducts = () => {
+  window.searchOrders = () => {
     const query = document.getElementById("searchInput").value.toLowerCase();
     const selectedStatus = document.getElementById("statusFilter").value;
-    const currentUser = StorageManager.load("currentUser");
-    const products = ProductManager.getProductsBySeller(currentUser.id);
-    filteredProducts = products.filter((p) => {
-      const category = CategoryManager.getCategory(p.categoryId);
+    filteredOrders = sellerOrders.filter((o) => {
       const matchesQuery =
-        p.name.toLowerCase().includes(query) ||
-        (category && category.name.toLowerCase().includes(query)) ||
-        (p.status && p.status.toLowerCase().includes(query));
-      const matchesStatus = selectedStatus === "all" || p.status === selectedStatus;
+      (UserManager.getUserNameById(o.customerId)).toLowerCase().includes(query) ||
+        (o.status && o.status.toLowerCase().includes(query));
+      const matchesStatus = selectedStatus === "all" || o.status === selectedStatus;
       return matchesQuery && matchesStatus;
     });
     currentPage = 1;
-    renderProductsTable();
+    renderOrdersTable();
   };
 
   window.filterByStatus = () => {
     const selectedStatus = document.getElementById("statusFilter").value;
     const query = document.getElementById("searchInput").value.toLowerCase();
-    const currentUser = StorageManager.load("currentUser");
-    const products = ProductManager.getProductsBySeller(currentUser.id);
-    filteredProducts = products.filter((p) => {
-      const category = CategoryManager.getCategory(p.categoryId);
+    filteredOrders = sellerOrders.filter((o) => {
       const matchesQuery =
-        p.name.toLowerCase().includes(query) ||
-        (category && category.name.toLowerCase().includes(query)) ||
-        (p.status && p.status.toLowerCase().includes(query));
-      const matchesStatus = selectedStatus === "all" || p.status === selectedStatus;
+      (UserManager.getUserNameById(o.customerId)).toLowerCase().includes(query) ||
+        (o.status && o.status.toLowerCase().includes(query));
+      const matchesStatus = selectedStatus === "all" || o.status === selectedStatus;
       return matchesQuery && matchesStatus;
     });
     currentPage = 1;
-    renderProductsTable();
+    renderOrdersTable();
   };
 
-  function handleImageUpload(files, callback) {
-    const imagePaths = [];
-    const validTypes = ["image/jpeg", "image/png", "image/gif"];
-    const maxSize = 5 * 1024 * 1024; // 5MB
+ 
 
-    if (files && files.length) {
-      Array.from(files).forEach((file) => {
-        if (!validTypes.includes(file.type)) {
-          showToast("Only JPEG, PNG, or GIF images are allowed.", "error");
-          return;
-        }
-        if (file.size > maxSize) {
-          showToast("Image size must be less than 5MB.", "error");
-          return;
-        }
-        const imagePath = `/assets/images/${file.name}`;
-        imagePaths.push(imagePath);
-      });
-    }
-
-    callback(imagePaths);
-  }
-
-  function renderImagePreview(files, imagePaths) {
-    const previewContainer = document.getElementById("imagePreview");
-    previewContainer.innerHTML = "";
-    const imagesToPreview = [];
-
-    // Update selectedImages based on input
-    if (files && files.length) {
-      const newFiles = Array.from(files);
-      // Append new files to selectedImages, avoiding duplicates
-      newFiles.forEach((file) => {
-        if (!selectedImages.some((img) => img.isFile && img.file.name === file.name)) {
-          selectedImages.push({ src: URL.createObjectURL(file), file, isFile: true });
-        }
-      });
-    } else if (imagePaths && imagePaths.length && selectedImages.length === 0) {
-      // Only set imagePaths if selectedImages is empty (initial load for edit)
-      selectedImages = imagePaths.map((image) => ({
-        src: image,
-        isFile: false
-      }));
-    }
-
-    imagesToPreview.push(...selectedImages);
-
-    if (imagesToPreview.length) {
-      imagesToPreview.forEach(({ src }, index) => {
-        const imgContainer = document.createElement("div");
-        imgContainer.style.display = "inline-block";
-        imgContainer.style.position = "relative";
-        const img = document.createElement("img");
-        img.src = src;
-        img.alt = "Preview";
-        img.style.height = "100px";
-        img.style.width = "100px";
-        img.style.objectFit = "cover";
-        img.style.margin = "5px";
-        img.onerror = () => {
-          img.src = "https://dummyimage.com/100x100/cccccc/000000&text=Invalid+Image";
-        };
-        const removeBtn = document.createElement("button");
-        removeBtn.type = "button";
-        removeBtn.className = "btn btn-danger btn-sm";
-        removeBtn.style.position = "absolute";
-        removeBtn.style.top = "0";
-        removeBtn.style.right = "0";
-        removeBtn.innerHTML = "×";
-        removeBtn.onclick = () => {
-          selectedImages.splice(index, 1);
-          // Re-render with current selectedImages
-          renderImagePreview(
-            selectedImages.filter((img) => img.isFile).map((img) => img.file),
-            selectedImages.filter((img) => !img.isFile).map((img) => img.src)
-          );
-          // Clear file input to prevent old files from being submitted
-          document.getElementById("productImage").value = "";
-        };
-        imgContainer.appendChild(img);
-        imgContainer.appendChild(removeBtn);
-        previewContainer.appendChild(imgContainer);
-      });
-      previewContainer.style.display = "block";
-    } else {
-      previewContainer.style.display = "none";
-    }
-  }
-
-  document.getElementById("productImage").addEventListener("change", (e) => {
-    const files = e.target.files;
-    renderImagePreview(files, null);
-  });
-
-  function populateCategorySelect() {
-    const categorySelect = document.getElementById("productCategory");
-    if (!categorySelect) return;
-    categorySelect.innerHTML = `<option value="" disabled selected>Select category</option>`;
-    const categories = CategoryManager.getAllCategories();
-    categories.forEach((category) => {
-      const option = document.createElement("option");
-      option.value = category.id;
-      option.textContent = category.name;
-      categorySelect.appendChild(option);
-    });
-  }
-
-  document.getElementById("productForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const id = parseInt(document.getElementById("productId").value);
-    const currentUser = StorageManager.load("currentUser");
-    if (!currentUser || currentUser.role !== "seller") {
-      showToast(
-        "You must be logged in as a Seller to add/edit products.",
-        "error"
-      );
-      window.location.href = "/index.html";
-      return;
-    }
-
-    const name = document.getElementById("productName").value;
-    const categoryId = parseInt(document.getElementById("productCategory").value);
-    const price = parseFloat(document.getElementById("productPrice").value);
-    const discount = parseFloat(document.getElementById("productDiscount").value);
-    const stock = parseInt(document.getElementById("productStock").value);
-    const sellerId = currentUser.id;
-
-    if (isNaN(price) || isNaN(stock) || isNaN(categoryId)) {
-      showToast("Please enter valid price, stock, and category.", "error");
-      return;
-    }
-
-    // Use selectedImages for submission
-    const newFiles = selectedImages
-      .filter((img) => img.isFile)
-      .map((img) => img.file);
-    const existingImagePaths = selectedImages
-      .filter((img) => !img.isFile)
-      .map((img) => img.src);
-
-    handleImageUpload(newFiles, (newImagePaths) => {
-      const finalImages = [...existingImagePaths, ...newImagePaths];
-
-      // Check if at least one image is present
-      if (finalImages.length === 0) {
-        showToast("At least one image is required.", "error");
-        return;
-      }
-
-      if (!isNaN(id) && ProductManager.getProduct(id)) {
-        ProductManager.updateProduct(
-          id,
-          name,
-          categoryId,
-          price,
-          stock,
-          finalImages, // Always use finalImages
-          sellerId,
-          {
-            discount,
-            status: "pending"
-          }
-        );
-        showToast("Product updated successfully", "success");
-      } else {
-        const newId = Date.now();
-        ProductManager.createProduct(
-          newId,
-          name,
-          categoryId,
-          price,
-          stock,
-          finalImages,
-          sellerId,
-          { discount, status: "pending" }
-        );
-        showToast("Product added successfully", "success");
-      }
-
-      filteredProducts = [...ProductManager.getProductsBySeller(currentUser.id)];
-      renderProductsTable();
-      bootstrap.Modal.getInstance(document.getElementById("productModal")).hide();
-
-      document.getElementById("productName").value = "";
-      document.getElementById("productCategory").value = "";
-      document.getElementById("productPrice").value = "";
-      document.getElementById("productDiscount").value = "";
-      document.getElementById("productStock").value = "";
-      document.getElementById("productImage").value = "";
-      selectedImages = [];
-      renderImagePreview([], []);
-    });
-  });
-
-  window.openAddProductModal = () => {
-    document.getElementById("productModalLabel").textContent = "Add Product";
-    document.getElementById("productId").value = "";
-    document.getElementById("productName").value = "";
-    document.getElementById("productCategory").value = "";
-    document.getElementById("productPrice").value = "";
-    document.getElementById("productDiscount").value = "";
-    document.getElementById("productStock").value = "";
-    document.getElementById("productImage").value = "";
-    document.getElementById("productImage").required = true; // Ensure required for new product
-    selectedImages = [];
-    populateCategorySelect();
-    renderImagePreview([], []);
-  };
-
-  window.openEditProductModal = (id) => {
-    const productId = parseInt(id);
-    const product = ProductManager.getProduct(productId);
-    if (!product) {
-      showToast("Product not found.", "error");
-      return;
-    }
-    document.getElementById("productModalLabel").textContent = "Edit Product";
-    document.getElementById("productId").value = product.id;
-    document.getElementById("productName").value = product.name;
-    document.getElementById("productCategory").value = product.categoryId;
-    document.getElementById("productPrice").value = product.price;
-    document.getElementById("productDiscount").value = product.discount;
-    document.getElementById("productStock").value = product.stock;
-    selectedImages = (product.images || []).map((image) => ({
-      src: image,
-      isFile: false
-    }));
-    // Remove required attribute if there are existing images
-    document.getElementById("productImage").required = selectedImages.length === 0;
-    populateCategorySelect();
-    renderImagePreview(null, product.images || []);
-    new bootstrap.Modal(document.getElementById("productModal")).show();
-  };
-
-  window.deleteProduct = (id) => {
-    const productIdToDelete = parseInt(id);
-    const confirmDeleteModal = new bootstrap.Modal(
-      document.getElementById("confirmDeleteModal")
-    );
-    confirmDeleteModal.show();
-
-    document.getElementById("confirmDeleteBtn").onclick = () => {
-      ProductManager.deleteProduct(productIdToDelete);
-      showToast("Product deleted successfully", "success");
-      const currentUser = StorageManager.load("currentUser");
-      filteredProducts = [...ProductManager.getProductsBySeller(currentUser.id)];
-      renderProductsTable();
-      confirmDeleteModal.hide();
-    };
-  };
-
-  loadProducts();
-});
+}) // end of load
