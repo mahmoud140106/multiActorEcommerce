@@ -7,6 +7,7 @@ let filterCategory = document.getElementById("filterCategory");
 let AllCategories = CategoryManager.getAllCategories();
 
 
+// default page which will be shown in product page
 
 function product(items) {
   
@@ -75,28 +76,39 @@ function product(items) {
     
       
   }
-  
-  
-  
 
     
   }
 
 
-
-// Set default option for filterCategory
+  // Set default option for filterCategory
 filterCategory.innerHTML = '<option  value="AllCategories">All Categories</option>';
 for (let i = 0; i < AllCategories.length; i++) {
   filterCategory.innerHTML += `<option value="${AllCategories[i].name}">${AllCategories[i].name}</option>`;
 }
 
 
+//default page , search by name through home , select category through home
+
+window.addEventListener("DOMContentLoaded", () => {
+  // from home page through search show its products
+    if (window.location.href.includes("$")) {
+
+  let path = window.location.href.slice(window.location.href.lastIndexOf("$") + 1,);
+  let productsByName = ProductManager.getProductsByName(path);
+  console.log(productsByName);
+
+  product(productsByName);
+
+  }
 
 
+  // from home page through category section show its products
+    else if (window.location.href.includes("=")) { 
+      
 
-  //from home page through category section show its products
 
-let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
+      let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
 
 
 let categoryId = 0;
@@ -107,25 +119,22 @@ let categoryId = 0;
     }
   }
 
-  let filterProducts = ProductManager.getProductsByCategory(categoryId);
+  let filteredProducts = ProductManager.getProductsByCategory(categoryId);
 
 
-product(filterProducts);
-    
+product(filteredProducts);
+      
+    }
+      
+    // default page which will be shown in product page
 
-
-  
-
-//default page which will be shown in product page
-
-if (window.location.href.indexOf("=") == -1) {
-
-  product(allProduct);
-  
-};
+    else {
+       product(allProduct);
+  }
 
 
 
+});
 
 
 
@@ -165,7 +174,7 @@ filterCategory.addEventListener("change", function (e) {
     //change products  by option Size in product page
 
  
-    let productSize = document.getElementById("filterSize");
+ let productSize = document.getElementById("filterSize");
 
 productSize.addEventListener("change", function (e) {
 
@@ -201,6 +210,9 @@ productSize.addEventListener("change", function (e) {
   
   
 });
+
+
+
 
 
 

@@ -88,7 +88,7 @@ export class ProductManager {
 
   static getProductsByName(searchName) {
     const productsName = StorageManager.load("products") || [];
-    return productsName.filter( (product) =>  product.name.toLowerCase().includes(searchName.toLowerCase()) ); 
+    return productsName.filter((product) =>  product.name.toLowerCase().includes(searchName.toLowerCase()) ); 
   }
 
   static updateProduct(
