@@ -5,21 +5,31 @@ import { UserManager } from "./userManager.js";
 import { ProductManager } from "./productManager.js";
 
 
+
+let urlParams=new URLSearchParams(window.location.search);
+let orderId = urlParams.get('orderId');
+
+let order = OrderManager.getAllOrders().find(order=>order.id==orderId);
+let customer=UserManager.getUser(order.customerId);
+
+
 //display customer delivery data
-let customerDeliveryData = StorageManager.load('customerDeliveryData');
+let customerDeliveryData = StorageManager.load(`${order.customerId}`);
+console.log(customerDeliveryData)
+
+if(customerDeliveryData){
 document.getElementById('firstName').value=customerDeliveryData.firstName;
 document.getElementById('lastName').value=customerDeliveryData.lastName;
 document.getElementById('address').value=customerDeliveryData.address;
 document.getElementById('City').value=customerDeliveryData.City;
 document.getElementById('Governorate').value=customerDeliveryData.Governorate;
 document.getElementById('PhoneNumber').value=customerDeliveryData.PhoneNumber;
+}
+else{
+    document.getElementById('firstName').value=customer.userName;
 
-let urlParams=new URLSearchParams(window.location.search);
-let orderId = urlParams.get('orderId');
+}
 
-let order = OrderManager.getAllOrders().find(order=>order.id==orderId);
-
-console.log(order.items)
 const orderItemsContainer = document.getElementById('order-items');
 orderItemsContainer.innerHTML = '';
 
