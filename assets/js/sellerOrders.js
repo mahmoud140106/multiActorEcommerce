@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const end = start + itemsPerPage;
     const paginatedOrders = ordersToRender.slice(start, end);
   
-    paginatedOrders.forEach((order) => {
+    paginatedOrders.forEach((order,index) => {
       const statusClass = order.status === "pending" ? "bg-warning text-dark" :
                           order.status === "accepted" ? "bg-success text-white" :
                           order.status === "Shipped" ? "bg-success text-white" :
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const statusText = order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : "Unknown";
       const statusContent = order.status === "rejected" && order.rejectReason
         ? `<span class="badge ${statusClass}" data-bs-toggle="tooltip" data-bs-placement="top" title="${order.rejectReason}">${statusText}</span>`
-        : `<span class="badge ${statusClass}">${statusText}</span>`;
+        : `<span id='orderCurrentStatus${index}' class="badge ${statusClass}">${statusText}</span>`;
   
       const row = document.createElement("tr");
       row.setAttribute('orderId',`${order.id}`);
@@ -95,8 +95,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${UserManager.getUserNameById(order.customerId)}</td>
         <td class="d-none d-md-table-cell">$${order.createdAt}</td>
         <td class="d-none d-md-table-cell">$${order.total}</td>
-        <td class="d-none d-md-table-cell">${order.status}</td>
-        <td>${statusContent}</td>
+        <td >${statusContent}</td>
+        <td> 
+            <select class="form-control orderNewStatus" >
+                       <option >${order.status}</option>
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="rejected">Rejected</option>
+            </select>
+        </td>
       `;
       tbody.appendChild(row);
     });
@@ -211,10 +219,39 @@ document.getElementById('statusFilter').addEventListener('change',function(){
 
  //add event listener to each row(order) in seller orders to show order details
    document.querySelectorAll('tr').forEach((row)=>{
-    row.addEventListener('click',function(){
+    row.addEventListener('click',function(e){
+        const clickedCell = e.target.closest("td");
+        const lastCell = row.querySelector("td:last-child");
+      
+        if (clickedCell === lastCell) {
+          // Don't trigger the action for the last cell
+          return;
+        }
         let orderId=row.getAttribute('orderId');
         window.location.href=`orderDetails.html?orderId=${orderId}`;
     })
  })
+
+
+ //change the status of the order
+ document.querySelectorAll('.orderNewStatus').forEach((action,index)=>{
+   action.addEventListener('change',function(e){
+        let orderCurrentStatus=document.getElementById(`orderCurrentStatus${index}`);
+        const statusClasses = {
+            pending: "bg-warning text-dark",
+            accepted: "bg-success text-white",
+            shipped: "bg-secondary text-white",
+            rejected: "bg-danger text-white" ,
+             
+          };
+    
+        orderCurrentStatus.className=`badge ${statusClasses[e.target.value]}`;
+        orderCurrentStatus.innerText=e.target.value
+      
+    
+     })
+     
+ })
+ 
 
 }) // end of load
