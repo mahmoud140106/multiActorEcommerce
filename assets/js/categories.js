@@ -93,6 +93,38 @@ function updatePagination(totalItems) {
   pagination.appendChild(nextLi);
 }
 
+
+
+
+function relateCategoryAndProducts() {
+    let ALLCards = document.getElementsByClassName("card");
+  
+
+  for (let index = 0; index < ALLCards.length; index++) {
+  ALLCards[index].addEventListener("click", function (e) {
+    console.log(ALLCards[index].innerText);
+    
+
+     window.location.href=`../../customer/product.html?category=${ALLCards[index].innerText}`
+  
+})
+  
+  
+}
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   appendCategories();
+
+  relateCategoryAndProducts()
+
+  
+
 });
+
+
+
+
+
+
+
