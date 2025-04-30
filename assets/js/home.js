@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </a>
       <div id ="wishlist-html" class="card-icons position-absolute top-0 end-0 p-2">
         <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${product.id}"><i class="far fa-heart"></i></button>
-        <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1"><i class="fas fa-shopping-cart"></i></button>
+        <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1 add-to-cart" data-id="${product.id}"><i class="fas fa-shopping-cart"></i></button>
       </div>
       ${product.isOnSale
           ? '<span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">SALE</span>'
