@@ -1,5 +1,4 @@
 import { OrderManager } from "./orderManager.js";
-import{OrderItem} from "./orderManager.js";
 import { StorageManager } from "./storageManager.js";
 import { ProductManager } from "./productManager.js";
 
@@ -24,18 +23,20 @@ const customerDeliveryData ={
 StorageManager.save('customerDeliveryData',customerDeliveryData);
 
 const cart = JSON.parse(localStorage.getItem('cart')) || [];        //get cart from local storage
-const product= ProductManager.getProduct(productId);                //get product from  storage manager
+let products = StorageManager.load('products');
+const product= products.find(product=>product.id==productId);                //get product from  storage manager                    
 let items =[];
 
 // if the items in cart
 if(Number.isNaN(productId)){
-    console.log('from cart')
-cart.forEach((item,index)=>{
-let orderItem= new OrderItem(item.id,item.quantity,item.price);
+    let productCopy
+cart.forEach((item)=>{
+     productCopy= JSON.parse(JSON.stringify(item));                         // make a copy of the product object to send in the order and keep the main product in my products
+items.push(productCopy);
 
-items[index]=orderItem;
 
 })
+console.log(items)
 
 OrderManager.createOrder(customerId,items);                                          //create order
 
@@ -43,8 +44,10 @@ OrderManager.createOrder(customerId,items);                                     
 
 //if the item is direct from product details
 else {
-    let orderItem= new OrderItem(productId,productCount,product.price);
-    items[0]=orderItem;
+    // console.log(product)
+   let productCopy= {...product}                                               // make a copy of the product object
+    items[0]={productCopy,quantity:productCount};
+    
     OrderManager.createOrder(customerId,items);                                          //create order
 
 }
@@ -53,5 +56,4 @@ let customerOrders= OrderManager.getOrdersByCustomer(customerId);               
 
 let orderId = customerOrders[customerOrders.length-1].id;                             //get the id of the last order
 console.log(customerOrders)
-
 document.getElementById('orderId').innerText=orderId;
