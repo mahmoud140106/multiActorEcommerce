@@ -84,12 +84,12 @@ export class ProductManager {
   }
 
   static getProduct(id) {
-    const products = StorageManager.load("products") || [];
+    const products = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
     return products.find((product) => product.id === id);
   }
 
   static getProductsByName(searchName) {
-    const productsName = StorageManager.load("products") || [];
+    const productsName = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
     return productsName.filter((product) =>
       product.name.toLowerCase().includes(searchName.toLowerCase())
     );
@@ -161,7 +161,7 @@ export class ProductManager {
   }
 
   static getProductsByCategory(categoryId) {
-    const products = StorageManager.load("products") || [];
+    const products = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
     return products.filter((product) => product.categoryId === categoryId);
   }
 
