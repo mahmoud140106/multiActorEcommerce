@@ -82,17 +82,28 @@
                     id="login-email"
                     required
                   />
+                  <div class="invalid-feedback" id="login-email-error"></div>
                 </div>
                 <div class="mb-3">
                   <label for="login-password" class="form-label"
                     >Password</label
                   >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="login-password"
-                    required
-                  />
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="login-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="login-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="login-password-error"></div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">
                   Login
@@ -140,6 +151,21 @@
             <div class="modal-body">
               <form id="signup-form">
                 <div class="mb-3">
+                  <label for="signup-userName" class="form-label"
+                    >UserName</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="signup-userName"
+                    required
+                  />
+                  <div
+                    class="invalid-feedback"
+                    id="signup-userName-error"
+                  ></div>
+                </div>
+                <div class="mb-3">
                   <label for="signup-email" class="form-label">Email</label>
                   <input
                     type="email"
@@ -147,28 +173,102 @@
                     id="signup-email"
                     required
                   />
+                  <div class="invalid-feedback" id="signup-email-error"></div>
                 </div>
                 <div class="mb-3">
                   <label for="signup-password" class="form-label"
                     >Password</label
                   >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signup-password"
-                    required
-                  />
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signup-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    id="signup-password-error"
+                  ></div>
                 </div>
-                <input type="hidden" id="role" value="customer" />
+                <div class="mb-3">
+                  <label for="signup-confirm-password" class="form-label"
+                    >Confirm Password</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signup-confirm-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-confirm-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    id="signup-confirm-password-error"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Register as:</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="role"
+                      id="role-customer"
+                      value="customer"
+                      checked
+                    />
+                    <label class="form-check-label" for="role-customer">
+                      Customer
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="role"
+                      id="role-seller"
+                      value="seller"
+                    />
+                    <label class="form-check-label" for="role-seller">
+                      Seller
+                    </label>
+                  </div>
+                </div>
                 <button type="submit" class="btn btn-primary w-100">
                   Sign Up
                 </button>
               </form>
+              <p class="text-center mt-3">
+                Already have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginModal"
+                  data-bs-dismiss="modal"
+                  >Login</a
+                >
+              </p>
             </div>
           </div>
         </div>
       </div>
-
       <div
         id="toast-container"
         class="toast-container position-fixed bottom-0 end-0 p-3"
@@ -246,7 +346,7 @@
                 class="styled-slider"
               />
             </div>
-            <div class="row mb-3" >
+            <div class="row mb-3">
               <div class="col-md-6 col-lg-8">
                 <div class="input-group">
                   <span
@@ -258,137 +358,135 @@
                     id="productCount"
                     type="number"
                     min="1"
-                    placeholder="1"                                                 
+                    placeholder="1"
                     class="form-control text-end"
                     aria-label="Product count"
                   />
                 </div>
               </div>
             </div>
-            <div class="mb-2 ">
+            <div class="mb-2">
               <button
-              type="button"
-              class="btn btn-dark col-12 col-md-6 col-lg-8"
-              id="addTocart"
-             
-            >
-            Add To Cart
-            </button>
+                type="button"
+                class="btn btn-dark col-12 col-md-6 col-lg-8"
+                id="addTocart"
+              >
+                Add To Cart
+              </button>
             </div>
             <div class="">
               <button
-              type="button"
-              class="btn btn-dark col-12 col-md-6 col-lg-8"
-              id="buyItNow"
-            >
-            Buy It Now
-            </button>
+                type="button"
+                class="btn btn-dark col-12 col-md-6 col-lg-8"
+                id="buyItNow"
+              >
+                Buy It Now
+              </button>
             </div>
           </div>
-          <div class="d-flex col-12 col-lg-2 col-xl-3 mb-3 ">
-                <div class="col-5 col-lg-3 mt-lg-5 ms-3 ">
-                  <div >
-                    <button
-                      type="button"
-                      class="btn btn-dark dropdown-toggle "
-                      id="descriptionBtn"
-                    >
-                    Description
-                    </button>
-                  </div>
-                  <div 
-                  class="text-dark text-opacity-70 ps-2  col-12 my-5" 
-                  id="descriptionSection"
-                  style="width: 300px; "
+          <div class="d-flex col-12 col-lg-2 col-xl-3 mb-3">
+            <div class="col-5 col-lg-3 mt-lg-5 ms-3">
+              <div>
+                <button
+                  type="button"
+                  class="btn btn-dark dropdown-toggle"
+                  id="descriptionBtn"
+                >
+                  Description
+                </button>
+              </div>
+              <div
+                class="text-dark text-opacity-70 ps-2 col-12 my-5"
+                id="descriptionSection"
+                style="width: 300px;"
+              >
+                <strong class="mb-1" style="font-size: large;"
+                  >Product Description</strong
+                >
+                <br />
+                <strong id="productRating">Rating: </strong>
+              </div>
+            </div>
+            <div class="col-5 col-lg-8 offset-lg-1 mt-lg-5">
+              <div style="margin-left: 20px;">
+                <button
+                  type="button"
+                  class="btn btn-dark dropdown-toggle"
+                  id="reviewsBtn"
+                >
+                  Reviews
+                </button>
+              </div>
+              <div
+                class="container my-5 d-none"
+                id="reviewSection"
+                style="width: 400px;"
+              >
+                <div
+                  class="carousel slide col-12 p-2 border border-3 m-auto bg-light mb-2"
+                  id="carouselRviewsControls"
+                  data-bs-ride="false"
+                >
+                  <div
+                    class="carousel-inner ratio ratio-1x1"
+                    id="carouselReviews"
+                    style="height: 250px;"
+                  ></div>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselRviewsControls"
+                    data-bs-slide="prev"
                   >
-                  <strong class="mb-1" style="font-size: large;">Product Description</strong> <br/>
-                  <strong id="productRating">Rating: </strong>
-                  </div>
-                
+                    <span
+                      class="carousel-control-prev-icon rounded-3 btn-dark"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselRviewsControls"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon rounded-3 btn-dark"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
                 </div>
-                <div class="col-5 col-lg-8 offset-lg-1 mt-lg-5 ">
-                  <div style="margin-left: 20px;">
-                    <button
+                <div class="col-md-6 col-lg-12">
+                  <h4 class="text-dark fw-semibold mb-3">Write a Review</h4>
+                  <form id="reviewForm" class="p-3 bg-white rounded">
+                    <div class="col-12 p-2 border border-3 m-auto bg-light">
+                      <i class="fa-solid fa-star star" data-value="1"></i>
+                      <i class="fa-solid fa-star star" data-value="2"></i>
+                      <i class="fa-solid fa-star star" data-value="3"></i>
+                      <i class="fa-solid fa-star star" data-value="4"></i>
+                      <i class="fa-solid fa-star star" data-value="5"></i>
+
+                      <textarea
+                        class="form-control mt-3 mb-3"
+                        id="reviewInput"
+                        rows="4"
+                        cols="100"
+                        placeholder="Write your comment here..."
+                      >
+                      </textarea>
+                    </div>
+
+                    <input
                       type="button"
-                      class="btn btn-dark dropdown-toggle "
-                      id="reviewsBtn"
-                    >
-                      Reviews
-                    </button>
-                  </div>
-                  <div 
-                    class="container my-5 d-none" 
-                    id="reviewSection"
-                    style="width: 400px; "
-
-                    >    
-                      
-                        <div
-                          class="carousel slide col-12  p-2  border border-3  m-auto bg-light mb-2"
-
-                          id="carouselRviewsControls"
-                          data-bs-ride="false"
-                          >
-                            <div
-                              class="carousel-inner ratio ratio-1x1"
-                              id="carouselReviews"
-                              style="height: 250px;"
-                            ></div>
-                            <button
-                              class="carousel-control-prev"
-                              type="button"
-                              data-bs-target="#carouselRviewsControls"
-                              data-bs-slide="prev"
-                            >
-                              <span
-                                class="carousel-control-prev-icon rounded-3 btn-dark"
-                                aria-hidden="true"
-                              ></span>
-                              <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button
-                              class="carousel-control-next"
-                              type="button"
-                              data-bs-target="#carouselRviewsControls"
-                              data-bs-slide="next"
-                            >
-                              <span
-                                class="carousel-control-next-icon rounded-3 btn-dark"
-                                aria-hidden="true"
-                              ></span>
-                              <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                        <div class="col-md-6 col-lg-12">
-                          <h4 class="text-dark fw-semibold mb-3">Write a Review</h4>
-                          <form id="reviewForm" class="p-3 bg-white rounded">
-                            <div class="col-12 p-2 border border-3 m-auto bg-light">
-                              <i class="fa-solid fa-star star" data-value="1"></i>
-                              <i class="fa-solid fa-star star" data-value="2"></i>
-                              <i class="fa-solid fa-star star" data-value="3"></i>
-                              <i class="fa-solid fa-star star" data-value="4"></i>
-                              <i class="fa-solid fa-star star" data-value="5"></i>
-
-                              <textarea
-                                class="form-control mt-3 mb-3"
-                                id="reviewInput"
-                                rows="4"
-                                cols="100"
-                                placeholder="Write your comment here..."
-                              >
-                              </textarea>
-                            </div>
-
-                            <input
-                              type="button"
-                              value="Submit Review"
-                              class="btn btn-dark w-100 text-uppercase fw-semibold mt-2"
-                              id="submitBtn"
-                            />
-                          </form>
-                        </div>
-                  </div>
+                      value="Submit Review"
+                      class="btn btn-dark w-100 text-uppercase fw-semibold mt-2"
+                      id="submitBtn"
+                    />
+                  </form>
                 </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -396,19 +494,16 @@
 
     <section id="recommendationSection" class="container mt-2 mb-5">
       <h2>Recommendation For You</h2>
-     
+
       <div
         class="carousel slide w-100 pt-4"
         id="carouselrecommendationControls"
         data-bs-ride="carousel"
       >
         <div
-          class="carousel-inner ratio ratio-1x1 "
+          class="carousel-inner ratio ratio-1x1"
           id="carouselrecommendationInner"
-        >
-        
-
-        </div>
+        ></div>
         <button
           class="carousel-control-prev"
           type="button"
@@ -434,10 +529,7 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-    
     </section>
-
-
 
     <!-- Footer -->
     <footer class="bg-dark text-light pt-5 pb-0">

@@ -79,17 +79,28 @@
                     id="login-email"
                     required
                   />
+                  <div class="invalid-feedback" id="login-email-error"></div>
                 </div>
                 <div class="mb-3">
                   <label for="login-password" class="form-label"
                     >Password</label
                   >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="login-password"
-                    required
-                  />
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="login-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="login-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="login-password-error"></div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">
                   Login
@@ -146,6 +157,10 @@
                     id="signup-userName"
                     required
                   />
+                  <div
+                    class="invalid-feedback"
+                    id="signup-userName-error"
+                  ></div>
                 </div>
                 <div class="mb-3">
                   <label for="signup-email" class="form-label">Email</label>
@@ -155,17 +170,55 @@
                     id="signup-email"
                     required
                   />
+                  <div class="invalid-feedback" id="signup-email-error"></div>
                 </div>
                 <div class="mb-3">
                   <label for="signup-password" class="form-label"
                     >Password</label
                   >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signup-password"
-                    required
-                  />
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signup-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    id="signup-password-error"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-confirm-password" class="form-label"
+                    >Confirm Password</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signup-confirm-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-confirm-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    id="signup-confirm-password-error"
+                  ></div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Register as:</label>
