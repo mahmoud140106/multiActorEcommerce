@@ -1,4 +1,3 @@
-import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
 import { OrderManager } from "./orderManager.js";
 import { showToast } from "./toast.js";
@@ -90,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         : `<span class="badge ${statusClass}">${statusText}</span>`;
   
       const row = document.createElement("tr");
+      row.setAttribute('orderId',`${order.id}`);
       row.innerHTML = `
         <td>...${order.id % 1000}</td>
         <td>${UserManager.getUserNameById(order.customerId)}</td>
@@ -178,6 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.searchOrders = () => {
+    console.log('from search')
     const query = document.getElementById("searchInput").value.toLowerCase();
     const selectedStatus = document.getElementById("statusFilter").value;
     filteredOrders = sellerOrders.filter((o) => {
@@ -195,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById('statusFilter').addEventListener('change',function(){
 
     const selectedStatus = document.getElementById("statusFilter").value;
+    console.log(selectedStatus)
     const query = document.getElementById("searchInput").value.toLowerCase();
     filteredOrders = sellerOrders.filter((o) => {
       const matchesQuery =
@@ -207,6 +209,12 @@ document.getElementById('statusFilter').addEventListener('change',function(){
     renderOrdersTable();
   });
 
- 
+ //add event listener to each row(order) in seller orders to show order details
+   document.querySelectorAll('tr').forEach((row)=>{
+    row.addEventListener('click',function(){
+        let orderId=row.getAttribute('orderId');
+        window.location.href=`orderDetails.html?orderId=${orderId}`;
+    })
+ })
 
 }) // end of load
