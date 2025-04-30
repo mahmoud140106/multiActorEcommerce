@@ -139,49 +139,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   //Dynamic categories in home page 
+
   let categories = CategoryManager.getAllCategories();
-  let categoriesActiveSlide = document.getElementById("activeSlide");
-  let categoriesNextSlide = document.getElementById("nextSlide");
+  let showCategories = document.getElementById("showCategories");
 
   
-  for (let i = 0; i < 4; i++) {
-
-    let categoryId = categories[i].id;
-
-    let productsOfCategory = ProductManager.getProductsByCategory(categoryId);
   
-    categoriesActiveSlide.innerHTML +=
-      `<div class="card cardItem p-0  position-relative  ">
-            <img src="${categories[i].image}" class="rounded w-100 " alt="...">
-    
-            <div class="cardCaption position-absolute text-center">
-              <h5 class="imgContainer text-light">${categories[i].name}</h5>
-              <div class="cardDetails text-light">
-                <p class="text-light">${productsOfCategory.length} product</p>
-                <button class="btn p-3 btn-light viewProductsOfCategory"   value="${categories[i].name}">View</button>
-              </div>
-            </div>
-          </div>`; 
+
+  let screenSize = window.innerWidth;
+  let screenCard = 4;
+
+  if (screenSize < 576) {
+    screenCard = 1;
+  }
+  else if(screenSize < 992) {
+    screenCard = 2;
   }
 
-  for (let i = 4; i < 8; i++) {
-    let productId = categories[i].id;
-    let productsOfCategory = ProductManager.getProductsByCategory(productId);
 
-    categoriesNextSlide.innerHTML += 
-      `<div class="card cardItem position-relative">
-          <img src="${categories[i].image}" class="rounded" alt="...">
-    
+// let screenWidth = window.innerWidth;
+// let cardsPerSlide = 4;
+
+// if (screenWidth < 576) {
+//   cardsPerSlide = 1;
+// } else if (screenWidth < 992) {
+//   cardsPerSlide = 2;
+// }
+
+// // هنقسم الكروت على Slides
+let slideHTML = "";
+for (let i = 0; i < categories.length; i += screenCard) {
+  let slideItems = categories.slice(i, i + screenCard); // عناصر كل Slide
+  let slideContent = "";
+
+  slideItems.forEach(cat => {
+    let products = ProductManager.getProductsByCategory(cat.id);
+    slideContent += `
+      <div class="col-12 col-sm-6 col-lg-3 mb-3 d-flex justify-content-center">
+        <div class="card cardItem w-100 position-relative">
+          <img src="${cat.image}" class="rounded w-100" alt="${cat.name}">
           <div class="cardCaption position-absolute text-center">
-            <h5 class="imgContainer text-light">${categories[i].name}</h5>
+            <h5 class="imgContainer text-light">${cat.name}</h5>
             <div class="cardDetails text-light">
-              <p class="text-light">${productsOfCategory.length} product</p>
-              <button class="btn p-3 btn-light viewProductsOfCategory"  value="${categories[i].name}">View</button>
+              <p>${products.length} product</p>
+              <button class="btn btn-light viewProductsOfCategory" value="${cat.name}">View</button>
             </div>
           </div>
-        </div>`;
-  }
+        </div>
+      </div>
+    `;
+  });
+
+  slideHTML += `
+    <div class="carousel-item ${i === 0 ? 'active' : ''}">
+      <div class="row justify-content-center">
+        ${slideContent}
+      </div>
+    </div>
+  `;
+}
+
+// عرض كل Slides
+showCategories.innerHTML = slideHTML;
+
+
+
 });
+
+
+
 
 //Dynamic reviews in home page
 let reviews = ReviewManager.getAllReviews();
@@ -306,3 +332,11 @@ for (let index = 0; index < btnShopNow.length; index++) {
   })
   
 }
+
+document.getElementById("learnMore").addEventListener("click", function () {
+  window.location.href = "../../customer/categories.html";
+  
+})
+
+
+ 
