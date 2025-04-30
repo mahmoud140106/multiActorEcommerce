@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize
   loadFeaturedProducts();
 
-  // Counter Animation
+    // Counter Animation
   function animateCounter(counter, target, duration) {
     let start = 0;
     const increment = target / (duration / 50);
@@ -119,10 +119,28 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const counters = document.querySelectorAll(".counter");
-  counters.forEach((counter) => {
-    const target = parseInt(counter.getAttribute("data-target"));
-    animateCounter(counter, target, 2000);
-  });
+
+
+  let target = parseInt(UserManager.getAllUsers().length);
+  animateCounter(counters[0], target, 1000);
+
+
+  target = parseInt(ReviewManager.getAllReviews().length);
+  animateCounter(counters[1], target, 1000);
+
+
+  target = parseInt(CategoryManager.getAllCategories().length);
+  animateCounter(counters[2], target, 1000);
+
+  
+  
+  // counters.forEach((counter) => {
+  //   const target = parseInt(ReviewManager.getAllReviews().length);
+  //   animateCounter(counter, target, 2000);
+  // });
+
+
+
 
   //Dynamic categories in home page
   let categories = CategoryManager.getAllCategories();
@@ -230,18 +248,24 @@ for (let i = 1; i < reviews.length; i++) {
   `;
 }
 
-let textSearch = "";
-textSearch.toLowerCase();
 
-document.getElementById("searchGo").addEventListener("click", function () {
-  textSearch = document.getElementById("searchInput").value;
-  let pros = ProductManager.getAllProducts();
-  for (let i = 0; i < pros.length; i++) {
-    if (pros[i].name.toLowerCase().includes(textSearch.toLowerCase())) {
-      console.log(pros[i].name);
-    }
-  }
-});
+
+
+// search about product through home
+
+document.getElementById("searchGo").addEventListener("click", function (e) {
+
+  let searchInputData=document.getElementById("searchInput").value;
+  
+  window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
+})
+
+
+
+
+
+// viewAll Products Of specific Category through Home
 
 document.addEventListener("DOMContentLoaded", function () {
   let viewAllProductsOfCategory = document.getElementsByClassName(
@@ -255,10 +279,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-document
-  .getElementById("viewCategories")
-  .addEventListener("click", function (e) {
-    console.log(e);
 
-    window.location.href = "/customer/categories.html";
-  });
+
+
+
+
+
+
+
+
+
+// view All Categories through Home
+
+document.getElementById("viewCategories").addEventListener("click", function (e) {
+  console.log(e);
+  
+
+  window.location.href="/customer/categories.html"
+  
+})
+
+
+
+let btnShopNow = document.getElementsByClassName("ShopNow");
+for (let index = 0; index < btnShopNow.length; index++) {
+  btnShopNow[index].addEventListener("click", function () {
+    window.location.href = "../../customer/product.html";
+  })
+  
+}
