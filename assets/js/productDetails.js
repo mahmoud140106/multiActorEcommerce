@@ -236,7 +236,7 @@ document.getElementById("addTocart").addEventListener("click", function () {
   }
   if(productCount<1){
     productCount=1;
-    console.log('from count 1')
+    // console.log('from count 1')
   }
   console.log(productCount)
   CartManager.addToCart(product,productCount);
@@ -248,6 +248,9 @@ document.getElementById("buyItNow").addEventListener("click", function () {
   if (user == null) {
     showToast("Please log in first", "error");
     return;
+  }
+  if(productCount<1){
+    productCount=1;
   }
   window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
 });
