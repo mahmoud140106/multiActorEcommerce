@@ -49,22 +49,24 @@ document.addEventListener("DOMContentLoaded", () => {
         order.items.forEach((item)=>{
 
             let productFromStorage=products.find(product=>product.id==item.productId)    //filter products from storage to get seller id
-           console.log(productFromStorage)
+        //    console.log(productFromStorage)
             if(productFromStorage.sellerId==currentUser.id && productFromStorage.id==item.productId){
-                sellerOrders.push(allOrders.find(product=>product.id==item.productId));         //filter all orders to get the seller orders
+                sellerOrders.push(order);         //filter all orders to get the seller orders
                 
             }
         })
     })
-    console.log(sellerOrders)
+    // console.log(sellerOrders)
     renderOrdersTable();
   }
-
 
   function renderOrdersTable() {
     const tbody = document.getElementById("ordersTableBody");
     tbody.innerHTML = "";
-    if (sellerOrders.length === 0) {
+  
+    const ordersToRender = filteredOrders ?? sellerOrders;
+  
+    if (ordersToRender.length === 0) {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td colspan="9" class="text-center">No Orders available</td>
@@ -72,20 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
       tbody.appendChild(row);
       return;
     }
+  
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    const paginatedOrders = sellerOrders.slice(start, end);
-
+    const paginatedOrders = ordersToRender.slice(start, end);
+  
     paginatedOrders.forEach((order) => {
-        console.log(order)
-
       const statusClass = order.status === "pending" ? "bg-warning text-dark" :
                           order.status === "accepted" ? "bg-success text-white" :
+                          order.status === "Shipped" ? "bg-success text-white" :
                           order.status === "rejected" ? "bg-danger text-white" : "bg-secondary text-white";
       const statusText = order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : "Unknown";
       const statusContent = order.status === "rejected" && order.rejectReason
         ? `<span class="badge ${statusClass}" data-bs-toggle="tooltip" data-bs-placement="top" title="${order.rejectReason}">${statusText}</span>`
         : `<span class="badge ${statusClass}">${statusText}</span>`;
+  
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>...${order.id % 1000}</td>
@@ -97,19 +100,19 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       tbody.appendChild(row);
     });
-
+  
     // Initialize tooltips
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => {
       new bootstrap.Tooltip(el);
     });
-
+  
     renderPagination();
   }
-
+  
   function renderPagination() {
     const pagination = document.getElementById("pagination");
     pagination.innerHTML = "";
-    const pageCount = Math.ceil(sellerOrders.length / itemsPerPage);
+    const pageCount = Math.ceil((filteredOrders ?? sellerOrders).length / itemsPerPage);
 
     const prevLi = document.createElement("li");
     prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
@@ -188,7 +191,9 @@ document.addEventListener("DOMContentLoaded", () => {
     renderOrdersTable();
   };
 
-  window.filterByStatus = () => {
+  //filter by status
+document.getElementById('statusFilter').addEventListener('change',function(){
+
     const selectedStatus = document.getElementById("statusFilter").value;
     const query = document.getElementById("searchInput").value.toLowerCase();
     filteredOrders = sellerOrders.filter((o) => {
@@ -200,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     currentPage = 1;
     renderOrdersTable();
-  };
+  });
 
  
 

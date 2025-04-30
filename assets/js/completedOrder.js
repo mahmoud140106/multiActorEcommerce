@@ -24,16 +24,15 @@ StorageManager.save('customerDeliveryData',customerDeliveryData);
 
 const cart = JSON.parse(localStorage.getItem('cart')) || [];        //get cart from local storage
 let products = StorageManager.load('products');
-const product= products.find(product=>product.id==productId);                //get product from  storage manager
-                       // make a copy of the product object to send in the order and keep the main product in my products
+const product= products.find(product=>product.id==productId);                //get product from  storage manager                    
 let items =[];
 
 // if the items in cart
 if(Number.isNaN(productId)){
     let productCopy
-cart.forEach((item,index)=>{
-    //  productCopy= {...item}
-items.push(item);
+cart.forEach((item)=>{
+     productCopy= JSON.parse(JSON.stringify(item));                         // make a copy of the product object to send in the order and keep the main product in my products
+items.push(productCopy);
 
 
 })
@@ -46,7 +45,7 @@ OrderManager.createOrder(customerId,items);                                     
 //if the item is direct from product details
 else {
     // console.log(product)
-   let productCopy= JSON.parse(JSON.stringify(product))
+   let productCopy= {...product}                                               // make a copy of the product object
     items[0]={productCopy,quantity:productCount};
     
     OrderManager.createOrder(customerId,items);                                          //create order
