@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let reviews = ReviewManager.getAllReviews();
     let carouselAllReviews = document.getElementById("carouselAllReviews");
-    carouselAllReviews.innerHTML+=`<div id="activeCarouselItem" class=" carousel-item active p-5 border border-3 m-auto bg-light"></div>`;
+    carouselAllReviews.innerHTML+=`<div id="activeCarouselItem" class=" carousel-item active p-5 m-auto bg-light"></div>`;
     let activeCarouselItem = document.getElementById('activeCarouselItem');
 
     for (let index = 0; index < 5; index++) {
@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let reviewLength = reviews.length;
     for (let index = 1; index < reviewLength; index++) {
       
-            carouselAllReviews.innerHTML+=`<div class="carousel-item carouselItems p-5  border border-3 m-auto bg-light"></div>`;
+            carouselAllReviews.innerHTML+=`<div class="carousel-item carouselItems p-5   m-auto bg-light"></div>`;
     }
 
 
