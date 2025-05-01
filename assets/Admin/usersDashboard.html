@@ -53,23 +53,23 @@
 
 
                     <form action="" method="get">
-                            <div class="mb-3 d-flex">
+                            <div class="mb-3  d-flex">
                                 <label for="UserID" class="col-sm-2 col-form-label w-25">User ID</label>
                                 <div class="col-sm-10 w-75">
-                                    <input type="number" readonly class="form-control" id="UserID">
+                                    <input type="number" readonly class="form-control" id="UserID" name="UserID">
                                 </div>
                             </div>
                             <div class="mb-3 d-flex">
                                     <label for="UserName" class="col-sm-2 col-form-label w-25">User Name</label>
                                     <div class="col-sm-10 w-75">
-                                        <input type="text" required class="form-control" id="UserName">
+                                        <input type="text" required class="form-control" id="UserName" name="UserName">
                                 </div>
                            </div>
             
                             <div class="mb-3 d-flex">
                                 <label for="staticEmail" class="col-sm-2 col-form-label w-25">Email</label>
                                 <div class="col-sm-10 w-75">
-                                    <input type="email" required class="form-control" id="staticEmail"
+                                    <input type="email" required class="form-control" id="staticEmail" name="userEmail"
                                        >
                                 </div>
                             </div>
@@ -77,16 +77,16 @@
                             <div class="mb-3 d-flex">
                                 <label for="inputPassword" class="col-sm-2 col-form-label w-25">Password</label>
                                 <div class="col-sm-10 w-75">
-                                    <input type="password" required class="form-control" id="inputPassword">
+                                    <input type="password" required class="form-control" id="inputPassword" name="inputPassword"> 
                                 </div>
                             </div>
                             <div class="mb-3 d-flex">
                                 <label for="role" class="col-sm-2 col-form-label w-25">User Role</label>
                                 <div class="col-sm-10 w-75">
-                                    <select id="role" class="form-select" required aria-label="Default select example">
+                                    <select id="role" name="role" class="form-select" required aria-label="Default select example">
                                         <option disabled>Select Role</option>
-                                        <option value="Seller">Seller</option>
-                                        <option value="Customer">Customer</option>
+                                        <option value="seller">Seller</option>
+                                        <option value="customer">Customer</option>
                                     </select>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
 
     <script src="../../assets/libs/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="./usersDashboardScript.js"></script>
+    <script type="module" src="./usersDashboardScript.js"></script>
 </body>
 </html>
 
