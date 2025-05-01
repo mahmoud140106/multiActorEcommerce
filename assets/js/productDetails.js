@@ -230,7 +230,7 @@ function showDescription() {
 //add to cart function
 document.getElementById("addTocart").addEventListener("click", function () {
   if (user == null) {
-    showToast("Please log in first", "error");
+    CartManager.showToast("Please log in first")
     return;
   }
   if(productCount<1){
@@ -245,7 +245,7 @@ document.getElementById("addTocart").addEventListener("click", function () {
 // Redirect to checkout page when "Buy It Now" is clicked
 document.getElementById("buyItNow").addEventListener("click", function () {
   if (user == null) {
-    showToast("Please log in first", "error");
+    CartManager.showToast("Please log in first")
     return;
   }
   if(productCount<1){

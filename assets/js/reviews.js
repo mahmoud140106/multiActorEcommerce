@@ -1,6 +1,6 @@
 import { ReviewManager } from "./reviewManager.js";
 import { StorageManager } from "./storageManager.js";
-import { showToast } from "./toast.js";
+import { CartManager } from "./cartManager.js";
 
 let reviews;
 let productId;
@@ -93,11 +93,11 @@ document.getElementById('submitBtn').addEventListener('click', function (){
     let user = StorageManager.load("currentUser"); // Get current user from storage
     let ratingValue = document.querySelectorAll('.star.selected').length; // Get selected rating value
     if(user==null){
-     showToast("Please login to add a review.",'error');
+         CartManager.showToast("Please log in first")
       return;
     }
     if(ratingValue<1){
-      showToast("Rating must be between 1 and 5 stars.",'error');
+      CartManager.showToast("Rating must be between 1 and 5 stars.")
       return;
     }
     let reviewComment= document.getElementById('reviewInput').value ;

@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td >${statusContent}</td>
         <td> 
             <select class="form-control orderNewStatus" >
-                       <option >${order.status}</option>
+                       <option value='action' >Action</option>
                         <option value="pending">Pending</option>
                         <option value="accepted">Accepted</option>
                         <option value="shipped">Shipped</option>
@@ -161,11 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
       sortDirection = "asc";
     }
 
-    filteredProducts.sort((a, b) => {
+    sellerOrders.sort((a, b) => {
       let valA = a[column];
       let valB = b[column];
-
-      
 
       if (typeof valA === "string") {
         return sortDirection === "asc"

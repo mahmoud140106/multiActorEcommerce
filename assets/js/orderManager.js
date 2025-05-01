@@ -3,11 +3,11 @@ import { ProductManager } from "./productManager.js";
 import { UserManager } from "./userManager.js";
 
 export class OrderItem {
-  constructor(productId, quantity,  priceAtPurchase) {
+  constructor(productId, quantity,size,color,  priceAtPurchase) {
     this.productId = productId;
     this.quantity = quantity;
-    // this.size = size;
-    // this.color = color;
+    this.size = size;
+    this.color = color;
     this.priceAtPurchase = priceAtPurchase;
   }
 
@@ -87,8 +87,8 @@ export class OrderManager {
       return new OrderItem(
        product.id,
         item.quantity,
-        // item.size,
-        // item.color,
+        item.size,
+        item.color,
         price
       );
     });
