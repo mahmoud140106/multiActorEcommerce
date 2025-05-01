@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const statusClass = order.status === "pending" ? "bg-warning text-dark" :
                           order.status === "shipped" ? "bg-success text-white" :
-                          order.status === "processing" ? "bg-success text-white" :
+                          order.status === "processing" ? "bg-secondary text-white" :
                           order.status === "cancelled" ? "bg-danger text-white" : "bg-secondary text-white";
       const statusText = order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : "Unknown";
       const statusContent = order.status === "cancelled" && order.rejectReason
