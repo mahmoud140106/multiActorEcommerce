@@ -32,9 +32,16 @@ function restrictAccess() {
       "/seller/products.html",
       "/seller/orders.html",
       "/seller/orderDetails.html",
-
+      "/seller/profile.html",
     ],
-    admin: ["/index.html", "/admin/dashboard.html", "/admin/products.html"],
+    admin: [
+      "/index.html", 
+      "/admin/dashboard.html", 
+      "/admin/products.html",
+      "/admin/profile.html", 
+      "/admin/categories.html",  
+    "/admin/messages.html"],
+    ],
     guest: [
       "/index.html",
       "/customer/catalog.html",
