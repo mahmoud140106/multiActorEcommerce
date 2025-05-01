@@ -97,12 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </span>
               </div>
             </div>
-            <!-- View More Button -->
-            <div class="text-end mt-3">
-              <a href="orderDetails.html?orderId=${order.id}" class="btn btn-link p-0 text-decoration-none">
-                View Details <i class="fas fa-arrow-right ms-1"></i>
-              </a>
-            </div>
           </div>
         </div>
       `;
