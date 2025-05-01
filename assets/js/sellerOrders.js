@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let allOrders;
   let sellerOrders =[];
   let filteredOrders;
+
   // get products for each seller 
 
   loadOrders();
