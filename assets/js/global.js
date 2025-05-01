@@ -41,7 +41,7 @@ function restrictAccess() {
       "/admin/profile.html", 
       "/admin/categories.html",  
     "/admin/messages.html"],
-    ],
+    
     guest: [
       "/index.html",
       "/customer/catalog.html",

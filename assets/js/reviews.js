@@ -15,8 +15,8 @@ window.addEventListener('load', () =>{
       return;
     }
 
-let Allreviews = StorageManager.load('reviews');
-reviews=Allreviews.filter((review) => review.productId === productId);
+// let Allreviews = StorageManager.load('reviews');
+// reviews=Allreviews.filter((review) => review.productId === productId);
 // reviews = ReviewManager.getReviewsByProduct(productId); // Get reviews for the product
 console.log(reviews)
 
@@ -32,7 +32,7 @@ removeHighlight(); // Remove highlight from stars
 
 //get reviews for the product
 function getreviews(productId){
-
+let reviews = ReviewManager.getReviewsByProduct(productId);
   
  // Render carousel images dynamically
  const carouselReviews = document.getElementById("carouselReviews");
@@ -79,10 +79,6 @@ divReviewItem.appendChild(reviewUser); // Append review user name to review item
   
  });
 }
-
-
-
- 
 
 }
 

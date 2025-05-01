@@ -136,9 +136,12 @@ export class OrderManager {
     }
 
     let orders = StorageManager.load("orders") || [];
-    orders = orders.map((order) =>
-      order.id === orderId ? { ...order, status, updatedAt: new Date() } : order
-    );
+    let order=orders.find(order=>order.id==orderId);
+    order.status = status;
+    // orders = orders.map((order) =>
+    //   order.id === orderId ? { ...order, status, updatedAt: new Date() } : order
+    // );
+    console.log(orders)
     StorageManager.save("orders", orders);
   }
 
