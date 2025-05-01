@@ -135,7 +135,7 @@
               <div class="profile-pic" id="profile-pic-container">U</div>
               <input type="file" id="profile-pic-input" accept="image/*" style="display: none;">
               <div class="profile-name">
-                <p>Hi, <br> User123</p>
+                <p>Hi, <br> <span>UserName</span></p>
               </div>
             </div>
             <ul class="profile-list">
@@ -164,24 +164,24 @@
               <h2>MY DETAILS</h2>
               <p>
                 Feel free to edit any of your details below so that your account is
-                totally up to date. (* Indicates a required field).
+                totally up to date.
               </p>
               <form>
                 <div class="form-group">
-                  <label for="user-name">USER NAME*</label>
-                  <input type="text" id="user-name" value="Username" />
+                  <label for="user-name">USER NAME (uneditable)</label>
+                  <input type="text" id="user-name" placeholder="Username" />
                 </div>
                 <div class="form-group">
-                  <label for="first-name">FIRST NAME*</label>
-                  <input type="text" id="first-name" value="First Name" />
+                  <label for="first-name">FIRST NAME</label>
+                  <input type="text" id="first-name" placeholder="First Name" />
                 </div>
                 <div class="form-group">
-                  <label for="last-name">LAST NAME*</label>
-                  <input type="text" id="last-name" value="Last Name" />
+                  <label for="last-name">LAST NAME</label>
+                  <input type="text" id="last-name" placeholder="Last Name" />
                 </div>
                 <div class="form-group">
-                  <label for="email">EMAIL ADDRESS</label>
-                  <input type="email" id="email" value="email@gmail.com" />
+                  <label for="email">EMAIL ADDRESS (uneditable)</label>
+                  <input type="email" id="email" placeholder="email@gmail.com" />
                 </div>
                 <div class="form-group">
                   <label for="dob">DATE OF BIRTH</label>
@@ -318,7 +318,6 @@
             </div>
           </div>
           
-
           <!-- <div class="overview-section col-9 main d-none">
             <div class="account-overview">
               <h2>ACCOUNT OVERVIEW</h2>
@@ -498,9 +497,10 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="../assets/js/auth.js"></script>
   <script type="module" src="../assets/js/global.js"></script>
-  <script  src="../assets/js/profile.js"></script>
+  <script type="module" src="../assets/js/profile.js"></script>
 </body>
 
 </html>

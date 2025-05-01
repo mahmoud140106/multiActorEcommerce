@@ -1,0 +1,27 @@
+/* Messages Page */
+#messagesTableBody tr {
+    cursor: pointer;
+  }
+  #messagesTableBody tr:hover {
+    background-color: #f8f9fa;
+  }
+  .status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .bg-warning {
+    background-color: #ffc107 !important;
+  }
+  .bg-success {
+    background-color: #198754 !important;
+  }
+  
+  /* Modal Tweaks */
+  #messageDetailModal .modal-body {
+    padding: 1.5rem;
+  }
+  #detail-message {
+    white-space: pre-line;
+  }
