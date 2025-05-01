@@ -155,6 +155,11 @@ export class ProductManager {
     StorageManager.save("notifications", notifications);
   }
 
+  static getNotificationsForSeller(userId) {
+    const notifications = StorageManager.load("notifications") || [];
+    return notifications.filter(notification => notification.userId === userId);
+  }
+
   static deleteProduct(id) {
     let products = StorageManager.load("products") || [];
     products = products.filter((product) => product.id !== id);
@@ -201,7 +206,6 @@ export class ProductManager {
       };
     }
   }
-  
 
   static updateStock(productId, quantityChange) {
     const products = StorageManager.load("products") || [];

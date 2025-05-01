@@ -23,8 +23,6 @@ function restrictAccess() {
       "/customer/wishlist.html",
       "/customer/completedOrder.html",
       "/customer/product.html",
-
-      
     ],
     seller: [
       "/index.html",
@@ -32,11 +30,12 @@ function restrictAccess() {
       "/seller/products.html",
       "/seller/orders.html",
       "/seller/orderDetails.html",
-      "/seller/profile.html",
+      "/seller/updates.html",
     ],
+
     admin: [
-      "/index.html", 
-      "/admin/dashboard.html", 
+      "/index.html",
+      "/admin/dashboard.html",
       "/admin/products.html",
       "/admin/profile.html", 
       "/admin/categories.html",  
@@ -85,7 +84,10 @@ export function updateNavbar() {
     return;
   }
 
-  if (currentUser && (currentUser.role === "admin" || currentUser.role === "seller")) {
+  if (
+    currentUser &&
+    (currentUser.role === "admin" || currentUser.role === "seller")
+  ) {
     navbar.classList.add("d-none");
     return;
   }
@@ -168,6 +170,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-
-

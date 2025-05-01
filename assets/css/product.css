@@ -1,4 +1,127 @@
+.pagination {
 
+  display: flex;
+  padding-left: 550px;
+  text-align: center;
+  margin-top:-100px ;
+  
+}
+a.product{
+ 
+  text-decoration: none;
+ margin: 50px;
+padding: 5px;
+  border: none;
+  border-radius: 0 20px 20px  0;
+  margin: 0 6px;
+  color:var(--secondary-color);
+  background: #ffffff;
+  box-shadow: var(--card-shadow);
+  width: 50;
+  height: 36px;
+  display: flex;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+a.product:hover{
+  background: var(--primary-color) !important;
+  color: #ffffff;
+}
+.page-item:first-child .page-link:hover {
+ 
+
+  padding: 5px 35px 2px 35px; 
+ 
+}
+.pagination .page-item .page-link:hover {
+  background: var(--primary-color) !important;
+}
+
+li.page-item{
+  padding:10px ;
+}
+
+/*  */
+.rating-filter .form-check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating-filter .form-check-input:checked + label {
+  color: #ffc107;
+}
+
+.rating-filter .form-check-input {
+  margin-top: 0.2rem;
+}
+
+/*  */
+
+aside {
+  height: calc(100vh - 100px);
+  position: sticky;
+  top: 20px;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  aside {
+    height: auto;
+    position: static;
+    margin-bottom: 2rem;
+  }
+}
+
+.form-select, .form-control {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+#productPage {
+  min-height: 10vh;
+}
+
+/*  */
+/* *************************************************** */
+/* .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.page-btn {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #dee2e6;
+  background: white; 
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+.btn-outline-info:hover{
+  color:white !important;
+  border: 1px solid #FFC107;
+  background-color: #FFC107;
+}
+.btn-outline-info{
+  color:black !important;
+  border: 1px solid black;
+  border-radius: 20px 20px 20px  20px;
+}
+
+.page-btn.active,.page-btn:hover {
+  background-color: #FFC107 !important;
+  color: white;
+  border-color: #0d6efd;
+}
+
+.page-btn:hover:not(.active) {
+  background-color: #e9ecef;
+} */
+
+/* ******************************************* */
 .filters {
   text-align: center;
   margin-bottom: 20px;

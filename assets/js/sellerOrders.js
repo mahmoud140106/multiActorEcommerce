@@ -48,15 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       let productFromStorage
         order.items.forEach((item)=>{
-        // console.log(item)
              productFromStorage=products.find(product=>product.id===item.productId)    //filter products from storage to get seller id
           //  console.log(productFromStorage)
+          if(productFromStorage.sellerId==currentUser.id ){
+
+            if(!sellerOrders.includes(order)){
+              sellerOrders.push(order);         //filter all orders to get the seller orders
+
+            }
             
+        }
         })
-        if(productFromStorage.sellerId==currentUser.id ){
-          sellerOrders.push(order);         //filter all orders to get the seller orders
-          
-      }
+       
     })
     // console.log(sellerOrders)
     renderOrdersTable();
@@ -90,9 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const formattedDate = `${year}-${month}-${day}`;
 
       const statusClass = order.status === "pending" ? "bg-warning text-dark" :
-                          order.status === "shipped" ? "bg-success text-white" :
-                          order.status === "processing" ? "bg-secondary text-white" :
-                          order.status === "cancelled" ? "bg-danger text-white" : "bg-secondary text-white";
+                          order.status === "delivered" ? "bg-success text-white" :  "bg-secondary text-white";
+                          // order.status === "processing" ? "bg-secondary text-white" :
+                          // order.status === "cancelled" ? "bg-danger text-white" :
       const statusText = order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : "Unknown";
       const statusContent = order.status === "cancelled" && order.rejectReason
         ? `<span class="badge ${statusClass}" data-bs-toggle="tooltip" data-bs-placement="top" title="${order.rejectReason}">${statusText}</span>`
@@ -110,9 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <select class="form-control orderNewStatus " >
                        <option value='action'>Action </option> 
                         <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="cancelled">Cancelled</option>
+                        <option value="delivered">Delivered</option>
             </select>
         </td>
       `;
@@ -292,9 +293,9 @@ document.getElementById("ordersTableBody").addEventListener("change", function (
 
     const statusClasses = {
       pending: "bg-warning text-dark",
-      processing: "bg-success text-white",
-      shipped: "bg-secondary text-white",
-      cancelled: "bg-danger text-white",
+      delivered: "bg-success text-white",
+      // shipped: "bg-secondary text-white",
+      // cancelled: "bg-danger text-white",
     };
 
     const newStatus = select.value;
@@ -303,6 +304,7 @@ document.getElementById("ordersTableBody").addEventListener("change", function (
       orderCurrentStatus.innerText = newStatus;
 
       OrderManager.updateOrderStatus(orderId, newStatus);       //update order status
+      console.log(OrderManager.getAllOrders)
       window.location.reload();             //reload the page to refresh the status
       
     }
