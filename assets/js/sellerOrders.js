@@ -48,15 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       let productFromStorage
         order.items.forEach((item)=>{
-        // console.log(item)
              productFromStorage=products.find(product=>product.id===item.productId)    //filter products from storage to get seller id
           //  console.log(productFromStorage)
+          if(productFromStorage.sellerId==currentUser.id ){
+
+            if(!sellerOrders.includes(order)){
+              sellerOrders.push(order);         //filter all orders to get the seller orders
+
+            }
             
+        }
         })
-        if(productFromStorage.sellerId==currentUser.id ){
-          sellerOrders.push(order);         //filter all orders to get the seller orders
-          
-      }
+       
     })
     // console.log(sellerOrders)
     renderOrdersTable();
