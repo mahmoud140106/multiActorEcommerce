@@ -130,7 +130,125 @@
   </nav>
 
 
-  <div class="filters container w-75  justify-content-around ">
+<!--  -->
+<div class="container-fluid">
+  <div class=" row mb-4 mt-3 d-flex justify-content-center">
+    <input type="text" class="form-control" id="searchInput" placeholder="Search products...">
+  </div>
+  <div class="row">
+    <!-- Filters Sidebar -->
+    <aside class="col-md-3 col-12 order-md-first order-last bg-light p-4">
+      <h4 class="mb-4">Filters</h4>
+      
+      <!-- Category Filter -->
+      <div class="mb-4">
+        <label for="filterCategory" class="form-label">Category</label>
+        <select class="form-select" id="filterCategory">
+          <option value="AllCategories">All Categories</option>
+        </select>
+      </div>
+
+      <!-- Size Filter -->
+      <div class="mb-4">
+        <label for="filterSize" class="form-label">Size</label>
+        <select class="form-select" id="filterSize">
+          <option value="AllSizes">All Sizes</option>
+        </select>
+      </div>
+
+      <!-- Price Filter -->
+      <div class="mb-4">
+        <label class="form-label">Price Range</label>
+        <div class="row g-2">
+          <div class="col-6">
+            <input type="number" class="form-control" id="minPrice" placeholder="Min" min="0">
+          </div>
+          <div class="col-6">
+            <input type="number" class="form-control" id="maxPrice" placeholder="Max" min="0">
+          </div>
+        </div>
+      </div>
+
+
+
+  <!--special offer -->
+  <div class="mb-4">
+    <label class="form-label fw-bold mb-2">Special Offers</label>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="bestSeller">
+      <label class="form-check-label" for="bestSeller">Best Seller</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="newArrivals">
+      <label class="form-check-label" for="newArrivals">New Arrivals</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="onSale">
+      <label class="form-check-label" for="onSale">On Sale</label>
+    </div>
+  </div>
+<!-- filter brand -->
+  <div class="mb-4">
+    <label for="filterBrand" class="form-label fw-bold">Brand</label>
+    <select class="form-select" id="filterBrand">
+      <option value="AllBrands">All Brands</option>
+      <!-- added through js-->
+    </select>
+  </div>
+<!-- filter seller -->
+  <!-- <div class="mb-4">
+    <label for="filterSeller" class="form-label fw-bold">Seller</label>
+    <select class="form-select" id="filterSeller">
+      <option value="AllSellers">All Sellers</option>
+      add seller through js
+    </select>
+  </div> -->
+<!-- filter rating -->
+  <!-- <div class="mb-4">
+    <label class="form-label fw-bold">Rating</label>
+    <div class="rating-filter">
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="rating" id="rating4" value="4">
+        <label class="form-check-label" for="rating4">
+          ★★★★☆ & Up
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="rating" id="rating3" value="3">
+        <label class="form-check-label" for="rating3">
+          ★★★☆☆ & Up
+        </label>
+      </div>
+    </div>
+  </div> -->
+<!-- filter gender -->
+  <div class="mb-4">
+    <label for="filterGender" class="form-label fw-bold">Gender</label>
+    <select class="form-select" id="filterGender">
+      <option value="All">All</option>
+      <option value="Men">Men</option>
+      <option value="Women">Women</option>
+   
+    </select>
+  </div>
+
+    </aside>
+
+    <!-- Products Section -->
+    <main class="col-md-9 col-12 order-md-last order-first mt-2">
+      <div class="container">
+        <div id="productPage" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"></div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center mt-4"></ul>
+        </nav>
+      </div>
+    </main>
+  </div>
+</div>
+<!--  -->
+
+
+  <!-- <div class="filters container w-75  justify-content-around ">
     <select name="filterCategory" id="filterCategory" class="w-25 rounded-2">
 
     </select>
@@ -144,11 +262,11 @@
     </select>
 
 
-  </div>
+  </div> -->
 
 
 
-  
+
 
 
 
@@ -163,6 +281,20 @@
 
 
     </section>
+
+<!--  -->
+<!-- <nav aria-label="Page navigation example mb-3 ">
+  <ul class="pagination ">
+    <li class="page-item"><a class="product text-decoration-none" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link " href="#">Next</a></li>
+  </ul>
+</nav> -->
+
+
+
 
 
 
@@ -248,6 +380,7 @@
   <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="../assets/js/productPage.js"></script>
   <script type="module" src="../assets/js/global.js"></script>
+ 
 
 </body>
 
