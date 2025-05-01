@@ -44,7 +44,7 @@ order.items.forEach((item,index)=>{
       <div class="col-md-2 productDetailsItem" product-id="${item.productId}">
         <img src="${product.images[0]}" alt="${item.name}" class="img-fluid rounded-3" />
       </div>
-      <div class="col-md-6 ps-4">
+      <div class="col-8 col-md-6 ps-4">
         <div class="d-flex justify-content-between align-items-start">
           <div>
             <h5 class="mb-1 fw-semibold">${product.name}</h5>
@@ -56,8 +56,8 @@ order.items.forEach((item,index)=>{
          
         </div>
       </div>
-      <div class="col-md-4 text-end">
-        <h4 class="fw-bold">$${product.price.toFixed(2)}</h4>
+      <div class="col-3 col-md-4 text-end">
+        <h5 class="fw-bold">$${product.price.toFixed(2)}</h5>
        
       </div>
     </div>
