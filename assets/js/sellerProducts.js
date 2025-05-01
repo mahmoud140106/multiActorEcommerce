@@ -19,13 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // /////////////////
-
   let filteredProducts = [];
   let currentPage = 1;
   const itemsPerPage = 5;
   let sortColumn = "id";
   let sortDirection = "asc";
+  let selectedImages = []; // Store selected images (files or paths)
 
   function loadProducts() {
     const currentUser = StorageManager.load("currentUser");
@@ -48,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (filteredProducts.length === 0) {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td colspan="7" class="text-center">No products available</td>
+        <td colspan="9" class="text-center">No products available</td>
       `;
       tbody.appendChild(row);
       return;
@@ -59,6 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     paginatedProducts.forEach((product) => {
       const category = CategoryManager.getCategory(product.categoryId);
+      const statusClass = product.status === "pending" ? "bg-warning text-dark" :
+                         product.status === "accepted" ? "bg-success text-white" :
+                         product.status === "rejected" ? "bg-danger text-white" : "bg-secondary text-white";
+      const statusText = product.status ? product.status.charAt(0).toUpperCase() + product.status.slice(1) : "Unknown";
+      const statusContent = product.status === "rejected" && product.rejectReason
+        ? `<span class="badge ${statusClass}" data-bs-toggle="tooltip" data-bs-placement="top" title="${product.rejectReason}">${statusText}</span>`
+        : `<span class="badge ${statusClass}">${statusText}</span>`;
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>...${product.id % 1000}</td>
@@ -73,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td class="d-none d-md-table-cell">$${product.price.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">$${product.discount.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">${product.stock}</td>
+        <td>${statusContent}</td>
         <td>
           <button class="btn btn-sm btn-outline-primary rounded-circle m-1 m-md-0" onclick="openEditProductModal(${
             product.id
@@ -83,6 +90,11 @@ document.addEventListener("DOMContentLoaded", () => {
         </td>
       `;
       tbody.appendChild(row);
+    });
+
+    // Initialize tooltips
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => {
+      new bootstrap.Tooltip(el);
     });
 
     renderPagination();
@@ -141,6 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const catB = CategoryManager.getCategory(b.categoryId);
         valA = catA ? catA.name : "";
         valB = catB ? catB.name : "";
+      } else if (column === "status") {
+        valA = a.status || "";
+        valB = b.status || "";
       }
 
       if (typeof valA === "string") {
@@ -163,14 +178,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.searchProducts = () => {
     const query = document.getElementById("searchInput").value.toLowerCase();
+    const selectedStatus = document.getElementById("statusFilter").value;
     const currentUser = StorageManager.load("currentUser");
     const products = ProductManager.getProductsBySeller(currentUser.id);
     filteredProducts = products.filter((p) => {
       const category = CategoryManager.getCategory(p.categoryId);
-      return (
+      const matchesQuery =
         p.name.toLowerCase().includes(query) ||
-        (category && category.name.toLowerCase().includes(query))
-      );
+        (category && category.name.toLowerCase().includes(query)) ||
+        (p.status && p.status.toLowerCase().includes(query));
+      const matchesStatus = selectedStatus === "all" || p.status === selectedStatus;
+      return matchesQuery && matchesStatus;
+    });
+    currentPage = 1;
+    renderProductsTable();
+  };
+
+  window.filterByStatus = () => {
+    const selectedStatus = document.getElementById("statusFilter").value;
+    const query = document.getElementById("searchInput").value.toLowerCase();
+    const currentUser = StorageManager.load("currentUser");
+    const products = ProductManager.getProductsBySeller(currentUser.id);
+    filteredProducts = products.filter((p) => {
+      const category = CategoryManager.getCategory(p.categoryId);
+      const matchesQuery =
+        p.name.toLowerCase().includes(query) ||
+        (category && category.name.toLowerCase().includes(query)) ||
+        (p.status && p.status.toLowerCase().includes(query));
+      const matchesStatus = selectedStatus === "all" || p.status === selectedStatus;
+      return matchesQuery && matchesStatus;
     });
     currentPage = 1;
     renderProductsTable();
@@ -178,9 +214,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function handleImageUpload(files, callback) {
     const imagePaths = [];
+    const validTypes = ["image/jpeg", "image/png", "image/gif"];
+    const maxSize = 5 * 1024 * 1024; // 5MB
 
     if (files && files.length) {
       Array.from(files).forEach((file) => {
+        if (!validTypes.includes(file.type)) {
+          showToast("Only JPEG, PNG, or GIF images are allowed.", "error");
+          return;
+        }
+        if (file.size > maxSize) {
+          showToast("Image size must be less than 5MB.", "error");
+          return;
+        }
         const imagePath = `/assets/images/${file.name}`;
         imagePaths.push(imagePath);
       });
@@ -194,20 +240,30 @@ document.addEventListener("DOMContentLoaded", () => {
     previewContainer.innerHTML = "";
     const imagesToPreview = [];
 
+    // Update selectedImages based on input
     if (files && files.length) {
-      Array.from(files).forEach((file) => {
-        imagesToPreview.push({ src: URL.createObjectURL(file), isFile: true });
+      const newFiles = Array.from(files);
+      // Append new files to selectedImages, avoiding duplicates
+      newFiles.forEach((file) => {
+        if (!selectedImages.some((img) => img.isFile && img.file.name === file.name)) {
+          selectedImages.push({ src: URL.createObjectURL(file), file, isFile: true });
+        }
       });
+    } else if (imagePaths && imagePaths.length && selectedImages.length === 0) {
+      // Only set imagePaths if selectedImages is empty (initial load for edit)
+      selectedImages = imagePaths.map((image) => ({
+        src: image,
+        isFile: false
+      }));
     }
 
-    if (imagePaths && imagePaths.length) {
-      imagePaths.forEach((image) => {
-        imagesToPreview.push({ src: image, isFile: false });
-      });
-    }
+    imagesToPreview.push(...selectedImages);
 
     if (imagesToPreview.length) {
-      imagesToPreview.forEach(({ src }) => {
+      imagesToPreview.forEach(({ src }, index) => {
+        const imgContainer = document.createElement("div");
+        imgContainer.style.display = "inline-block";
+        imgContainer.style.position = "relative";
         const img = document.createElement("img");
         img.src = src;
         img.alt = "Preview";
@@ -216,10 +272,28 @@ document.addEventListener("DOMContentLoaded", () => {
         img.style.objectFit = "cover";
         img.style.margin = "5px";
         img.onerror = () => {
-          img.src =
-            "https://dummyimage.com/100x100/cccccc/000000&text=Invalid+Image";
+          img.src = "https://dummyimage.com/100x100/cccccc/000000&text=Invalid+Image";
         };
-        previewContainer.appendChild(img);
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "btn btn-danger btn-sm";
+        removeBtn.style.position = "absolute";
+        removeBtn.style.top = "0";
+        removeBtn.style.right = "0";
+        removeBtn.innerHTML = "×";
+        removeBtn.onclick = () => {
+          selectedImages.splice(index, 1);
+          // Re-render with current selectedImages
+          renderImagePreview(
+            selectedImages.filter((img) => img.isFile).map((img) => img.file),
+            selectedImages.filter((img) => !img.isFile).map((img) => img.src)
+          );
+          // Clear file input to prevent old files from being submitted
+          document.getElementById("productImage").value = "";
+        };
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(removeBtn);
+        previewContainer.appendChild(imgContainer);
       });
       previewContainer.style.display = "block";
     } else {
@@ -229,9 +303,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("productImage").addEventListener("change", (e) => {
     const files = e.target.files;
-    handleImageUpload(files, (imagePaths) => {
-      renderImagePreview(files, imagePaths);
-    });
+    renderImagePreview(files, null);
   });
 
   function populateCategorySelect() {
@@ -250,7 +322,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("productForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const id = parseInt(document.getElementById("productId").value);
-    const files = document.getElementById("productImage").files;
     const currentUser = StorageManager.load("currentUser");
     if (!currentUser || currentUser.role !== "seller") {
       showToast(
@@ -261,26 +332,34 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    handleImageUpload(files, (imagePaths) => {
-      const name = document.getElementById("productName").value;
-      const categoryId = parseInt(
-        document.getElementById("productCategory").value
-      );
-      const price = parseFloat(document.getElementById("productPrice").value);
-      const discount = parseFloat(
-        document.getElementById("productDiscount").value
-      );
-      const stock = parseInt(document.getElementById("productStock").value);
-      const sellerId = currentUser.id;
+    const name = document.getElementById("productName").value;
+    const categoryId = parseInt(document.getElementById("productCategory").value);
+    const price = parseFloat(document.getElementById("productPrice").value);
+    const discount = parseFloat(document.getElementById("productDiscount").value);
+    const stock = parseInt(document.getElementById("productStock").value);
+    const sellerId = currentUser.id;
 
-      if (isNaN(price) || isNaN(stock) || isNaN(categoryId)) {
-        showToast("Please enter valid price, stock, and category.", "error");
+    if (isNaN(price) || isNaN(stock) || isNaN(categoryId)) {
+      showToast("Please enter valid price, stock, and category.", "error");
+      return;
+    }
+
+    // Use selectedImages for submission
+    const newFiles = selectedImages
+      .filter((img) => img.isFile)
+      .map((img) => img.file);
+    const existingImagePaths = selectedImages
+      .filter((img) => !img.isFile)
+      .map((img) => img.src);
+
+    handleImageUpload(newFiles, (newImagePaths) => {
+      const finalImages = [...existingImagePaths, ...newImagePaths];
+
+      // Check if at least one image is present
+      if (finalImages.length === 0) {
+        showToast("At least one image is required.", "error");
         return;
       }
-
-      const images = imagePaths.length
-        ? imagePaths
-        : ProductManager.getProduct(id)?.images || [];
 
       if (!isNaN(id) && ProductManager.getProduct(id)) {
         ProductManager.updateProduct(
@@ -289,10 +368,11 @@ document.addEventListener("DOMContentLoaded", () => {
           categoryId,
           price,
           stock,
-          images,
+          finalImages, // Always use finalImages
           sellerId,
           {
             discount,
+            status: "pending"
           }
         );
         showToast("Product updated successfully", "success");
@@ -304,18 +384,16 @@ document.addEventListener("DOMContentLoaded", () => {
           categoryId,
           price,
           stock,
-          images,
+          finalImages,
           sellerId,
-          { discount }
+          { discount, status: "pending" }
         );
         showToast("Product added successfully", "success");
       }
 
       filteredProducts = [...ProductManager.getProductsBySeller(currentUser.id)];
       renderProductsTable();
-      bootstrap.Modal.getInstance(
-        document.getElementById("productModal")
-      ).hide();
+      bootstrap.Modal.getInstance(document.getElementById("productModal")).hide();
 
       document.getElementById("productName").value = "";
       document.getElementById("productCategory").value = "";
@@ -323,6 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("productDiscount").value = "";
       document.getElementById("productStock").value = "";
       document.getElementById("productImage").value = "";
+      selectedImages = [];
       renderImagePreview([], []);
     });
   });
@@ -336,6 +415,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("productDiscount").value = "";
     document.getElementById("productStock").value = "";
     document.getElementById("productImage").value = "";
+    document.getElementById("productImage").required = true; // Ensure required for new product
+    selectedImages = [];
     populateCategorySelect();
     renderImagePreview([], []);
   };
@@ -354,6 +435,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("productPrice").value = product.price;
     document.getElementById("productDiscount").value = product.discount;
     document.getElementById("productStock").value = product.stock;
+    selectedImages = (product.images || []).map((image) => ({
+      src: image,
+      isFile: false
+    }));
+    // Remove required attribute if there are existing images
+    document.getElementById("productImage").required = selectedImages.length === 0;
     populateCategorySelect();
     renderImagePreview(null, product.images || []);
     new bootstrap.Modal(document.getElementById("productModal")).show();

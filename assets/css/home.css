@@ -29,53 +29,7 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 768px) {
-  #hero-section {
-    padding: 0 !important;
-  }
-  #hero-section .w-40 {
-    width: 100% !important;
-    margin: 0 auto;
-    background-image: url("https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 0px 20px;
-    position: relative;
-  }
 
-  #hero-section .w-40::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(2px);
-    z-index: 1;
-  }
-
-  #hero-section .w-40 * {
-    position: relative;
-    z-index: 2;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  }
-  .maincaption {
-    font-size: 3.4rem;
-    margin-bottom: 0.5rem !important;
-  }
-  .herocaption {
-    color: #cac8c8 !important;
-    font-size: smaller;
-    margin-bottom: 0.5rem !important;
-  }
-  .heroBtn{
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-  }
-}
 
 /* Hero Banner (Carousel) */
 .carousel-inner {
@@ -251,7 +205,20 @@ section h2 {
   flex-wrap: nowrap;
 }
 
+
+
 /* Responsive Design */
+
+
+@media (max-width: 1250px) {
+  .car>div>span{
+    font-size: 1.1rem !important;
+    padding: 7px;
+  }
+}
+
+
+
 @media (max-width: 768px) {
   section h2 {
     font-size: 1.5rem;
@@ -274,8 +241,349 @@ section h2 {
   }
 }
 
+
+
+
+.cardItem{
+  width: 90% !important;
+}
+
+
+@media (max-width: 790px) {
+
+  .cardItem{
+  width: 60% !important;
+}
+
+
+  .car>div>span{
+    font-size: 0.8rem !important;
+   
+  }
+  .car>div>span:nth-child(2){
+    padding-right: 1rem !important;
+  }
+  #hero-section {
+    padding: 0 !important;
+  }
+  #hero-section img{
+    display: none;
+  }
+  #headerBtns{
+    display: flex;
+    justify-content: center !important;
+    margin-top: 2rem;
+  }
+  #hero-section .w-40 {
+    width: 100% !important;
+    margin: 0 auto;
+    background-image: url("https://mensclubcollection.com/cdn/shop/files/0E9A5556copy_540x.jpg?v=1745338947");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 0px 20px;
+    position: relative;
+    color: whitesmoke !important;
+    text-align: center;
+  }
+
+  #headerDetails h1{
+    color: whitesmoke !important;
+    padding: 1rem;
+  }
+  #hero-section .w-40::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.46);
+    backdrop-filter: blur(2px);
+    z-index: 1;
+  }
+
+  #hero-section .w-40 * {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  /* .maincaption {
+    font-size: 3.4rem;
+    margin-bottom: 0.5rem !important;
+  }
+  .herocaption {
+    color: #cac8c8 !important;
+    font-size: smaller;
+    margin-bottom: 0.5rem !important;
+  }
+  .heroBtn{
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  } */
+}
+
+
+
+
 @media (max-width: 576px) {
   .card-img-top {
     height: 180px;
+  }
+}
+
+
+
+
+
+
+/* body style */
+body,
+h1 {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.bg-black {
+  background-color: black;
+}
+
+#hero-section {
+  margin-top: 0px !important;
+}
+
+/* categories section style  */
+
+#categoriesSection {
+  width: 90%;
+}
+
+
+.cardItem {
+  width: 22%;
+  padding: 0;
+}
+
+.cardCaption {
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 1s;
+}
+
+.cardDetails {
+  opacity: 0;
+}
+
+.cardItem:hover {
+  .cardCaption {
+    top: 50%;
+  }
+
+  .cardDetails {
+    opacity: 1;
+  }
+}
+
+#categoriesSection .carousel-control-prev-icon,
+#categoriesSection .carousel-control-next-icon {
+  transform: translateY(50%);
+}
+
+#categoriesSection .carousel-control-next,
+#categoriesSection .carousel-control-prev {
+  top: 55%;
+  bottom: 50%;
+}
+
+#categoriesSection .carousel-control-next {
+  right: -4%;
+}
+#categoriesSection .carousel-control-prev {
+  left: -4%;
+}
+
+/* carouselSlides after header style */
+
+@keyframes CarouselSlideOfHeader {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.carouselSlideContent {
+  animation-name: CarouselSlideOfHeader;
+  animation-duration: 20s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+#carouselSlidesOnly {
+  background-color: black;
+}
+
+#carouselSlidesOnly .textStroke {
+  text-shadow: -1px -1px 0 white, 1px -1px 0 whitesmoke, -1px 1px 0 whitesmoke,
+    1px 1px 0 whitesmoke;
+}
+
+
+
+
+/* Reviews section style  */
+
+#ReviewSection {
+  background-image: url("https://themewagon.github.io/Bookly/images/banner-image-bg.jpg");
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+}
+
+#carouselReview .carousel-control-next,#carouselReview .carousel-control-prev{
+ top:50%;
+ bottom:50%;
+}
+
+
+
+#carouselAllReviews .carousel-item{
+  width: 100%;
+
+}
+
+#carouselAllReviews img{
+  width: 50px;
+  height: 50px;
+}
+
+
+.carousel-item {
+  display: none;
+}
+
+.carousel-item.active {
+  display: block;
+}
+
+
+
+
+/* sale section style  */
+
+/* https://mensclubcollection.com/cdn/shop/collections/cover-collection-for-hoodie.jpg?v=1735559439 */
+
+.saleSection {
+  background-image: url("https://mensclubcollection.com/cdn/shop/files/new-in-summer-25-web-cover_1950x.jpg?v=1744108517");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Search Style Modal in Home */
+
+#SearchHomeModal .modal-dialog {
+  max-width: 100%;
+  max-height: 100vh;
+  margin: 0;
+}
+
+#SearchHomeModal .modal {
+  max-height: 100vh;
+}
+
+#SearchHomeModal .modal-content {
+  border-radius: 0px;
+  border: 0;
+}
+
+#SearchHomeModal .btn-close {
+  position: absolute;
+  right: 1%;
+  top: 2vh !important;
+}
+
+#closeButton {
+  top: 5vh !important;
+  right: 3%;
+}
+
+/* #searchInput::placeholder {
+  color: rgba(0, 0, 0, 0.297);
+} */
+
+#searchInput {
+  border: none;
+  border-bottom: 1px solid black; 
+}
+
+#searchInput:focus {
+  border: 0;
+}
+
+@media (max-width: 1400px) {
+  h1 {
+    font-weight: bolder;
+    font-size: 3rem !important;
+  }
+
+  .cardItem {
+    width: 35% !important;
+  }
+  .categoryItems,
+  .saleSection {
+    height: auto !important;
+    margin-bottom: 30px;
+  }
+
+  #activeCarouselItem {
+    width: 100% !important;
+  }
+
+  #saleSection {
+    font-size: 1rem;
+  }
+
+  #saleSection #saleSectionDetails {
+    width: 90% !important;
+  }
+
+  .carouselSlideContent span {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .cardItem {
+    width: 55% !important;
+  }
+
+  h1 {
+    font-size: 2rem !important;
+  }
+}
+
+@media (max-width: 950px) {
+  #headerDetails span,
+  #headerDetails p,
+  #headerDetails button {
+    font-size: 1rem !important;
+  }
+
+  h1 {
+    font-size: 1.7rem !important;
+    font-weight: bolder;
+    margin-bottom: 5px !important;
+  }
+
+  .carouselSlideContent span {
+    font-size: 1.5rem !important;
   }
 }

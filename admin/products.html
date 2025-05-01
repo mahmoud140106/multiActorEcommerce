@@ -4,35 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manage Products - Multi-Actor E-commerce</title>
-    <link
-      href="../assets/libs/bootstrap/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="../assets/css/dashboard.css" rel="stylesheet" />
+    <style>
+      .status-select {
+        width: 120px;
+        padding: 2px;
+        font-size: 14px;
+        border-radius: 4px;
+      }
+      .status-select option {
+        padding: 5px;
+      }
+    </style>
   </head>
   <body>
     <!-- Sidebar Toggle Button -->
-    <button
-      class="sidebar-toggle"
-      aria-label="Toggle Sidebar"
-      title="Show Menu"
-    >
+    <button class="sidebar-toggle" aria-label="Toggle Sidebar" title="Show Menu">
       <i class="fas fa-bars"></i>
     </button>
     <main>
-      <!-- Sidebar -->
       <div class="container-fluid">
         <div class="row">
           <!-- Sidebar -->
           <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-            <div class="position-sticky pt-0">
+            <div class="position-sticky">
               <a
                 class="navbar-brand d-flex align-items-center text-white mb-2 pb-2"
                 style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);"
@@ -53,6 +50,16 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link" href="/admin/categories.html">
+                    <i class="fa-solid fa-list me-2"></i>Categories
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/messages.html">
+                    <i class="fa-solid fa-message me-2"></i>Messages
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link" href="#" onclick="logout()">
                     <i class="fas fa-sign-out-alt me-2"></i>Logout
                   </a>
@@ -63,82 +70,54 @@
 
           <!-- Main Content -->
           <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4 pt-4 pb-0">
-            <div class="">
+            <div>
               <div class="row mb-2">
                 <div class="col-12">
                   <h1 class="display-5">Admin - Manage Products</h1>
-                  <p class="lead">
-                    Manage all products in the store
-                  </p>
+                  <p class="lead">View and manage the status of products in the store</p>
                 </div>
               </div>
               <div class="row mb-4 gap-2 gap-md-0">
                 <div class="col-md-4 search-container">
-                  <input
-                    type="text"
-                    id="searchInput"
-                    class="form-control"
-                    placeholder="Search by name, category, or seller Name..."
-                    onkeyup="searchProducts()"
-                  />
+                  <input type="text" id="searchInput" class="form-control" placeholder="Search by name, category, or seller..." onkeyup="searchProducts()" />
                 </div>
-                <div class="col-md-8 text-end">
-                  <button
-                    class="btn btn-dark btn-gradient"
-                    onclick="openAddProductModal()"
-                    data-bs-toggle="modal"
-                    data-bs-target="#productModal"
-                  >
-                    Add Product
-                  </button>
+                <div class="col-md-4">
+                  <select id="statusFilter" class="form-select" onchange="filterByStatus()">
+                    <option value="all">All Products</option>
+                    <option value="pending">Pending</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
                   <div class="card shadow-sm">
                     <div class="card-body">
-                      <table class="table table-striped">
+                      <table class="table table-striped overflow-auto">
                         <thead>
                           <tr>
-                            <th
-                              onclick="sortTable('id')"
-                              style="cursor: pointer;"
-                            >
+                            <th onclick="sortTable('id')" style="cursor: pointer;">
                               ID <span id="sort-id"></span>
                             </th>
                             <th class="d-none d-md-table-cell">Image</th>
-                            <th
-                              onclick="sortTable('name')"
-                              style="cursor: pointer;"
-                            >
+                            <th onclick="sortTable('name')" style="cursor: pointer;">
                               Name <span id="sort-name"></span>
                             </th>
-                            <th
-                              onclick="sortTable('category')"
-                              style="cursor: pointer;"
-                            >
+                            <th onclick="sortTable('category')" style="cursor: pointer;">
                               Category <span id="sort-category"></span>
                             </th>
-                            <th
-                              class="d-none d-md-table-cell"
-                              onclick="sortTable('price')"
-                              style="cursor: pointer;"
-                            >
+                            <th class="d-none d-md-table-cell" onclick="sortTable('price')" style="cursor: pointer;">
                               Price <span id="sort-price"></span>
                             </th>
-                            <th
-                              class="d-none d-md-table-cell"
-                              onclick="sortTable('discount')"
-                              style="cursor: pointer;"
-                            >
+                            <th class="d-none d-md-table-cell" onclick="sortTable('discount')" style="cursor: pointer;">
                               Discount <span id="sort-discount"></span>
                             </th>
-                            <th
-                              class="d-none d-md-table-cell"
-                              onclick="sortTable('stock')"
-                              style="cursor: pointer;"
-                            >
+                            <th class="d-none d-md-table-cell" onclick="sortTable('stock')" style="cursor: pointer;">
                               Stock <span id="sort-stock"></span>
+                            </th>
+                            <th onclick="sortTable('seller')" style="cursor: pointer;">
+                              Seller <span id="sort-seller"></span>
                             </th>
                             <th>Actions</th>
                           </tr>
@@ -153,166 +132,24 @@
                 </div>
               </div>
             </div>
-
-            <!-- Product Modal -->
-            <div
-              class="modal fade"
-              id="productModal"
-              tabindex="-1"
-              aria-labelledby="productModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel">
-                      Add Product
-                    </h5>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <form id="productForm">
-                      <input type="hidden" id="productId" />
-                      <div class="d-flex gap-2">
-                        <div class="mb-3">
-                          <label for="productName" class="form-label"
-                            >Name</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="productName"
-                            placeholder="Enter product name"
-                            required
-                          />
-                        </div>
-                        <div class="mb-3 w-50">
-                          <label for="productCategory" class="form-label"
-                            >Category</label
-                          >
-                          <select
-                            class="form-control"
-                            id="productCategory"
-                            required
-                          >
-                            <option value="" disabled selected
-                              >Select category</option
-                            >
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="d-flex gap-2">
-                        <div class="mb-3">
-                          <label for="productPrice" class="form-label"
-                            >Price ($)</label
-                          >
-                          <input
-                            type="number"
-                            step="0.01"
-                            min="0"
-                            class="form-control"
-                            id="productPrice"
-                            placeholder="Enter price (e.g., 19.99)"
-                            required
-                          />
-                        </div>
-                        <div class="mb-3">
-                          <label for="productDiscount" class="form-label"
-                            >Discount (%)</label
-                          >
-                          <input
-                            type="number"
-                            min="0"
-                            step="0.01"
-                            class="form-control"
-                            id="productDiscount"
-                            placeholder="Enter discount (e.g., 0.25)"
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div class="d-flex gap-2">
-                        <div class="mb-3">
-                          <label for="productStock" class="form-label"
-                            >Stock</label
-                          >
-                          <input
-                            type="number"
-                            min="0"
-                            class="form-control"
-                            id="productStock"
-                            placeholder="Enter stock quantity"
-                            required
-                          />
-                        </div>
-
-                        <div class="mb-3 w-50" id="sellerSelectContainer">
-                          <label for="productSellerId" class="form-label"
-                            >Seller</label
-                          >
-                          <select
-                            class="form-control"
-                            id="productSellerId"
-                            required
-                          >
-                            <option value="" disabled selected
-                              >Select seller</option
-                            >
-                          </select>
-                        </div>
-                      </div>
-
-
-                      <div class="mb-3">
-                        <label for="productImage" class="form-label"
-                          >Images</label
-                        >
-                        <input
-                          type="file"
-                          class="form-control"
-                          id="productImage"
-                          accept="image/*"
-                          multiple
-                          placeholder="Choose image files"
-                        />
-                        <div
-                          id="imagePreview"
-                          style="margin-top: 10px; display: none;"
-                        ></div>
-                      </div>
-
-                      <button type="submit" class="btn btn-dark btn-gradient">
-                        Save
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
           </main>
         </div>
       </div>
     </main>
 
+    <!-- Change Status Modal -->
     <div
       class="modal fade"
-      id="confirmDeleteModal"
+      id="changeStatusModal"
       tabindex="-1"
-      aria-labelledby="confirmDeleteModalLabel"
+      aria-labelledby="changeStatusModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="confirmDeleteModalLabel">
-              Confirm Delete
+            <h5 class="modal-title" id="changeStatusModalLabel">
+              Confirm Status Change
             </h5>
             <button
               type="button"
@@ -322,7 +159,11 @@
             ></button>
           </div>
           <div class="modal-body">
-            Are you sure you want to delete this product?
+            <p>Are you sure you want to change the status of this product?</p>
+            <div class="mb-3" id="rejectReasonContainer" style="display: none;">
+              <label for="rejectReason" class="form-label">Reason for rejection (optional)</label>
+              <textarea class="form-control" id="rejectReason" rows="3"></textarea>
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -332,18 +173,16 @@
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
-              Delete
+            <button type="button" class="btn btn-primary" id="confirmChangeStatusBtn">
+              Confirm
             </button>
           </div>
         </div>
       </div>
     </div>
+
     <!-- Toast Container -->
-    <div
-      id="toast-container"
-      class="toast-container position-fixed bottom-0 end-0 p-3"
-    >
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
       <!-- Toasts will be dynamically inserted here -->
     </div>
 

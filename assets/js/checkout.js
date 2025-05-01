@@ -1,6 +1,6 @@
 import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
-import { showToast } from "./toast.js";
+import { CartManager } from "./cartManager.js";
 
 let productCount;
 let productId;
@@ -12,7 +12,8 @@ window.addEventListener("load", function() {
     const urlParams = new URLSearchParams(window.location.search);
      productId = parseInt(urlParams.get("id"));
      productCount =parseInt(urlParams.get("count"));
-     const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = CartManager.getCart();
+     console.log(cart)
 
      this.document.getElementById('customerId').value = currentUser.id;
      this.document.getElementById('productId').value = productId;
@@ -41,13 +42,13 @@ window.addEventListener("load", function() {
         </div>
         <div class="w-100  me-5" >
           <p class="mb-0" id="productName">${product.name} </p>
-          <small class="text-muted " id="Productdetails">${product.name} / ${product.brand}  </small>
+          <small class="text-muted " id="Productdetails">${product.name} / ${productCount} pieces  </small>
         </div>
         <span class=" fw-bold Subtotal text-danger" >$${product.price.toFixed(2)}</span>
       </div>
     <br/>
       `
-      document.getElementById('Subtotal').textContent = `$${product.price.toFixed(2)}`;
+      document.getElementById('Subtotal').textContent = `$${(product.price.toFixed(2))*productCount}`;
     
       
       document.getElementById("totalPrice").textContent = `$${(product.price + 90.00).toFixed(2)}`;
@@ -72,12 +73,12 @@ window.addEventListener("load", function() {
           <p class="mb-0" id="productName${index}">${product.name} </p>
           <small class="text-muted " id="Productdetails">${product.name} / ${product.quantity} pieces </small>
         </div>
-        <span class=" fw-bold Subtotal text-danger" >$${product.price.toFixed(2)}</span>
+        <span class=" fw-bold Subtotal text-danger" >$${(product.price.toFixed(2))*product.quantity}</span>
         
       </div>
     <br/>
       `
-      subtotal += product.price;
+      subtotal += product.price*product.quantity;
       document.getElementById('Subtotal').textContent = `$${subtotal.toFixed(2)}`;
     
       
@@ -98,7 +99,7 @@ window.addEventListener("load", function() {
 
      
     this.document.getElementById('userEmail').value=`${currentUser.email}`;
-   let deliveryData= StorageManager.load(`userDeliveryData`)   //get the delivery data of the current user
+   let deliveryData= StorageManager.load(`${currentUser.id}`)   //get the delivery data of the current user
 
     this.document.querySelector(`input[name=firstName]`).value='';
     this.document.querySelector(`input[name=lastName]`).value='';
@@ -185,12 +186,12 @@ deliveryData.forEach((data)=>{
  document.getElementById('saveInformation').addEventListener('change',function(){
   if(this.checked){
 
-    StorageManager.save('userDeliveryData',deliveryDataUserObj);     // save the delivery data of the user in storage
+    StorageManager.save(`${currentUser.id}`,deliveryDataUserObj);     // save the delivery data of the user in storage
                                   console.log(deliveryDataUserObj)                              //  with key userDeliveryData to display auto on load if he checked the save information box
 
   }
   else{
-    StorageManager.remove('userDeliveryData');
+    StorageManager.remove(`${currentUser.id}`);
   }
  });
 

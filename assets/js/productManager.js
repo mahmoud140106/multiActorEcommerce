@@ -24,6 +24,7 @@ export class Product {
       rating = 0,
       numReviews = 0,
       soldCount = 0,
+      status = "pending",
     } = {}
   ) {
     this.id = id;
@@ -48,6 +49,7 @@ export class Product {
     this.rating = rating;
     this.numReviews = numReviews;
     this.soldCount = soldCount;
+    this.status = status;
   }
 
   getCategory() {
@@ -74,7 +76,7 @@ export class ProductManager {
       stock,
       images,
       sellerId,
-      extraOptions
+      { ...extraOptions, status: "pending" }
     );
     let products = StorageManager.load("products") || [];
     products.push(product);
@@ -82,13 +84,15 @@ export class ProductManager {
   }
 
   static getProduct(id) {
-    const products = StorageManager.load("products") || [];
+    const products = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
     return products.find((product) => product.id === id);
   }
 
   static getProductsByName(searchName) {
-    const productsName = StorageManager.load("products") || [];
-    return productsName.filter( (product) =>  product.name.toLowerCase().includes(searchName.toLowerCase()) ); 
+    const productsName = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
+    return productsName.filter((product) =>
+      product.name.toLowerCase().includes(searchName.toLowerCase())
+    );
   }
 
   static updateProduct(
@@ -102,21 +106,53 @@ export class ProductManager {
     extraOptions = {}
   ) {
     let products = StorageManager.load("products") || [];
-    products = products.map((product) =>
-      product.id === id
-        ? new Product(
-            id,
-            name,
-            categoryId,
-            price,
-            stock,
-            images,
-            sellerId,
-            extraOptions
-          )
-        : product
-    );
+    // products = products.map((product) =>
+    //   product.id === id
+    //     ? new Product(
+    //         id,
+    //         name,
+    //         categoryId,
+    //         price,
+    //         stock,
+    //         images,
+    //         sellerId,
+    //         extraOptions
+    //       )
+    //     : product
+    // );
+    let product=products.find(product=> product.id==id);
+    product.name=name;
+    product.categoryId=categoryId;
+    product.price=price;
+    product.stock=stock;
+    product.images=images;
+    product.sellerId=sellerId;
+    product.extraOptions=extraOptions;
+
     StorageManager.save("products", products);
+  }
+
+  static updateProductStatus(productId, newStatus) {
+    let products = StorageManager.load("products") || [];
+    const productIndex = products.findIndex((p) => p.id === productId);
+    if (productIndex !== -1) {
+      products[productIndex].status = newStatus;
+      products[productIndex].updatedAt = new Date();
+      StorageManager.save("products", products);
+    }
+  }
+
+  static sendNotification(userId, message) {
+    let notifications = StorageManager.load("notifications") || [];
+    const notification = {
+      id: notifications.length + 1,
+      userId,
+      message,
+      createdAt: new Date(),
+      isRead: false,
+    };
+    notifications.push(notification);
+    StorageManager.save("notifications", notifications);
   }
 
   static deleteProduct(id) {
@@ -126,15 +162,17 @@ export class ProductManager {
   }
 
   static getAllProducts() {
-    return StorageManager.load("products") || [];
+    return (
+      StorageManager.load("products").filter(
+        (product) => product.status === "accepted"
+      ) || []
+    );
   }
 
   static getProductsByCategory(categoryId) {
-    const products = StorageManager.load("products") || [];
+    const products = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
     return products.filter((product) => product.categoryId === categoryId);
   }
-
-  
 
   static getProductsBySeller(sellerId) {
     const products = StorageManager.load("products") || [];
@@ -145,23 +183,31 @@ export class ProductManager {
     return StorageManager.load("products") || [];
   }
 
-  // Function to check stock availability for a product
-  static checkStockAvailability(productId) {
-    const product = this.getProduct(productId);
+  static checkStockAvailability(productId, desiredQuantity = 1) {
+    const products = StorageManager.load("products") || [];
+    const product = products.find((p) => p.id === productId && p.status === "accepted");
+  
     if (!product) {
-      return { available: false, stock: 0 };
+      return { available: false, stock: 0, message: "Product not found or not available." };
     }
-
-    if (product.stock > 0) {
+  
+    if (product.stock >= desiredQuantity) {
       return { available: true, stock: product.stock };
     } else {
-      return { available: false, stock: 0};
+      return {
+        available: false,
+        stock: product.stock,
+        message: `Only ${product.stock} item(s) available in stock.`,
+      };
     }
   }
+  
 
   static updateStock(productId, quantityChange) {
     const products = StorageManager.load("products") || [];
-    const productIndex = products.findIndex((product) => product.id === productId);
+    const productIndex = products.findIndex(
+      (product) => product.id === productId
+    );
 
     if (productIndex !== -1) {
       products[productIndex].stock += quantityChange;
@@ -197,7 +243,8 @@ function initializeDefaultProducts() {
         brand: "BasicWear",
         colors: ["White", "Black"],
         sizes: ["S", "M", "L"],
-        soldCount:5
+        soldCount: 5,
+        status: "accepted",
       }
     ),
     new Product(
@@ -218,10 +265,10 @@ function initializeDefaultProducts() {
         brand: "CozyKnit",
         colors: ["Gray", "Navy"],
         sizes: ["M", "L", "XL"],
-        soldCount:3
+        soldCount: 3,
+        status: "accepted",
       }
     ),
-
     new Product(
       3,
       "White Sneakers",
@@ -239,7 +286,8 @@ function initializeDefaultProducts() {
         brand: "StepUp",
         colors: ["White"],
         sizes: ["38", "39", "40", "41"],
-        soldCount:2
+        soldCount: 2,
+        status: "accepted",
       }
     ),
     new Product(
@@ -260,7 +308,8 @@ function initializeDefaultProducts() {
         brand: "SportyWear",
         colors: ["Red", "Blue", "White"],
         sizes: ["S", "M", "L"],
-        soldCount:8
+        soldCount: 8,
+        status: "accepted",
       }
     ),
     new Product(
@@ -281,7 +330,8 @@ function initializeDefaultProducts() {
         brand: "UrbanWear",
         colors: ["Blue"],
         sizes: ["M", "L", "XL"],
-        soldCount:8
+        soldCount: 8,
+        status: "accepted",
       }
     ),
     new Product(
@@ -301,7 +351,8 @@ function initializeDefaultProducts() {
         brand: "TrendyFit",
         colors: ["Black"],
         sizes: ["30", "32", "34"],
-        soldCount:8
+        soldCount: 8,
+        status: "accepted",
       }
     ),
     new Product(
@@ -321,27 +372,28 @@ function initializeDefaultProducts() {
         brand: "SummerVibe",
         colors: ["Multicolor"],
         sizes: ["S", "M", "L"],
-        soldCount:8
+        soldCount: 8,
+        status: "accepted",
       }
     ),
     new Product(
       8,
-      "White shirt",
+      "White Shirt",
       1,
       24.99,
       14,
       ["/assets/images/shopping7.jpg", "/assets/images/shopping6.jpg"],
       sellerIds.sellerTwo,
       {
-        description: "Chic floral skirt for summer outings.",
+        description: "Chic floral shirt for summer outings.",
         isFeatured: true,
         brand: "SummerVibe",
         colors: ["Multicolor"],
         sizes: ["S", "M", "L"],
-        soldCount:8
+        soldCount: 8,
+        status: "accepted",
       }
     ),
-    
   ];
 
   if (!StorageManager.load("products")) {

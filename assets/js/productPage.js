@@ -1,3 +1,6 @@
+import { ProductManager } from "./productManager.js";
+import { CategoryManager } from "./categoryManager.js";
+import { CartManager } from "./cartManager.js";
 // import { ProductManager } from "./productManager.js";
 // import { CategoryManager } from "./categoryManager.js";
 
@@ -11,7 +14,12 @@ function product(items) {
     productPage.innerHTML = `<p class="h1 text-danger">No Products yet</p>`;
   } else {
     productPage.innerHTML = ``;
+  if (items.length == 0) {
+    productPage.innerHTML = `<p class="h1 text-danger">No Products yet</p>`;
+  } else {
+    productPage.innerHTML = ``;
 
+    items.forEach((product, index) => {
     items.forEach((product, index) => {
       const card = document.createElement("div");
       card.className = "col";
@@ -26,6 +34,12 @@ function product(items) {
              onerror="this.src='https://dummyimage.com/500x250/cccccc/000000&text=No+Image';">
       </a>
       <div id ="wishlist-html" class="card-icons position-absolute top-0 end-0 p-2">
+        <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${
+          product.id
+        }"><i class="far fa-heart"></i></button>
+        <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1 add-to-cart" data-id="${
+          product.id
+        }"><i class="fas fa-shopping-cart"></i></button>
         <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${
           product.id
         }"><i class="far fa-heart"></i></button>
@@ -46,6 +60,9 @@ function product(items) {
       <p class="card-text text-secondary mb-2">${
         CategoryManager.getCategory(product.categoryId).name
       }</p>
+      <p class="card-text text-secondary mb-2">${
+        CategoryManager.getCategory(product.categoryId).name
+      }</p>
       <div class="p-3 border-top position-relative border-1 d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center">
           <span class="">$${
@@ -61,6 +78,7 @@ function product(items) {
               : ""
           }
         </div>
+        <button class="btn btn-dark add-to-cart" data-id="${product.id}">Add to cart</button>
         <button class="btn btn-dark" data-id="${
           product.id
         }">Add to cart</button>
@@ -69,6 +87,42 @@ function product(items) {
   </div>
 `;
       productPage.appendChild(card);
+    });
+
+    // Add event listeners to "Add to Cart" buttons
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const productId = parseInt(button.getAttribute('data-id'));
+        const product = items.find(p => p.id === productId);
+        if (product) {
+          CartManager.addToCart(product);
+        }
+      });
+    });
+
+    // Add event listeners to "Add to Wishlist" buttons
+    document.querySelectorAll('.add-to-wishlist').forEach(button => {
+      button.addEventListener('click', (event) => {
+        const productId = parseInt(button.getAttribute('data-id'));
+        const product = items.find(p => p.id === productId);
+        if (product) {
+          CartManager.addToWishlist(product, event);
+        }
+      });
+    });
+  }
+}
+
+
+
+
+
+// Set default option for filterCategory
+filterCategory.innerHTML = '<option  value="AllCategories">All Categories</option>';
+for (let i = 0; i < AllCategories.length; i++) {
+  filterCategory.innerHTML += `<option value="${AllCategories[i].name}">${AllCategories[i].name}</option>`;
+}
+
     });
   }
 }
@@ -84,9 +138,15 @@ for (let i = 0; i < AllCategories.length; i++) {
   filterCategory.innerHTML += `<option value="${AllCategories[i].name}">${AllCategories[i].name}</option>`;
 }
 
+
+
+//from home page through category section show its products
 //from home page through category section show its products
 
 let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
+if (window.location.href.includes("=")) {
+  
+  let categoryId = 0;
 
 let categoryId = 0;
 
@@ -95,7 +155,38 @@ for (let j = 0; j < AllCategories.length; j++) {
     categoryId = AllCategories[j].id;
   }
 }
+for (let j = 0; j < AllCategories.length; j++) {
+  if (item === AllCategories[j].name) {
+    categoryId = AllCategories[j].id;
+  }
+}
 
+let filterProducts = ProductManager.getProductsByCategory(categoryId);
+  console.log(filterProducts);
+  product(filterProducts);
+
+}
+
+
+
+
+
+
+
+// from home page through search input show its products
+let searchItem = window.location.href.slice(window.location.href.indexOf("$") + 1);
+if (window.location.href.includes("$")) {
+  let searchedProducts = ProductManager.getProductsByName(searchItem);
+ product(searchedProducts);
+}
+
+
+
+
+
+
+// Ensure all products are displayed by default
+if (window.location.href.indexOf("=") == -1 && window.location.href.indexOf("$") == -1 ) {
 let filterProducts = ProductManager.getProductsByCategory(categoryId);
 
 product(filterProducts);
@@ -106,10 +197,17 @@ if (window.location.href.indexOf("=") == -1) {
   product(allProduct);
 }
 
+
+//change products by option categories in product page
+}
+
 //change products  by option categories in product page
 
 filterCategory.addEventListener("change", function (e) {
   if (e.target.value == "AllCategories") {
+    product(allProduct);
+  } else {
+    let categoryId = 0;
     product(allProduct);
   } else {
     let categoryId = 0;
@@ -119,12 +217,13 @@ filterCategory.addEventListener("change", function (e) {
         categoryId = AllCategories[j].id;
       }
     }
-
     let filterProducts = ProductManager.getProductsByCategory(categoryId);
-
-    console.log(filterProducts);
-
     product(filterProducts);
+  }
+});
+
+//change products by option Size in product page
+let productSize = document.getElementById("filterSize");
   }
 });
 
@@ -155,8 +254,21 @@ if (window.location.href.indexOf("=") === -1) {
 
 // Change products by selected size
 productSize.addEventListener("change", function (e) {
+  if (e.target.value == "AllSizes") {
   if (e.target.value === "AllSizes") {
     product(allProduct);
+  } else {
+    let ProductsFilteredBySize = [];
+    for (let index = 0; index < allProduct.length; index++) {
+      for (let j = 0; j < allProduct[index].sizes.length; j++) {
+        if (allProduct[index].sizes[j] == productSize.value) {
+          ProductsFilteredBySize.push(allProduct[index]);
+        }
+      }
+    }
+    product(ProductsFilteredBySize);
+  }
+});
   } else {
     let filterProducts = allProduct.filter((p) =>
       p.sizes.includes(e.target.value)
