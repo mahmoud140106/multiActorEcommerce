@@ -46,9 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
     {
 
         order.items.forEach((item)=>{
-
-            let productFromStorage=products.find(product=>product.id==item.productId)    //filter products from storage to get seller id
-        //    console.log(productFromStorage)
+        console.log(item)
+            let productFromStorage=products.find(product=>product.id===item.productId)    //filter products from storage to get seller id
+           console.log(productFromStorage)
             if(productFromStorage.sellerId==currentUser.id && productFromStorage.id==item.productId){
                 sellerOrders.push(order);         //filter all orders to get the seller orders
                 
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>...${order.id % 1000}</td>
         <td>${UserManager.getUserNameById(order.customerId)}</td>
         <td class="d-none d-md-table-cell">$${order.createdAt}</td>
-        <td class="d-none d-md-table-cell">$${order.total}</td>
+        <td class="d-none d-md-table-cell">$${order.total.toFixed(2)}</td>
         <td >${statusContent}</td>
         <td> 
             <select class="form-control orderNewStatus" >

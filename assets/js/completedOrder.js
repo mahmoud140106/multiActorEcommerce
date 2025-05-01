@@ -1,12 +1,12 @@
 import { OrderManager } from "./orderManager.js";
 import { StorageManager } from "./storageManager.js";
-import { ProductManager } from "./productManager.js";
+import { CartManager } from "./cartManager.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams)
 let customerId = parseInt(urlParams.get("customerId"));                 //get customer id from url
 let productId =  parseInt(urlParams.get("productId"));                    //get product id from url
-let productCount =  parseInt(urlParams.get("productCount"));                    //get product count from url
+let quantity =  parseInt(urlParams.get("productCount"));                    //get product count from url
 
 
 //fetch the delivery data of the customer from url
@@ -20,9 +20,9 @@ const customerDeliveryData ={
 
 }
 // adding the deivery data of user in storage manager
-StorageManager.save('customerDeliveryData',customerDeliveryData);
+StorageManager.save(`${customerId}`,customerDeliveryData);
 
-const cart = JSON.parse(localStorage.getItem('cart')) || [];        //get cart from local storage
+const cart = CartManager.getCart();                                           //get cart 
 let products = StorageManager.load('products');
 const product= products.find(product=>product.id==productId);                //get product from  storage manager                    
 let items =[];
@@ -30,13 +30,12 @@ let items =[];
 // if the items in cart
 if(Number.isNaN(productId)){
     let productCopy
-cart.forEach((item)=>{
-     productCopy= JSON.parse(JSON.stringify(item));                         // make a copy of the product object to send in the order and keep the main product in my products
-items.push(productCopy);
+cart.forEach((item,index)=>{
+     productCopy={...item}                        // make a copy of the product object to send in the order and keep the main product in my products
+items[index]=productCopy;
 
 
 })
-console.log(items)
 
 OrderManager.createOrder(customerId,items);                                          //create order
 
@@ -45,8 +44,9 @@ OrderManager.createOrder(customerId,items);                                     
 //if the item is direct from product details
 else {
     // console.log(product)
-   let productCopy= {...product}                                               // make a copy of the product object
-    items[0]={productCopy,quantity:productCount};
+   let  productCopy= {...product,quantity} ;                                             // make a copy of the product object
+
+   items[0]=productCopy;
     
     OrderManager.createOrder(customerId,items);                                          //create order
 

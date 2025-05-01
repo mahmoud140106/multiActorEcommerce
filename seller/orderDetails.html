@@ -86,17 +86,28 @@
                     id="login-email"
                     required
                   />
+                  <div class="invalid-feedback" id="login-email-error"></div>
                 </div>
                 <div class="mb-3">
                   <label for="login-password" class="form-label"
                     >Password</label
                   >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="login-password"
-                    required
-                  />
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="login-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="login-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="login-password-error"></div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">
                   Login
@@ -144,6 +155,21 @@
             <div class="modal-body">
               <form id="signup-form">
                 <div class="mb-3">
+                  <label for="signup-userName" class="form-label"
+                    >UserName</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="signup-userName"
+                    required
+                  />
+                  <div
+                    class="invalid-feedback"
+                    id="signup-userName-error"
+                  ></div>
+                </div>
+                <div class="mb-3">
                   <label for="signup-email" class="form-label">Email</label>
                   <input
                     type="email"
@@ -151,23 +177,98 @@
                     id="signup-email"
                     required
                   />
+                  <div class="invalid-feedback" id="signup-email-error"></div>
                 </div>
                 <div class="mb-3">
                   <label for="signup-password" class="form-label"
                     >Password</label
                   >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signup-password"
-                    required
-                  />
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signup-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    id="signup-password-error"
+                  ></div>
                 </div>
-                <input type="hidden" id="role" value="customer" />
+                <div class="mb-3">
+                  <label for="signup-confirm-password" class="form-label"
+                    >Confirm Password</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signup-confirm-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-confirm-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    id="signup-confirm-password-error"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Register as:</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="role"
+                      id="role-customer"
+                      value="customer"
+                      checked
+                    />
+                    <label class="form-check-label" for="role-customer">
+                      Customer
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="role"
+                      id="role-seller"
+                      value="seller"
+                    />
+                    <label class="form-check-label" for="role-seller">
+                      Seller
+                    </label>
+                  </div>
+                </div>
                 <button type="submit" class="btn btn-primary w-100">
                   Sign Up
                 </button>
               </form>
+              <p class="text-center mt-3">
+                Already have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginModal"
+                  data-bs-dismiss="modal"
+                  >Login</a
+                >
+              </p>
             </div>
           </div>
         </div>
@@ -182,82 +283,92 @@
     </nav>
 
     <div class="container py-5">
-        <div class="mb-2">
-            <input class="btn btn-outline-dark" type="button" value="Back To Dashboard" />
-
-        </div>
-        <div class="d-flex  flex-column-reverse flex-lg-row g-5">
-   
-          <!-- left side -->
-          <div class=" col-11 col-sm-12 col-lg-5 mx-auto  mb-3 ms-lg-5 order-details ">
-            <div>
-  
-                <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-                    <div class="card-body p-0" id="order-items">
-                      <!-- order items will be populated dynamically -->
-                    </div>
-                  </div>
-             
+      <div class="mb-2">
+        <input
+          class="btn btn-outline-dark"
+          type="button"
+          value="Back To Dashboard"
+        />
+      </div>
+      <div class="d-flex flex-column-reverse flex-lg-row g-5">
+        <!-- left side -->
+        <div
+          class="col-11 col-sm-12 col-lg-5 mx-auto mb-3 ms-lg-5 order-details"
+        >
+          <div>
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+              <div class="card-body p-0" id="order-items">
+                <!-- order items will be populated dynamically -->
+              </div>
             </div>
           </div>
-           <!-- right side -->
-           <div class=" col-12 col-lg-5  deliveryData-summary">
-           
-  
-            <h4>Customer Delivery Data</h4>
-            <form class="row g-3" >
-  
-              <div class="col-md-12">
-                <input type="text" value="Egypt"
-                class="form-control">
-              </div>
-              <div class="d-flex">
-                <div class="col-md-6">
-                  <input
-                    type="text"
-                    class="form-control deliveryData" 
-                    id="firstName"
-                    readonly
-                  />
-                </div>
-                <div class="col-md-6">
-                  <input
-                    type="text"
-                    class="form-control deliveryData"
-                    id="lastName"
-                    readonly
-                  />
-                </div>
-              </div>
-              <div class="col-12">
-                <input type="text" class="form-control deliveryData" id="address" readonly/>
-              </div>
-             
+        </div>
+        <!-- right side -->
+        <div class="col-12 col-lg-5 deliveryData-summary">
+          <h4>Customer Delivery Data</h4>
+          <form class="row g-3">
+            <div class="col-md-12">
+              <input type="text" value="Egypt" class="form-control" />
+            </div>
+            <div class="d-flex">
               <div class="col-md-6">
-                <input type="text" class="form-control deliveryData"  id="City" readonly/>
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="form-control deliveryData"  id="Governorate" readonly/>
-                  
-              </div>
-              
-              <div class="col-12">
                 <input
-                  type="text"        
+                  type="text"
                   class="form-control deliveryData"
-                  id="PhoneNumber"
+                  id="firstName"
                   readonly
                 />
               </div>
-           
-            </form>
-          </div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control deliveryData"
+                  id="lastName"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control deliveryData"
+                id="address"
+                readonly
+              />
+            </div>
+
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control deliveryData"
+                id="City"
+                readonly
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control deliveryData"
+                id="Governorate"
+                readonly
+              />
+            </div>
+
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control deliveryData"
+                id="PhoneNumber"
+                readonly
+              />
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-  
 
     <!-- Footer -->
-    <footer class="  bg-dark text-light pt-5 pb-0">
+    <footer class="bg-dark text-light pt-5 pb-0">
       <div class="container">
         <div class="row gy-4">
           <!-- About Section -->
