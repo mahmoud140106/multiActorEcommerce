@@ -14,6 +14,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!--Bootstrap Icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
     <!-- google font  -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -27,230 +29,35 @@
     <link href="assets/css/style.css" rel="stylesheet" />
     <link href="assets/css/home.css" rel="stylesheet" />
     <link href="assets/css/cart.css" rel="stylesheet" />
+    <link href="assets/css/navBar.css" rel="stylesheet" />
   </head>
   <body class="overflow-x-hidden">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-black py-2 mb-0">
-      <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="/index.html">
-          <i class="fas fa-shopping-bag me-2"></i>
-          <span class="omnishop-logo">OmniShop</span>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <!-- JavaScript will populate this dynamically -->
-          </ul>
-        </div>
-      </div>
-
-      <!-- Login Modal -->
-      <div
-        class="modal fade"
-        id="loginModal"
-        tabindex="-1"
-        aria-labelledby="loginModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
-                Login
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="login-form">
-                <div class="mb-3">
-                  <label for="login-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="login-email"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="login-password" class="form-label"
-                    >Password</label
-                  >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="login-password"
-                    required
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Login
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Don't have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#signupModal"
-                  data-bs-dismiss="modal"
-                  >Sign Up</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sign Up Modal -->
-      <div
-        class="modal fade"
-        id="signupModal"
-        tabindex="-1"
-        aria-labelledby="signupModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
-                Sign Up
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="signup-form">
-                <div class="mb-3">
-                  <label for="signup-userName" class="form-label"
-                    >UserName</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="signup-userName"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="signup-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="signup-email"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="signup-password" class="form-label"
-                    >Password</label
-                  >
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signup-password"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Register as:</label>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="role"
-                      id="role-customer"
-                      value="customer"
-                      checked
-                    />
-                    <label class="form-check-label" for="role-customer">
-                      Customer
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="role"
-                      id="role-seller"
-                      value="seller"
-                    />
-                    <label class="form-check-label" for="role-seller">
-                      Seller
-                    </label>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Sign Up
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Already have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#loginModal"
-                  data-bs-dismiss="modal"
-                  >Login</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        id="toast-container"
-        class="toast-container position-fixed bottom-0 end-0 p-3"
-      >
-        <!-- Toasts will be dynamically inserted here -->
-      </div>
-    </nav>
+    <div id="navbar-container"></div>
 
     <!-- Hero Section (only for unauthenticated users or customers on homepage) -->
     <section
       class="row container-fluid mx-auto mt-0 mt-md-4 bg-light"
       id="hero-section"
     >
-      <div id="headerDetails" class="w-40 ms-auto ">
+      <div id="headerDetails" class="w-40 ms-auto">
         <h1 class="mb-5 fw-bolder maincaption text-black">
           Discover Quality Products for Every Need
         </h1>
         <p class="lead text-muted fs-4 herocaption text-black">
           Browse our wide range of products designed to enhance your lifestyle.
         </p>
-        <div id="headerBtns" class="row justify-content-start gap-3 container-fluid">
-          <button 
+        <div
+          id="headerBtns"
+          class="row justify-content-start gap-3 container-fluid"
+        >
+          <button
             class="w-30 btn btn-outline-dark p-3 my-4 heroBtn ShopNow"
             style="min-width: max-content;"
           >
             Shop now
           </button>
-          <button id="learnMore"
+          <button
+            id="learnMore"
             class="w-30 btn btn-outline-dark p-3 my-4 heroBtn"
             style="min-width: max-content;"
           >
@@ -260,10 +67,10 @@
 
         <!-- Counter Section -->
         <div
-          class="row justify-content-between mt-5 flex-nowrap "
+          class="row justify-content-between mt-5 flex-nowrap"
           id="counterSection"
         >
-          <div class="col-4 p-2 p-sm-1  ">
+          <div class="col-4 p-2 p-sm-1">
             <span class="fw-bold fs-2 counter" data-target="250000">0</span>
             <p class="lead text-muted herocaption text-nowrap">Users</p>
           </div>
@@ -310,307 +117,284 @@
     <section class="mt-2 w-100">
       <div id="carouselSlidesOnly">
         <div class="carouselSlideContent w-100">
-          <div class="d-flex justify-content-between  w-100 car ">
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+          <div class="d-flex justify-content-between w-100 car">
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
 
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <div class="w-25 text-center  d-flex mx-3 px-3">
-                <span class="text-light fs-2 ">MOFASA </span>
-                <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <div class="w-25 text-center d-flex mx-3 px-3">
+                <span class="text-light fs-2">MOFASA </span>
+                <span class="textStroke fs-2"> :)CONFLICT</span>
               </div>
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-            <div class="w-25 text-center  d-flex mx-3 px-3">
-              <span class="text-light fs-2 ">MOFASA </span>
-              <span class="textStroke fs-2 "> :)CONFLICT</span>
+            <div class="w-25 text-center d-flex mx-3 px-3">
+              <span class="text-light fs-2">MOFASA </span>
+              <span class="textStroke fs-2"> :)CONFLICT</span>
             </div>
-           
-            
           </div>
         </div>
       </div>
     </section>
-
-
-
-    
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-
-
-
 
     <!-- Featured Products -->
     <section class="container mt-5">
@@ -635,19 +419,21 @@
 
     <!-- categories section -->
 
-    <section class="container-fluid vh-100 d-flex align-items-center categoryItems ">
+    <section
+      class="container-fluid vh-100 d-flex align-items-center categoryItems"
+    >
       <div id="categoriesSection" class="carousel slide m-auto">
-        <div class="d-flex justify-content-between px-4 my-4">
+        <div class="d-flex justify-content-between px-4 my-4 container">
           <h2>Categories</h2>
-          <button id="viewCategories" class="btn btn-light p-2 border-1 border-dark">
+          <button
+            id="viewCategories"
+            class="btn btn-light p-2 border-1 border-dark"
+          >
             View All
           </button>
         </div>
 
-
-      <div class="carousel-inner" id="showCategories" >
-        
-        </div>
+        <div class="carousel-inner" id="showCategories"></div>
 
         <button
           class="carousel-control-prev"
@@ -656,7 +442,7 @@
           data-bs-slide="prev"
         >
           <span
-            class="carousel-control-prev-icon rounded-5 bg-dark"
+            class="carousel-control-prev-icon rounded-5 bg-secondary"
             aria-hidden="true"
           ></span>
           <span class="visually-hidden">Previous</span>
@@ -668,7 +454,7 @@
           data-bs-slide="next"
         >
           <span
-            class="carousel-control-next-icon rounded-5 bg-dark"
+            class="carousel-control-next-icon rounded-5 bg-secondary"
             aria-hidden="true"
           ></span>
           <span class="visually-hidden">Next</span>
@@ -676,14 +462,16 @@
       </div>
     </section>
 
-    
     <!-- Sale Section -->
 
     <section id="saleSection">
       <div
         class="container d-flex align-items-center container-fluid vh-100 saleSection"
       >
-        <div id="saleSectionDetails" class="d-flex flex-column w-50 text-light p-5">
+        <div
+          id="saleSectionDetails"
+          class="d-flex flex-column w-50 text-light p-5"
+        >
           <span class="p-3 fs-5">Limited Time Offer</span>
           <h2 class="text-light p-3 fs-1">Special Edition</h2>
           <p class="p-3 lead text-light">
@@ -692,8 +480,10 @@
           <p class="p-3 fs-5">
             Buy This T-shirt At 20% Discount, Use Code OFF20
           </p>
-          <button id="shopNow" 
-            class="btn d-inline border border-3 w-50 btn-outline-light fs-5 ms-3 ShopNow">
+          <button
+            id="shopNow"
+            class="btn d-inline border border-3 w-50 btn-outline-light fs-5 ms-3 ShopNow"
+          >
             Shop Now
           </button>
         </div>
@@ -702,7 +492,9 @@
 
     <!-- Reviews section  -->
 
-    <section class="p-0 d-flex align-items-center container vh-100 bg-light">
+    <section
+      class="p-0 d-flex align-items-center container vh-100 bg-light Reviews"
+    >
       <div class="text-center w-100 p-5" id="ReviewSection">
         <p class="headingStyle">TESTIMONAIL</p>
         <p class="h3 text-black">Hear From Our Happy Customers</p>
@@ -711,13 +503,10 @@
           anything you want.
         </p>
 
-        <div
-          id="carouselReview"
-          class="carousel slide m-auto p-5 d-flex justify-content-center border border-2 bg-danger"
-        >
+        <div id="carouselReview" class="carousel slide m-auto p-5">
           <div
             id="carouselAllReviews"
-            class="carousel-inner  carouselReviews text-center d-flex  border border-2 bg-danger justify-content-center"
+            class="carousel-inner carouselReviews text-center"
           >
             <!-- handle through home.js  -->
           </div>
@@ -727,7 +516,10 @@
             data-bs-target="#carouselReview"
             data-bs-slide="prev"
           >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span
+              class="carousel-control-prev-icon bg-secondary rounded-circle"
+              aria-hidden="true"
+            ></span>
             <span class="visually-hidden">Previous</span>
           </button>
           <button
@@ -736,7 +528,10 @@
             data-bs-target="#carouselReview"
             data-bs-slide="next"
           >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span
+              class="carousel-control-next-icon bg-secondary rounded-circle"
+              aria-hidden="true"
+            ></span>
             <span class="visually-hidden">Next</span>
           </button>
         </div>
@@ -895,20 +690,27 @@
           ></button>
 
           <div class="modal-body p-0">
-
             <div class="d-flex justify-content-center align-items-center h-100">
-              <div class="input-group mb-3 w-50 ">
-                <input  id="searchInput" type="search" class="form-control  rounded-0 fs-5" placeholder="Write Product U Want to Search About"
-                  aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append ">
-                  <button id="searchGo" class="btn btn-outline-dark fs-4" type="button">Search</button>
+              <div class="input-group mb-3 w-50">
+                <input
+                  id="searchInput"
+                  type="search"
+                  class="form-control rounded-0 fs-5"
+                  placeholder="Write Product U Want to Search About"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button
+                    id="searchGo"
+                    class="btn btn-outline-dark fs-4"
+                    type="button"
+                  >
+                    Search
+                  </button>
                 </div>
               </div>
             </div>
-
-            
-
-
           </div>
         </div>
       </div>
@@ -1042,6 +844,18 @@
     <!-- Bootstrap JS (Local File) -->
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
+
+    <script type="module">
+      import { updateNavbar } from "./assets/js/global.js";
+  
+      // Dynamically insert navbar HTML, then run the logic
+      fetch("navBar.html")
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("navbar-container").innerHTML = html;
+          updateNavbar(); // Run your logic after navbar is in the DOM
+        });
+    </script>
 
     <script type="module" src="./assets/js/auth.js"></script>
     <script type="module" src="./assets/js/global.js"></script>

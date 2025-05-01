@@ -1,240 +1,290 @@
 import { ProductManager } from "./productManager.js";
-// cartManager.js
+
 export const CartManager = {
-  // Cart Operations
-  getCart: function() {
-    return JSON.parse(localStorage.getItem('cart')) || [];
+  getCurrentUser: function () {
+    return JSON.parse(localStorage.getItem("currentUser"));
   },
-  
-  // Function to add product to cart
-  addToCart: function(product) {
+
+  // Cart Operations
+  getCart: function () {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return [];
+    }
+    return JSON.parse(localStorage.getItem(`cart_${user.id}`)) || [];
+  },
+
+  addToCart: function (product) {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return null;
+    }
     let cart = this.getCart();
-    
-    // Format the product data to match what cart.js expects
+
+    const existingItemIndex = cart.findIndex(
+      (item) =>
+        item.id === product.id &&
+        (item.sku === product.sku || item.sku === `SKU-${product.id}`) &&
+        item.price === (product.discountedPrice || product.price)
+    );
+
+    const currentQuantity = existingItemIndex !== -1 ? cart[existingItemIndex].quantity : 0;
+    const desiredQuantity = currentQuantity + 1;
+    const stockCheck = ProductManager.checkStockAvailability(product.id, desiredQuantity);
+
+    if (!stockCheck.available) {
+      this.showToast(stockCheck.message || "Product stock limit reached!");
+      return null;
+    }
+
     const cartItem = {
       id: product.id,
       name: product.name,
-      sku: product.sku || `SKU-${product.id}`, // Fallback if no SKU
+      sku: product.sku || `SKU-${product.id}`,
       price: product.discountedPrice || product.price,
-      image: product.images ? product.images[0] : product.image, // Handle both formats
-      quantity: 1
+      image: product.images ? product.images[0] : product.image,
+      quantity: 1,
     };
-    
-    // Check if product already exists in cart
-    const existingItemIndex = cart.findIndex(item => 
-      item.id === cartItem.id && item.sku === cartItem.sku && item.price === cartItem.price
-    );
-    
+
     if (existingItemIndex !== -1) {
-      // Update quantity if item already exists
       cart[existingItemIndex].quantity += 1;
-      this.showToast(`${cartItem.name} Quantity updated in cart!`);
+      this.showToast(`${cartItem.name} quantity updated in cart!`);
     } else {
       cart.push(cartItem);
       this.showToast(`${cartItem.name} added to cart!`);
     }
-    
-    localStorage.setItem('cart', JSON.stringify(cart));
+
+    localStorage.setItem(`cart_${user.id}`, JSON.stringify(cart));
     return cartItem;
   },
-  
-  // Function to remove item from cart
-  removeFromCart: function(index) {
+
+  removeFromCart: function (index) {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return null;
+    }
     let cart = this.getCart();
     const removedItem = cart[index];
     cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    this.showToast(`Item removed from cart.`);
+    localStorage.setItem(`cart_${user.id}`, JSON.stringify(cart));
+    this.showToast("Item removed from cart.");
     return removedItem;
   },
-  
-  // Function to update quantity of cart item
-  updateQuantity: function(index, change) {
-    let cart = this.getCart();
-    cart[index].quantity += change;
-    
-    if (cart[index].quantity <= 0) {
-      this.removeFromCart(index);
-    } else {
-      localStorage.setItem('cart', JSON.stringify(cart));
-    }
-    const productId = cart[index].id;
-    const quantityChange = change;
 
-    // Update the stock in ProductManager
-    ProductManager.updateStock(productId, -quantityChange);
+  updateQuantity: function (index, change) {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return [];
+    }
+    let cart = this.getCart();
+    const product = cart[index];
+    const newQuantity = product.quantity + change;
+
+    if (newQuantity <= 0) {
+      this.removeFromCart(index);
+      return cart;
+    }
+
+    const stockCheck = ProductManager.checkStockAvailability(product.id, newQuantity);
+    if (!stockCheck.available) {
+      this.showToast(stockCheck.message || "Not enough stock available!");
+      return cart;
+    }
+
+    cart[index].quantity = newQuantity;
+    localStorage.setItem(`cart_${user.id}`, JSON.stringify(cart));
     return cart;
   },
-  
-  // Function to clear cart
-  clearCart: function() {
-    localStorage.removeItem('cart');
-    localStorage.removeItem('promoCode');
-    this.showToast('Cart cleared.');
+
+  clearCart: function () {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return;
+    }
+    localStorage.removeItem(`cart_${user.id}`);
+    localStorage.removeItem(`promoCode_${user.id}`);
+    this.showToast("Cart cleared.");
   },
-  
-  // Function to apply promo code
-  applyPromoCode: function(code) {
-    const validCodes = {
-      'OFF10': { discount: 10, type: 'fixed' }
-      // Add more promo codes as needed
-    };
-    
-    if (validCodes[code]) {
-      localStorage.setItem('promoCode', code);
-      this.showToast('Promo code applied!');
-      return validCodes[code];
+
+  applyPromoCode: function (code) {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return false;
+    }
+    const validPromoCode = "OFF10";
+    if (code === validPromoCode) {
+      localStorage.setItem(`promoCode_${user.id}`, code);
+      this.showToast("Promo code applied! You saved $10.00.");
+      return true;
     } else {
-      localStorage.removeItem('promoCode');
-      this.showToast('Invalid promo code.');
-      return null;
+      localStorage.removeItem(`promoCode_${user.id}`);
+      this.showToast("Invalid promo code!");
+      return false;
     }
   },
-  
+
   // Wishlist Operations
-  getWishlist: function() {
-    return JSON.parse(localStorage.getItem('wishlist')) || [];
+  getWishlist: function () {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return [];
+    }
+    return JSON.parse(localStorage.getItem(`wishlist_${user.id}`)) || [];
   },
-  
-  // Function to add product to wishlist
-  addToWishlist: function(product, event) {
+
+  addToWishlist: function (product, event) {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return null;
+    }
     let wishlist = this.getWishlist();
-    
     const wishlistItem = {
       id: product.id,
       name: product.name,
       sku: product.sku || `SKU-${product.id}`,
       price: product.discountedPrice || product.price,
       image: product.images ? product.images[0] : product.image,
-      quantity: 1
+      quantity: 1,
     };
-    
-    // Check if product already exists in wishlist
-    const existingItemIndex = wishlist.findIndex(item => 
-      item.id === wishlistItem.id && item.sku === wishlistItem.sku && item.price === wishlistItem.price
+
+    const existingItemIndex = wishlist.findIndex(
+      (item) => item.id === wishlistItem.id && item.sku === wishlistItem.sku && item.price === wishlistItem.price
     );
-    
-    // Find the specific button that was clicked
+
     const wishlistButton = event.currentTarget;
-    
+
     if (existingItemIndex !== -1) {
-      // Remove from wishlist
       wishlist.splice(existingItemIndex, 1);
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      localStorage.setItem(`wishlist_${user.id}`, JSON.stringify(wishlist));
       this.showToast(`${wishlistItem.name} removed from wishlist!`);
-      
-      // Update button appearance
       wishlistButton.innerHTML = '<i class="far fa-heart"></i>';
-      wishlistButton.classList.remove('btn-clicked');
-      wishlistButton.classList.add('btn-light');
+      wishlistButton.classList.remove("btn-clicked");
+      wishlistButton.classList.add("btn-light");
     } else {
-      // Add to wishlist
       wishlist.push(wishlistItem);
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      localStorage.setItem(`wishlist_${user.id}`, JSON.stringify(wishlist));
       this.showToast(`${wishlistItem.name} added to wishlist!`);
-      
-      // Update button appearance
       wishlistButton.innerHTML = '<i class="fas fa-heart"></i>';
-      wishlistButton.classList.remove('btn-light');
-      wishlistButton.classList.add('btn-clicked');
+      wishlistButton.classList.remove("btn-light");
+      wishlistButton.classList.add("btn-clicked");
     }
-    
+
     return wishlist;
   },
-  
-  // Function to remove item from wishlist
-  removeFromWishlist: function(productId) {
+
+  removeFromWishlist: function (productId) {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return null;
+    }
     let wishlist = this.getWishlist();
-    const removedItem = wishlist.find(item => item.id == productId);
-    wishlist = wishlist.filter(item => item.id != productId);
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    this.showToast('Item removed from wishlist');
+    const removedItem = wishlist.find((item) => item.id == productId);
+    wishlist = wishlist.filter((item) => item.id != productId);
+    localStorage.setItem(`wishlist_${user.id}`, JSON.stringify(wishlist));
+    this.showToast("Item removed from wishlist");
     return removedItem;
   },
-  
-  // Function to add item from wishlist to cart
-  addToCartFromWishlist: function(productId) {
-    const wishlist = this.getWishlist();
-    const item = wishlist.find(item => item.id == productId);
 
-    if (item) {
-      let cart = this.getCart();
-      const existingItemIndex = cart.findIndex(cartItem => cartItem.id == item.id);
-
-      if (existingItemIndex !== -1) {
-        cart[existingItemIndex].quantity += 1;
-      } else {
-        cart.push({
-          id: item.id,
-          name: item.name,
-          sku: item.sku,
-          price: item.price,
-          image: item.image,
-          quantity: 1
-        });
-      }
-
-      // Remove the item from the wishlist
-      const updatedWishlist = wishlist.filter(wishlistItem => wishlistItem.id != productId);
-      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-
-      localStorage.setItem('cart', JSON.stringify(cart));
-      this.showToast(`${item.name} added to cart`);
-      return item;
+  addToCartFromWishlist: function (productId) {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return null;
     }
-    return null;
+    const wishlist = this.getWishlist();
+    const item = wishlist.find((item) => item.id == productId);
+    if (!item) return null;
+
+    let cart = this.getCart();
+    const existingItemIndex = cart.findIndex((cartItem) => cartItem.id == item.id);
+    const currentQuantity = existingItemIndex !== -1 ? cart[existingItemIndex].quantity : 0;
+    const desiredQuantity = currentQuantity + 1;
+
+    const stockCheck = ProductManager.checkStockAvailability(item.id, desiredQuantity);
+    if (!stockCheck.available) {
+      this.showToast(stockCheck.message || "Not enough stock to add item.");
+      return null;
+    }
+
+    if (existingItemIndex !== -1) {
+      cart[existingItemIndex].quantity += 1;
+    } else {
+      cart.push({ ...item, quantity: 1 });
+    }
+
+    const updatedWishlist = wishlist.filter((wishlistItem) => wishlistItem.id != productId);
+    localStorage.setItem(`wishlist_${user.id}`, JSON.stringify(updatedWishlist));
+    localStorage.setItem(`cart_${user.id}`, JSON.stringify(cart));
+
+    this.showToast(`${item.name} added to cart`);
+    return item;
   },
-  
-  // Function to clear wishlist
-  clearWishlist: function() {
-    localStorage.removeItem('wishlist');
-    this.showToast('Wishlist cleared');
+
+  clearWishlist: function () {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return false;
+    }
+    localStorage.removeItem(`wishlist_${user.id}`);
+    this.showToast("Wishlist cleared");
     return true;
   },
-  
-  // Function to add all wishlist items to cart
-  addAllToCart: function() {
+
+  addAllToCart: function () {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return 0;
+    }
     const wishlist = this.getWishlist();
-    
     if (wishlist.length === 0) {
-      this.showToast('Your wishlist is empty');
+      this.showToast("Your wishlist is empty");
       return 0;
     }
 
     let cart = this.getCart();
     let addedCount = 0;
 
-    wishlist.forEach(item => {
-      const existingItemIndex = cart.findIndex(cartItem => cartItem.id == item.id);
-      
+    wishlist.forEach((item) => {
+      const existingItemIndex = cart.findIndex((cartItem) => cartItem.id == item.id);
+      const currentQuantity = existingItemIndex !== -1 ? cart[existingItemIndex].quantity : 0;
+      const desiredQuantity = currentQuantity + 1;
+
+      const stockCheck = ProductManager.checkStockAvailability(item.id, desiredQuantity);
+      if (!stockCheck.available) {
+        this.showToast(`${item.name}: ${stockCheck.message || "Not enough stock available."}`);
+        return;
+      }
+
       if (existingItemIndex !== -1) {
         cart[existingItemIndex].quantity += 1;
       } else {
-        cart.push({
-          id: item.id,
-          name: item.name,
-          sku: item.sku,
-          price: item.price,
-          image: item.image,
-          quantity: 1
-        });
+        cart.push({ ...item, quantity: 1 });
       }
       addedCount++;
     });
 
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem(`cart_${user.id}`, JSON.stringify(cart));
     this.showToast(`Added ${addedCount} items to cart`);
     return addedCount;
   },
-  
-  // Function to show toast notifications
-  showToast: function(message) {
-    const toastContainer = document.getElementById('toast-container');
+
+  showToast: function (message) {
+    const toastContainer = document.getElementById("toast-container");
     if (!toastContainer) {
-      console.error('Toast container not found');
+      console.error("Toast container not found");
       return;
     }
-    
     const toastId = `toast-${Date.now()}`;
     const toastHTML = `
       <div id="${toastId}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -244,42 +294,41 @@ export const CartManager = {
         <div class="toast-body">${message}</div>
       </div>
     `;
-    toastContainer.insertAdjacentHTML('beforeend', toastHTML);
-    
+    toastContainer.insertAdjacentHTML("beforeend", toastHTML);
+
     const toastElement = document.getElementById(toastId);
     const toast = new bootstrap.Toast(toastElement, { delay: 3000 });
     toast.show();
-    
-    toastElement.addEventListener('hidden.bs.toast', () => {
+    toastElement.addEventListener("hidden.bs.toast", () => {
       toastElement.remove();
     });
   },
-  
-  // Calculate order summary
-  calculateOrderSummary: function() {
+
+  calculateOrderSummary: function () {
+    const user = this.getCurrentUser();
+    if (!user) {
+      this.showToast("Please log in first!");
+      return null;
+    }
     const cart = this.getCart();
-    const promoCode = localStorage.getItem('promoCode');
-    
+    const promoCode = localStorage.getItem(`promoCode_${user.id}`);
+
     let totalItems = 0;
     let subtotal = 0;
-    
-    cart.forEach(item => {
+
+    cart.forEach((item) => {
       totalItems += item.quantity;
       subtotal += item.price * item.quantity;
     });
-    
-    const shippRate = 0.10; // Flat rate shipping
-    const taxRate = 0.06; // 6% tax
+
+    const shippRate = 0.1;
+    const taxRate = 0.06;
     const shipping = subtotal * shippRate;
     const tax = subtotal * taxRate;
-    
-    let discount = 0;
-    if (promoCode === 'OFF10') {
-      discount = 10.00;
-    }
-    
+    let discount = promoCode === "OFF10" ? 10.0 : 0;
+
     const total = subtotal + shipping + tax - discount;
-    
+
     return {
       totalItems,
       subtotal,
@@ -287,7 +336,7 @@ export const CartManager = {
       tax,
       discount,
       total,
-      promoCode
+      promoCode,
     };
-  }
+  },
 };

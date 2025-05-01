@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     productCountInput = document.getElementById("productCount");
     productCount= productCountInput.value;
     AllProducts = ProductManager.getAllProducts();
-   
     if (isNaN(productId)) {
       console.error("Invalid product ID:", urlParams.get("id"));
       document.querySelector(".container.mt-4").innerHTML =

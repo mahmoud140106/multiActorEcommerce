@@ -17,16 +17,14 @@
       referrerpolicy="no-referrer"
     />
     <!-- Custom CSS -->
-    <link href="../assets/css/style.css" rel="stylesheet" />
-    <link href="../assets/css/cart.css" rel="stylesheet" />
 
-    <title>order confirmation</title>
+    <title>Order Details Page</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
-   
+    <link rel="stylesheet" href="../assets/css/orderDetails.css" />
   </head>
   <body>
     <!-- Navbar -->
@@ -284,151 +282,218 @@
       </div>
     </nav>
 
-
-    
-<div class="container">
-	<div class="col-12 text-center mt-1">
-		<h1 class=" text-center" style="color: rgb(170, 149, 30);">Order placed successfully</h1>
-		
-		Your Order Number is : <span id="orderId" class="text-danger"></span><br /><br />
-		<img src="../assets/images/lawn_leaf.jpg" width="65%" />
-	</div>
-	
-</div>
-<pre>
-
-
-    
-</pre>
-
-
-<!-- Footer -->
-<footer class="  bg-dark text-light pt-5 pb-0">
-    <div class="container">
-      <div class="row gy-4">
-        <!-- About Section -->
-        <div class="col-md-3 col-12">
-          <h5 class="mb-3">About Us</h5>
-          <ul class="list-unstyled">
-            <li>
-              <a
-                href="#"
-                class="text-secondary text-decoration-none hover-light"
-                >History</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="text-secondary text-decoration-none hover-light"
-                >Team</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="text-secondary text-decoration-none hover-light"
-                >Services</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="text-secondary text-decoration-none hover-light"
-                >Company</a
-              >
-            </li>
-          </ul>
-        </div>
-        <!-- Contact Us Section -->
-        <div class="col-md-3 col-12">
-          <h5 class="mb-3">Contact Us</h5>
-          <ul class="list-unstyled">
-            <li class="text-secondary">
-              811 Egypt. Capitol Heights, MD 2743
-            </li>
-            <li>
-              <a
-                href="tel:+5662374687"
-                class="text-secondary text-decoration-none hover-light"
-                >(566) 237-4687</a
-              >
-            </li>
-            <li>
-              <a
-                href="mailto:info@email.com"
-                class="text-secondary text-decoration-none hover-light"
-                >info@email.com</a
-              >
-            </li>
-          </ul>
-        </div>
-        <!-- Quick Links Section -->
-        <div class="col-md-3 col-12">
-          <h5 class="mb-3">Quick Links</h5>
-          <ul class="list-unstyled">
-            <li>
-              <a
-                href="#"
-                class="text-secondary text-decoration-none hover-light"
-                >Home</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="text-secondary text-decoration-none hover-light"
-                >Shop</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="text-secondary text-decoration-none hover-light"
-                >Blog</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="text-secondary text-decoration-none hover-light"
-                >FAQ</a
-              >
-            </li>
-          </ul>
-        </div>
-        <!-- Social Media Section -->
-        <div class="col-md-3 col-12">
-          <h5 class="mb-3">Follow Us</h5>
-          <div class="d-flex gap-3">
-            <a href="#" class="text-secondary hover-light"
-              ><i class="fab fa-facebook-f fa-lg"></i
-            ></a>
-            <a href="#" class="text-secondary hover-light"
-              ><i class="fab fa-twitter fa-lg"></i
-            ></a>
-            <a href="#" class="text-secondary hover-light"
-              ><i class="fab fa-instagram fa-lg"></i
-            ></a>
-            <a href="#" class="text-secondary hover-light"
-              ><i class="fab fa-linkedin-in fa-lg"></i
-            ></a>
+    <div class="container py-5">
+      <div class="mb-2">
+        <input
+          class="btn btn-outline-dark"
+          type="button"
+          value="Back To Dashboard"
+        />
+      </div>
+      <div class="d-flex flex-column-reverse flex-lg-row g-5">
+        <!-- left side -->
+        <div
+          class="col-11 col-sm-12 col-lg-5 mx-auto mb-3 ms-lg-5 order-details"
+        >
+          <div>
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+              <div class="card-body p-0" id="order-items">
+                <!-- order items will be populated dynamically -->
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Copyright Section -->
-      <div class="row mt-3 py-3 border-top border-1">
-        <div class="col-12 text-center">
-          <p class="text-secondary mb-0">
-            © 2025 Team4 ITI All Rights Reserved.
-          </p>
+        <!-- right side -->
+        <div class="col-12 col-lg-5 deliveryData-summary">
+          <h4>Customer Delivery Data</h4>
+          <form class="row g-3">
+            <div class="col-md-12">
+              <input type="text" value="Egypt" class="form-control" />
+            </div>
+            <div class="d-flex">
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control deliveryData"
+                  id="firstName"
+                  readonly
+                />
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  class="form-control deliveryData"
+                  id="lastName"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control deliveryData"
+                id="address"
+                readonly
+              />
+            </div>
+
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control deliveryData"
+                id="City"
+                readonly
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control deliveryData"
+                id="Governorate"
+                readonly
+              />
+            </div>
+
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control deliveryData"
+                id="PhoneNumber"
+                readonly
+              />
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  </footer>
-  <!-- custom js  -->
-  <script type="module" src="../assets/js/auth.js"></script>
-  <script type="module" src="../assets/js/global.js"></script>
-  <script type="module" src="../assets/js/completedOrder.js"></script>
-</body>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light pt-5 pb-0">
+      <div class="container">
+        <div class="row gy-4">
+          <!-- About Section -->
+          <div class="col-md-3 col-12">
+            <h5 class="mb-3">About Us</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >History</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Team</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Company</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Contact Us Section -->
+          <div class="col-md-3 col-12">
+            <h5 class="mb-3">Contact Us</h5>
+            <ul class="list-unstyled">
+              <li class="text-secondary">
+                811 Egypt. Capitol Heights, MD 2743
+              </li>
+              <li>
+                <a
+                  href="tel:+5662374687"
+                  class="text-secondary text-decoration-none hover-light"
+                  >(566) 237-4687</a
+                >
+              </li>
+              <li>
+                <a
+                  href="mailto:info@email.com"
+                  class="text-secondary text-decoration-none hover-light"
+                  >info@email.com</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Quick Links Section -->
+          <div class="col-md-3 col-12">
+            <h5 class="mb-3">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Shop</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >Blog</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-secondary text-decoration-none hover-light"
+                  >FAQ</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Social Media Section -->
+          <div class="col-md-3 col-12">
+            <h5 class="mb-3">Follow Us</h5>
+            <div class="d-flex gap-3">
+              <a href="#" class="text-secondary hover-light"
+                ><i class="fab fa-facebook-f fa-lg"></i
+              ></a>
+              <a href="#" class="text-secondary hover-light"
+                ><i class="fab fa-twitter fa-lg"></i
+              ></a>
+              <a href="#" class="text-secondary hover-light"
+                ><i class="fab fa-instagram fa-lg"></i
+              ></a>
+              <a href="#" class="text-secondary hover-light"
+                ><i class="fab fa-linkedin-in fa-lg"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <!-- Copyright Section -->
+        <div class="row mt-3 py-3 border-top border-1">
+          <div class="col-12 text-center">
+            <p class="text-secondary mb-0">
+              © 2025 Team4 ITI All Rights Reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- custom js  -->
+    <script type="module" src="../assets/js/auth.js"></script>
+    <script type="module" src="../assets/js/global.js"></script>
+    <script type="module" src="../assets/js/orderDetails.js"></script>
+  </body>
 </html>
