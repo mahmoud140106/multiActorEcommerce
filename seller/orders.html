@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage orders - Multi-Actor E-commerce</title>
+    <link
+      href="../assets/libs/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="../assets/css/dashboard.css" rel="stylesheet" />
+    <link href="../assets/css/sellerOrders.css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <!-- Sidebar Toggle Button -->
+    <button
+      class="sidebar-toggle"
+      aria-label="Toggle Sidebar"
+      title="Show Menu"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Sidebar -->
+          <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="position-sticky pt-0">
+              <a
+                class="navbar-brand d-flex align-items-center text-white mb-2 pb-2"
+                style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                <span class="omnishop-logo">OmniShop</span>
+              </a>
+              <ul class="nav flex-column navbar-nav px-3">
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/dashboard.html">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/products.html">
+                    <i class="fas fa-box-open me-2"></i>Products
+                  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/seller/orders.html">
+                      <i class="fas fa-box-open me-2"></i>Orders
+                    </a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <!-- Main Content -->
+          <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4 pt-4 pb-0">
+            <div class="container my-4">
+              <div class="row mb-2">
+                <div class="col-12">
+                  <h1 class="display-5">Manage Orders</h1>          
+                </div>
+              </div>
+              <div class="row mb-4 gap-2 gap-md-0">
+                <div class="col-md-4 search-container">
+                  <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control"
+                    placeholder="Search by ID or Name..."
+                    onkeyup="searchOrders()"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <select id="statusFilter" class="form-control" >
+                    <option value="all">All Statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                </div>
+             
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th
+                              onclick="sortTable('id')"
+                              style="cursor: pointer;"
+                            >
+                              ID <span id="sort-id"></span>
+                            </th>
+                            <th
+                              onclick="sortTable('name')"
+                              style="cursor: pointer;"
+                            >
+                              Customer <span id="sort-name"></span>
+                            </th>
+                            <th
+                            onclick="sortTable('date')"
+                            style="cursor: pointer;"
+                          >
+                            Date <span id="sort-name"></span>
+                          </th>
+                         
+                            <th
+                              class="d-none d-md-table-cell"
+                              onclick="sortTable('price')"
+                              style="cursor: pointer;"
+                            >
+                              Total <span id="sort-price"></span>
+                            </th>
+                           
+                            
+                            <th
+                              onclick="sortTable('status')"
+                              style="cursor: pointer;"
+                            >
+                              Status <span id="sort-status"></span>
+                            </th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="ordersTableBody"></tbody>
+                      </table>
+                      <nav>
+                        <ul class="pagination" id="pagination"></ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          </main>
+        </div>
+      </div>
+    </main>
+    <div
+      id="toast-container"
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+    >
+    </div>
+    <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../assets/js/global.js"></script>
+    <script type="module" src="../assets/js/auth.js"></script>
+    <script type="module" src="../assets/js/sellerOrders.js"></script>
+  </body>
+</html>
