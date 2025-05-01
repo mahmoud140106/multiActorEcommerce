@@ -141,7 +141,6 @@ export class OrderManager {
     // orders = orders.map((order) =>
     //   order.id === orderId ? { ...order, status, updatedAt: new Date() } : order
     // );
-    console.log(orders)
     StorageManager.save("orders", orders);
   }
 

@@ -106,20 +106,29 @@ export class ProductManager {
     extraOptions = {}
   ) {
     let products = StorageManager.load("products") || [];
-    products = products.map((product) =>
-      product.id === id
-        ? new Product(
-            id,
-            name,
-            categoryId,
-            price,
-            stock,
-            images,
-            sellerId,
-            extraOptions
-          )
-        : product
-    );
+    // products = products.map((product) =>
+    //   product.id === id
+    //     ? new Product(
+    //         id,
+    //         name,
+    //         categoryId,
+    //         price,
+    //         stock,
+    //         images,
+    //         sellerId,
+    //         extraOptions
+    //       )
+    //     : product
+    // );
+    let product=products.find(product=> product.id==id);
+    product.name=name;
+    product.categoryId=categoryId;
+    product.price=price;
+    product.stock=stock;
+    product.images=images;
+    product.sellerId=sellerId;
+    product.extraOptions=extraOptions;
+
     StorageManager.save("products", products);
   }
 

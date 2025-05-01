@@ -36,7 +36,7 @@ let reviews = ReviewManager.getReviewsByProduct(productId);
   
  // Render carousel images dynamically
  const carouselReviews = document.getElementById("carouselReviews");
-//  carouselReviews.innerHTML = "";
+ carouselReviews.innerHTML = "";
 
  if (!reviews || reviews.length  === 0) {
   console.warn("No reviews found for product:", productId);

@@ -256,33 +256,57 @@ document.getElementById('statusFilter').addEventListener('change',function(){
  })
  
 
- //change the status of the order
- document.querySelectorAll('.orderNewStatus').forEach((action,index)=>{
-   action.addEventListener('change',function(e){
-        let orderCurrentStatus=document.getElementById(`orderCurrentStatus${index}`);
-        let orderId =action.parentElement.getAttribute('order-id');
-        const statusClasses = {
-            pending: "bg-warning text-dark",
-            processing: "bg-success text-white",
-            shipped: "bg-secondary text-white",
-            cancelled: "bg-danger text-white" ,
-             
-          };
-    
-          console.log(statusClasses[e.target.value])
-        orderCurrentStatus.className=`badge ${statusClasses[e.target.value]}`;
-
-        orderCurrentStatus.innerText=e.target.value;
-        OrderManager.updateOrderStatus(orderId,e.target.value)
-        console.log(OrderManager.getAllOrders()   )
-
-        // renderOrdersTable();
-       
-      
-    
-     })
-     
- })
  
+ //change the status of the order
+
+ 
+// window.document.querySelectorAll('.orderNewStatus').forEach((action,index)=>{
+//   action.addEventListener('change',function(e){
+//        let orderCurrentStatus=document.getElementById(`orderCurrentStatus${index}`);
+//        let orderId =action.parentElement.getAttribute('order-id');
+//        const statusClasses = {
+//            pending: "bg-warning text-dark",
+//            processing: "bg-secondary text-white",
+//            shipped: "bg-success text-white",
+//            cancelled: "bg-danger text-white" ,
+            
+//          };
+//          console.log(e.target)
+//        orderCurrentStatus.className=`badge ${statusClasses[e.target.value]}`;
+
+//        orderCurrentStatus.innerText=e.target.value;
+//        OrderManager.updateOrderStatus(orderId,e.target.value)
+//        
+//     })
+    
+// })
+
+document.getElementById("ordersTableBody").addEventListener("change", function (e) {
+  if (e.target && e.target.classList.contains("orderNewStatus")) {
+    const select = e.target;
+    const orderId = select.parentElement.getAttribute("order-id");
+    const index = [...document.querySelectorAll(".orderNewStatus")].indexOf(select);
+    const orderCurrentStatus = document.getElementById(`orderCurrentStatus${index}`);
+
+    const statusClasses = {
+      pending: "bg-warning text-dark",
+      processing: "bg-success text-white",
+      shipped: "bg-secondary text-white",
+      cancelled: "bg-danger text-white",
+    };
+
+    const newStatus = select.value;
+    if (statusClasses[newStatus]) {
+      orderCurrentStatus.className = `badge ${statusClasses[newStatus]}`;
+      orderCurrentStatus.innerText = newStatus;
+
+      OrderManager.updateOrderStatus(orderId, newStatus);       //update order status
+      window.location.reload();             //reload the page to refresh the status
+      
+    }
+  }
+});
+
 
 }) // end of load
+
