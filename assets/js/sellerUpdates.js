@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       notificationsList.innerHTML = "";
 
       const notifications =
-        ProductManager.getNotificationsForSeller(currentUser.id) || [];
+        ProductManager.getNotificationsForSeller(currentUser.id).slice(0, 5) || [];
       console.log("Notifications fetched:", notifications);
 
       if (!Array.isArray(notifications) || notifications.length === 0) {

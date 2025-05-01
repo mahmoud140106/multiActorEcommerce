@@ -391,15 +391,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // viewAll Products Of specific Category through Home
 
   document.addEventListener("DOMContentLoaded", function () {
-    const user = {
-      id: 1,
-      name: "Admin",
-      email: "admin@ecommerce.com",
-      password: "admin123",
-      role: "admin",
-      createdAt: new Date("2025-01-01")
-  };
-localStorage.setItem("currentUser", JSON.stringify(user));
     let viewAllProductsOfCategory = document.getElementsByClassName("viewProductsOfCategory");
     
     for (let i = 0; i < viewAllProductsOfCategory.length; i++) {
