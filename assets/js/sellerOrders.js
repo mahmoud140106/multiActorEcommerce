@@ -210,13 +210,14 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.searchOrders = () => {
-    console.log('from search')
     const query = document.getElementById("searchInput").value.toLowerCase();
     const selectedStatus = document.getElementById("statusFilter").value;
+
     filteredOrders = sellerOrders.filter((o) => {
+      const orderId = o.id.toString().toLowerCase();
       const matchesQuery =
       (UserManager.getUserNameById(o.customerId)).toLowerCase().includes(query) ||
-        (o.status && o.status.toLowerCase().includes(query));
+        (o.status && o.status.toLowerCase().includes(query))||(orderId.includes(query));
       const matchesStatus = selectedStatus === "all" || o.status === selectedStatus;
       return matchesQuery && matchesStatus;
     });
