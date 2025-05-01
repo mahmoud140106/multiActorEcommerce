@@ -99,7 +99,7 @@
                 <div class="col-12">
                   <div class="card shadow-sm">
                     <div class="card-body">
-                      <table class="table table-striped">
+                      <table class="table table-striped" id="ordersTableBody">
                         <thead>
                           <tr>
                             <th
@@ -109,16 +109,16 @@
                               ID <span id="sort-id"></span>
                             </th>
                             <th
-                              onclick="sortTable('name')"
+                              onclick="sortTable('customerId')"
                               style="cursor: pointer;"
                             >
-                              Customer <span id="sort-name"></span>
+                              Customer <span id="sort-customerId"></span>
                             </th>
                             <th
                             onclick="sortTable('date')"
                             style="cursor: pointer;"
                           >
-                            Date <span id="sort-name"></span>
+                            Date <span id="sort-date"></span>
                           </th>
                          
                             <th

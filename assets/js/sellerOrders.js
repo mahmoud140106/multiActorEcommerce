@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const itemsPerPage = 5;
   let sortColumn = "id";
   let sortDirection = "asc";
+  let allOrders;
   let sellerOrders =[];
   let filteredOrders;
   // get products for each seller 
@@ -38,22 +39,23 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "/index.html";
       return;
     }
-    let allOrders = OrderManager.getAllOrders()              //get all orders
-    console.log(allOrders)
+     allOrders = OrderManager.getAllOrders()              //get all orders
+    // console.log(allOrders)
 
     let products = StorageManager.load('products');         //get all products to get products for each seller by seller id
     allOrders.forEach((order)=>
     {
-
+      let productFromStorage
         order.items.forEach((item)=>{
-        console.log(item)
-            let productFromStorage=products.find(product=>product.id===item.productId)    //filter products from storage to get seller id
-           console.log(productFromStorage)
-            if(productFromStorage.sellerId==currentUser.id && productFromStorage.id==item.productId){
-                sellerOrders.push(order);         //filter all orders to get the seller orders
-                
-            }
+        // console.log(item)
+             productFromStorage=products.find(product=>product.id===item.productId)    //filter products from storage to get seller id
+          //  console.log(productFromStorage)
+            
         })
+        if(productFromStorage.sellerId==currentUser.id ){
+          sellerOrders.push(order);         //filter all orders to get the seller orders
+          
+      }
     })
     // console.log(sellerOrders)
     renderOrdersTable();
@@ -64,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tbody.innerHTML = "";
   
     const ordersToRender = filteredOrders ?? sellerOrders;
+    console.log(sellerOrders)
   
     if (ordersToRender.length === 0) {
       const row = document.createElement("tr");
@@ -79,12 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const paginatedOrders = ordersToRender.slice(start, end);
   
     paginatedOrders.forEach((order,index) => {
+      const date = new Date(order.createdAt);
+      const year =date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+      const day = String(date.getDate()).padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+
       const statusClass = order.status === "pending" ? "bg-warning text-dark" :
-                          order.status === "accepted" ? "bg-success text-white" :
-                          order.status === "Shipped" ? "bg-success text-white" :
-                          order.status === "rejected" ? "bg-danger text-white" : "bg-secondary text-white";
+                          order.status === "shipped" ? "bg-success text-white" :
+                          order.status === "processing" ? "bg-secondary text-white" :
+                          order.status === "cancelled" ? "bg-danger text-white" : "bg-secondary text-white";
       const statusText = order.status ? order.status.charAt(0).toUpperCase() + order.status.slice(1) : "Unknown";
-      const statusContent = order.status === "rejected" && order.rejectReason
+      const statusContent = order.status === "cancelled" && order.rejectReason
         ? `<span class="badge ${statusClass}" data-bs-toggle="tooltip" data-bs-placement="top" title="${order.rejectReason}">${statusText}</span>`
         : `<span id='orderCurrentStatus${index}' class="badge ${statusClass}">${statusText}</span>`;
   
@@ -93,16 +102,16 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <td>...${order.id % 1000}</td>
         <td>${UserManager.getUserNameById(order.customerId)}</td>
-        <td class="d-none d-md-table-cell">$${order.createdAt}</td>
+        <td class="d-none d-md-table-cell">${formattedDate}</td>
         <td class="d-none d-md-table-cell">$${order.total.toFixed(2)}</td>
         <td >${statusContent}</td>
-        <td> 
-            <select class="form-control orderNewStatus" >
-                       <option >${order.status}</option>
+        <td order-id='${order.id}'> 
+            <select class="form-control orderNewStatus " >
+                       <option value='action'>Action </option> 
                         <option value="pending">Pending</option>
-                        <option value="accepted">Accepted</option>
+                        <option value="processing">Processing</option>
                         <option value="shipped">Shipped</option>
-                        <option value="rejected">Rejected</option>
+                        <option value="cancelled">Cancelled</option>
             </select>
         </td>
       `;
@@ -161,12 +170,26 @@ document.addEventListener("DOMContentLoaded", () => {
       sortDirection = "asc";
     }
 
-    filteredProducts.sort((a, b) => {
+    sellerOrders.sort((a, b) => {
       let valA = a[column];
       let valB = b[column];
 
-      
-
+      if (column === "customerId") {
+        valA = UserManager.getUserNameById(a.customerId) || "";
+        valB = UserManager.getUserNameById(b.customerId) || "";
+            } 
+            else if (column === "status") {
+              valA = a.status || "";
+              valB = b.status || "";
+            }
+            else if (column === "date") {
+              valA = a.date || "";
+              valB = b.date || "";
+            }
+            else if (column === "price") {
+              valA = a.total || "";
+              valB = b.total || "";
+            }
       if (typeof valA === "string") {
         return sortDirection === "asc"
           ? valA.localeCompare(valB)
@@ -231,27 +254,59 @@ document.getElementById('statusFilter').addEventListener('change',function(){
         window.location.href=`orderDetails.html?orderId=${orderId}`;
     })
  })
-
-
- //change the status of the order
- document.querySelectorAll('.orderNewStatus').forEach((action,index)=>{
-   action.addEventListener('change',function(e){
-        let orderCurrentStatus=document.getElementById(`orderCurrentStatus${index}`);
-        const statusClasses = {
-            pending: "bg-warning text-dark",
-            accepted: "bg-success text-white",
-            shipped: "bg-secondary text-white",
-            rejected: "bg-danger text-white" ,
-             
-          };
-    
-        orderCurrentStatus.className=`badge ${statusClasses[e.target.value]}`;
-        orderCurrentStatus.innerText=e.target.value
-      
-    
-     })
-     
- })
  
 
+ 
+ //change the status of the order
+
+ 
+// window.document.querySelectorAll('.orderNewStatus').forEach((action,index)=>{
+//   action.addEventListener('change',function(e){
+//        let orderCurrentStatus=document.getElementById(`orderCurrentStatus${index}`);
+//        let orderId =action.parentElement.getAttribute('order-id');
+//        const statusClasses = {
+//            pending: "bg-warning text-dark",
+//            processing: "bg-secondary text-white",
+//            shipped: "bg-success text-white",
+//            cancelled: "bg-danger text-white" ,
+            
+//          };
+//          console.log(e.target)
+//        orderCurrentStatus.className=`badge ${statusClasses[e.target.value]}`;
+
+//        orderCurrentStatus.innerText=e.target.value;
+//        OrderManager.updateOrderStatus(orderId,e.target.value)
+//        
+//     })
+    
+// })
+
+document.getElementById("ordersTableBody").addEventListener("change", function (e) {
+  if (e.target && e.target.classList.contains("orderNewStatus")) {
+    const select = e.target;
+    const orderId = select.parentElement.getAttribute("order-id");
+    const index = [...document.querySelectorAll(".orderNewStatus")].indexOf(select);
+    const orderCurrentStatus = document.getElementById(`orderCurrentStatus${index}`);
+
+    const statusClasses = {
+      pending: "bg-warning text-dark",
+      processing: "bg-success text-white",
+      shipped: "bg-secondary text-white",
+      cancelled: "bg-danger text-white",
+    };
+
+    const newStatus = select.value;
+    if (statusClasses[newStatus]) {
+      orderCurrentStatus.className = `badge ${statusClasses[newStatus]}`;
+      orderCurrentStatus.innerText = newStatus;
+
+      OrderManager.updateOrderStatus(orderId, newStatus);       //update order status
+      window.location.reload();             //reload the page to refresh the status
+      
+    }
+  }
+});
+
+
 }) // end of load
+
