@@ -38,7 +38,7 @@ function restrictAccess() {
       "/admin/dashboard.html",
       "/admin/products.html",
       "/admin/profile.html",
-      "/admin/updates.html",
+      "/admin/messages.html",
     ],
     guest: [
       "/index.html",
