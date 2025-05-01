@@ -98,37 +98,43 @@
                   </button>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-12">
-                  <div class="card shadow-sm">
-                    <div class="card-body">
-                      <table class="table table-striped overflow-auto">
-                        <thead>
-                          <tr>
-                            <th onclick="sortTable('id')" style="cursor: pointer;">
-                              ID <span id="sort-id"></span>
-                            </th>
-                            <th onclick="sortTable('sender')" style="cursor: pointer;">
-                              Sender <span id="sort-sender"></span>
-                            </th>
-                            <th onclick="sortTable('role')" style="cursor: pointer;">
-                              Role <span id="sort-role"></span>
-                            </th>
-                            <th onclick="sortTable('message')" style="cursor: pointer;">
-                              Last Message <span id="sort-message"></span>
-                            </th>
-                            <th onclick="sortTable('date')" style="cursor: pointer;">
-                              Date <span id="sort-date"></span>
-                            </th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody id="conversationsTableBody"></tbody>
-                      </table>
-                      <nav>
-                        <ul class="pagination" id="pagination"></ul>
-                      </nav>
-                    </div>
+            </div>
+
+            <!-- Messages Table -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card shadow-sm">
+                  <div class="card-body table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Subject</th>
+                          <th>Type</th>
+                          <th>Customer</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="messagesTableBody">
+                        <!-- Messages will load here -->
+                        <tr>
+                          <td>1</td>
+                          <td>Order Issue</td>
+                          <td>Order</td>
+                          <td>user@example.com</td>
+                          <td>May 1, 2025</td>
+                          <td><span class="badge bg-warning">Open</span></td>
+                          <td>
+                            <button class="btn btn-sm btn-primary">View</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <nav>
+                      <ul class="pagination" id="pagination"></ul>
+                    </nav>
                   </div>
                 </div>
               </div>

@@ -25,3 +25,22 @@
   #detail-message {
     white-space: pre-line;
   }
+  table {
+    width: 100%;
+    table-layout: auto;
+  }
+  td {
+    word-wrap: break-word;
+    min-width: 120px;
+  }
+  .table-responsive {
+    overflow-x: auto;
+    display: block;
+  }
+  
+  @media (max-width: 768px) {
+  td {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
