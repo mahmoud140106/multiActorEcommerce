@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Messages - Admin Dashboard</title>
-  <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-  <link rel="stylesheet" href="../assets/css/dashboard.css">
-  <link href="../assets/css/adminMessages.css" rel="stylesheet" />
-</head>
-<body>
-  <!-- Sidebar Toggle Button -->
-  <button class="sidebar-toggle" aria-label="Toggle Sidebar" title="Show Menu">
-    <i class="fas fa-bars"></i>
-  </button>
-  <main>
-    <div class="container-fluid">
-      <div class="row">
-        <!-- Sidebar -->
-        <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Manage Updates</title>
+    <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="../assets/css/dashboard.css" rel="stylesheet" />
+    <style>
+      .status-select {
+        width: 120px;
+        padding: 2px;
+        font-size: 14px;
+        border-radius: 4px;
+      }
+      .status-select option {
+        padding: 5px;
+      }
+      .replied {
+        background-color: rgba(40, 167, 69, 0.1);
+      }
+      .replied-icon {
+        color: #28a745; 
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" aria-label="Toggle Sidebar" title="Show Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Sidebar -->
+          <nav class="col-md-3 col-lg-2 d-md-block sidebar">
             <div class="position-sticky">
               <a
                 class="navbar-brand d-flex align-items-center text-white mb-2 pb-2"
                 style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);"
-                
               >
                 <i class="fas fa-shopping-bag "></i>
                 <span class="omnishop-logo">OmniShop</span>
@@ -34,19 +50,19 @@
                     <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                   </a>
                 </li>
+                    <li class="nav-item">
+                  <a class="nav-link" href="/admin/categories.html">
+                    <i class="fa-solid fa-list me-2"></i>Categories
+                  </a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/admin/products.html">
                     <i class="fas fa-box-open me-2"></i>Products
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/admin/categories.html">
-                    <i class="fa-solid fa-list me-2"></i>Categories
-                  </a>
-                </li>
-                <li class="nav-item">
                   <a class="nav-link" href="/admin/messages.html">
-                    <i class="fa-solid fa-message me-2"></i>Messages
+                    <i class="fas fa-envelope me-2"></i>Messages
                   </a>
                 </li>
                 <li class="nav-item">
@@ -58,28 +74,29 @@
             </div>
           </nav>
 
-        <!-- Main Content -->
-        <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4 pt-4 pb-0">
-          <div class="container my-4">
-            <div class="row mb-2">
-              <div class="col-12">
-                <h1 class="display-5">Customer Messages</h1>
-                <p class="lead">View and respond to customer inquiries</p>
+          <!-- Main Content -->
+          <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4 pt-4 pb-0">
+            <div>
+              <div class="row mb-2">
+                <div class="col-12">
+                  <h1 class="display-5">Messages</h1>
+                  <p class="lead">View Messages from sellers and customers</p>
+                </div>
               </div>
-            </div>
-            
-            <!-- Message Filters -->
-            <div class="row mb-4 gap-2 gap-md-0">
-              <div class="col-md-6 search-container">
-                <input type="text" id="searchMessages" class="form-control" placeholder="Search messages..." />
-              </div>
-              <div class="col-md-6 text-end">
-                <select id="messageStatusFilter" class="form-select" style="max-width: 200px; float: right;">
-                    <option value="all">All Messages</option>
-                    <option value="responded">Responded</option>
-                    <option value="not-responded">Not Yet Responded</option>
-                </select>
-                
+              <div class="row mb-4 gap-2 gap-md-0">
+                <div class="col-md-4 search-container">
+                  <input type="text" id="searchInput" class="form-control" placeholder="Search by sender, role, or message..." onkeyup="searchConversations()" />
+                </div>
+                <div class="col-md-4">
+                  <select id="senderFilter" class="form-select" onchange="filterBySender()">
+                    <option value="">All Senders</option>
+                  </select>
+                </div>
+                <div class="col-md-4 text-end">
+                  <button class="btn btn-primary btn-gradient" data-bs-toggle="modal" data-bs-target="#sendMessageModal">
+                    Send Message
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -87,7 +104,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="card shadow-sm">
-                  <div class="card-body">
+                  <div class="card-body table-responsive">
                     <table class="table table-striped">
                       <thead>
                         <tr>
@@ -122,50 +139,76 @@
                 </div>
               </div>
             </div>
+          </main>
+        </div>
+      </div>
+    </main>
+
+    <!-- Send Message Modal -->
+    <div class="modal fade" id="sendMessageModal" tabindex="-1" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="sendMessageModalLabel">Send Message</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-        </main>
+          <div class="modal-body">
+            <form id="messageForm">
+              <div class="mb-3">
+                <label for="recipientFilter" class="form-label">Recipient</label>
+                <select class="form-select" id="recipientFilter" required>
+                  <option value="">Select Recipient</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="messageContent" class="form-label">Message</label>
+                <textarea class="form-control" id="messageContent" rows="4" required></textarea>
+                <div class="invalid-feedback" id="messageContent-error"></div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmSendMessageBtn">Send</button>
+          </div>
+        </div>
       </div>
     </div>
-  </main>
 
-  <!-- Message Detail Modal -->
-  <div class="modal fade" id="messageDetailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Message Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <strong>From:</strong> <span id="detail-email">user@example.com</span>
+    <!-- Message Detail Modal -->
+    <div class="modal fade" id="messageDetailModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Conversation Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="mb-3">
-            <strong>Subject:</strong> <span id="detail-subject">Order Issue</span>
-          </div>
-          <div class="mb-3">
-            <strong>Message:</strong>
-            <p id="detail-message" class="p-3 bg-light rounded">Lorem ipsum dolor sit amet...</p>
-          </div>
-          <form>
+          <div class="modal-body">
             <div class="mb-3">
-              <label for="admin-response" class="form-label">Response</label>
-              <textarea class="form-control" id="admin-response" rows="3"></textarea>
+              <strong>With:</strong> <span id="detail-sender"></span>
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="send-response-btn">Send Response</button>
+            <div class="mb-3" id="detail-messages"></div>
+            <form>
+              <div class="mb-3">
+                <label for="admin-response" class="form-label">Reply</label>
+                <textarea class="form-control" id="admin-response" rows="3"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="send-response-btn">Send Reply</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="../assets/js/adminMessages.js"></script>
-  <script type="module" src="../assets/js/global.js"></script>
-  <script type="module" src="../assets/js/adminMessages.js"></script>
-  <script type="module" src="../assets/js/admin-dashboard.js"></script>
-</body>
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../assets/js/global.js"></script>
+    <script type="module" src="../assets/js/auth.js"></script>
+    <script type="module" src="../assets/js/adminUpdates.js"></script>
+  </body>
 </html>

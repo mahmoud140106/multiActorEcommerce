@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Updates - Seller Dashboard</title>
+    <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="../assets/css/dashboard.css" rel="stylesheet" />
+    <style>
+      .notification-card { 
+        border-left: 4px solid #007bff; 
+      }
+      .notification-card.rejected { 
+        border-left-color: #dc3545; 
+      }
+      .notification-card.accepted { 
+        border-left-color: #28a745; 
+      }
+      .review-card { 
+        border-left: 4px solid #ffc107; 
+      }
+      .message-form { 
+        max-width: 600px; 
+      }
+      .filter-form { 
+        max-width: 300px; 
+      }
+      /* Table styles for Messages */
+      .message-table {
+        width: 100%;
+      }
+      .message-table th, .message-table td {
+        vertical-align: middle;
+      }
+      .last-message {
+        max-width: 200px; /* تحديد عرض العمود */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .replied {
+        background-color: rgba(40, 167, 69, 0.1); /* خلفية خضرا باهتة */
+      }
+      .replied-icon {
+        color: #28a745; /* لون أخضر */
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" aria-label="Toggle Sidebar" title="Show Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Sidebar -->
+          <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="position-sticky pt-0">
+              <a class="navbar-brand d-flex align-items-center text-white mb-2 pb-2" style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="omnishop-logo">OmniShop</span>
+              </a>
+              <ul class="nav flex-column navbar-nav px-3">
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/dashboard.html">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/products.html">
+                    <i class="fas fa-box-open me-2"></i>Products
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="/seller/updates.html">
+                    <i class="fas fa-bell me-2"></i>Updates
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/orders.html">
+                    <i class="fas fa-box-open me-2"></i>Orders
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <!-- Main Content -->
+          <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4 pt-4 pb-0">
+            <div>
+              <div class="row mb-2">
+                <div class="col-12">
+                  <h1 class="display-5">Updates</h1>
+                  <p class="lead">View notifications, product reviews, messages, and send messages to the admin</p>
+                </div>
+              </div>
+
+              <!-- Notifications Section -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <h3>Notifications</h3>
+                  <div id="notificationsList"></div>
+                </div>
+              </div>
+
+              <!-- Reviews Section -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <h3>Product Reviews</h3>
+                  <div class="filter-form mb-3">
+                    <label for="productFilter" class="form-label">Filter by Product</label>
+                    <select class="form-select" id="productFilter">
+                      <option value="">All Products</option>
+                    </select>
+                  </div>
+                  <div id="reviewsList"></div>
+                </div>
+              </div>
+
+              <!-- Messages Section -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <h3>Messages</h3>
+                  <div class="row mb-3 gap-2 gap-md-0">
+                    <div class="col-md-4 search-container">
+                      <input type="text" id="searchInput" class="form-control" placeholder="Search by sender, role, or message..." onkeyup="searchConversations()" />
+                    </div>
+                    <div class="col-md-4">
+                      <select id="senderFilter" class="form-select" onchange="filterBySender()">
+                        <option value="">All Senders</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <table class="table table-striped message-table">
+                        <thead>
+                          <tr>
+                            <th onclick="sortTable('id')" style="cursor: pointer;">
+                              ID <span id="sort-id"></span>
+                            </th>
+                            <th onclick="sortTable('sender')" style="cursor: pointer;">
+                              Sender <span id="sort-sender"></span>
+                            </th>
+                            <th onclick="sortTable('role')" style="cursor: pointer;">
+                              Role <span id="sort-role"></span>
+                            </th>
+                            <th onclick="sortTable('message')" style="cursor: pointer;">
+                              Last Message <span id="sort-message"></span>
+                            </th>
+                            <th onclick="sortTable('date')" style="cursor: pointer;">
+                              Date <span id="sort-date"></span>
+                            </th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="conversationsTableBody"></tbody>
+                      </table>
+                      <nav>
+                        <ul class="pagination" id="pagination"></ul>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Send Message Section -->
+              <div class="row mb-4">
+                <div class="col-12">
+                  <h3>Send Message to Admin</h3>
+                  <form id="messageForm" class="message-form">
+                    <div class="mb-3">
+                      <label for="messageContent" class="form-label">Message</label>
+                      <textarea class="form-control" id="messageContent" rows="4" required></textarea>
+                      <div class="invalid-feedback" id="messageContent-error"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </main>
+
+    <!-- Message Detail Modal -->
+    <div class="modal fade" id="messageDetailModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Conversation Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <strong>With:</strong> <span id="detail-sender"></span>
+            </div>
+            <div class="mb-3" id="detail-messages"></div>
+            <form>
+              <div class="mb-3">
+                <label for="seller-response" class="form-label">Reply</label>
+                <textarea class="form-control" id="seller-response" rows="3"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="send-response-btn">Send Reply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../assets/js/global.js"></script>
+    <script type="module" src="../assets/js/auth.js"></script>
+    <script type="module" src="../assets/js/sellerUpdates.js"></script>
+  </body>
+</html>

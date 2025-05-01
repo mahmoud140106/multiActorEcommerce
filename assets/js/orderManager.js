@@ -3,11 +3,11 @@ import { ProductManager } from "./productManager.js";
 import { UserManager } from "./userManager.js";
 
 export class OrderItem {
-  constructor(productId, quantity,  priceAtPurchase) {
+  constructor(productId, quantity,size,color,  priceAtPurchase) {
     this.productId = productId;
     this.quantity = quantity;
-    // this.size = size;
-    // this.color = color;
+    this.size = size;
+    this.color = color;
     this.priceAtPurchase = priceAtPurchase;
   }
 
@@ -87,8 +87,8 @@ export class OrderManager {
       return new OrderItem(
        product.id,
         item.quantity,
-        // item.size,
-        // item.color,
+        item.size,
+        item.color,
         price
       );
     });
@@ -136,9 +136,11 @@ export class OrderManager {
     }
 
     let orders = StorageManager.load("orders") || [];
-    orders = orders.map((order) =>
-      order.id === orderId ? { ...order, status, updatedAt: new Date() } : order
-    );
+    let order=orders.find(order=>order.id==orderId);
+    order.status = status;
+    // orders = orders.map((order) =>
+    //   order.id === orderId ? { ...order, status, updatedAt: new Date() } : order
+    // );
     StorageManager.save("orders", orders);
   }
 
