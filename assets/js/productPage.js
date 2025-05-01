@@ -1,6 +1,7 @@
 import { ProductManager } from "./productManager.js";
 import { CategoryManager } from "./categoryManager.js";
 import { CartManager } from "./cartManager.js";
+import { updateNavbar } from "./global.js";
 
 let allProduct = ProductManager.getAllProducts();
 let productPage = document.getElementById("productPage");
@@ -79,6 +80,7 @@ function product(items) {
         const product = items.find(p => p.id === productId);
         if (product) {
           CartManager.addToCart(product);
+          updateNavbar(); // Update the cart count in the navbar
         }
       });
     });
@@ -90,6 +92,7 @@ function product(items) {
         const product = items.find(p => p.id === productId);
         if (product) {
           CartManager.addToWishlist(product, event);
+          updateNavbar(); // Update the wishlist count in the navbar
         }
       });
     });

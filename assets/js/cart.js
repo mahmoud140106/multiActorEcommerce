@@ -1,15 +1,14 @@
 // Import the CartManager and ProductManager modules
 import { CartManager } from './cartManager.js';
 import { ProductManager } from './productManager.js';
+import{updateNavbar} from './global.js';
 
 // Render the cart items
 function renderCart() {
   const cart = CartManager.getCart();
   const cartItemsContainer = document.getElementById('cart-items');
-  const cartItemCount = document.getElementById('cart-item-count');
   const subtotalLabel = document.getElementById('subtotal-label');
   const subtotalElement = document.getElementById('subtotal');
-  const taxElement = document.getElementById('tax');
   const shippingElement = document.getElementById('shipping');
   const finalTotalElement = document.getElementById('final-total');
   const originalTotalElement = document.getElementById('original-total');
@@ -83,7 +82,6 @@ function renderCart() {
   // Update order summary display
   subtotalLabel.textContent = `Subtotal (${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''})`;
   subtotalElement.textContent = `$${summary.subtotal.toFixed(2)}`;
-  taxElement.textContent = `$${summary.tax.toFixed(2)}`;
   shippingElement.textContent = `$${summary.shipping.toFixed(2)}`;
 
   // Handle promo code display
@@ -109,6 +107,7 @@ function addCartEventListeners() {
       const index = parseInt(button.getAttribute('data-index'));
       CartManager.removeFromCart(index);
       renderCart();
+      updateNavbar();
     });
   });
 
@@ -117,6 +116,7 @@ function addCartEventListeners() {
       const index = parseInt(button.getAttribute('data-index'));
       CartManager.updateQuantity(index, 1);
       renderCart();
+      updateNavbar();
     });
   });
 
@@ -125,6 +125,7 @@ function addCartEventListeners() {
       const index = parseInt(button.getAttribute('data-index'));
       CartManager.updateQuantity(index, -1);
       renderCart();
+      updateNavbar();
     });
   });
 }
@@ -195,6 +196,7 @@ function renderWishlistPeek() {
       const productId = this.getAttribute('data-id');
       CartManager.removeFromWishlist(productId);
       renderWishlistPeek();
+      updateNavbar();
     });
   });
 
@@ -204,6 +206,7 @@ function renderWishlistPeek() {
       CartManager.addToCartFromWishlist(productId);
       renderWishlistPeek();
       renderCart();
+      updateNavbar();
     });
   });
 
@@ -213,10 +216,12 @@ function renderWishlistPeek() {
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   renderWishlistPeek();
+  updateNavbar();
 
   document.getElementById('clear-cart')?.addEventListener('click', () => {
     CartManager.clearCart();
     renderCart();
+    updateNavbar();
   });
 
   document.getElementById('apply-promo')?.addEventListener('click', () => {
