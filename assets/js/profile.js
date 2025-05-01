@@ -7,6 +7,16 @@ const paymentBtn = document.getElementById('payment-btn');
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
 document.addEventListener("DOMContentLoaded", () => {
+  const storedProfile = currentUser 
+    ? JSON.parse(localStorage.getItem(`userProfile_${currentUser.email}`)) 
+    : null;
+  
+  if (storedProfile) {
+    document.getElementById("first-name").value = storedProfile.firstName;
+    document.getElementById("last-name").value = storedProfile.lastName;
+    document.getElementById("dob").value = storedProfile.dob;
+  }
+  
   if (currentUser) {
     const userNameInput = document.getElementById("user-name");
     userNameInput.value = currentUser.userName;
@@ -22,26 +32,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
 // Handle form submission (prevent page reload and update the sidebar / account overview)
 form.addEventListener('submit', (event) => {
-  event.preventDefault(); // stops page reload
+  event.preventDefault(); // Prevents page reload
 
-  // Get updated first & last name from inputs
-  const firstNameInput = document.getElementById('first-name');
-  const lastNameInput = document.getElementById('last-name');
-  const firstName = firstNameInput.value.trim();
-  const lastName = lastNameInput.value.trim();
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName = document.getElementById('last-name').value.trim();
+  const dob = document.getElementById('dob').value.trim();
 
-  // Save the new name in localStorage
-  localStorage.setItem("userFirstName", firstName);
-  localStorage.setItem("userLastName", lastName);
+  // Validate that all fields are filled
+  if (!firstName || !lastName || !dob) {
+    showToast('Please fill in all fields before saving!', 'error');
+    return;
+  }
+
+  // Save form data to localStorage
+  const userProfile = {
+    firstName,
+    lastName,
+    dob
+  };
+  if (currentUser && currentUser.email) {
+    localStorage.setItem(`userProfile_${currentUser.email}`, JSON.stringify(userProfile));
+  }  
+  
 
   updateSidebarName();
   checkBirthday();
 
-  // Show a success toast using your toast module
   showToast('Profile updated successfully!', 'success');
 });
+
 
 // Payment button: redirect user to the cart page
 paymentBtn.addEventListener('click', () => {
@@ -62,8 +84,13 @@ document.querySelectorAll('.profile-list li').forEach((item, index) => {
 
 // Update the sidebar greeting with first name only or first & last name if available, otherwise fallback to the current user's username.
 function updateSidebarName() {
-  const storedFirstName = (localStorage.getItem("userFirstName") || "").trim();
-  const storedLastName = (localStorage.getItem("userLastName") || "").trim();
+  // Retrieve the current user's profile data using a unique key
+  const storedProfile = currentUser 
+    ? JSON.parse(localStorage.getItem(`userProfile_${currentUser.email}`))
+    : null;
+
+  const storedFirstName = storedProfile ? storedProfile.firstName : "";
+  const storedLastName = storedProfile ? storedProfile.lastName : "";
 
   let displayName = "";
   if (storedFirstName && storedLastName) {
@@ -94,6 +121,7 @@ function updateSidebarName() {
     profilePicContainer.textContent = initials.toUpperCase();
   }
 }
+
 
 // Enable profile picture upload functionality
 function enableProfilePictureUpload() {

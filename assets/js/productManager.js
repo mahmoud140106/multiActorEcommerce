@@ -106,42 +106,29 @@ export class ProductManager {
     extraOptions = {}
   ) {
     let products = StorageManager.load("products") || [];
-    const currentProduct = products.find((product) => product.id === id);
-    if (!currentProduct) return;
+    // products = products.map((product) =>
+    //   product.id === id
+    //     ? new Product(
+    //         id,
+    //         name,
+    //         categoryId,
+    //         price,
+    //         stock,
+    //         images,
+    //         sellerId,
+    //         extraOptions
+    //       )
+    //     : product
+    // );
+    let product=products.find(product=> product.id==id);
+    product.name=name;
+    product.categoryId=categoryId;
+    product.price=price;
+    product.stock=stock;
+    product.images=images;
+    product.sellerId=sellerId;
+    product.extraOptions=extraOptions;
 
-    // دمج الـ extraOptions مع القيم الحالية للمنتج، مع الحفاظ على الـ status إذا لم يكن موجودًا
-    const updatedOptions = {
-      description: currentProduct.description,
-      discount: currentProduct.discount,
-      isFeatured: currentProduct.isFeatured,
-      brand: currentProduct.brand,
-      colors: currentProduct.colors,
-      sizes: currentProduct.sizes,
-      createdAt: currentProduct.createdAt,
-      updatedAt: currentProduct.updatedAt,
-      isActive: currentProduct.isActive,
-      sku: currentProduct.sku,
-      rating: currentProduct.rating,
-      numReviews: currentProduct.numReviews,
-      soldCount: currentProduct.soldCount,
-      status: currentProduct.status, // الحفاظ على الـ status الحالي
-      ...extraOptions, // الكتابة فوق القيم الحالية بأي قيم جديدة في extraOptions
-    };
-
-    products = products.map((product) =>
-      product.id === id
-        ? new Product(
-            id,
-            name,
-            categoryId,
-            price,
-            stock,
-            images,
-            sellerId,
-            updatedOptions
-          )
-        : product
-    );
     StorageManager.save("products", products);
   }
 
