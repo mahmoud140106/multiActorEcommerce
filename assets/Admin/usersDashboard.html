@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users Dashboard</title>
+    <link rel="stylesheet" href="../../assets/libs/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="usersDashboardStyle.css">
+</head>
+<body>
+    
+
+
+    <section class="w75 m-auto my-5  d-flex justify-content-center">
+        <input placeholder="Search About User through Name , Id , Role" class="w-50 form-control me-5" type="search" name="searchAboutUser" id="searchAboutUser">
+        <button id="addUsers" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#myModal">Add</button>
+    </section>
+        <section class=" p-5 mt-5 card w-75 d-flex justify-content-center shadow border-0 m-auto">
+            <table class="table table-striped ">
+                <thead>
+                    <tr >
+                        <th>Id</th>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>PassWord</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+ 
+                </tbody>
+            </table>
+        </section>
+
+
+
+
+
+        <div class="">
+            <div id="myModal" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+
+                    <form action="" method="get">
+                            <div class="mb-3 d-flex">
+                                <label for="UserID" class="col-sm-2 col-form-label w-25">User ID</label>
+                                <div class="col-sm-10 w-75">
+                                    <input type="number" readonly class="form-control" id="UserID">
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex">
+                                    <label for="UserName" class="col-sm-2 col-form-label w-25">User Name</label>
+                                    <div class="col-sm-10 w-75">
+                                        <input type="text" required class="form-control" id="UserName">
+                                </div>
+                           </div>
+            
+                            <div class="mb-3 d-flex">
+                                <label for="staticEmail" class="col-sm-2 col-form-label w-25">Email</label>
+                                <div class="col-sm-10 w-75">
+                                    <input type="email" required class="form-control" id="staticEmail"
+                                       >
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3 d-flex">
+                                <label for="inputPassword" class="col-sm-2 col-form-label w-25">Password</label>
+                                <div class="col-sm-10 w-75">
+                                    <input type="password" required class="form-control" id="inputPassword">
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex">
+                                <label for="role" class="col-sm-2 col-form-label w-25">User Role</label>
+                                <div class="col-sm-10 w-75">
+                                    <select id="role" class="form-select" required aria-label="Default select example">
+                                        <option disabled>Select Role</option>
+                                        <option value="Seller">Seller</option>
+                                        <option value="Customer">Customer</option>
+                                    </select>
+                                </div>
+                            </div>
+                           
+                        
+                         <div class="mb-3 d-flex justify-content-center">
+                            <input class="btn btn-outline-primary p-2 px-4" data-bs-dismiss="modal" type="submit" value="Save">
+                         </div>
+                    </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div id="deleteAlert" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title">Confirm Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+                        <p>Are U sure U want To Delete This User?</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="DeleteUser" type="button" class="btn btn-danger">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    
+
+    <script src="../../assets/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./usersDashboardScript.js"></script>
+</body>
+</html>
+
+
+
+
+
