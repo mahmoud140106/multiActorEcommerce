@@ -32,9 +32,10 @@ function restrictAccess() {
       "/seller/products.html",
       "/seller/orders.html",
       "/seller/orderDetails.html",
+      "/seller/updates.html",
 
     ],
-    admin: ["/index.html", "/admin/dashboard.html", "/admin/products.html"],
+    admin: ["/index.html", "/admin/dashboard.html", "/admin/products.html","/admin/updates.html"],
     guest: [
       "/index.html",
       "/customer/catalog.html",
@@ -110,6 +111,7 @@ export function updateNavbar() {
       navLinks.innerHTML = `
         <li class="nav-item"><a class="nav-link hover-light" href="/admin/dashboard.html">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link hover-light" href="/admin/products.html">Products</a></li>
+        // <li class="nav-item"><a class="nav-link hover-light" href="/admin/updates.html">Updates</a></li>
         <li class="nav-item"><a class="nav-link hover-light" href="#" onclick="logout()">Logout</a></li>
       `;
     }
