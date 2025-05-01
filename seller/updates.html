@@ -20,42 +20,31 @@
       .review-card { 
         border-left: 4px solid #ffc107; 
       }
-      .message-card { 
-        border-left: 4px solid #007bff; 
-        transition: background-color 0.3s; 
-      }
       .message-form { 
         max-width: 600px; 
       }
-      .reply-form { 
-        max-width: 500px; 
-        margin-top: 10px; 
-        display: none; 
-      }
-      .reply-form.show { 
-        display: block; 
-      }
-      .message-item { 
-        margin-bottom: 10px; 
-      }
-      .message-item.sent { 
-        margin-left: 20px; 
-        color: #28a745; 
-      }
-      .message-item.received { 
-        margin-right: 20px; 
-        color: #007bff; 
-      }
-      .reply-icon { 
-        font-size: 16px; 
-        cursor: pointer; 
-        color: #007bff; 
-      }
-      .reply-icon:hover { 
-        color: #0056b3; 
-      }
       .filter-form { 
         max-width: 300px; 
+      }
+      /* Table styles for Messages */
+      .message-table {
+        width: 100%;
+      }
+      .message-table th, .message-table td {
+        vertical-align: middle;
+      }
+      .last-message {
+        max-width: 200px; /* تحديد عرض العمود */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .replied {
+        background-color: rgba(40, 167, 69, 0.1); /* خلفية خضرا باهتة */
+      }
+      .replied-icon {
+        color: #28a745; /* لون أخضر */
+        margin-left: 5px;
       }
     </style>
   </head>
@@ -86,7 +75,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/seller/updates.html">
+                  <a class="nav-link active" href="/seller/updates.html">
                     <i class="fas fa-bell me-2"></i>Updates
                   </a>
                 </li>
@@ -140,13 +129,46 @@
               <div class="row mb-4">
                 <div class="col-12">
                   <h3>Messages</h3>
-                  <div class="filter-form mb-3">
-                    <label for="senderFilter" class="form-label">Filter by Sender</label>
-                    <select class="form-select" id="senderFilter">
-                      <option value="">All Senders</option>
-                    </select>
+                  <div class="row mb-3 gap-2 gap-md-0">
+                    <div class="col-md-4 search-container">
+                      <input type="text" id="searchInput" class="form-control" placeholder="Search by sender, role, or message..." onkeyup="searchConversations()" />
+                    </div>
+                    <div class="col-md-4">
+                      <select id="senderFilter" class="form-select" onchange="filterBySender()">
+                        <option value="">All Senders</option>
+                      </select>
+                    </div>
                   </div>
-                  <div id="messagesList"></div>
+                  <div class="card shadow-sm">
+                    <div class="card-body">
+                      <table class="table table-striped message-table">
+                        <thead>
+                          <tr>
+                            <th onclick="sortTable('id')" style="cursor: pointer;">
+                              ID <span id="sort-id"></span>
+                            </th>
+                            <th onclick="sortTable('sender')" style="cursor: pointer;">
+                              Sender <span id="sort-sender"></span>
+                            </th>
+                            <th onclick="sortTable('role')" style="cursor: pointer;">
+                              Role <span id="sort-role"></span>
+                            </th>
+                            <th onclick="sortTable('message')" style="cursor: pointer;">
+                              Last Message <span id="sort-message"></span>
+                            </th>
+                            <th onclick="sortTable('date')" style="cursor: pointer;">
+                              Date <span id="sort-date"></span>
+                            </th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="conversationsTableBody"></tbody>
+                      </table>
+                      <nav>
+                        <ul class="pagination" id="pagination"></ul>
+                      </nav>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -169,6 +191,34 @@
         </div>
       </div>
     </main>
+
+    <!-- Message Detail Modal -->
+    <div class="modal fade" id="messageDetailModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Conversation Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <strong>With:</strong> <span id="detail-sender"></span>
+            </div>
+            <div class="mb-3" id="detail-messages"></div>
+            <form>
+              <div class="mb-3">
+                <label for="seller-response" class="form-label">Reply</label>
+                <textarea class="form-control" id="seller-response" rows="3"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="send-response-btn">Send Reply</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Toast Container -->
     <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
