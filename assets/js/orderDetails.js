@@ -11,7 +11,7 @@ let orderId = urlParams.get('orderId');
 
 let order = OrderManager.getAllOrders().find(order=>order.id==orderId);
 let customer=UserManager.getUser(order.customerId);
-
+let currentUser=StorageManager.load('currentUser');
 
 //display customer delivery data
 let customerDeliveryData = StorageManager.load(`${order.customerId}`);
@@ -36,9 +36,9 @@ orderItemsContainer.innerHTML = '';
 order.items.forEach((item,index)=>{
     let products= StorageManager.load('products')
     let product= products.find(product=>product.id==item.productId);
-    console.log(product)
-    console.log(item)
-
+    console.log(product.sellerId)
+    console.log(item.sellerId)
+  if(product.sellerId==currentUser.id){
     const orderItemHTML = `
     <div class="row g-0 align-items-center p-4 cart-item">
       <div class="col-md-2 productDetailsItem" product-id="${item.productId}">
@@ -64,6 +64,7 @@ order.items.forEach((item,index)=>{
     ${index < order.items.length - 1 ? '<div class="divider"></div>' : ''}
     `;
     orderItemsContainer.insertAdjacentHTML('beforeend', orderItemHTML);
+  }
 })
 
 document.querySelector('input[type="button"]').addEventListener('click',function(){
