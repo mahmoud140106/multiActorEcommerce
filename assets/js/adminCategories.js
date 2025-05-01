@@ -268,6 +268,7 @@ document.getElementById("categoryForm").addEventListener("submit", (e) => {
 
     bootstrap.Modal.getInstance(document.getElementById("categoryModal")).hide();
     selectedImage = null;
+    window.location.reload();
     loadCategories();
   });
 });
