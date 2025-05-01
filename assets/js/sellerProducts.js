@@ -337,10 +337,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const price = parseFloat(document.getElementById("productPrice").value);
     const discount = parseFloat(document.getElementById("productDiscount").value);
     const stock = parseInt(document.getElementById("productStock").value);
+    const sizes = Array.from(document.getElementById("productSizes").selectedOptions).map(option => option.value);
+    const description = document.getElementById("productDescription").value;
+    const brand = document.getElementById("productBrand").value;
     const sellerId = currentUser.id;
 
     if (isNaN(price) || isNaN(stock) || isNaN(categoryId)) {
       showToast("Please enter valid price, stock, and category.", "error");
+      return;
+    }
+
+    // Validate description and brand if provided
+    if (description && (description.length < 10 || description.length > 500)) {
+      showToast("Description must be between 10 and 500 characters.", "error");
+      return;
+    }
+    if (brand && (brand.length < 2 || brand.length > 50)) {
+      showToast("Brand name must be between 2 and 50 characters.", "error");
       return;
     }
 
@@ -361,6 +374,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      const extraOptions = {
+        discount,
+        status: "pending",
+        sizes: sizes.length > 0 ? sizes : [],
+        description: description || "",
+        brand: brand || ""
+      };
+
       if (!isNaN(id) && ProductManager.getProduct(id)) {
         ProductManager.updateProduct(
           id,
@@ -368,12 +389,9 @@ document.addEventListener("DOMContentLoaded", () => {
           categoryId,
           price,
           stock,
-          finalImages, // Always use finalImages
+          finalImages,
           sellerId,
-          {
-            discount,
-            status: "pending"
-          }
+          extraOptions
         );
         showToast("Product updated successfully", "success");
       } else {
@@ -386,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
           stock,
           finalImages,
           sellerId,
-          { discount, status: "pending" }
+          extraOptions
         );
         showToast("Product added successfully", "success");
       }
@@ -400,6 +418,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("productPrice").value = "";
       document.getElementById("productDiscount").value = "";
       document.getElementById("productStock").value = "";
+      document.getElementById("productSizes").selectedIndex = -1;
+      document.getElementById("productDescription").value = "";
+      document.getElementById("productBrand").value = "";
       document.getElementById("productImage").value = "";
       selectedImages = [];
       renderImagePreview([], []);
@@ -414,6 +435,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("productPrice").value = "";
     document.getElementById("productDiscount").value = "";
     document.getElementById("productStock").value = "";
+    document.getElementById("productSizes").selectedIndex = -1;
+    document.getElementById("productDescription").value = "";
+    document.getElementById("productBrand").value = "";
     document.getElementById("productImage").value = "";
     document.getElementById("productImage").required = true; // Ensure required for new product
     selectedImages = [];
@@ -435,6 +459,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("productPrice").value = product.price;
     document.getElementById("productDiscount").value = product.discount;
     document.getElementById("productStock").value = product.stock;
+    document.getElementById("productDescription").value = product.description || "";
+    document.getElementById("productBrand").value = product.brand || "";
+    // Populate sizes
+    const sizeSelect = document.getElementById("productSizes");
+    Array.from(sizeSelect.options).forEach(option => {
+      option.selected = product.sizes && product.sizes.includes(option.value);
+    });
     selectedImages = (product.images || []).map((image) => ({
       src: image,
       isFile: false

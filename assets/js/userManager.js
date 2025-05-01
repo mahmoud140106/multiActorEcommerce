@@ -146,7 +146,7 @@ function initializeDefaultSellers() {
   const defaultUsers = [
     new User(
       1,
-      "AdminUser",
+      "Admin",
       "admin@ecommerce.com",
       "admin123",
       "admin",
