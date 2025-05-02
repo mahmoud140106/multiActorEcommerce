@@ -3,34 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Updates - Seller Dashboard</title>
-    <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Updates - OmniShop</title>
+    <link
+      href="../assets/libs/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link href="../assets/css/dashboard.css" rel="stylesheet" />
     <style>
-      .notification-card { 
-        border-left: 4px solid #007bff; 
+      .notification-card {
+        border-left: 4px solid #007bff;
       }
-      .notification-card.rejected { 
-        border-left: #dc3545; 
+      .notification-card.rejected {
+        border-left: #dc3545;
       }
-      .notification-card.accepted { 
-        border-left-color: #28a745; 
+      .notification-card.accepted {
+        border-left-color: #28a745;
       }
-      .review-card { 
-        border-left: 4px solid #ffc107; 
+      .review-card {
+        border-left: 4px solid #ffc107;
       }
-      .message-form { 
-        max-width: 600px; 
+      .message-form {
+        max-width: 600px;
       }
-      .filter-form { 
-        max-width: 300px; 
+      .filter-form {
+        max-width: 300px;
       }
       /* Table styles for Messages */
       .message-table {
         width: 100%;
       }
-      .message-table th, .message-table td {
+      .message-table th,
+      .message-table td {
         vertical-align: middle;
       }
       .last-message {
@@ -61,7 +71,11 @@
   </head>
   <body>
     <!-- Sidebar Toggle Button -->
-    <button class="sidebar-toggle" aria-label="Toggle Sidebar" title="Show Menu">
+    <button
+      class="sidebar-toggle"
+      aria-label="Toggle Sidebar"
+      title="Show Menu"
+    >
       <i class="fas fa-bars"></i>
     </button>
     <main>
@@ -70,7 +84,10 @@
           <!-- Sidebar -->
           <nav class="col-md-3 col-lg-2 d-md-block sidebar">
             <div class="position-sticky">
-              <a class="navbar-brand d-flex align-items-center text-white mb-2 pb-2" style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);">
+              <a
+                class="navbar-brand d-flex align-items-center text-white mb-2 pb-2"
+                style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);"
+              >
                 <i class="fas fa-shopping-bag"></i>
                 <span class="omnishop-logo">OmniShop</span>
               </a>
@@ -110,7 +127,10 @@
               <div class="row mb-2">
                 <div class="col-12">
                   <h1 class="display-5">Updates</h1>
-                  <p class="lead">View notifications, product reviews, messages, and send messages to the admin</p>
+                  <p class="lead">
+                    View notifications, product reviews, messages, and send
+                    messages to the admin
+                  </p>
                 </div>
               </div>
 
@@ -127,7 +147,9 @@
                 <div class="col-12">
                   <h3>Product Reviews</h3>
                   <div class="filter-form mb-3">
-                    <label for="productFilter" class="form-label">Filter by Product</label>
+                    <label for="productFilter" class="form-label"
+                      >Filter by Product</label
+                    >
                     <select class="form-select" id="productFilter">
                       <option value="">All Products</option>
                     </select>
@@ -142,11 +164,21 @@
                   <h3>Messages</h3>
                   <div class="row mb-3 gap-2 gap-md-0">
                     <div class="col-md-4 search-container">
-                      <input type="text" id="searchInput" class="form-control" placeholder="Search by subject or type..." onkeyup="searchMessages()" />
+                      <input
+                        type="text"
+                        id="searchInput"
+                        class="form-control"
+                        placeholder="Search by subject or type..."
+                        onkeyup="searchMessages()"
+                      />
                     </div>
                     <div class="col-md-4"></div>
                     <div class="col-md-4 text-end">
-                      <button class="btn btn-primary btn-gradient" data-bs-toggle="modal" data-bs-target="#sendMessageModal">
+                      <button
+                        class="btn btn-primary btn-gradient"
+                        data-bs-toggle="modal"
+                        data-bs-target="#sendMessageModal"
+                      >
                         Send Message
                       </button>
                     </div>
@@ -156,11 +188,21 @@
                       <table class="table table-striped message-table">
                         <thead>
                           <tr>
-                            <th onclick="sortTable('id')">ID <span id="sort-id"></span></th>
-                            <th onclick="sortTable('subject')">Subject <span id="sort-subject"></span></th>
-                            <th onclick="sortTable('type')">Type <span id="sort-type"></span></th>
-                            <th onclick="sortTable('content')">Content <span id="sort-content"></span></th>
-                            <th onclick="sortTable('date')">Date <span id="sort-date"></span></th>
+                            <th onclick="sortTable('id')">
+                              ID <span id="sort-id"></span>
+                            </th>
+                            <th onclick="sortTable('subject')">
+                              Subject <span id="sort-subject"></span>
+                            </th>
+                            <th onclick="sortTable('type')">
+                              Type <span id="sort-type"></span>
+                            </th>
+                            <th onclick="sortTable('content')">
+                              Content <span id="sort-content"></span>
+                            </th>
+                            <th onclick="sortTable('date')">
+                              Date <span id="sort-date"></span>
+                            </th>
                             <th>Sender</th>
                             <th>Actions</th>
                           </tr>
@@ -181,19 +223,37 @@
     </main>
 
     <!-- Send Message Modal -->
-    <div class="modal fade" id="sendMessageModal" tabindex="-1" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="sendMessageModal"
+      tabindex="-1"
+      aria-labelledby="sendMessageModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="sendMessageModalLabel">Send Message</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
             <form id="messageFormModal">
               <div class="mb-3">
                 <label for="messageSubject" class="form-label">Subject</label>
-                <input type="text" class="form-control" id="messageSubject" required />
-                <div class="invalid-feedback" id="messageSubject-error">Subject cannot be empty.</div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="messageSubject"
+                  required
+                />
+                <div class="invalid-feedback" id="messageSubject-error">
+                  Subject cannot be empty.
+                </div>
               </div>
               <div class="mb-3">
                 <label for="messageType" class="form-label">Message Type</label>
@@ -205,30 +265,63 @@
                   <option value="product">Product Inquiry</option>
                   <option value="other">Other</option>
                 </select>
-                <div class="invalid-feedback" id="messageType-error">Please select a message type.</div>
+                <div class="invalid-feedback" id="messageType-error">
+                  Please select a message type.
+                </div>
               </div>
               <div class="mb-3">
-                <label for="messageContentModal" class="form-label">Message</label>
-                <textarea class="form-control" id="messageContentModal" rows="4" required></textarea>
-                <div class="invalid-feedback" id="messageContentModal-error">Message cannot be empty.</div>
+                <label for="messageContentModal" class="form-label"
+                  >Message</label
+                >
+                <textarea
+                  class="form-control"
+                  id="messageContentModal"
+                  rows="4"
+                  required
+                ></textarea>
+                <div class="invalid-feedback" id="messageContentModal-error">
+                  Message cannot be empty.
+                </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" id="confirmSendMessageBtn">Send</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="confirmSendMessageBtn"
+            >
+              Send
+            </button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Message Detail Modal -->
-    <div class="modal fade" id="messageDetailModal" tabindex="-1" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="messageDetailModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Message Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
@@ -248,14 +341,23 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Toast Container -->
-    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+    <div
+      id="toast-container"
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+    ></div>
 
     <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="../assets/js/global.js"></script>

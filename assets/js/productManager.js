@@ -84,12 +84,18 @@ export class ProductManager {
   }
 
   static getProduct(id) {
-    const products = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
+    const products =
+      StorageManager.load("products").filter(
+        (product) => product.status === "accepted"
+      ) || [];
     return products.find((product) => product.id === id);
   }
 
   static getProductsByName(searchName) {
-    const productsName = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
+    const productsName =
+      StorageManager.load("products").filter(
+        (product) => product.status === "accepted"
+      ) || [];
     return productsName.filter((product) =>
       product.name.toLowerCase().includes(searchName.toLowerCase())
     );
@@ -120,14 +126,14 @@ export class ProductManager {
     //       )
     //     : product
     // );
-    let product=products.find(product=> product.id==id);
-    product.name=name;
-    product.categoryId=categoryId;
-    product.price=price;
-    product.stock=stock;
-    product.images=images;
-    product.sellerId=sellerId;
-    product.extraOptions=extraOptions;
+    let product = products.find((product) => product.id == id);
+    product.name = name;
+    product.categoryId = categoryId;
+    product.price = price;
+    product.stock = stock;
+    product.images = images;
+    product.sellerId = sellerId;
+    product.extraOptions = extraOptions;
 
     StorageManager.save("products", products);
   }
@@ -157,7 +163,9 @@ export class ProductManager {
 
   static getNotificationsForSeller(userId) {
     const notifications = StorageManager.load("notifications") || [];
-    return notifications.filter(notification => notification.userId === userId);
+    return notifications.filter(
+      (notification) => notification.userId === userId
+    );
   }
 
   static deleteProduct(id) {
@@ -175,7 +183,10 @@ export class ProductManager {
   }
 
   static getProductsByCategory(categoryId) {
-    const products = StorageManager.load("products").filter((product) => product.status === "accepted") || [];
+    const products =
+      StorageManager.load("products").filter(
+        (product) => product.status === "accepted"
+      ) || [];
     return products.filter((product) => product.categoryId === categoryId);
   }
 
@@ -190,12 +201,18 @@ export class ProductManager {
 
   static checkStockAvailability(productId, desiredQuantity = 1) {
     const products = StorageManager.load("products") || [];
-    const product = products.find((p) => p.id === productId && p.status === "accepted");
-  
+    const product = products.find(
+      (p) => p.id === productId && p.status === "accepted"
+    );
+
     if (!product) {
-      return { available: false, stock: 0, message: "Product not found or not available." };
+      return {
+        available: false,
+        stock: 0,
+        message: "Product not found or not available.",
+      };
     }
-  
+
     if (product.stock >= desiredQuantity) {
       return { available: true, stock: product.stock };
     } else {
@@ -221,184 +238,693 @@ export class ProductManager {
 }
 
 function initializeDefaultProducts() {
-  const sellerIds = {
-    admin: 1,
-    sellerOne: 2,
-    sellerTwo: 3,
-    sellerThree: 4,
-  };
-
   const defaultProducts = [
     new Product(
-      1,
-      "Cotton T-Shirt",
-      1,
-      19.99,
-      5,
+      13,
+      "Double-Breasted Wool Coat",
+      1, // Category: COAT
+      99.99,
+      18, // Stock count
       [
-        "https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/01/product-image-15-600x600.webp",
-        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "/assets/images/coat (4).jpg",
+        "/assets/images/coat (5).jpg",
+        "/assets/images/coat (6).jpg",
       ],
-      sellerIds.sellerOne,
+      2, // Seller: 2
       {
-        description: "Comfortable cotton t-shirt for daily wear.",
-        discount: 0.25,
+        description:
+          "Elegant double-breasted wool coat with a tailored fit, offering warmth and sophistication for cold seasons.",
+        discount: 10,
         isFeatured: true,
-        brand: "BasicWear",
-        colors: ["White", "Black"],
-        sizes: ["S", "M", "L"],
-        soldCount: 5,
+        brand: "PremiumStyle",
+        colors: ["Camel", "Black"],
+        sizes: ["S", "M", "L", "XL"],
+        soldCount: 85,
         status: "accepted",
       }
     ),
+
     new Product(
-      2,
-      "Wool Sweater",
-      6,
-      49.99,
-      10,
-      [
-        "https://images.unsplash.com/photo-1604176354204-9268737828e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-        "https://images.pexels.com/photos/45982/pexels-photo-45982.jpeg?auto=compress&cs=tinysrgb&w=600",
-      ],
-      sellerIds.sellerOne,
-      {
-        description: "Warm and stylish wool sweater.",
-        discount: 0.2,
-        isFeatured: true,
-        brand: "CozyKnit",
-        colors: ["Gray", "Navy"],
-        sizes: ["M", "L", "XL"],
-        soldCount: 3,
-        status: "accepted",
-      }
-    ),
-    new Product(
-      3,
-      "White Sneakers",
-      5,
-      59.99,
-      10,
-      [
-        "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-        "https://images.pexels.com/photos/19090/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600",
-      ],
-      sellerIds.sellerOne,
-      {
-        description: "Trendy white sneakers for casual outfits.",
-        isFeatured: true,
-        brand: "StepUp",
-        colors: ["White"],
-        sizes: ["38", "39", "40", "41"],
-        soldCount: 2,
-        status: "accepted",
-      }
-    ),
-    new Product(
-      4,
-      "Polo Shirt",
-      1,
-      29.99,
-      6,
-      [
-        "https://images.pexels.com/photos/428340/pexels-photo-428340.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      ],
-      sellerIds.sellerOne,
-      {
-        description: "Classic polo shirt for a sporty look.",
-        discount: 0.2,
-        isFeatured: true,
-        brand: "SportyWear",
-        colors: ["Red", "Blue", "White"],
-        sizes: ["S", "M", "L"],
-        soldCount: 8,
-        status: "accepted",
-      }
-    ),
-    new Product(
-      5,
-      "Denim Jacket",
-      3,
-      69.99,
-      15,
-      [
-        "https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/02/product-image-34-600x600.webp",
-        "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      ],
-      sellerIds.sellerTwo,
-      {
-        description: "Classic denim jacket for all seasons.",
-        discount: 0.15,
-        isFeatured: true,
-        brand: "UrbanWear",
-        colors: ["Blue"],
-        sizes: ["M", "L", "XL"],
-        soldCount: 8,
-        status: "accepted",
-      }
-    ),
-    new Product(
-      6,
-      "Black Slim Jeans",
-      2,
-      39.99,
-      8,
-      [
-        "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-        "https://images.pexels.com/photos/720606/pexels-photo-720606.jpeg?auto=compress&cs=tinysrgb&w=600",
-      ],
-      sellerIds.sellerTwo,
-      {
-        description: "Slim-fit black jeans for a modern look.",
-        isFeatured: true,
-        brand: "TrendyFit",
-        colors: ["Black"],
-        sizes: ["30", "32", "34"],
-        soldCount: 8,
-        status: "accepted",
-      }
-    ),
-    new Product(
-      7,
-      "Floral Skirt",
-      4,
-      24.99,
-      12,
-      [
-        "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-        "https://startersites.io/blocksy/kiddy/wp-content/uploads/2025/02/product-image-40.webp",
-      ],
-      sellerIds.sellerTwo,
-      {
-        description: "Chic floral skirt for summer outings.",
-        isFeatured: true,
-        brand: "SummerVibe",
-        colors: ["Multicolor"],
-        sizes: ["S", "M", "L"],
-        soldCount: 8,
-        status: "accepted",
-      }
-    ),
-    new Product(
-      8,
-      "White Shirt",
-      1,
-      24.99,
       14,
-      ["/assets/images/shopping7.jpg", "/assets/images/shopping6.jpg"],
-      sellerIds.sellerTwo,
+      "Formal Charcoal Blazer",
+      2, // Category: BLAZER
+      89.99,
+      20, // Stock count
+      [
+        "/assets/images/blazer (4).jpg",
+        "/assets/images/blazer (5).jpg",
+        "/assets/images/blazer (6).jpg",
+      ],
+      3, // Seller: 3
       {
-        description: "Chic floral shirt for summer outings.",
+        description:
+          "Sophisticated charcoal blazer designed for formal and business attire, offering comfort and a polished look.",
+        discount: 15,
         isFeatured: true,
-        brand: "SummerVibe",
-        colors: ["Multicolor"],
+        brand: "ExecutiveWear",
+        colors: ["Charcoal", "Navy"],
+        sizes: ["M", "L", "XL"],
+        soldCount: 75,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      15,
+      "Distressed Denim Pants",
+      3, // Category: DENIM PANTS
+      49.99,
+      35, // Stock count
+      [
+        "/assets/images/denim pants (4).jpg",
+        "/assets/images/denim pants (5).jpg",
+        "/assets/images/denim pants (6).jpg",
+      ],
+      1, // Seller: 1
+      {
+        description:
+          "Trendy distressed denim pants with a relaxed fit, perfect for a casual streetwear aesthetic.",
+        discount: 5,
+        isFeatured: false,
+        brand: "UrbanEdge",
+        colors: ["Light Blue", "Dark Blue"],
+        sizes: ["30", "32", "34", "36"],
+        soldCount: 95,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      16,
+      "Water-Resistant Puffer Jacket",
+      4, // Category: JACKET
+      79.99,
+      25, // Stock count
+      [
+        "/assets/images/jacket (4).jpg",
+        "/assets/images/jacket (5).jpg",
+      ],
+      2, // Seller: 2
+      {
+        description:
+          "Lightweight water-resistant puffer jacket designed for warmth and comfort during colder days.",
+        discount: 10,
+        isFeatured: true,
+        brand: "OutdoorGear",
+        colors: ["Black", "Navy", "Olive"],
+        sizes: ["S", "M", "L", "XL"],
+        soldCount: 80,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      17,
+      "Cozy Fleece Sweatshirt",
+      5, // Category: SWEATSHIRT
+      44.99,
+      22, // Stock count
+      [
+        "/assets/images/sweatshirt (4).jpg",
+        "/assets/images/sweatshirt (5).jpg",
+        "/assets/images/sweatshirt (6).jpg",
+      ],
+      3, // Seller: 3
+      {
+        description:
+          "Comfortable fleece sweatshirt with an oversized fit, ideal for casual lounge wear.",
+        discount: 0,
+        isFeatured: false,
+        brand: "WarmEssentials",
+        colors: ["Gray", "Blue", "Burgundy"],
+        sizes: ["XS", "S", "M", "L"],
+        soldCount: 110,
+        status: "accepted",
+      }
+    ),
+    new Product(
+      18,
+      "Slim Fit Herringbone Blazer",
+      2, // Category: BLAZER
+      94.99,
+      28, // Stock count
+      [
+        "/assets/images/blazer (7).jpg",
+        "/assets/images/blazer (8).jpg",
+        "/assets/images/blazer (9).jpg",
+      ],
+      1, // Seller: 1
+      {
+        description:
+          "Refined herringbone blazer with a slim-cut design, perfect for business meetings or upscale events.",
+        discount: 10,
+        isFeatured: true,
+        brand: "ExecutiveStyle",
+        colors: ["Gray", "Black"],
+        sizes: ["S", "M", "L", "XL"],
+        soldCount: 65,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      19,
+      "Distressed Slim Denim Jeans",
+      3, // Category: DENIM PANTS
+      59.99,
+      30, // Stock count
+      [
+        "/assets/images/denim pants (7).jpg",
+        "/assets/images/denim pants (8).jpg",
+        "/assets/images/denim pants (9).jpg",
+      ],
+      2, // Seller: 2
+      {
+        description:
+          "Stylish distressed slim-fit denim jeans, crafted with stretch fabric for a comfortable fit.",
+        discount: 5,
+        isFeatured: false,
+        brand: "DenimEdge",
+        colors: ["Blue", "Gray"],
+        sizes: ["30", "32", "34", "36"],
+        soldCount: 90,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      20,
+      "Casual Quilted Jacket",
+      4, // Category: JACKET
+      72.99,
+      22, // Stock count
+      [
+        "/assets/images/jacket (1).jpg",
+        "/assets/images/jacket (2).jpg",
+        "/assets/images/jacket (3).jpg",
+      ],
+      3, // Seller: 3
+      {
+        description:
+          "Lightweight quilted jacket with an insulated interior, ideal for chilly outdoor adventures.",
+        discount: 15,
+        isFeatured: true,
+        brand: "OutdoorEssentials",
+        colors: ["Black", "Olive"],
+        sizes: ["S", "M", "L", "XL"],
+        soldCount: 78,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      21,
+      "Streetwear Printed Sweatshirt",
+      5, // Category: SWEATSHIRT
+      39.99,
+      26, // Stock count
+      [
+        "/assets/images/sweatshirt (7).jpg",
+        "/assets/images/sweatshirt (8).jpg",
+      ],
+      1, // Seller: 1
+      {
+        description:
+          "Trendy printed sweatshirt designed for urban streetwear fashion, offering comfort and style.",
+        discount: 0,
+        isFeatured: false,
+        brand: "StreetFusion",
+        colors: ["Black", "White"],
+        sizes: ["XS", "S", "M", "L"],
+        soldCount: 105,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      22,
+      "Classic Button-Up Flannel Shirt",
+      6, // Category: FLANNEL SHIRT
+      34.99,
+      24, // Stock count
+      [
+        "/assets/images/flannel shirt (1).jpg",
+        "/assets/images/flannel shirt (2).jpg",
+        "/assets/images/flannel shirt (3).jpg",
+        "/assets/images/flannel shirt (4).jpg",
+      ],
+      2, // Seller: 2
+      {
+        description:
+          "Soft and breathable button-up flannel shirt, designed for timeless casual looks.",
+        discount: 5,
+        isFeatured: false,
+        brand: "RusticStyle",
+        colors: ["Red", "Green", "Navy"],
+        sizes: ["S", "M", "L", "XL"],
+        soldCount: 88,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      23,
+      "Lightweight Summer Vest",
+      7, // Category: CASUAL VEST
+      27.99,
+      32, // Stock count
+      [
+        "/assets/images/casual vest (1).jpg",
+        "/assets/images/casual vest (2).jpg",
+      ],
+      3, // Seller: 3
+      {
+        description:
+          "Breathable summer vest with a lightweight fabric blend, ideal for casual layering.",
+        discount: 10,
+        isFeatured: false,
+        brand: "EasyWear",
+        colors: ["Beige", "Light Gray"],
         sizes: ["S", "M", "L"],
-        soldCount: 8,
+        soldCount: 70,
+        status: "accepted",
+      }
+    ),
+    new Product(
+      24,
+      "Formal Cotton Shirt",
+      8, // Category: SHIRT
+      42.99,
+      29, // Stock count
+      [
+        "/assets/images/shirt (1).jpg",
+        "/assets/images/shirt (2).jpg",
+        "/assets/images/shirt (3).jpg",
+      ],
+      1, // Seller: 1
+      {
+        description:
+          "Classic formal cotton shirt with a tailored fit, ideal for office wear or special occasions.",
+        discount: 10,
+        isFeatured: true,
+        brand: "EliteWear",
+        colors: ["White", "Light Blue", "Gray"],
+        sizes: ["S", "M", "L", "XL"],
+        soldCount: 95,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      25,
+      "Graphic Printed T-Shirt",
+      9, // Category: TSHIRT
+      26.99,
+      33, // Stock count
+      [
+        "/assets/images/tshirt (4).jpg",
+        "/assets/images/tshirt (5).jpg",
+        "/assets/images/tshirt (6).jpg",
+      ],
+      2, // Seller: 2
+      {
+        description:
+          "Vibrant graphic printed t-shirt with breathable fabric, designed for daily casual wear.",
+        discount: 0,
+        isFeatured: false,
+        brand: "StreetCulture",
+        colors: ["Black", "White", "Red"],
+        sizes: ["M", "L", "XL"],
+        soldCount: 120,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      26,
+      "Straight-Leg Chinos",
+      10, // Category: CHINOS
+      39.99,
+      31, // Stock count
+      [
+        "/assets/images/chinos (4).jpg",
+        "/assets/images/chinos (5).jpg",
+        "/assets/images/chinos (6).jpg",
+      ],
+      3, // Seller: 3
+      {
+        description:
+          "Comfortable straight-leg chinos, perfect for both casual and semi-formal wear.",
+        discount: 5,
+        isFeatured: true,
+        brand: "ModernFit",
+        colors: ["Khaki", "Navy", "Black"],
+        sizes: ["30", "32", "34", "36"],
+        soldCount: 110,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      27,
+      "Casual Sneakers",
+      11, // Category: SHOES
+      64.99,
+      20, // Stock count
+      [
+        "/assets/images/shoes (4).jpg",
+        "/assets/images/shoes (5).jpg",
+        "/assets/images/shoes (6).jpg",
+      ],
+      1, // Seller: 1
+      {
+        description:
+          "Comfortable everyday sneakers with a stylish design, perfect for casual outings.",
+        discount: 10,
+        isFeatured: true,
+        brand: "UrbanFeet",
+        colors: ["White", "Black", "Gray"],
+        sizes: ["8", "9", "10", "11"],
+        soldCount: 95,
+        status: "accepted",
+      }
+    ),
+
+    new Product(
+      28,
+      "Soft Knit Sweater",
+      12, // Category: SWEATER
+      55.99,
+      27, // Stock count
+      [
+        "/assets/images/sweater (4).jpg",
+        "/assets/images/sweater (5).jpg",
+        "/assets/images/sweater (6).jpg",
+      ],
+      2, // Seller: 2
+      {
+        description:
+          "Warm and stylish knit sweater with a relaxed fit, ideal for cold seasons.",
+        discount: 15,
+        isFeatured: true,
+        brand: "CozyThreads",
+        colors: ["Gray", "Navy", "Burgundy"],
+        sizes: ["S", "M", "L", "XL"],
+        soldCount: 78,
         status: "accepted",
       }
     ),
   ];
+  // const defaultProducts = [
+  //   new Product(
+  //     1,
+  //     "Classic Wool Coat",
+  //     1, // Category: COAT
+  //     89.99,
+  //     20,
+  //     [
+  //       "/assets/images/coat (1).jpg",
+  //       "/assets/images/coat (2).jpg",
+  //       "/assets/images/coat (3).jpg",
+  //     ],
+  //     4, // Seller: Farah Alaa
+  //     {
+  //       description:
+  //         "Timeless wool coat featuring a structured silhouette and a warm, luxurious feel. Perfect for chilly evenings or stylish layering.",
+  //       discount: 0.1,
+  //       isFeatured: true,
+  //       brand: "UrbanStyle",
+  //       colors: ["Black", "Navy"],
+  //       sizes: ["S", "M", "L", "XL"],
+  //       soldCount: 65,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     2,
+  //     "Tailored Navy Blazer",
+  //     2, // Category: BLAZER
+  //     79.99,
+  //     25,
+  //     [
+  //       "/assets/images/blazer (1).jpg",
+  //       "/assets/images/blazer (2).jpg",
+  //       "/assets/images/blazer (3).jpg",
+  //     ],
+  //     4, // Seller: Farah Alaa
+  //     {
+  //       description:
+  //         "Sharp and stylish navy blazer tailored for a sleek silhouette. Ideal for formal occasions or elevated casual looks.",
+  //       discount: 0.15,
+  //       isFeatured: true,
+  //       brand: "EliteWear",
+  //       colors: ["Navy", "Charcoal"],
+  //       sizes: ["S", "M", "L", "XL"],
+  //       soldCount: 45,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     3,
+  //     "Slim-Fit Black Jeans",
+  //     3, // Category: DENIM PANTS
+  //     49.99,
+  //     35,
+  //     [
+  //       "/assets/images/denim pants (1).jpg",
+  //       "/assets/images/denim pants (2).jpg",
+  //       "/assets/images/denim pants (3).jpg",
+  //     ],
+  //     4, // Seller: Farah Alaa
+  //     {
+  //       description:
+  //         "Sleek slim-fit black jeans, designed for a modern wardrobe with a tailored cut that enhances comfort and style. Made from stretch denim, ideal for both casual and semi-formal occasions.",
+  //       discount: 0,
+  //       isFeatured: true,
+  //       brand: "TrendyDenim",
+  //       colors: ["Black"],
+  //       sizes: ["30", "32", "34", "36"],
+  //       soldCount: 110,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     4,
+  //     "Windproof Hooded Jacket",
+  //     4, // Category: JACKET
+  //     59.99,
+  //     18,
+  //     [
+  //       "/assets/images/jacket (1).jpg",
+  //       "/assets/images/jacket (2).jpg",
+  //       "/assets/images/jacket (3).jpg",
+  //     ],
+  //     4, // Seller: Farah Alaa
+  //     {
+  //       description:
+  //         "Durable hooded jacket with windproof technology, designed for outdoor adventures and urban comfort. Features a sleek design with practical pockets.",
+  //       discount: 0.2,
+  //       isFeatured: false,
+  //       brand: "AdventureGear",
+  //       colors: ["Olive", "Black", "Gray"],
+  //       sizes: ["M", "L", "XL"],
+  //       soldCount: 85,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     5,
+  //     "Oversized Cotton Sweatshirt",
+  //     5, // Category: SWEATSHIRT
+  //     39.99,
+  //     15,
+  //     [
+  //       "/assets/images/sweatshirt (1).jpg",
+  //       "/assets/images/sweatshirt (2).jpg",
+  //       "/assets/images/sweatshirt (3).jpg",
+  //     ],
+  //     4, // Seller: Farah Alaa
+  //     {
+  //       description:
+  //         "Comfy oversized sweatshirt with breathable cotton fabric, featuring a modern relaxed fit. Ideal for casual wear and cozy days.",
+  //       discount: 0.05,
+  //       isFeatured: false,
+  //       brand: "CozyWear",
+  //       colors: ["Beige", "Gray", "Blue"],
+  //       sizes: ["XS", "S", "M", "L"],
+  //       soldCount: 120,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     6,
+  //     "Zip-Up Hoodie with Pockets",
+  //     6, // Category: HOODIE
+  //     44.99,
+  //     22,
+  //     [
+  //       "/assets/images/hoodie (1).jpg",
+  //       "/assets/images/hoodie (2).jpg",
+  //       "/assets/images/hoodie (3).jpg",
+  //     ],
+  //     4, // Seller: Farah Alaa
+  //     {
+  //       description:
+  //         "Stylish zip-up hoodie with spacious front pockets, crafted from a soft cotton blend for all-day comfort. Perfect for layering or casual outings.",
+  //       discount: 0.1,
+  //       isFeatured: true,
+  //       brand: "UrbanComfort",
+  //       colors: ["Gray", "Black", "Navy"],
+  //       sizes: ["S", "M", "L", "XL"],
+  //       soldCount: 90,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     7,
+  //     "Padded Casual Vest",
+  //     7, // Category: CASUAL VEST
+  //     59.99,
+  //     20,
+  //     [
+  //       "/assets/images/casual vest (1).jpg",
+  //       "/assets/images/casual vest (2).jpg",
+  //       "/assets/images/casual vest (3).jpg",
+  //     ],
+  //     11, // Seller: Hassan Youssef
+  //     {
+  //       description:
+  //         "Lightweight padded casual vest, perfect for layering in cool weather with a quilted design for added warmth. Features a water-resistant finish, ideal for outdoor activities.",
+  //       discount: 0,
+  //       isFeatured: true,
+  //       brand: "OutdoorLayer",
+  //       colors: ["Black", "Olive"],
+  //       sizes: ["S", "M", "L"],
+  //       soldCount: 50,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     8,
+  //     "Flannel Plaid Shirt",
+  //     8, // Category: SHIRT
+  //     29.99,
+  //     35,
+  //     [
+  //       "/assets/images/flannel shirt (1).jpg",
+  //       "/assets/images/flannel shirt (2).jpg",
+  //       "/assets/images/flannel shirt (3).jpg",
+  //     ],
+  //     8, // Seller: Aya Nour
+  //     {
+  //       description:
+  //         "Cozy flannel plaid shirt with a classic pattern, made from soft cotton for warmth and comfort. Ideal for outdoor activities or a relaxed day, with a button-down front and chest pockets.",
+  //       discount: 0.1,
+  //       isFeatured: true,
+  //       brand: "RusticWear",
+  //       colors: ["Red", "Blue", "Green"],
+  //       sizes: ["S", "M", "L", "XL"],
+  //       soldCount: 70,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     9,
+  //     "Premium Graphic T-Shirt",
+  //     9, // Category: TSHIRT
+  //     24.99,
+  //     50,
+  //     [
+  //       "/assets/images/tshirt (1).jpg",
+  //       "/assets/images/tshirt (2).jpg",
+  //       "/assets/images/tshirt (3).jpg",
+  //     ],
+  //     4, // Seller: Farah Alaa
+  //     {
+  //       description:
+  //         "Soft and breathable graphic tee with vibrant designs. Made for ultimate comfort with lightweight fabric, perfect for casual wear.",
+  //       discount: 0,
+  //       isFeatured: false,
+  //       brand: "StreetStyle",
+  //       colors: ["White", "Black", "Red"],
+  //       sizes: ["M", "L", "XL"],
+  //       soldCount: 200,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     10,
+  //     "Slim Fit Chinos",
+  //     10, // Category: CHINOS
+  //     44.99,
+  //     30,
+  //     [
+  //       "/assets/images/chinos (1).jpg",
+  //       "/assets/images/chinos (2).jpg",
+  //       "/assets/images/chinos (3).jpg",
+  //     ],
+  //     4, // Seller: Farah Alaa
+  //     {
+  //       description:
+  //         "Elegant slim fit chinos with a soft fabric blend for versatile styling. Perfect for both office and casual wear with a polished look.",
+  //       discount: 0.1,
+  //       isFeatured: true,
+  //       brand: "ClassicWear",
+  //       colors: ["Khaki", "Navy", "Black"],
+  //       sizes: ["30", "32", "34", "36"],
+  //       soldCount: 130,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     11,
+  //     "Leather White Sneakers",
+  //     11, // Category: SHOES
+  //     89.99,
+  //     25,
+  //     [
+  //       "/assets/images/shoes (1).jpg",
+  //       "/assets/images/shoes (2).jpg",
+  //       "/assets/images/shoes (3).jpg",
+  //     ],
+  //     3, // Seller: Omar Khaled
+  //     {
+  //       description:
+  //         "Stylish white leather sneakers, handcrafted with premium leather for a sleek, modern look. Offers excellent cushioning and durability, ideal for casual walks and active lifestyles.",
+  //       discount: 0.1,
+  //       isFeatured: true,
+  //       brand: "UrbanStep",
+  //       colors: ["White"],
+  //       sizes: ["38", "39", "40", "41", "42"],
+  //       soldCount: 60,
+  //       status: "accepted",
+  //     }
+  //   ),
+  //   new Product(
+  //     12,
+  //     "Wool Cable-Knit Sweater",
+  //     12, // Category: SWEATER
+  //     79.99,
+  //     30,
+  //     [
+  //       "/assets/images/sweater (1).jpg",
+  //       "/assets/images/sweater (2).jpg",
+  //       "/assets/images/sweater (3).jpg",
+  //     ],
+  //     2, // Seller: Mahmoud Taha
+  //     {
+  //       description:
+  //         "Cozy wool cable-knit sweater, crafted with premium quality yarn for warmth and durability. Features a classic design with intricate patterns, perfect for chilly days or elegant winter evenings.",
+  //       discount: 0.15,
+  //       isFeatured: true,
+  //       brand: "WarmKnit",
+  //       colors: ["Navy", "Gray", "Green"],
+  //       sizes: ["M", "L", "XL"],
+  //       soldCount: 85,
+  //       status: "accepted",
+  //     }
+  //   ),
+  // ];
 
   if (!StorageManager.load("products")) {
     StorageManager.save("products", defaultProducts);

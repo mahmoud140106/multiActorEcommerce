@@ -214,7 +214,7 @@ document.getElementById("addUsers").addEventListener("click", function () {
 // edit user (show current data of the user in the form)
 
 
-
+let rowIndex=null;
 
     
 let pen = document.querySelectorAll(".fa-pen-to-square");
@@ -255,7 +255,6 @@ v.forEach(element => {
 });
 
 
-let rowIndex=null;
 //add and update users 
 
 document.querySelector("form").addEventListener("submit", function (e) {

@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(products);
 
     products.forEach((product, index) => {
+      
+      console.log("object",CategoryManager.getCategory(product.categoryId))
       const card = document.createElement("div");
       card.className = "col";
       card.innerHTML = `

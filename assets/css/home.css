@@ -29,8 +29,6 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-
-
 /* Hero Banner (Carousel) */
 .carousel-inner {
   position: relative;
@@ -186,12 +184,12 @@ section h2 {
 }
 
 .btn-clicked {
-  background-color: var(--primary-color); 
-  color: white !important; 
+  background-color: var(--primary-color);
+  color: white !important;
 }
 .btn-clicked:hover {
-  background-color: var(--primary-color); 
-  color: white !important; 
+  background-color: var(--primary-color);
+  color: white !important;
 }
 
 .badge.bg-warning {
@@ -205,19 +203,14 @@ section h2 {
   flex-wrap: nowrap;
 }
 
-
-
 /* Responsive Design */
 
-
 @media (max-width: 1250px) {
-  .car>div>span{
+  .car > div > span {
     font-size: 1.1rem !important;
     padding: 7px;
   }
 }
-
-
 
 @media (max-width: 768px) {
   section h2 {
@@ -241,35 +234,28 @@ section h2 {
   }
 }
 
-
-
-
-.cardItem{
+.cardItem {
   width: 90% !important;
 }
 
-
 @media (max-width: 790px) {
-
-  .cardItem{
-  width: 60% !important;
-}
-
-
-  .car>div>span{
-    font-size: 0.8rem !important;
-   
+  .cardItem {
+    width: 60% !important;
   }
-  .car>div>span:nth-child(2){
+
+  .car > div > span {
+    font-size: 0.8rem !important;
+  }
+  .car > div > span:nth-child(2) {
     padding-right: 1rem !important;
   }
   #hero-section {
     padding: 0 !important;
   }
-  #hero-section img{
+  #hero-section img {
     display: none;
   }
-  #headerBtns{
+  #headerBtns {
     display: flex;
     justify-content: center !important;
     margin-top: 2rem;
@@ -288,7 +274,7 @@ section h2 {
     text-align: center;
   }
 
-  #headerDetails h1{
+  #headerDetails h1 {
     color: whitesmoke !important;
     padding: 1rem;
   }
@@ -307,7 +293,7 @@ section h2 {
   #hero-section .w-40 * {
     position: relative;
     z-index: 2;
-    color: white;
+    color: white !important;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   }
   /* .maincaption {
@@ -325,19 +311,11 @@ section h2 {
   } */
 }
 
-
-
-
 @media (max-width: 576px) {
   .card-img-top {
     height: 180px;
   }
 }
-
-
-
-
-
 
 /* body style */
 body,
@@ -360,7 +338,6 @@ h1 {
 #categoriesSection {
   width: 90%;
 }
-
 
 .cardItem {
   width: 22%;
@@ -434,9 +411,6 @@ h1 {
     1px 1px 0 whitesmoke;
 }
 
-
-
-
 /* Reviews section style  */
 
 #ReviewSection {
@@ -446,23 +420,20 @@ h1 {
   overflow: hidden;
 }
 
-#carouselReview .carousel-control-next,#carouselReview .carousel-control-prev{
- top:50%;
- bottom:50%;
+#carouselReview .carousel-control-next,
+#carouselReview .carousel-control-prev {
+  top: 50%;
+  bottom: 50%;
 }
 
-
-
-#carouselAllReviews .carousel-item{
+#carouselAllReviews .carousel-item {
   width: 100%;
-
 }
 
-#carouselAllReviews img{
+#carouselAllReviews img {
   width: 50px;
   height: 50px;
 }
-
 
 .carousel-item {
   display: none;
@@ -471,9 +442,6 @@ h1 {
 .carousel-item.active {
   display: block;
 }
-
-
-
 
 /* sale section style  */
 
@@ -521,7 +489,7 @@ h1 {
 
 #searchInput {
   border: none;
-  border-bottom: 1px solid black; 
+  border-bottom: 1px solid black;
 }
 
 #searchInput:focus {
@@ -564,7 +532,6 @@ h1 {
   .cardItem {
     width: 100% !important;
   }
-
 }
 @media (max-width: 1000px) {
   .cardItem {
@@ -591,5 +558,9 @@ h1 {
 
   .carouselSlideContent span {
     font-size: 1.5rem !important;
+  }
+
+  .herocaption {
+    color: #ffff !important;
   }
 }
