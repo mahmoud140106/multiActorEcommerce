@@ -6,271 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product Page</title>
 
-    <!-- Bootstrap CSS (Local File) -->
-    <link href="/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Font Awesome CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+  <!-- Bootstrap CSS (Local File) -->
+  <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../assets/css/product.css" />
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <link rel="stylesheet" href="../assets/css/home.css" />
-  <link rel="stylesheet" href="../assets/css/cart.css" />
 
 
 </head>
 
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="/index.html">
-        <i class="fas fa-shopping-bag me-2"></i>
-        <span class="omnishop-logo">OmniShop</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <!-- JavaScript will populate this dynamically -->
-        </ul>
-      </div>
-    </div>
-  
-      <!-- Login Modal -->
-      <div
-        class="modal fade"
-        id="loginModal"
-        tabindex="-1"
-        aria-labelledby="loginModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
-                Login
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="login-form">
-                <div class="mb-3">
-                  <label for="login-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="login-email"
-                    required
-                  />
-                  <div class="invalid-feedback" id="login-email-error"></div>
-                </div>
-                <div class="mb-3">
-                  <label for="login-password" class="form-label"
-                    >Password</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="login-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="login-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div class="invalid-feedback" id="login-password-error"></div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Login
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Don't have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#signupModal"
-                  data-bs-dismiss="modal"
-                  >Sign Up</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sign Up Modal -->
-      <div
-        class="modal fade"
-        id="signupModal"
-        tabindex="-1"
-        aria-labelledby="signupModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
-                Sign Up
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="signup-form">
-                <div class="mb-3">
-                  <label for="signup-userName" class="form-label"
-                    >UserName</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="signup-userName"
-                    required
-                  />
-                  <div
-                    class="invalid-feedback"
-                    id="signup-userName-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="signup-email"
-                    required
-                  />
-                  <div class="invalid-feedback" id="signup-email-error"></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-password" class="form-label"
-                    >Password</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="signup-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="signup-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div
-                    class="invalid-feedback"
-                    id="signup-password-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-confirm-password" class="form-label"
-                    >Confirm Password</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="signup-confirm-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="signup-confirm-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div
-                    class="invalid-feedback"
-                    id="signup-confirm-password-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Register as:</label>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="role"
-                      id="role-customer"
-                      value="customer"
-                      checked
-                    />
-                    <label class="form-check-label" for="role-customer">
-                      Customer
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="role"
-                      id="role-seller"
-                      value="seller"
-                    />
-                    <label class="form-check-label" for="role-seller">
-                      Seller
-                    </label>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Sign Up
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Already have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#loginModal"
-                  data-bs-dismiss="modal"
-                  >Login</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-  
-    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
-      <!-- Toasts will be dynamically inserted here -->
+  <nav class="bg-dark">
+    <div class="nav-left">NAV</div>
+    <div class="nav-right">
+      <button class="btn btn-outline-light p-2 me-1">Wishlist</button>
+      <!-- <button><i class="fa-solid fa-cart-shopping"></i</button> -->
+      <button class="btn btn-outline-light p-2 ">Cart</button>
+      <!-- <button><i class="fa-solid fa-heart"></i></button> -->
     </div>
   </nav>
-
 
 <!--  -->
 <div class="container-fluid">
@@ -314,21 +71,8 @@
 
 
   <!--special offer -->
-  <div class="mb-4">
-    <label class="form-label fw-bold mb-2">Special Offers</label>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="bestSeller">
-      <label class="form-check-label" for="bestSeller">Best Seller</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="newArrivals">
-      <label class="form-check-label" for="newArrivals">New Arrivals</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="onSale">
-      <label class="form-check-label" for="onSale">On Sale</label>
-    </div>
-  </div>
+  <!-- 
+   -->
 <!-- filter brand -->
   <div class="mb-4">
     <label for="filterBrand" class="form-label fw-bold">Brand</label>
@@ -364,7 +108,7 @@
     </div>
   </div> -->
 <!-- filter gender -->
-  <div class="mb-4">
+  <!-- <div class="mb-4">
     <label for="filterGender" class="form-label fw-bold">Gender</label>
     <select class="form-select" id="filterGender">
       <option value="All">All</option>
@@ -372,7 +116,7 @@
       <option value="Women">Women</option>
    
     </select>
-  </div>
+  </div> -->
 
     </aside>
 
@@ -386,54 +130,50 @@
       </div>
     </main>
   </div>
-</div>
-<!--  -->
 
-
-  <!-- <div class="filters container w-75  justify-content-around ">
-    <select name="filterCategory" id="filterCategory" class="w-25 rounded-2">
+  <div class="filters container w-75  justify-content-around">
+    <select name="filterCategory" id="filterCategory" class="w-25">
 
     </select>
 
-    <select id="filterSize" class="w-25 rounded">
-      <option value="AllSizes">All Sizes</option>
-      <option value="S">S</option>
-      <option value="M">M</option>
-      <option value="L">L</option>
-      <option value="XL">XL</option>
+    <select id="filterSize " class="w-25">
+      <option value="">All Sizes</option>
+      <option value="small">Small</option>
+      <option value="medium">Medium</option>
+      <option value="large">Large</option>
     </select>
 
 
-  </div> -->
+  </div>
 
 
 
 
 
+  <main class="">
 
 
 
+    <section class="container justify-content-center  ">
+      <div class="products w-100 " id="productPage">
 
-    <section class="container   mb-5">
-
-
-      <div id="productPage" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 products  justify-content-center ">
-        <!-- Products will be populated by JavaScript -->
       </div>
 
 
     </section>
 
 <!--  -->
-<!-- <nav aria-label="Page navigation example mb-3 ">
+<nav aria-label="Page navigation example mb-3 ">
   <ul class="pagination ">
-    <li class="page-item"><a class="product text-decoration-none" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link " href="#">Next</a></li>
+    <li class="page-item"><a class="product text-decoration-none" href="#"onclick="previousPage()">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-page="1" onclick="changePage(1)">1</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-page="2" onclick="changePage(2)">2</a></li>
+    <!-- <li class="page-item"><a class="page-link" href="#" data-page="3" onclick="changePage(3)">3</a></li> -->
+    <li class="page-item"><a class="page-link " href="#"onclick="nextPage()">Next</a></li>
   </ul>
-</nav> -->
+</nav>
+
+
 
 
 
@@ -522,8 +262,12 @@
     <!-- Bootstrap JS (Local File) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+  </main>
+  <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="../assets/js/productPage.js"></script>
   <script type="module" src="../assets/js/global.js"></script>
+  
+  
  
 
 </body>
