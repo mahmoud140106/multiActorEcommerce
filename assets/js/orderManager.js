@@ -115,7 +115,7 @@ export class OrderManager {
   static getOrdersBySeller(sellerId) {
     const orders = StorageManager.load("orders") || [];
     return orders.filter((order) =>
-      order.items.some((item) => item.getSellerId() === sellerId)
+      order.items.some((item) => item.sellerId === sellerId)
     );
   }
 

@@ -1,158 +1,331 @@
-import { ProductManager } from './productManager.js';
-import { OrderManager } from './orderManager.js';
-import { ReviewManager } from './reviewManager.js';
-import { AuthManager } from './authManager.js';
+import { CategoryManager } from "./categoryManager.js";
+import { ProductManager } from "./productManager.js";
+import { ReviewManager } from "./reviewManager.js";
+import { OrderManager } from "./orderManager.js";
+import { StorageManager } from "./storageManager.js";
 
 
-const currentSeller = AuthManager.getCurrentSeller();
+document.addEventListener("DOMContentLoaded", () => {
+    let sellerId;
+  // Render dashboard
+  function renderDashboard() {
+    // Get current seller's ID (assuming it's available from auth context)
+     sellerId = StorageManager.load('currentUser')?.id;
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (!AuthManager.isSellerLoggedIn()) {
-        window.location.href = '/login.html';
+    // Summary cards
+    const products = ProductManager.getProductsBySeller(sellerId);
+    console.log("Rendering seller dashboard with products:", products);
+    const totalProductsEl = document.getElementById("totalProducts");
+    if (totalProductsEl) totalProductsEl.textContent = products.length;
+
+    const totalSales = products.reduce((sum, p) => sum + (p.soldCount || 0), 0);
+    const totalSalesEl = document.getElementById("totalSales");
+    if (totalSalesEl) totalSalesEl.textContent = totalSales;
+
+    let totalReviewsEl= document.getElementById('totalReviews');
+     const reviews=  ProductManager.getProductsBySeller(sellerId).reduce((sum, p) => sum + ReviewManager.getReviewsByProduct(p.id).length, 0)
+    console.log(reviews)
+     totalReviewsEl.textContent = reviews;
+
+    
+    const allOrders = OrderManager.getOrdersBySeller();
+    const pendingOrders = allOrders.filter(order => order.status === "pending").length;
+
+    document.getElementById("pendingOrders").innerText=pendingOrders;
+    // Chart 1:Total Products  (Bar Chart)
+ 
+
+    const barChartCanvas = document.getElementById("TotalProducts");
+    if (barChartCanvas) {
+      const barChartCtx = barChartCanvas.getContext("2d");
+      new Chart(barChartCtx, {
+        type: "bar",
+        data: {
+          labels: products.map((c) => c.name),
+          datasets: [
+            {
+              label: "Products Stock",
+              data: products.map((c) => c.stock),
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.6)",
+                "rgba(54, 162, 235, 0.6)",
+                "rgba(255, 206, 86, 0.6)",
+                "rgba(75, 192, 192, 0.6)",
+                "rgba(153, 102, 255, 0.6)",
+                "rgba(255, 159, 64, 0.6)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: { display: true, text: "Products Stock" },
+            },
+            x: {
+              title: { display: true, text: "Products Name" },
+            },
+          },
+        },
+      });
+    } else {
+      console.warn("Products chart canvas not found");
     }
-    loadSellerData();
+
+    // Chart 2: Total Sales 
+    const Sales = products
+      .map((product) => ({
+        name: product.name,
+        sold: products
+          .filter((p) => p.id === product.id)
+          .reduce((sum, p) => sum + (p.soldCount || 0), 0),
+      }))
+      .filter((product) => product.sold > 0);
+
+    const pieChartCanvas = document.getElementById("TotalSales");
+    const pieChartContainer = pieChartCanvas?.parentElement;
+    if (pieChartContainer && pieChartCanvas) {
+      if (Sales.length === 0) {
+        pieChartContainer.innerHTML = `
+          <div class="text-center text-muted">
+            <p>No sales data available yet.</p>
+          </div>
+        `;
+      } else {
+        const pieChartCtx = pieChartCanvas.getContext("2d");
+        new Chart(pieChartCtx, {
+          type: "pie",
+          data: {
+            labels: Sales.map((c) => c.name),
+            datasets: [
+              {
+                label: "Total Sales",
+                data: Sales.map((c) => c.sold),
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.6)",
+                  "rgba(54, 162, 235, 0.6)",
+                  "rgba(255, 206, 86, 0.6)",
+                  "rgba(75, 192, 192, 0.6)",
+                  "rgba(153, 102, 255, 0.6)",
+                  "rgba(255, 159, 64, 0.6)",
+                ],
+                borderColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              tooltip: {
+                callbacks: {
+                  label: (context) =>
+                    `${context.label}: ${context.raw} units sold`,
+                },
+              },
+            },
+          },
+        });
+      }
+    } else {
+      console.warn("Total Sales chart canvas or container not found");
+    }
+
+    // Chart 3: Total Reviews (Line Chart)
+    const TotalReviewsCanvas = document.getElementById("TotalReviews");
+    const TotalReviewsContainer = TotalReviewsCanvas?.parentElement;
+    if (TotalReviewsContainer && TotalReviewsCanvas) {
+      const months = [
+        "Jan 2025",
+        "Feb 2025",
+        "Mar 2025",
+        "Apr 2025",
+        "May 2025",
+        "Jun 2025",
+        "Jul 2025",
+        "Aug 2025",
+        "Sep 2025",
+        "Oct 2025",
+        "Nov 2025",
+        "Dec 2025",
+      ];
+      const reviewsPerProduct = products.map((product) => {
+        const productReviews = ReviewManager.getReviewsByProduct(product.id);
+        return {
+          name: product.name,
+          count: productReviews.length,
+        };
+      }).filter(p => p.count > 0); // Remove products with 0 reviews if needed
+    
+      if (reviewsPerProduct.length === 0) {
+        TotalReviewsContainer.innerHTML = `
+          <div class="text-center text-muted">
+            <p>No reviews data available yet.</p>
+          </div>
+        `;
+      } else {
+        const barChartCtx = TotalReviewsCanvas.getContext("2d");
+        new Chart(barChartCtx, {
+          type: "bar",
+          data: {
+            labels: reviewsPerProduct.map(p => p.name),
+            datasets: [
+              {
+                label: "Total Reviews",
+                data: reviewsPerProduct.map(p => p.count),
+                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Number of Reviews",
+                },
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: "Product Name",
+                },
+              },
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (context) =>
+                    `${context.label}: ${context.raw} reviews`,
+                },
+              },
+            },
+          },
+        });
+      }
+    }
+    
+    // Chart 4: Pending Orders per Product (Bar Chart)
+const pendingOrdersCanvas = document.getElementById("PendingOrders");
+const pendingOrdersContainer = pendingOrdersCanvas?.parentElement;
+
+if (pendingOrdersContainer && pendingOrdersCanvas) {
+  const allOrders = OrderManager.getOrdersBySeller();
+  const pendingOrders = allOrders.filter(order => order.status === "pending");
+
+  const pendingPerProductMap = {};
+
+  pendingOrders.forEach(order => {
+    order.items?.forEach(item => {
+      if (!pendingPerProductMap[item.productId]) {
+        pendingPerProductMap[item.productId] = 0;
+      }
+      pendingPerProductMap[item.productId] += item.quantity || 1;
+    });
+  });
+
+  const productLabels = [];
+  const productCounts = [];
+
+  for (const productId in pendingPerProductMap) {
+    const product = products.find(p => p.id == productId);
+    if (product) {
+      productLabels.push(product.name);
+      productCounts.push(pendingPerProductMap[productId]);
+    }
+  }
+
+  if (productLabels.length === 0) {
+    pendingOrdersContainer.innerHTML = `
+      <div class="text-center text-muted">
+        <p>No pending orders data available yet.</p>
+      </div>
+    `;
+  } else {
+    const pendingOrdersCtx = pendingOrdersCanvas.getContext("2d");
+    new Chart(pendingOrdersCtx, {
+      type: "bar",
+      data: {
+        labels: productLabels,
+        datasets: [
+          {
+            label: "Pending Orders",
+            data: productCounts,
+            backgroundColor: "rgba(255, 159, 64, 0.6)",
+            borderColor: "rgba(255, 159, 64, 1)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Order Quantity" },
+          },
+          x: {
+            title: { display: true, text: "Product Name" },
+          },
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) =>
+                `${context.label}: ${context.raw} pending units`,
+            },
+          },
+        },
+      },
+    });
+  }
+} else {
+  console.warn("Pending Orders chart canvas or container not found");
+}
+
+  }
+
+  // Initial render
+  renderDashboard();
 });
 
-async function loadSellerData() {
-    // جلب بيانات البائع
-    const products = ProductManager.getProductsBySeller(currentSeller.id);
-    const orders = OrderManager.getOrdersBySeller(currentSeller.id);
-    const reviews = ReviewManager.getReviewsBySeller(currentSeller.id);
-    
-    // تحديث واجهة المستخدم
-    updateSummaryCards(products, orders, reviews);
-    initializeCharts(products, orders, reviews);
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const currentPath = window.location.pathname;
 
-function updateSummaryCards(products, orders, reviews) {
-    document.getElementById('sellerTotalProducts').textContent = products.length;
-    document.getElementById('sellerMonthlySales').textContent = 
-        calculateMonthlySales(orders).toFixed(2);
-    document.getElementById('sellerPendingOrders').textContent = 
-        orders.filter(o => o.status === 'pending').length;
-    document.getElementById('sellerTotalReviews').textContent = reviews.length;
-}
+  const navLinks = document.querySelectorAll(".sidebar .nav-link");
 
-function initializeCharts(products, orders, reviews) {
-    // تنفيذ الرسوم البيانية هنا
+  navLinks.forEach((link) => {
+    const linkPath = link.getAttribute("href");
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// if (localStorage.getItem('sellerData')) {
-//     sellerData = JSON.parse(localStorage.getItem('sellerData'));
-// }
-//        // Sample Data Storage (Replace with actual data source)
-//         let sellerData = {
-//             products: [],
-//             orders: [
-//                 { id: 1, date: '2023-08-01', status: 'Delivered', total: 149.99 },
-//                 { id: 2, date: '2023-08-02', status: 'Processing', total: 89.99 }
-//             ]
-//         };
-
-//         // Initialize Dashboard
-//         document.addEventListener('DOMContentLoaded', () => {
-//             loadProducts();
-//             loadOrders();
-//             updateStats();
-//         });
-
-//         // Product Management Functions
-//         function toggleProductForm() {
-//             const form = document.getElementById('productForm');
-//             form.style.display = form.style.display === 'none' ? 'block' : 'none';
-//         }
-
-//         function addProduct() {
-//             const name = document.getElementById('productName').value;
-//             const price = parseFloat(document.getElementById('productPrice').value);
-
-//             if (name && price) {
-//                 const newProduct = {
-//                     id: sellerData.products.length + 1,
-//                     name: name,
-//                     price: price,
-//                     status: 'Active'
-//                 };
-
-//                 sellerData.products.push(newProduct);
-//                 loadProducts();
-//                 updateStats();
-//                 clearForm();
-//             }
-//         }
-
-//         function loadProducts() {
-//             const container = document.getElementById('productsList');
-//             container.innerHTML = sellerData.products.map(product => `
-//                 <div class="product-item">
-//                     <h4>${product.name}</h4>
-//                     <p>Price: $${product.price.toFixed(2)}</p>
-//                     <button onclick="editProduct(${product.id})">Edit</button>
-//                 </div>
-//             `).join('');
-//         }
-
-//         // Order Management Functions
-//         function loadOrders() {
-//             const tbody = document.getElementById('ordersBody');
-//             tbody.innerHTML = sellerData.orders.map(order => `
-//                 <tr>
-//                     <td>#${order.id}</td>
-//                     <td>${order.date}</td>
-//                     <td>${order.status}</td>
-//                     <td>$${order.total.toFixed(2)}</td>
-//                 </tr>
-//             `).join('');
-//         }
-
-//         // Statistics Functions
-//         function updateStats() {
-//             document.getElementById('active-products').textContent = 
-//                 sellerData.products.length;
-            
-//             const totalSales = sellerData.orders.reduce((sum, order) => sum + order.total, 0);
-//             document.getElementById('total-sales').textContent = `
-//                 $${totalSales.toFixed(2)}`;
-//         }
-
-//         function clearForm() {
-//             document.getElementById('productName').value = '';
-//             document.getElementById('productPrice').value = '';
-//             toggleProductForm();
-//         }
-
-//         // Edit Product (Sample Implementation)
-//         function editProduct(productId) {
-//             const product = sellerData.products.find(p => p.id === productId);
-//             if (product) {
-//                 document.getElementById('productName').value = product.name;
-//                 document.getElementById('productPrice').value = product.price;
-//                 toggleProductForm();
-//             }
-//         }
+    if (currentPath.includes(linkPath) && linkPath !== "#") {
+      link.classList.add("active");
+    } else if (currentPath === "/" && linkPath.includes("index.html")) {
+      link.classList.add("active");
+    }
+  });
+});
