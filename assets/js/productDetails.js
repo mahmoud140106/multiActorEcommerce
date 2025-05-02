@@ -247,7 +247,6 @@ document.getElementById("addTocart").addEventListener("click", function () {
   }
   CartManager.addToCart(product,productCount);
   updateNavbar(); // Update the navbar to reflect the new cart count
-  // showToast('Your item Added to cart successfully ' ,'success');
 });
 
 

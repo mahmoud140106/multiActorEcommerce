@@ -86,6 +86,7 @@ export function updateNavbar() {
   if (!navLinks || !navbar) return;
 
   if (currentUser && (currentUser.role === "admin" || currentUser.role === "seller")) {
+
     navbar.classList.add("d-none");
     return;
   }
