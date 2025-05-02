@@ -1,4 +1,6 @@
 import { showToast } from "./toast.js";
+import { MessageManager } from "./messageManager.js";
+import { StorageManager } from "./storageManager.js";
 
 const form = document.querySelector('.account-details form');
 const paymentBtn = document.getElementById('payment-btn');
@@ -32,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
 // Handle form submission (prevent page reload and update the sidebar / account overview)
 form.addEventListener('submit', (event) => {
   event.preventDefault(); // Prevents page reload
@@ -56,14 +57,12 @@ form.addEventListener('submit', (event) => {
   if (currentUser && currentUser.email) {
     localStorage.setItem(`userProfile_${currentUser.email}`, JSON.stringify(userProfile));
   }  
-  
 
   updateSidebarName();
   checkBirthday();
 
   showToast('Profile updated successfully!', 'success');
 });
-
 
 // Payment button: redirect user to the cart page
 paymentBtn.addEventListener('click', () => {
@@ -122,7 +121,6 @@ function updateSidebarName() {
   }
 }
 
-
 // Enable profile picture upload functionality
 function enableProfilePictureUpload() {
   const profilePicInput = document.getElementById('profile-pic-input');
@@ -168,69 +166,81 @@ function checkBirthday() {
 
 enableProfilePictureUpload();
 
-// Message Form Submission - Save to Local Storage
+// Message Form Submission - Save using MessageManager
 document.getElementById("contact-form").addEventListener("submit", function(event) {
   event.preventDefault();
 
-  let subject = document.getElementById("contact-subject").value;
-  let type = document.getElementById("message-type").value;
-  let content = document.getElementById("message-content").value;
+  const subject = document.getElementById("contact-subject").value.trim();
+  const type = document.getElementById("message-type").value;
+  const content = document.getElementById("message-content").value.trim();
 
-  let messages = JSON.parse(localStorage.getItem("customerMessages")) || [];
+  // Validate inputs
+  if (!subject) {
+    showToast("Subject cannot be empty.", "error");
+    return;
+  }
+  if (!type) {
+    showToast("Please select a message type.", "error");
+    return;
+  }
+  if (!content) {
+    showToast("Message content cannot be empty.", "error");
+    return;
+  }
 
-  let newMessage = {
-      id: Date.now(),
-      subject,
-      type,
-      content,
-      userEmail: currentUser?.email || "Anonymous",
-      timestamp: new Date().toLocaleString(),
-      status: "Open",
-      reply: ""
-  };
+  // Find admin user to send the message to
+  const users = StorageManager.load("users") || [];
+  const admin = users.find(u => u.role === "admin");
+  if (!admin) {
+    showToast("No admin found to send message.", "error");
+    return;
+  }
 
-  messages.push(newMessage);
-  localStorage.setItem("customerMessages", JSON.stringify(messages));
+  // Send message using MessageManager
+  MessageManager.sendMessage(currentUser.id, admin.id, subject, type, content);
 
   showToast("Message sent successfully!", "success");
+  document.getElementById("contact-subject").value = "";
+  document.getElementById("message-type").value = "";
+  document.getElementById("message-content").value = "";
   loadMessages(); // Refresh message history
 });
 
 // Load messages in customer profile
 function loadMessages() {
-  let messages = JSON.parse(localStorage.getItem("customerMessages")) || [];
-  let messageList = document.querySelector(".message-list");
-  messageList.innerHTML = ""; 
+  const messages = MessageManager.getMessagesForUser(currentUser.id);
+  const users = StorageManager.load("users") || [];
+  const admin = users.find(u => u.role === "admin");
+  const adminId = admin ? admin.id : null;
+  const messageList = document.querySelector(".message-list");
+  messageList.innerHTML = "";
 
-  messages.forEach((msg) => {
-      let messageItem = `
-          <div class="message-item">
-              <div class="message-header">
-                  <h4>${msg.type}: ${msg.subject}</h4>
-                  <span class="message-date">${msg.timestamp}</span>
-              </div>
-              <p><strong>Your Message:</strong> ${msg.content}</p>
-              <p><strong>Admin Reply:</strong> ${msg.reply ? msg.reply : "No reply yet"}</p>
-              <div class="message-status">
-                  <span class="status-badge ${msg.status === 'Open' ? 'status-open' : 'status-responded'}">
-                      ${msg.status}
-                  </span>
-              </div>
-          </div>`;
-      messageList.innerHTML += messageItem;
+  const filteredMessages = messages.filter(message => 
+    message.recipientId === currentUser.id || 
+    (message.senderId === currentUser.id && message.recipientId === adminId)
+  );
+
+  if (filteredMessages.length === 0) {
+    messageList.innerHTML = '<p class="text-muted">No messages available.</p>';
+    return;
+  }
+
+  filteredMessages.forEach((msg) => {
+    const senderName = msg.senderId === currentUser.id ? "You" : "Admin";
+    const messageItem = `
+      <div class="message-item">
+        <div class="message-header">
+          <h4>${msg.type}: ${msg.subject}</h4>
+          <span class="message-date">${new Date(msg.timestamp).toLocaleString()}</span>
+        </div>
+        <p><strong>Sender:</strong> ${senderName}</p>
+        <p><strong>Message:</strong> ${msg.content}</p>
+      </div>`;
+    messageList.innerHTML += messageItem;
   });
 }
 
-// Delete messages from Local Storage
-function deleteMessage(index) {
-  let messages = JSON.parse(localStorage.getItem("customerMessages")) || [];
-  messages.splice(index, 1);
-  localStorage.setItem("customerMessages", JSON.stringify(messages));
-  loadMessages(); // Refresh message list
-}
-
 window.onload = loadMessages;
-
 
 // Update the "Account Overview" section using data from the "My Details" section
 // function updateAccountOverview() {

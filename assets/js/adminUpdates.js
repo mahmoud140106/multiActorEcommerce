@@ -5,48 +5,48 @@ import { showToast } from "./toast.js";
 document.addEventListener("DOMContentLoaded", () => {
   const currentUser = StorageManager.load("currentUser");
   if (!currentUser || currentUser.role !== "admin") {
-    showToast("You must be logged in as an Admin to view updates.", "error");
+    showToast("You must be logged in as an Admin to view messages.", "error");
     window.location.href = "/index.html";
     return;
   }
 
   const navLinks = document.querySelectorAll(".sidebar .nav-link");
-  navLinks.forEach(link => {
-    if (link.getAttribute("href").includes("updates.html")) {
+  navLinks.forEach((link) => {
+    if (link.getAttribute("href").includes("messages.html")) {
       link.classList.add("active");
     }
   });
 
-  let filteredConversations = [];
+  let filteredMessages = [];
   let currentPage = 1;
   const itemsPerPage = 5;
   let sortColumn = "id";
   let sortDirection = "asc";
-  let selectedSender = ""; // Default filter
+  let selectedUser = "";
 
-  function loadConversations() {
-    filterConversationsBySender();
+  function loadMessages() {
+    filterMessagesByUser();
   }
 
-  function populateSenderFilter() {
+  function populateUserFilter() {
     const senderFilter = document.getElementById("senderFilter");
     const users = StorageManager.load("users") || [];
-    const senders = new Set();
+    const userIds = new Set();
     const messages = MessageManager.getMessagesForUser(currentUser.id);
-    messages.forEach(message => {
-      if (message.senderId !== currentUser.id) {
-        const otherUserId = message.senderId;
-        senders.add(otherUserId);
-      }
+    messages.forEach((message) => {
+      userIds.add(message.senderId);
+      userIds.add(message.recipientId);
     });
 
-    senders.forEach(senderId => {
-      const sender = users.find(u => u.id === senderId);
-      if (sender) {
-        const option = document.createElement("option");
-        option.value = senderId;
-        option.textContent = `${sender.userName} (${sender.role})`;
-        senderFilter.appendChild(option);
+    userIds.forEach((userId) => {
+      if (userId !== currentUser.id) {
+        const user = users.find((u) => u.id === userId);
+        if (user) {
+          const option = document.createElement("option");
+          option.value = userId;
+          option.textContent = `${user.userName} (${user.role})`;
+          senderFilter.appendChild(option);
+        }
       }
     });
   }
@@ -54,9 +54,25 @@ document.addEventListener("DOMContentLoaded", () => {
   function populateRecipientFilter() {
     const recipientFilter = document.getElementById("recipientFilter");
     const users = StorageManager.load("users") || [];
-    const sellersAndCustomers = users.filter(user => user.role === "seller" || user.role === "customer");
+    console.log("Users loaded for recipient filter:", users);
+    const sellersAndCustomers = users.filter(
+      (user) => user.role === "seller" || user.role === "customer"
+    );
 
-    sellersAndCustomers.forEach(user => {
+    if (sellersAndCustomers.length === 0) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "No recipients available";
+      option.disabled = true;
+      recipientFilter.appendChild(option);
+      showToast(
+        "No sellers or customers available to send messages to.",
+        "warning"
+      );
+      return;
+    }
+
+    sellersAndCustomers.forEach((user) => {
       const option = document.createElement("option");
       option.value = user.id;
       option.textContent = `${user.userName} (${user.role})`;
@@ -64,93 +80,61 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function hasAdminReplied(conversation) {
-    const messages = conversation.messages;
-    const lastIncomingMessageIndex = messages
-      .map((msg, index) => (msg.senderId !== currentUser.id ? index : -1))
-      .reduce((max, curr) => Math.max(max, curr), -1);
-    
-    if (lastIncomingMessageIndex === -1) return false;
-    
-    return messages.slice(lastIncomingMessageIndex + 1).some(msg => msg.senderId === currentUser.id);
-  }
-
-  function getConversations() {
+  function getMessages() {
     const messages = MessageManager.getMessagesForUser(currentUser.id);
     const users = StorageManager.load("users") || [];
-    const groupedMessages = {};
-
-    messages.forEach(message => {
-      const otherUserId = message.senderId === currentUser.id ? message.recipientId : message.senderId;
-      if (!groupedMessages[otherUserId]) {
-        groupedMessages[otherUserId] = [];
-      }
-      groupedMessages[otherUserId].push(message);
-    });
-
-    const conversations = [];
-    Object.entries(groupedMessages).forEach(([otherUserId, userMessages], index) => {
-      const hasIncomingMessages = userMessages.some(message => message.senderId !== currentUser.id);
-      if (hasIncomingMessages) {
-        conversations.push({
-          id: index + 1,
-          otherUserId: parseInt(otherUserId),
-          messages: userMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)),
-          latestTimestamp: userMessages.reduce((latest, msg) => {
-            const msgDate = new Date(msg.timestamp);
-            return latest > msgDate ? latest : msgDate;
-          }, new Date(userMessages[0].timestamp))
-        });
-      }
-    });
-
-    return conversations;
+    console.log("Messages loaded:", messages);
+    return messages
+      .filter((message) => message.senderId === currentUser.id || message.recipientId === currentUser.id)
+      .map((message, index) => ({
+        id: index + 1,
+        senderId: message.senderId,
+        sender: users.find((u) => u.id === message.senderId)?.userName || "Unknown",
+        recipientId: message.recipientId,
+        recipient: users.find((u) => u.id === message.recipientId)?.userName || "Unknown",
+        subject: message.subject || "No Subject",
+        type: message.type || "other",
+        content: message.content,
+        timestamp: new Date(message.timestamp),
+        originalMessageId: message.id,
+      }));
   }
 
-  function filterConversationsBySender() {
-    const conversations = getConversations();
-    filteredConversations = conversations.filter(conversation =>
-      selectedSender === "" ? true : conversation.otherUserId === parseInt(selectedSender)
+  function filterMessagesByUser() {
+    const messages = getMessages();
+    filteredMessages = messages.filter((message) =>
+      selectedUser === ""
+        ? true
+        : message.senderId === parseInt(selectedUser) || message.recipientId === parseInt(selectedUser)
     );
     currentPage = 1;
-    renderConversationsTable();
+    renderMessagesTable();
   }
 
-  function renderConversationsTable() {
-    const tbody = document.getElementById("conversationsTableBody");
+  function renderMessagesTable() {
+    const tbody = document.getElementById("messagesTableBody");
     tbody.innerHTML = "";
-    if (filteredConversations.length === 0) {
+    if (filteredMessages.length === 0) {
       const row = document.createElement("tr");
-      row.innerHTML = `
-        <td colspan="6" class="text-center">No conversations available</td>
-      `;
+      row.innerHTML = `<td colspan="7" class="text-center">No messages available</td>`;
       tbody.appendChild(row);
       return;
     }
     const start = (currentPage - 1) * itemsPerPage;
     const end = start + itemsPerPage;
-    const paginatedConversations = filteredConversations.slice(start, end);
+    const paginatedMessages = filteredMessages.slice(start, end);
 
-    const users = StorageManager.load("users") || [];
-    paginatedConversations.forEach(conversation => {
-      const otherUser = users.find(u => u.id === conversation.otherUserId);
-      const lastMessage = conversation.messages[conversation.messages.length - 1];
-      const isReplied = hasAdminReplied(conversation);
+    paginatedMessages.forEach((message) => {
       const row = document.createElement("tr");
-      if (isReplied) {
-        row.classList.add("replied");
-      }
       row.innerHTML = `
-        <td>${conversation.id}</td>
+        <td>${message.id}</td>
+        <td>${message.subject}</td>
+        <td>${message.type}</td>
+        <td class="d-none d-md-table-cell">${message.sender}</td>
+        <td class="d-none d-md-table-cell">${message.recipient}</td>
+        <td class="d-none d-md-table-cell">${message.timestamp.toLocaleString()}</td>
         <td>
-          ${otherUser ? otherUser.userName : "Unknown"}
-          ${isReplied ? '<i class="fas fa-check replied-icon"></i>' : ''}
-        </td>
-        <td>${otherUser ? otherUser.role : "unknown"}</td>
-        <td>${lastMessage.content.substring(0, 10)}${lastMessage.content.length > 30 ? "..." : ""}</td>
-        <td>${new Date(lastMessage.timestamp).toLocaleString()}</td>
-        <td>
-          <button class="btn btn-sm btn-primary view-message-btn" data-id="${conversation.otherUserId}">View</button>
+          <button class="btn btn-sm btn-primary view-message-btn" data-id="${message.id}">View</button>
         </td>
       `;
       tbody.appendChild(row);
@@ -162,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderPagination() {
     const pagination = document.getElementById("pagination");
     pagination.innerHTML = "";
-    const pageCount = Math.ceil(filteredConversations.length / itemsPerPage);
+    const pageCount = Math.ceil(filteredMessages.length / itemsPerPage);
 
     const prevLi = document.createElement("li");
     prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
@@ -183,14 +167,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.changePage = (page) => {
-    if (page < 1 || page > Math.ceil(filteredConversations.length / itemsPerPage)) return;
+    if (page < 1 || page > Math.ceil(filteredMessages.length / itemsPerPage))
+      return;
     currentPage = page;
-    renderConversationsTable();
+    renderMessagesTable();
   };
 
   window.filterBySender = () => {
-    selectedSender = document.getElementById("senderFilter").value;
-    filterConversationsBySender();
+    selectedUser = document.getElementById("senderFilter").value;
+    filterMessagesByUser();
   };
 
   window.sortTable = (column) => {
@@ -201,126 +186,113 @@ document.addEventListener("DOMContentLoaded", () => {
       sortDirection = "asc";
     }
 
-    filteredConversations.sort((a, b) => {
-      const users = StorageManager.load("users") || [];
-      let valA, valB;
-
-      if (column === "sender") {
-        const senderA = users.find(u => u.id === a.otherUserId);
-        const senderB = users.find(u => u.id === b.otherUserId);
-        valA = senderA ? senderA.userName : "";
-        valB = senderB ? senderB.userName : "";
-      } else if (column === "role") {
-        const senderA = users.find(u => u.id === a.otherUserId);
-        const senderB = users.find(u => u.id === b.otherUserId);
-        valA = senderA ? senderA.role : "";
-        valB = senderB ? senderB.role : "";
-      } else if (column === "message") {
-        valA = a.messages[a.messages.length - 1].content;
-        valB = b.messages[b.messages.length - 1].content;
-      } else if (column === "date") {
-        valA = new Date(a.latestTimestamp);
-        valB = new Date(b.latestTimestamp);
-      } else {
-        valA = a[column] || "";
-        valB = b[column] || "";
+    filteredMessages.sort((a, b) => {
+      let valA = a[column] || "";
+      let valB = b[column] || "";
+      if (column === "date") {
+        valA = a.timestamp;
+        valB = b.timestamp;
+      } else if (column === "recipient") {
+        valA = a.recipient;
+        valB = b.recipient;
       }
-
       if (typeof valA === "string") {
         return sortDirection === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
       }
       return sortDirection === "asc" ? valA - valB : valB - valA;
     });
 
-    document.querySelectorAll("th span").forEach(span => (span.innerHTML = ""));
+    document.querySelectorAll("th span").forEach((span) => (span.innerHTML = ""));
     document.getElementById(`sort-${column}`).innerHTML = sortDirection === "asc" ? "↑" : "↓";
 
     currentPage = 1;
-    renderConversationsTable();
+    renderMessagesTable();
   };
 
-  window.searchConversations = () => {
+  window.searchMessages = () => {
     const query = document.getElementById("searchInput").value.toLowerCase();
-    const conversations = getConversations();
-    const users = StorageManager.load("users") || [];
-    filteredConversations = conversations.filter(conversation => {
-      const otherUser = users.find(u => u.id === conversation.otherUserId);
-      return (
-        (otherUser && otherUser.userName.toLowerCase().includes(query)) ||
-        (otherUser && otherUser.role.toLowerCase().includes(query)) ||
-        conversation.messages.some(msg => msg.senderId !== currentUser.id && msg.content.toLowerCase().includes(query))
-      );
-    });
+    const messages = getMessages();
+    filteredMessages = messages.filter(
+      (message) =>
+        message.sender.toLowerCase().includes(query) ||
+        message.recipient.toLowerCase().includes(query) ||
+        message.subject.toLowerCase().includes(query) ||
+        message.type.toLowerCase().includes(query) ||
+        message.content.toLowerCase().includes(query)
+    );
     currentPage = 1;
-    renderConversationsTable();
+    renderMessagesTable();
   };
 
-  function viewMessage(otherUserId) {
-    const conversation = filteredConversations.find(c => c.otherUserId === parseInt(otherUserId));
-    if (!conversation) {
-      showToast("Conversation not found.", "error");
+  function viewMessage(messageId) {
+    const message = filteredMessages.find((m) => m.id === parseInt(messageId));
+    if (!message) {
+      showToast("Message not found.", "error");
       return;
     }
 
-    const users = StorageManager.load("users") || [];
-    const otherUser = users.find(u => u.id === conversation.otherUserId);
-    document.getElementById("detail-sender").textContent = otherUser ? `${otherUser.userName} (${otherUser.role})` : "Unknown";
-    
-    const detailMessages = document.getElementById("detail-messages");
-    detailMessages.innerHTML = "<strong>Messages:</strong>";
-    const incomingMessages = conversation.messages.filter(message => message.senderId !== currentUser.id);
-    if (incomingMessages.length === 0) {
-      detailMessages.innerHTML += `<p class="text-muted">No incoming messages.</p>`;
-    } else {
-      incomingMessages.forEach(message => {
-        detailMessages.innerHTML += `
-          <div class="message-item received p-3 bg-light rounded mb-2">
-            <p class="mb-1">${message.content}</p>
-            <small class="text-muted">${new Date(message.timestamp).toLocaleString()}</small>
-          </div>`;
-      });
-    }
-
-    document.getElementById("admin-response").value = "";
-    const sendResponseBtn = document.getElementById("send-response-btn");
-    sendResponseBtn.dataset.id = otherUserId;
+    document.getElementById("detail-sender").textContent = message.sender;
+    document.getElementById("detail-recipient").textContent = message.recipient;
+    document.getElementById("detail-subject").textContent = message.subject;
+    document.getElementById("detail-type").textContent = message.type;
+    document.getElementById("detail-content").textContent = message.content;
+    document.getElementById("detail-date").textContent = message.timestamp.toLocaleString();
 
     new bootstrap.Modal(document.getElementById("messageDetailModal")).show();
   }
 
-  function sendAdminReply(otherUserId) {
-    const replyInput = document.getElementById("admin-response").value.trim();
-    if (!replyInput) {
-      showToast("Reply cannot be empty.", "error");
-      return;
-    }
-
-    MessageManager.sendMessage(currentUser.id, parseInt(otherUserId), replyInput);
-    showToast("Reply sent successfully!", "success");
-    loadConversations();
-    new bootstrap.Modal(document.getElementById("messageDetailModal")).hide();
-  }
-
   function sendMessageFromModal() {
     const recipientId = document.getElementById("recipientFilter").value;
+    const subject = document.getElementById("messageSubject").value.trim();
+    const type = document.getElementById("messageType").value;
     const content = document.getElementById("messageContent").value.trim();
+
+    if (!recipientId) {
+      document.getElementById("recipientFilter-error").style.display = "block";
+      document.getElementById("recipientFilter").classList.add("is-invalid");
+      return;
+    }
+    if (!subject) {
+      document.getElementById("messageSubject-error").textContent = "Subject cannot be empty.";
+      document.getElementById("messageSubject-error").style.display = "block";
+      document.getElementById("messageSubject").classList.add("is-invalid");
+      return;
+    }
+    if (!type) {
+      document.getElementById("messageType-error").textContent = "Type cannot be empty.";
+      document.getElementById("messageType-error").style.display = "block";
+      document.getElementById("messageType").classList.add("is-invalid");
+      return;
+    }
     if (!content) {
       document.getElementById("messageContent-error").textContent = "Message cannot be empty.";
       document.getElementById("messageContent-error").style.display = "block";
       document.getElementById("messageContent").classList.add("is-invalid");
       return;
     }
-    if (!recipientId) {
-      showToast("Please select a recipient.", "error");
-      return;
-    }
-    MessageManager.sendMessage(currentUser.id, parseInt(recipientId), content);
+
+    MessageManager.sendMessage(
+      currentUser.id,
+      parseInt(recipientId),
+      subject,
+      type,
+      content
+    );
     showToast("Message sent successfully!", "success");
+    document.getElementById("recipientFilter").value = "";
+    document.getElementById("messageSubject").value = "";
+    document.getElementById("messageType").value = "";
     document.getElementById("messageContent").value = "";
+    document.getElementById("recipientFilter-error").style.display = "none";
+    document.getElementById("messageSubject-error").style.display = "none";
+    document.getElementById("messageType-error").style.display = "none";
     document.getElementById("messageContent-error").style.display = "none";
+    document.getElementById("recipientFilter").classList.remove("is-invalid");
+    document.getElementById("messageSubject").classList.remove("is-invalid");
+    document.getElementById("messageType").classList.remove("is-invalid");
     document.getElementById("messageContent").classList.remove("is-invalid");
     new bootstrap.Modal(document.getElementById("sendMessageModal")).hide();
-    loadConversations();
+    loadMessages();
   }
 
   const confirmSendMessageBtn = document.getElementById("confirmSendMessageBtn");
@@ -332,17 +304,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.body.addEventListener("click", (event) => {
     if (event.target.classList.contains("view-message-btn")) {
-      const otherUserId = event.target.dataset.id;
-      viewMessage(otherUserId);
+      const messageId = event.target.dataset.id;
+      viewMessage(messageId);
     }
   });
 
-  document.getElementById("send-response-btn").addEventListener("click", () => {
-    const otherUserId = document.getElementById("send-response-btn").dataset.id;
-    sendAdminReply(otherUserId);
-  });
-
-  populateSenderFilter();
+  populateUserFilter();
   populateRecipientFilter();
-  loadConversations();
+  loadMessages();
 });
