@@ -284,7 +284,7 @@ document.querySelector("form").addEventListener("submit", function (e) {
         currentRow.querySelectorAll('td')[4].innerText = e.target[4].value;
 
         UserManager.updateUser(rowIndex + 1, e.target[1].value,e.target[2].value, e.target[3].value, e.target[4].value);
-        r = null;
+        rowIndex = null;
 
         bootstrap.Modal.getInstance(document.getElementById('myModal')).hide();
         
