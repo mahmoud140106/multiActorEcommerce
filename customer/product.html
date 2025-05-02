@@ -314,21 +314,8 @@
 
 
   <!--special offer -->
-  <div class="mb-4">
-    <label class="form-label fw-bold mb-2">Special Offers</label>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="bestSeller">
-      <label class="form-check-label" for="bestSeller">Best Seller</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="newArrivals">
-      <label class="form-check-label" for="newArrivals">New Arrivals</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="onSale">
-      <label class="form-check-label" for="onSale">On Sale</label>
-    </div>
-  </div>
+  <!-- 
+   -->
 <!-- filter brand -->
   <div class="mb-4">
     <label for="filterBrand" class="form-label fw-bold">Brand</label>
@@ -364,7 +351,7 @@
     </div>
   </div> -->
 <!-- filter gender -->
-  <div class="mb-4">
+  <!-- <div class="mb-4">
     <label for="filterGender" class="form-label fw-bold">Gender</label>
     <select class="form-select" id="filterGender">
       <option value="All">All</option>
@@ -372,7 +359,7 @@
       <option value="Women">Women</option>
    
     </select>
-  </div>
+  </div> -->
 
     </aside>
 
@@ -425,15 +412,17 @@
     </section>
 
 <!--  -->
-<!-- <nav aria-label="Page navigation example mb-3 ">
+<nav aria-label="Page navigation example mb-3 ">
   <ul class="pagination ">
-    <li class="page-item"><a class="product text-decoration-none" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link " href="#">Next</a></li>
+    <li class="page-item"><a class="product text-decoration-none" href="#"onclick="previousPage()">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-page="1" onclick="changePage(1)">1</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-page="2" onclick="changePage(2)">2</a></li>
+    <!-- <li class="page-item"><a class="page-link" href="#" data-page="3" onclick="changePage(3)">3</a></li> -->
+    <li class="page-item"><a class="page-link " href="#"onclick="nextPage()">Next</a></li>
   </ul>
-</nav> -->
+</nav>
+
+
 
 
 
@@ -524,6 +513,8 @@
 
   <script type="module" src="../assets/js/productPage.js"></script>
   <script type="module" src="../assets/js/global.js"></script>
+  
+  
  
 
 </body>
