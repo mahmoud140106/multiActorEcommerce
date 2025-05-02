@@ -48,18 +48,11 @@ window.addEventListener("load", function() {
       </div>
     <br/>
       `
-      document.getElementById('Subtotal').textContent = `$${(product.price.toFixed(2))*productCount}`;
-    
-      
-      document.getElementById("totalPrice").textContent = `$${(product.price + 20.00).toFixed(2)}`;
-       
-      
     }
 
 
     else if(cart){
       let summary= document.getElementById("summary");
-      let subtotal=0;
       cart.forEach((product,index)=>{
       summary.innerHTML += 
       `
@@ -78,16 +71,16 @@ window.addEventListener("load", function() {
       </div>
     <br/>
       `
-      subtotal += product.price*product.quantity;
-      document.getElementById('Subtotal').textContent = `$${subtotal.toFixed(2)}`;
-    
-      
-      document.getElementById("totalPrice").textContent = `$${(subtotal + 90.00).toFixed(2)}`;
-       
       });
-
-
     }
+
+    const cartSummary = CartManager.calculateOrderSummary();
+
+    if (cartSummary) {
+      document.getElementById('Subtotal').textContent = `$${cartSummary.subtotal.toFixed(2)}`;
+      document.getElementById("totalPrice").textContent = `$${cartSummary.total.toFixed(2)}`;
+    }
+
     document.querySelectorAll(".summaryImg").forEach((img) => {
       img.addEventListener("click", function () {
         const id = img.getAttribute("product-id");
