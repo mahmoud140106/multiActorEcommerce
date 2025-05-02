@@ -44,7 +44,7 @@ window.addEventListener("load", function() {
           <p class="mb-0" id="productName">${product.name} </p>
           <small class="text-muted " id="Productdetails">${product.name} / ${productCount} pieces  </small>
         </div>
-        <span class=" fw-bold Subtotal text-danger" >$${product.price.toFixed(2)}</span>
+        <span class=" fw-bold Subtotal text-danger" >$${product.discountedPrice?product.discountedPrice.toFixed(2):product.price.toFixed(2)}</span>
       </div>
     <br/>
       `
@@ -52,6 +52,7 @@ window.addEventListener("load", function() {
 
 
     else if(cart){
+      console.log(cart)
       let summary= document.getElementById("summary");
       cart.forEach((product,index)=>{
       summary.innerHTML += 
@@ -66,7 +67,7 @@ window.addEventListener("load", function() {
           <p class="mb-0" id="productName${index}">${product.name} </p>
           <small class="text-muted " id="Productdetails">${product.name} / ${product.quantity} pieces </small>
         </div>
-        <span class=" fw-bold Subtotal text-danger" >$${(product.price.toFixed(2))*product.quantity}</span>
+        <span class=" fw-bold Subtotal text-danger" >$${(product.discountedPrice?product.discountedPrice.toFixed(2):product.price.toFixed(2))*product.quantity}</span>
         
       </div>
     <br/>
