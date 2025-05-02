@@ -154,7 +154,7 @@ table th:hover {
 
 .pagination .page-link {
   border: none;
-  border-radius: 50%;
+  border-radius: 50% !important;
   margin: 0 6px;
   color: var(--secondary-color);
   background: #ffffff;
@@ -169,12 +169,12 @@ table th:hover {
 }
 
 .pagination .page-item.active .page-link {
-  background: var(--gradient);
+  background-color: var(--primary-color);
   color: #ffffff;
 }
 
 .pagination .page-item .page-link:hover {
-  background: var(--gradient);
+  background-color: var(--primary-color);
   color: #ffffff;
 }
 

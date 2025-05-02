@@ -57,7 +57,7 @@ order.items.forEach((item,index)=>{
         </div>
       </div>
       <div class="col-3 col-md-4 text-end">
-        <h5 class="fw-bold">$${product.price.toFixed(2)}</h5>
+        <h5 class="fw-bold">$${(product.discountedPrice?product.discountedPrice.toFixed(2):product.price.toFixed(2))}</h5>
        
       </div>
     </div>
