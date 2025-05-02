@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users Dashboard</title>
+    <link rel="stylesheet" href="../../assets/libs/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="../assets/css/dashboard.css" rel="stylesheet" />
+    <link href="../assets/css/dashboard.css" rel="stylesheet" />
+</head>
+
+<body>
+
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" aria-label="Toggle Sidebar" title="Show Menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+
+
+    <main>
+
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="position-sticky">
+                <a class="navbar-brand d-flex align-items-center text-white mb-2 pb-2"
+                    style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);">
+                    <i class="fas fa-shopping-bag "></i>
+                    <span class="omnishop-logo">OmniShop</span>
+                </a>
+                <ul class="nav flex-column navbar-nav px-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard.html">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/categories.html">
+                            <i class="fa-solid fa-list me-2"></i>Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/products.html">
+                            <i class="fas fa-box-open me-2"></i>Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/messages.html">
+                            <i class="fas fa-envelope me-2"></i>Messages
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users.html">
+                            <i class="fas fa-user me-2"></i>Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class=" p-2  m-auto  d-flex justify-content-center">
+
+            <div class="w-100 my-4">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h1 class="display-5">Manage Users</h1>
+                        <p class="lead">Add, edit,Display Users products in store</p>
+                    </div>
+                </div>
+                <div class="row  gap-2 gap-md-0">
+                    <div class="row mb-4 gap-2 gap-md-0 justify-content-between">
+                        <div class="col-md-4 search-container w-50">
+                            <input placeholder="Search About User through Name , Id , Role"
+                                class="w-100 form-control me-5" type="search" name="searchAboutUser"
+                                id="searchAboutUser">
+
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button id="addUsers" class="btn btn-primary btn-gradient" data-bs-toggle="modal"
+                                data-bs-target="#myModal">
+                                Add User
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <input placeholder="Search About User through Name , Id , Role" class="w-50 form-control me-5" type="search" name="searchAboutUser" id="searchAboutUser">
+                    <button id="addUsers" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#myModal">Add</button> -->
+        </section>
+
+        <section class="card p-2  d-flex justify-content-center shadow-lg border-0 m-auto">
+
+            <table class="table text-center table-striped ">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>PassWord</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </section>
+
+
+
+        <div class="d-flex justify-content-center my-3" id="pagination"></div>
+
+    </main>
+
+
+
+
+
+    <div class="">
+        <div id="myModal" class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <form action="" method="get">
+                            <div class="mb-3  d-flex">
+                                <label for="UserID" class="col-sm-2 col-form-label w-25">User ID</label>
+                                <div class="col-sm-10 w-75">
+                                    <input type="number" readonly class="form-control" id="UserID" name="UserID">
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex">
+                                <label for="UserName" class="col-sm-2 col-form-label w-25">User Name</label>
+                                <div class="col-sm-10 w-75">
+                                    <input type="text" required class="form-control" id="UserName" name="UserName">
+                                </div>
+                            </div>
+
+                            <div class="mb-3 d-flex">
+                                <label for="staticEmail" class="col-sm-2 col-form-label w-25">Email</label>
+                                <div class="col-sm-10 w-75">
+                                    <input type="email"  class="form-control " id="staticEmail" name="userEmail" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 d-flex">
+                                <label for="inputPassword" class="col-sm-2 col-form-label w-25">Password</label>
+                                <div class="col-sm-10 w-75">
+                                    <input type="password"  class="form-control" id="inputPassword"
+                                        name="inputPassword"  required>
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex">
+                                <label for="role" class="col-sm-2 col-form-label w-25">User Role</label>
+                                <div class="col-sm-10 w-75">
+                                    <select id="role" name="role" class="form-select" required
+                                        aria-label="Default select example">
+                                        <option value="" disabled selected >Select Role</option>
+                                        <option value="seller">Seller</option>
+                                        <option value="customer">Customer</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="mb-3 d-flex justify-content-center">
+                                <input class="btn btn-outline-primary p-2 px-4"  type="submit"
+                                    value="Save">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="deleteAlert" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ">
+                    <p>Are U sure U want To Delete This User?</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="DeleteUser" type="button" class="btn btn-danger">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../assets/js/admin-users.js"></script>
+</body>
+
+</html>
