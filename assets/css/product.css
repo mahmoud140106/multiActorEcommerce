@@ -1,51 +1,3 @@
-.pagination {
-
-  display: flex;
-  padding-left: 550px;
-  text-align: center;
-  margin-top:-100px ;
-  
-}
-a.product{
-  text-decoration: none;
-  margin: 50px;
-  padding: 5px;
-  border: none;
-  border-radius: 0 20px 20px  0;
-  margin: 0 6px;
-  color:var(--secondary-color);
-  background: #ffffff;
-  box-shadow: var(--card-shadow);
-  width: 50;
-  height: 36px;
-  display: flex;
-  font-size: 0.9rem;
-  transition: var(--transition);
-}
-a.product:hover{
-  background: var(--primary-color) !important;
-  color: #ffffff;
-}
-.page-item:first-child .page-link:hover {
- 
-
-  padding: 5px 35px 2px 35px; 
- 
-}
-.pagination .page-item .page-link:hover {
-  background: var(--primary-color) !important;
-}
-
-li.page-item{
-  padding:10px ;
-}
-
-/*  */
-.pagination .page-link.active{
-  background-color: #212529;
-  color: #ffffff;
-  border-color: #ffffff;
-}
 
 /*  */
 
@@ -67,7 +19,8 @@ li.page-item{
 /*  */
 
 aside {
-  height: calc(100vh - 100px);
+  /* height: calc(100vh - 100px); */
+  height: fit-content;
   position: sticky;
   top: 20px;
   overflow-y: auto;
