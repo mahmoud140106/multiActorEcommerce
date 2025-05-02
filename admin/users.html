@@ -67,6 +67,9 @@
                 </ul>
             </div>
         </nav>
+
+        <div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055;"></div>
+        
         <section class=" p-2  m-auto  d-flex justify-content-center">
 
             <div class="w-100 my-4">
@@ -79,7 +82,7 @@
                 <div class="row  gap-2 gap-md-0">
                     <div class="row mb-4 gap-2 gap-md-0 justify-content-between">
                         <div class="col-md-4 search-container w-50">
-                            <input placeholder="Search About User through Name , Id , Role"
+                            <input placeholder="Search About User through its Name "
                                 class="w-100 form-control me-5" type="search" name="searchAboutUser"
                                 id="searchAboutUser">
 
@@ -211,11 +214,10 @@
         </div>
     </div>
 
-
-
     <!-- Bootstrap JS -->
     <script src="../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="../assets/js/admin-users.js"></script>
+    <script type="module" src="../assets/js/auth.js"></script>
 </body>
 
 </html>
