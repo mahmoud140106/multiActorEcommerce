@@ -1,11 +1,13 @@
 import { CartManager } from "./cartManager.js";
 import { ProductManager } from "./productManager.js";
 import { CategoryManager } from "./categoryManager.js";
+import { updateNavbar } from "./global.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   // Initial renders
   renderWishlist();
   renderRecommendedProducts();
+  updateNavbar();
 });
 
 function renderWishlist() {
@@ -124,53 +126,53 @@ function renderWishlist() {
   addEventListeners();
 }
 
-function generateColorOptions(selectedColor) {
-  const colors = ["primary", "dark", "secondary", "danger", "white"];
-  return colors
-    .map((color) => {
-      const isSelected = color === selectedColor.toLowerCase();
-      return `<div class="color-option bg-${color} ${
-        isSelected ? "selected" : ""
-      }"></div>`;
-    })
-    .join("");
-}
-
 function addEventListeners() {
+  // Remove existing event listeners to prevent duplication
+  const clearWishlistBtn = document.querySelector(".btn-danger.rounded-pill");
+  if (clearWishlistBtn) {
+    const newClearWishlistBtn = clearWishlistBtn.cloneNode(true);
+    clearWishlistBtn.parentNode.replaceChild(newClearWishlistBtn, clearWishlistBtn);
+    newClearWishlistBtn.addEventListener("click", () => {
+      if (CartManager.clearWishlist()) {
+        renderWishlist();
+        updateNavbar();
+      }
+    });
+  }
+
   // Remove item buttons
   document.querySelectorAll(".remove-item-btn").forEach((button) => {
-    button.addEventListener("click", function () {
+    const newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button);
+    newButton.addEventListener("click", function () {
       const productId = this.getAttribute("data-id");
       CartManager.removeFromWishlist(productId);
       renderWishlist();
+      updateNavbar();
     });
   });
 
   // Add to cart buttons
   document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
-    button.addEventListener("click", function () {
+    const newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button);
+    newButton.addEventListener("click", function () {
       const productId = this.getAttribute("data-id");
       CartManager.addToCartFromWishlist(productId);
       renderWishlist();
+      updateNavbar();
     });
   });
-
-  // Clear wishlist button
-  const clearWishlistBtn = document.querySelector(".btn-danger.rounded-pill");
-  if (clearWishlistBtn) {
-    clearWishlistBtn.addEventListener("click", () => {
-      if (CartManager.clearWishlist()) {
-        renderWishlist();
-      }
-    });
-  }
 
   // Add all to cart button
   const addAllToCartBtn = document.getElementById("add-all-to-cart");
   if (addAllToCartBtn) {
-    addAllToCartBtn.addEventListener("click", function () {
+    const newAddAllToCartBtn = addAllToCartBtn.cloneNode(true);
+    addAllToCartBtn.parentNode.replaceChild(newAddAllToCartBtn, addAllToCartBtn);
+    newAddAllToCartBtn.addEventListener("click", function () {
       CartManager.addAllToCart();
       renderWishlist();
+      updateNavbar();
     });
   }
 }
@@ -290,6 +292,7 @@ function attachRecommendationEventListeners() {
 
         if (product) {
           CartManager.addToCart(product);
+          updateNavbar();
         }
       });
     });
@@ -308,6 +311,7 @@ function attachRecommendationEventListeners() {
           CartManager.addToWishlist(product, event);
           // Update the UI
           renderWishlist();
+          updateNavbar();
         }
       });
     });

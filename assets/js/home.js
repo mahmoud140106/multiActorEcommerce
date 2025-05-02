@@ -3,6 +3,8 @@ import { CategoryManager } from "./categoryManager.js";
 import { ReviewManager } from "./reviewManager.js";
 import { UserManager } from "./userManager.js";
 import { CartManager } from "./cartManager.js";
+import { updateNavbar } from "./global.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const featuredProductsContainer = document.getElementById("featuredProducts");
@@ -72,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const productId = parseInt(button.getAttribute('data-id'));
         const product = products.find(p => p.id === productId);
         CartManager.addToCart(product);
+        updateNavbar();
       });
     });
 
@@ -82,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const product = products.find(p => p.id === productId);
         if (product) {
           CartManager.addToWishlist(product, event);
+          updateNavbar();
         }
       });
     });

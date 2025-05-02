@@ -101,12 +101,10 @@ function product(items) {
     });
   }
 }
-
 // Set default option for filterCategory
-filterCategory.innerHTML =
-  '<option  value="AllCategories">All Categories</option>';
+filterCategory.innerHTML = '<option  value="AllCategories">All Categories</option>';
 for (let i = 0; i < AllCategories.length; i++) {
-  filterCategory.innerHTML += `<option value="${AllCategories[i].name}">${AllCategories[i].name}</option>`;
+  filterCategory.innerHTML += <option value="${AllCategories[i].name}">${AllCategories[i].name}</option>;
 }
 
 //from home page through category section show its products
@@ -118,7 +116,6 @@ for (let j = 0; j < AllCategories.length; j++) {
     categoryId = AllCategories[j].id;
   }
 }
-
 let filterProducts = ProductManager.getProductsByCategory(categoryId);
 product(filterProducts);
 

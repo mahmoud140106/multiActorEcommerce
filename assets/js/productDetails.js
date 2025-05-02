@@ -3,6 +3,7 @@ import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
 import { showToast } from "./toast.js";
 import { CartManager } from "./cartManager.js";
+import { updateNavbar } from "./global.js";
 
 let user = StorageManager.load("currentUser"); // Get current user from storage
 let productId;
@@ -211,6 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const product = AllProducts.find((p) => p.id === productId);
       if (product) {
         CartManager.addToWishlist(product, event);
+        updateNavbar(); // Update the navbar to reflect the new wishlist count
       }
     });
   });
@@ -244,6 +246,7 @@ document.getElementById("addTocart").addEventListener("click", function () {
     // console.log('from count 1')
   }
   CartManager.addToCart(product,productCount);
+  updateNavbar(); // Update the navbar to reflect the new cart count
 });
 
 

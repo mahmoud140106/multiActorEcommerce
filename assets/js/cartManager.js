@@ -275,6 +275,10 @@ export const CartManager = {
     });
 
     localStorage.setItem(`cart_${user.id}`, JSON.stringify(cart));
+
+    // Clear wishlist without showing toast
+    localStorage.removeItem(`wishlist_${user.id}`);
+
     this.showToast(`Added ${addedCount} items to cart`);
     return addedCount;
   },
@@ -321,19 +325,18 @@ export const CartManager = {
       subtotal += item.price * item.quantity;
     });
 
-    const shippRate = 0.1;
-    const taxRate = 0.06;
-    const shipping = subtotal * shippRate;
-    const tax = subtotal * taxRate;
+    const shipping = 20;
+    // const taxRate = 0.06;
+    // // const shipping = subtotal * shippRate;
+    // const tax = subtotal * taxRate;
     let discount = promoCode === "OFF10" ? 10.0 : 0;
 
-    const total = subtotal + shipping + tax - discount;
+    const total = subtotal + shipping - discount;
 
     return {
       totalItems,
       subtotal,
       shipping,
-      tax,
       discount,
       total,
       promoCode,
