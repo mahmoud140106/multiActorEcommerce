@@ -1,7 +1,16 @@
 import { StorageManager } from "./storageManager.js";
 
 export class User {
-  constructor(id, userName, email, password, role, createdAt = new Date(), profilePicture = "",deliveryData) {
+  constructor(
+    id,
+    userName,
+    email,
+    password,
+    role,
+    createdAt = new Date(),
+    profilePicture = "",
+    deliveryData
+  ) {
     this.id = id;
     this.userName = userName;
     this.email = email;
@@ -18,12 +27,10 @@ export class UserManager {
     return "../images/anonymous.png"; // THE DEFAULT PP WE'RE YET TO ADD IN THE IMAGES FILE
   }
 
-
-
-    static getNextUserId() {
+  static getNextUserId() {
     const users = StorageManager.load("users") || [];
     if (users.length === 0) return 1;
-    const maxId = Math.max(...users.map(user => user.id));
+    const maxId = Math.max(...users.map((user) => user.id));
     return maxId + 1;
   }
 
@@ -59,7 +66,15 @@ export class UserManager {
     const id = UserManager.getNextUserId();
     const newProfilePicture =
       profilePicture || UserManager.getDefaultProfilePicture();
-    const user = new User(id, userName, email, password, role, new Date(), newProfilePicture);
+    const user = new User(
+      id,
+      userName,
+      email,
+      password,
+      role,
+      new Date(),
+      newProfilePicture
+    );
     let users = StorageManager.load("users") || [];
     users.push(user);
     StorageManager.save("users", users);
@@ -99,10 +114,20 @@ export class UserManager {
       return;
     }
     const newProfilePicture =
-      profilePicture || oldUser.profilePicture || UserManager.getDefaultProfilePicture();
+      profilePicture ||
+      oldUser.profilePicture ||
+      UserManager.getDefaultProfilePicture();
     users = users.map((user) =>
       user.id === id
-        ? new User(id, userName, email, password, role, oldUser.createdAt, newProfilePicture)
+        ? new User(
+            id,
+            userName,
+            email,
+            password,
+            role,
+            oldUser.createdAt,
+            newProfilePicture
+          )
         : user
     );
     StorageManager.save("users", users);
@@ -117,7 +142,7 @@ export class UserManager {
   static deleteUser(id) {
     console.log("deleteUser: Deleting user with id:", id);
     let users = StorageManager.load("users") || [];
-    users = users.filter((user) => user.id !=id);
+    users = users.filter((user) => user.id != id);
     StorageManager.save("users", users);
     console.log("deleteUser: User deleted successfully:", id);
   }
@@ -156,58 +181,128 @@ function initializeDefaultSellers() {
     new User(
       1,
       "Admin",
-      "admin@ecommerce.com",
+      "Admin@ecommerce.com",
       "admin123",
       "admin",
-      new Date("2025-01-01")
+      new Date("2025-01-01"),
+      "https://i.pravatar.cc/150?img=1"
     ),
     new User(
       2,
-      "SellerOne",
-      "seller1@ecommerce.com",
-      "seller123",
+      "Mahmoud Taha",
+      "mahmoud.taha@ecommerce.com",
+      "Taha2025!",
       "seller",
-      new Date("2025-01-10")
+      new Date("2025-01-10"),
+      "https://i.pravatar.cc/150?img=2"
     ),
     new User(
       3,
-      "SellerTwo",
-      "seller2@ecommerce.com",
-      "seller123",
+      "Omar Khaled",
+      "omar.khaled@ecommerce.com",
+      "Khaled$25",
       "seller",
-      new Date("2025-02-20")
+      new Date("2025-02-20"),
+      "https://i.pravatar.cc/150?img=3"
     ),
     new User(
       4,
-      "SellerThree",
-      "seller3@ecommerce.com",
-      "seller123",
+      "Farah Alaa",
+      "farah.alaa@ecommerce.com",
+      "Farah#2025",
       "seller",
-      new Date("2025-03-30")
+      new Date("2025-03-30"),
+      "https://i.pravatar.cc/150?img=4"
     ),
     new User(
       5,
-      "CustomerOne",
-      "c1@ecommerce.com",
-      "12345",
+      "Dina Mostafa",
+      "dina.mostafa@ecommerce.com",
+      "Dina_M25",
       "customer",
-      new Date("2025-01-15")
+      new Date("2025-01-15"),
+      "https://i.pravatar.cc/150?img=5"
     ),
     new User(
       6,
-      "CustomerTwo",
-      "c2@ecommerce.com",
-      "12345",
+      "Ibrahim Shaban",
+      "ibrahim.shaban@ecommerce.com",
+      "Ibrahim@25",
       "customer",
-      new Date("2025-02-10")
+      new Date("2025-02-10"),
+      "https://i.pravatar.cc/150?img=6"
     ),
     new User(
       7,
-      "CustomerThree",
-      "c3@ecommerce.com",
-      "12345",
+      "Taha Hassan",
+      "taha.hassan@ecommerce.com",
+      "Hassan!25",
       "customer",
-      new Date("2025-12-26")
+      new Date("2025-12-26"),
+      "https://i.pravatar.cc/150?img=7"
+    ),
+    new User(
+      8,
+      "Aya Nour",
+      "aya.nour@ecommerce.com",
+      "Nour_Aya22",
+      "seller",
+      new Date("2025-04-15"),
+      "https://i.pravatar.cc/150?img=8"
+    ),
+    new User(
+      9,
+      "Khaled Samir",
+      "khaled.samir@ecommerce.com",
+      "Samir$2025",
+      "customer",
+      new Date("2025-05-20"),
+      "https://i.pravatar.cc/150?img=9"
+    ),
+    new User(
+      10,
+      "Nour Ehab",
+      "nour.ehab@ecommerce.com",
+      "Ehab#Nour25",
+      "customer",
+      new Date("2025-06-10"),
+      "https://i.pravatar.cc/150?img=10"
+    ),
+    new User(
+      11,
+      "Hassan Youssef",
+      "hassan.youssef@ecommerce.com",
+      "Youssef!2025",
+      "seller",
+      new Date("2025-07-05"),
+      "https://i.pravatar.cc/150?img=11"
+    ),
+    new User(
+      12,
+      "Laila Rami",
+      "laila.rami@ecommerce.com",
+      "Rami_Laila25",
+      "customer",
+      new Date("2025-08-12"),
+      "https://i.pravatar.cc/150?img=12"
+    ),
+    new User(
+      13,
+      "Amr Zaki",
+      "amr.zaki@ecommerce.com",
+      "Zaki#25",
+      "customer",
+      new Date("2025-09-20"),
+      "https://i.pravatar.cc/150?img=13"
+    ),
+    new User(
+      14,
+      "Rania Adel",
+      "rania.adel@ecommerce.com",
+      "Adel$Rania22",
+      "seller",
+      new Date("2025-10-15"),
+      "https://i.pravatar.cc/150?img=14"
     ),
   ];
 

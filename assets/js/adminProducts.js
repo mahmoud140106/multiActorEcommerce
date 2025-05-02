@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td class="d-none d-md-table-cell">$${product.price.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">$${product.discount.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">${product.stock}</td>
-        <td>${seller ? seller.userName : "Unknown"}</td>
+        <td class="d-none d-md-table-cell" >${seller ? seller.userName : "Unknown"}</td>
         <td>${actions}</td>
       `;
       tbody.appendChild(row);
