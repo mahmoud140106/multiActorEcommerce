@@ -15,7 +15,16 @@ export class User {
 
 export class UserManager {
   static getDefaultProfilePicture() {
-    return "./images/anonymous.png"; // THE DEFAULT PP WE'RE YET TO ADD IN THE IMAGES FILE
+    return "../images/anonymous.png"; // THE DEFAULT PP WE'RE YET TO ADD IN THE IMAGES FILE
+  }
+
+
+
+    static getNextUserId() {
+    const users = StorageManager.load("users") || [];
+    if (users.length === 0) return 1;
+    const maxId = Math.max(...users.map(user => user.id));
+    return maxId + 1;
   }
 
   static createUser(userName, email, password, role, profilePicture = "") {
@@ -47,7 +56,7 @@ export class UserManager {
       throw new Error("Email already registered.");
     }
 
-    const id = Date.now();
+    const id = UserManager.getNextUserId();
     const newProfilePicture =
       profilePicture || UserManager.getDefaultProfilePicture();
     const user = new User(id, userName, email, password, role, new Date(), newProfilePicture);
@@ -84,7 +93,7 @@ export class UserManager {
     console.log("updateUser: Updating user with id:", id);
     let users = StorageManager.load("users") || [];
     // Get the current user data to keep values (like createdAt and the existing profilePicture)
-    const oldUser = users.find((user) => user.id === id);
+    const oldUser = users.find((user) => user.id == id);
     if (!oldUser) {
       console.error("updateUser: User not found with id:", id);
       return;
@@ -108,7 +117,7 @@ export class UserManager {
   static deleteUser(id) {
     console.log("deleteUser: Deleting user with id:", id);
     let users = StorageManager.load("users") || [];
-    users = users.filter((user) => user.id !== id);
+    users = users.filter((user) => user.id !=id);
     StorageManager.save("users", users);
     console.log("deleteUser: User deleted successfully:", id);
   }

@@ -16,167 +16,260 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
   <link rel="stylesheet" href="../assets/css/product.css" />
   <link rel="stylesheet" href="../assets/css/style.css" />
   <link rel="stylesheet" href="../assets/css/home.css" />
   <link rel="stylesheet" href="../assets/css/cart.css" />
-  <link href="../assets/css/navBar.css" rel="stylesheet" />
 
 
 </head>
 
 <body>
 
-<!-- Navbar -->
-<div id="navbar-container"></div>
-
-<!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bgmodal rounded p-4" style="width: 450px; min-height: 55vh;">
-  <div class="modal-header border-0">
-    <h5 class="modal-title w-100 text-center" id="loginModalLabel">Login</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-    <form id="login-form">
-      <div class="mb-3">
-        <label for="login-email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="login-email" required />
-        <div class="invalid-feedback" id="login-email-error"></div>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/index.html">
+        <i class="fas fa-shopping-bag me-2"></i>
+        <span class="omnishop-logo">OmniShop</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <!-- JavaScript will populate this dynamically -->
+        </ul>
       </div>
-      <div class="mb-3">
-        <label for="login-password" class="form-label">Password</label>
-        <div class="input-group">
-          <input type="password" class="form-control" id="login-password" required />
-          <button type="button" class="btn btn-outline-secondary toggle-password" data-target="login-password">
-            <i class="fa fa-eye"></i>
-          </button>
-        </div>
-        <div class="invalid-feedback" id="login-password-error"></div>
-      </div>
-      <button type="submit" class="btn btn-primary w-100">Login</button>
-    </form>
-    <p class="text-center mt-3">
-      Don't have an account?
-      <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Sign Up</a>
-    </p>
-  </div>
-</div>
-</div>
-</div>
-
-<!-- Sign Up Modal -->
-<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bgmodal rounded p-4" style="width: 450px; min-height: 55vh;">
-  <div class="modal-header border-0">
-    <h5 class="modal-title w-100 text-center" id="signupModalLabel">Sign Up</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-    <form id="signup-form">
-      <div class="mb-3">
-        <label for="signup-userName" class="form-label">UserName</label>
-        <input type="text" class="form-control" id="signup-userName" required />
-        <div class="invalid-feedback" id="signup-userName-error"></div>
-      </div>
-      <div class="mb-3">
-        <label for="signup-email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="signup-email" required />
-        <div class="invalid-feedback" id="signup-email-error"></div>
-      </div>
-      <div class="mb-3">
-        <label for="signup-password" class="form-label">Password</label>
-        <div class="input-group">
-          <input type="password" class="form-control" id="signup-password" required />
-          <button type="button" class="btn btn-outline-secondary toggle-password" data-target="signup-password">
-            <i class="fa fa-eye"></i>
-          </button>
-        </div>
-        <div class="invalid-feedback" id="signup-password-error"></div>
-      </div>
-      <div class="mb-3">
-        <label for="signup-confirm-password" class="form-label">Confirm Password</label>
-        <div class="input-group">
-          <input type="password" class="form-control" id="signup-confirm-password" required />
-          <button type="button" class="btn btn-outline-secondary toggle-password" data-target="signup-confirm-password">
-            <i class="fa fa-eye"></i>
-          </button>
-        </div>
-        <div class="invalid-feedback" id="signup-confirm-password-error"></div>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Register as:</label>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="role" id="role-customer" value="customer" checked />
-          <label class="form-check-label" for="role-customer">Customer</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="role" id="role-seller" value="seller" />
-          <label class="form-check-label" for="role-seller">Seller</label>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary w-100">Sign Up</button>
-    </form>
-    <p class="text-center mt-3">
-      Already have an account?
-      <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a>
-    </p>
-  </div>
-</div>
-</div>
-</div>
-
-<!-- Search Modal in Home-->
-
-<section
-  id="SearchHomeModal"
-  class="modal fade w-100 vh-100"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog h-100">
-    <div class="modal-content h-100 p-5">
-      <button
-        id="closeButton"
-        type="button"
-        class="btn-close fs-5"
-        data-bs-dismiss="modal"
-        aria-label="Close"
-      ></button>
-
-      <div class="modal-body p-0">
-        <div class="d-flex justify-content-center align-items-center h-100">
-          <div class="input-group mb-3 w-50">
-            <input
-              id="searchInput"
-              type="search"
-              class="form-control rounded-0 fs-5"
-              placeholder="Write Product U Want to Search About"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
-            <div class="input-group-append">
+    </div>
+  
+      <!-- Login Modal -->
+      <div
+        class="modal fade"
+        id="loginModal"
+        tabindex="-1"
+        aria-labelledby="loginModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content bgmodal rounded p-4"
+            style="width: 450px; min-height: 55vh;"
+          >
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
+                Login
+              </h5>
               <button
-                id="searchGo"
-                class="btn btn-outline-dark fs-4"
                 type="button"
-              >
-                Search
-              </button>
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="login-email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="login-email"
+                    required
+                  />
+                  <div class="invalid-feedback" id="login-email-error"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="login-password" class="form-label"
+                    >Password</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="login-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="login-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="login-password-error"></div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Login
+                </button>
+              </form>
+              <p class="text-center mt-3">
+                Don't have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#signupModal"
+                  data-bs-dismiss="modal"
+                  >Sign Up</a
+                >
+              </p>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Sign Up Modal -->
+      <div
+        class="modal fade"
+        id="signupModal"
+        tabindex="-1"
+        aria-labelledby="signupModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div
+            class="modal-content bgmodal rounded p-4"
+            style="width: 450px; min-height: 55vh;"
+          >
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
+                Sign Up
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="signup-form">
+                <div class="mb-3">
+                  <label for="signup-userName" class="form-label"
+                    >UserName</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="signup-userName"
+                    required
+                  />
+                  <div
+                    class="invalid-feedback"
+                    id="signup-userName-error"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="signup-email"
+                    required
+                  />
+                  <div class="invalid-feedback" id="signup-email-error"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-password" class="form-label"
+                    >Password</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signup-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    id="signup-password-error"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-confirm-password" class="form-label"
+                    >Confirm Password</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="signup-confirm-password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-confirm-password"
+                    >
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    id="signup-confirm-password-error"
+                  ></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Register as:</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="role"
+                      id="role-customer"
+                      value="customer"
+                      checked
+                    />
+                    <label class="form-check-label" for="role-customer">
+                      Customer
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="role"
+                      id="role-seller"
+                      value="seller"
+                    />
+                    <label class="form-check-label" for="role-seller">
+                      Seller
+                    </label>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Sign Up
+                </button>
+              </form>
+              <p class="text-center mt-3">
+                Already have an account?
+                <a
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#loginModal"
+                  data-bs-dismiss="modal"
+                  >Login</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
+      <!-- Toasts will be dynamically inserted here -->
     </div>
-  </div>
-</section>
+  </nav>
 
 
 <!--  -->
@@ -221,21 +314,8 @@
 
 
   <!--special offer -->
-  <div class="mb-4">
-    <label class="form-label fw-bold mb-2">Special Offers</label>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="bestSeller">
-      <label class="form-check-label" for="bestSeller">Best Seller</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="newArrivals">
-      <label class="form-check-label" for="newArrivals">New Arrivals</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="onSale">
-      <label class="form-check-label" for="onSale">On Sale</label>
-    </div>
-  </div>
+  <!-- 
+   -->
 <!-- filter brand -->
   <div class="mb-4">
     <label for="filterBrand" class="form-label fw-bold">Brand</label>
@@ -271,7 +351,7 @@
     </div>
   </div> -->
 <!-- filter gender -->
-  <div class="mb-4">
+  <!-- <div class="mb-4">
     <label for="filterGender" class="form-label fw-bold">Gender</label>
     <select class="form-select" id="filterGender">
       <option value="All">All</option>
@@ -279,124 +359,7 @@
       <option value="Women">Women</option>
    
     </select>
-  </div>
-
-    </aside>
-
-    <!-- Products Section -->
-    <main class="col-md-9 col-12 order-md-last order-first mt-2">
-      <div class="container">
-        <div id="productPage" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4"></div>
-        <nav aria-label="Page navigation">
-          <ul class="pagination justify-content-center mt-4"></ul>
-        </nav>
-      </div>
-    </main>
-  </div>
-</div>
-<!--  -->
-
-<!--  -->
-<div class="container-fluid">
-  <div class=" row mb-4 mt-3 d-flex justify-content-center">
-    <input type="text" class="form-control" id="searchInput" placeholder="Search products...">
-  </div>
-  <div class="row">
-    <!-- Filters Sidebar -->
-    <aside class="col-md-3 col-12 order-md-first order-last bg-light p-4">
-      <h4 class="mb-4">Filters</h4>
-      
-      <!-- Category Filter -->
-      <div class="mb-4">
-        <label for="filterCategory" class="form-label">Category</label>
-        <select class="form-select" id="filterCategory">
-          <option value="AllCategories">All Categories</option>
-        </select>
-      </div>
-
-      <!-- Size Filter -->
-      <div class="mb-4">
-        <label for="filterSize" class="form-label">Size</label>
-        <select class="form-select" id="filterSize">
-          <option value="AllSizes">All Sizes</option>
-        </select>
-      </div>
-
-      <!-- Price Filter -->
-      <div class="mb-4">
-        <label class="form-label">Price Range</label>
-        <div class="row g-2">
-          <div class="col-6">
-            <input type="number" class="form-control" id="minPrice" placeholder="Min" min="0">
-          </div>
-          <div class="col-6">
-            <input type="number" class="form-control" id="maxPrice" placeholder="Max" min="0">
-          </div>
-        </div>
-      </div>
-
-
-
-  <!--special offer -->
-  <div class="mb-4">
-    <label class="form-label fw-bold mb-2">Special Offers</label>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="bestSeller">
-      <label class="form-check-label" for="bestSeller">Best Seller</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="newArrivals">
-      <label class="form-check-label" for="newArrivals">New Arrivals</label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="onSale">
-      <label class="form-check-label" for="onSale">On Sale</label>
-    </div>
-  </div>
-<!-- filter brand -->
-  <div class="mb-4">
-    <label for="filterBrand" class="form-label fw-bold">Brand</label>
-    <select class="form-select" id="filterBrand">
-      <option value="AllBrands">All Brands</option>
-      <!-- added through js-->
-    </select>
-  </div>
-<!-- filter seller -->
-  <!-- <div class="mb-4">
-    <label for="filterSeller" class="form-label fw-bold">Seller</label>
-    <select class="form-select" id="filterSeller">
-      <option value="AllSellers">All Sellers</option>
-      add seller through js
-    </select>
   </div> -->
-<!-- filter rating -->
-  <!-- <div class="mb-4">
-    <label class="form-label fw-bold">Rating</label>
-    <div class="rating-filter">
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="rating" id="rating4" value="4">
-        <label class="form-check-label" for="rating4">
-          ★★★★☆ & Up
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="rating" id="rating3" value="3">
-        <label class="form-check-label" for="rating3">
-          ★★★☆☆ & Up
-        </label>
-      </div>
-    </div>
-  </div> -->
-<!-- filter gender -->
-  <div class="mb-4">
-    <label for="filterGender" class="form-label fw-bold">Gender</label>
-    <select class="form-select" id="filterGender">
-      <option value="All">All</option>
-      <option value="Men">Men</option>
-      <option value="Women">Women</option>
-   
-    </select>
-  </div>
 
     </aside>
 
@@ -449,15 +412,17 @@
     </section>
 
 <!--  -->
-<!-- <nav aria-label="Page navigation example mb-3 ">
+<nav aria-label="Page navigation example mb-3 ">
   <ul class="pagination ">
-    <li class="page-item"><a class="product text-decoration-none" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link " href="#">Next</a></li>
+    <li class="page-item"><a class="product text-decoration-none" href="#"onclick="previousPage()">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-page="1" onclick="changePage(1)">1</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-page="2" onclick="changePage(2)">2</a></li>
+    <!-- <li class="page-item"><a class="page-link" href="#" data-page="3" onclick="changePage(3)">3</a></li> -->
+    <li class="page-item"><a class="page-link " href="#"onclick="nextPage()">Next</a></li>
   </ul>
-</nav> -->
+</nav>
+
+
 
 
 
@@ -546,20 +511,10 @@
     <!-- Bootstrap JS (Local File) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script type="module">
-      import { updateNavbar } from "../assets/js/global.js";
-  
-      // Dynamically insert navbar HTML, then run the logic
-      fetch("../navBar.html")
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById("navbar-container").innerHTML = html;
-          updateNavbar(); // Run your logic after navbar is in the DOM
-        });
-    </script>
-
   <script type="module" src="../assets/js/productPage.js"></script>
   <script type="module" src="../assets/js/global.js"></script>
+  
+  
  
 
 </body>

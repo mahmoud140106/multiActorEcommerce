@@ -41,6 +41,15 @@ li.page-item{
 }
 
 /*  */
+.pagination .page-link.active{
+  background-color: #212529;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+/*  */
+
+/*  */
 .rating-filter .form-check-label {
   display: flex;
   align-items: center;
