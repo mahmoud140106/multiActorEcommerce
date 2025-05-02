@@ -1,16 +1,14 @@
 import { UserManager } from "./userManager.js";
 import { StorageManager } from "./storageManager.js";
+import { CartManager } from "./cartManager.js";
 
 (function initializeDefaultAdmin() {
   UserManager.initializeDefaultAdmin();
 })();
 
-// Protect routes
 function restrictAccess() {
   const currentUser = StorageManager.load("currentUser");
   const currentPath = window.location.pathname;
-  console.log("restrictAccess - Current User:", currentUser);
-  console.log("restrictAccess - Current Path:", currentPath);
   const allowedPaths = {
     customer: [
       "/index.html",
@@ -69,73 +67,109 @@ function restrictAccess() {
 }
 
 export function updateNavbar() {
-  console.log("updateNavbar: Starting execution");
   const currentUser = StorageManager.load("currentUser");
   const navLinks = document.querySelector(".navbar-nav");
   const navbar = document.querySelector(".navbar");
   const heroSection = document.querySelector("#hero-section");
+  const currentPath = window.location.pathname;
 
-  console.log("updateNavbar - Current User:", currentUser);
-  console.log("updateNavbar - Nav Links Element:", navLinks);
-  console.log("updateNavbar - Current Path:", window.location.pathname);
-
-  if (!navLinks || !navbar) {
-    // console.error("updateNavbar: .navbar-nav or .navbar element not found!");
-    return;
+  const user = CartManager.getCurrentUser();
+  let cartCount, wishlistCount;
+  if (user) {
+    cartCount = CartManager.getCart().reduce((total, item) => total + (item.quantity || 0), 0); // Calculate total quantity for the current user
+    wishlistCount = CartManager.getWishlist().length; // Get the number of items in the current user's wishlist
+  } else {
+    cartCount = '';
+    wishlistCount = '';
   }
 
-  if (
-    currentUser &&
-    (currentUser.role === "admin" || currentUser.role === "seller")
-  ) {
+  if (!navLinks || !navbar) return;
+
+  if (currentUser && (currentUser.role === "admin" || currentUser.role === "seller")) {
+
     navbar.classList.add("d-none");
     return;
   }
 
   navbar.classList.remove("d-none");
   navLinks.innerHTML = "";
-  if (currentUser && currentUser.role) {
-    console.log("updateNavbar: Updating for role", currentUser.role);
-    if (currentUser.role === "customer") {
-      if (heroSection) {
-        heroSection.style.display =
-          window.location.pathname === "/index.html" ? "flex" : "none";
-      }
-      navLinks.innerHTML = `
-        <li class="nav-item"><a class="nav-link hover-light" href="/index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="/customer/product.html">Catalog</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="/customer/cart.html">Cart</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="/customer/profile.html">Profile</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="#" onclick="logout()">Logout</a></li>
-      `;
-    } else if (currentUser.role === "seller") {
-      navLinks.innerHTML = `
-        <li class="nav-item"><a class="nav-link hover-light" href="/seller/dashboard.html">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="/seller/products.html">Products</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="/orders.html">Orders</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="#" onclick="logout()">Logout</a></li>
-      `;
-    } else if (currentUser.role === "admin") {
-      navLinks.innerHTML = `
-        <li class="nav-item"><a class="nav-link hover-light" href="/admin/dashboard.html">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="/admin/products.html">Products</a></li>
-        <li class="nav-item"><a class="nav-link hover-light" href="#" onclick="logout()">Logout</a></li>
-      `;
-    }
-  } else {
+
+  if (!document.getElementById('nav-hover-styles')) {
+    const styleElement = document.createElement('style');
+    styleElement.id = 'nav-hover-styles';
+    styleElement.textContent = `
+      .nav-item .nav-text { display: none; transition: all 0.3s ease; margin-left: 5px; }
+      .nav-item:hover .nav-text { display: inline; }
+      .nav-item .badge { margin-left: 5px; }
+      @media (max-width: 767px) { .nav-item .nav-text { display: inline; } }
+    `;
+    document.head.appendChild(styleElement);
+  }
+
+  const profileLink = `
+    <li class="nav-item ${currentPath.includes('/profile.html') ? 'active' : ''}">
+      <a class="nav-link hover-light" href="/${currentUser?.role}/profile.html" title="Profile">
+        <i class="bi bi-person fs-5"></i>
+        <span class="nav-text">Profile</span>
+      </a>
+    </li>
+  `;
+  const logoutLink = `
+    <li class="nav-item">
+      <a class="nav-link hover-light" href="#" onclick="logout()" title="Logout">
+        <i class="bi bi-box-arrow-right fs-5"></i>
+        <span class="nav-text">Logout</span>
+      </a>
+    </li>
+  `;
+
+  if (currentUser?.role === "customer") {
     if (heroSection) {
-      heroSection.style.display =
-        window.location.pathname === "/index.html" ? "flex" : "none";
+      heroSection.style.display = window.location.pathname === "/index.html" ? "flex" : "none";
     }
     navLinks.innerHTML = `
-      <li class="nav-item"><a class="nav-link hover-light" href="/index.html">Home</a></li>
-      <li class="nav-item"><a class="nav-link hover-light" href="/customer/product.html">Catalog</a></li>
-      <li class="nav-item">
-        <a class="nav-link hover-light loginsignup" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-      </li>
-      <li class="nav-item" id="searchIcon"><a class="nav-link hover-light" href="#" data-bs-toggle="modal" data-bs-target="#SearchHomeModal"><i class="fa-solid fa-magnifying-glass fs-4"></i></a></li>
+      <li class="nav-item ${currentPath === "/index.html" ? 'active' : ''}"><a class="nav-link hover-light" href="/index.html" title="Home"><i class="bi bi-house fs-5"></i><span class="nav-text">Home</span></a></li>
+      <li class="nav-item ${currentPath.includes('/categories.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/customer/categories.html" title="Categories"><i class="bi bi-list-ul fs-5"></i><span class="nav-text">Categories</span></a></li>
+      <li class="nav-item ${currentPath.includes('/product.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/customer/product.html" title="Products"><i class="bi bi-box-seam fs-5"></i><span class="nav-text">Products</span></a></li>
+      <li class="nav-item ${currentPath.includes('/wishlist.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/customer/wishlist.html" title="Wishlist"><i class="bi bi-heart fs-5"></i><span class="nav-text">Wishlist</span><span class="badge badge-notification rounded-pill bg-danger">${wishlistCount || ''}</span></a></li>
+      <li class="nav-item ${currentPath.includes('/cart.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/customer/cart.html" title="Cart"><i class="bi bi-cart fs-5"></i><span class="nav-text">Cart</span><span class="badge badge-notification rounded-pill bg-danger">${cartCount || ''}</span></a></li>
+      ${profileLink}
+      ${logoutLink}
+    `;
+  } else if (currentUser?.role === "seller") {
+    navLinks.innerHTML = `
+      <li class="nav-item ${currentPath === "/index.html" ? 'active' : ''}"><a class="nav-link hover-light" href="/index.html" title="Home"><i class="bi bi-house fs-5"></i><span class="nav-text">Home</span></a></li>
+      <li class="nav-item ${currentPath.includes('/dashboard.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/seller/dashboard.html" title="Dashboard"><i class="bi bi-speedometer2 fs-5"></i><span class="nav-text">Dashboard</span></a></li>
+      <li class="nav-item ${currentPath.includes('/products.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/seller/products.html" title="Products"><i class="bi bi-box-seam fs-5"></i><span class="nav-text">Products</span></a></li>
+      <li class="nav-item ${currentPath.includes('/orders.html') && !currentPath.includes('/orderDetails.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/seller/orders.html" title="Orders"><i class="bi bi-list-check fs-5"></i><span class="nav-text">Orders</span></a></li>
+      <li class="nav-item ${currentPath.includes('/orderDetails.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/seller/orderDetails.html" title="Order Details"><i class="bi bi-receipt fs-5"></i><span class="nav-text">Details</span></a></li>
+      ${profileLink}
+      ${logoutLink}
+    `;
+  } else if (currentUser?.role === "admin") {
+    navLinks.innerHTML = `
+      <li class="nav-item ${currentPath.includes('/dashboard.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/admin/dashboard.html" title="Dashboard"><i class="bi bi-speedometer2 fs-5"></i><span class="nav-text">Dashboard</span></a></li>
+      <li class="nav-item ${currentPath.includes('/products.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/admin/products.html" title="Products"><i class="bi bi-box-seam fs-5"></i><span class="nav-text">Products</span></a></li>
+      ${profileLink}
+      ${logoutLink}
+    `;
+  } else {
+    if (heroSection) {
+      heroSection.style.display = window.location.pathname === "/index.html" ? "flex" : "none";
+    }
+    navLinks.innerHTML = `
+      <li class="nav-item ${currentPath === "/index.html" ? 'active' : ''}"><a class="nav-link hover-light" href="/index.html" title="Home"><i class="bi bi-house fs-5"></i><span class="nav-text">Home</span></a></li>
+      <li class="nav-item ${currentPath.includes('/categories.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/customer/categories.html" title="Categories"><i class="bi bi-list-ul fs-5"></i><span class="nav-text">Categories</span></a></li>
+      <li class="nav-item ${currentPath.includes('/product.html') ? 'active' : ''}"><a class="nav-link hover-light" href="/customer/product.html" title="Products"><i class="bi bi-box-seam fs-5"></i><span class="nav-text">Products</span></a></li>
+      <li class="nav-item"><a class="nav-link hover-light" href="#" data-bs-toggle="modal" data-bs-target="#loginModal" title="Login"><i class="bi bi-box-arrow-in-right fs-5"></i><span class="nav-text">Login</span></a></li>
     `;
   }
+  
+  // Make sure the nav text is visible for active items
+  const activeItems = document.querySelectorAll('.nav-item.active .nav-text');
+  activeItems.forEach(item => {
+    item.style.display = 'inline';
+  });
 }
 
 export function logout() {
@@ -144,27 +178,34 @@ export function logout() {
   window.location.href = "/index.html";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOMContentLoaded fired");
-  window.logout = logout;
-  updateNavbar();
-  restrictAccess();
+function loadNavbar() {
+  const navbarContainer = document.getElementById("navbar-container");
+  if (!navbarContainer) return;
 
-  // Sidebar toggle logic
+  fetch("navBar.html")
+    .then((res) => res.text())
+    .then((html) => {
+      navbarContainer.innerHTML = html;
+      window.logout = logout;
+      updateNavbar();
+      restrictAccess();
+    })
+    .catch((err) => console.error("Failed to load navbar:", err));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadNavbar();
+
   const sidebar = document.querySelector(".sidebar");
   const toggleButton = document.querySelector(".sidebar-toggle");
+
   if (sidebar && toggleButton) {
     toggleButton.addEventListener("click", () => {
       sidebar.classList.toggle("active");
     });
 
-    // Close sidebar when clicking outside on mobile
     document.addEventListener("click", (e) => {
-      if (
-        window.innerWidth <= 769 &&
-        !sidebar.contains(e.target) &&
-        !toggleButton.contains(e.target)
-      ) {
+      if (window.innerWidth <= 769 && !sidebar.contains(e.target) && !toggleButton.contains(e.target)) {
         sidebar.classList.remove("active");
       }
     });

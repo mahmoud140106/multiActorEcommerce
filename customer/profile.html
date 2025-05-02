@@ -11,255 +11,162 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/home.css">
   <link rel="stylesheet" href="../assets/css/profile.css">
+  <link href="../assets/css/navBar.css" rel="stylesheet" />
+
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="/index.html">
-        <i class="fas fa-shopping-bag me-2"></i>
-        <span class="omnishop-logo">OmniShop</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <!-- JavaScript will populate this dynamically -->
-        </ul>
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bgmodal rounded p-4" style="width: 450px; min-height: 55vh;">
+      <div class="modal-header border-0">
+        <h5 class="modal-title w-100 text-center" id="loginModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="login-form">
+          <div class="mb-3">
+            <label for="login-email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="login-email" required />
+            <div class="invalid-feedback" id="login-email-error"></div>
+          </div>
+          <div class="mb-3">
+            <label for="login-password" class="form-label">Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="login-password" required />
+              <button type="button" class="btn btn-outline-secondary toggle-password" data-target="login-password">
+                <i class="fa fa-eye"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback" id="login-password-error"></div>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <p class="text-center mt-3">
+          Don't have an account?
+          <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Sign Up</a>
+        </p>
       </div>
     </div>
+  </div>
+</div>
 
-      <!-- Login Modal -->
-      <div
-        class="modal fade"
-        id="loginModal"
-        tabindex="-1"
-        aria-labelledby="loginModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
-                Login
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+<!-- Sign Up Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bgmodal rounded p-4" style="width: 450px; min-height: 55vh;">
+      <div class="modal-header border-0">
+        <h5 class="modal-title w-100 text-center" id="signupModalLabel">Sign Up</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="signup-form">
+          <div class="mb-3">
+            <label for="signup-userName" class="form-label">UserName</label>
+            <input type="text" class="form-control" id="signup-userName" required />
+            <div class="invalid-feedback" id="signup-userName-error"></div>
+          </div>
+          <div class="mb-3">
+            <label for="signup-email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="signup-email" required />
+            <div class="invalid-feedback" id="signup-email-error"></div>
+          </div>
+          <div class="mb-3">
+            <label for="signup-password" class="form-label">Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="signup-password" required />
+              <button type="button" class="btn btn-outline-secondary toggle-password" data-target="signup-password">
+                <i class="fa fa-eye"></i>
+              </button>
             </div>
-            <div class="modal-body">
-              <form id="login-form">
-                <div class="mb-3">
-                  <label for="login-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="login-email"
-                    required
-                  />
-                  <div class="invalid-feedback" id="login-email-error"></div>
-                </div>
-                <div class="mb-3">
-                  <label for="login-password" class="form-label"
-                    >Password</label
+            <div class="invalid-feedback" id="signup-password-error"></div>
+          </div>
+          <div class="mb-3">
+            <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" id="signup-confirm-password" required />
+              <button type="button" class="btn btn-outline-secondary toggle-password" data-target="signup-confirm-password">
+                <i class="fa fa-eye"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback" id="signup-confirm-password-error"></div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Register as:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="role" id="role-customer" value="customer" checked />
+              <label class="form-check-label" for="role-customer">Customer</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="role" id="role-seller" value="seller" />
+              <label class="form-check-label" for="role-seller">Seller</label>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+        <p class="text-center mt-3">
+          Already have an account?
+          <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Search Modal in Home-->
+
+    <section
+      id="SearchHomeModal"
+      class="modal fade w-100 vh-100"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog h-100">
+        <div class="modal-content h-100 p-5">
+          <button
+            id="closeButton"
+            type="button"
+            class="btn-close fs-5"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+
+          <div class="modal-body p-0">
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <div class="input-group mb-3 w-50">
+                <input
+                  id="searchInput"
+                  type="search"
+                  class="form-control rounded-0 fs-5"
+                  placeholder="Write Product U Want to Search About"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button
+                    id="searchGo"
+                    class="btn btn-outline-dark fs-4"
+                    type="button"
                   >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="login-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="login-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div class="invalid-feedback" id="login-password-error"></div>
+                    Search
+                  </button>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Login
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Don't have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#signupModal"
-                  data-bs-dismiss="modal"
-                  >Sign Up</a
-                >
-              </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Sign Up Modal -->
-      <div
-        class="modal fade"
-        id="signupModal"
-        tabindex="-1"
-        aria-labelledby="signupModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
-                Sign Up
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="signup-form">
-                <div class="mb-3">
-                  <label for="signup-userName" class="form-label"
-                    >UserName</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="signup-userName"
-                    required
-                  />
-                  <div
-                    class="invalid-feedback"
-                    id="signup-userName-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="signup-email"
-                    required
-                  />
-                  <div class="invalid-feedback" id="signup-email-error"></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-password" class="form-label"
-                    >Password</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="signup-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="signup-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div
-                    class="invalid-feedback"
-                    id="signup-password-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-confirm-password" class="form-label"
-                    >Confirm Password</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="signup-confirm-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="signup-confirm-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div
-                    class="invalid-feedback"
-                    id="signup-confirm-password-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Register as:</label>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="role"
-                      id="role-customer"
-                      value="customer"
-                      checked
-                    />
-                    <label class="form-check-label" for="role-customer">
-                      Customer
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="role"
-                      id="role-seller"
-                      value="seller"
-                    />
-                    <label class="form-check-label" for="role-seller">
-                      Seller
-                    </label>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Sign Up
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Already have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#loginModal"
-                  data-bs-dismiss="modal"
-                  >Login</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3">
-      <!-- Toasts will be dynamically inserted here -->
-    </div>
-  </nav>
+    </section>
 
 
 <section>
@@ -342,116 +249,7 @@
               <span class="text-muted" id="orders-count">3 orders</span>
             </div>
             
-            <!-- Order Card 1 -->
-            <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-3">
-              <div class="card-body p-4">
-                <div class="row g-0 align-items-center">
-                  <!-- Order Image -->
-                  <div class="col-md-2">
-                    <img
-                      src="../assets/images/shopping16.jpg"
-                      alt="Order Image"
-                      class="img-fluid rounded-3 order-img"
-                    />
-                  </div>
-                  <!-- Order Details -->
-                  <div class="col-md-6 ps-4">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Order #12345</h5>
-                      <p class="text-muted small mb-2">Products: P1, P2, P3, P4</p>
-                      <p class="text-muted small mb-2">Ordered on: March 25, 2025</p>
-                    </div>
-                  </div>
-                  <!-- Price and Status -->
-                  <div class="col-md-4 text-end">
-                    <h4 class="fw-bold">$199.99</h4>
-                    <span class="text-success small fw-semibold">
-                      <i class="fas fa-check-circle me-1"></i> Shipped
-                    </span>
-                  </div>
-                </div>
-                <!-- View More Button -->
-                <div class="text-end mt-3">
-                  <a href="#" class="btn btn-link p-0 text-decoration-none">
-                    View More <i class="fas fa-arrow-right ms-1"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
             
-            <!-- Order Card 2 -->
-            <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-3">
-              <div class="card-body p-4">
-                <div class="row g-0 align-items-center">
-                  <!-- Order Image -->
-                  <div class="col-md-2">
-                    <img
-                      src="../assets/images/shopping16.jpg"
-                      alt="Order Image"
-                      class="img-fluid rounded-3 order-img"
-                    />
-                  </div>
-                  <!-- Order Details -->
-                  <div class="col-md-6 ps-4">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Order #12346</h5>
-                      <p class="text-muted small mb-2">Products: P5, P6, P7</p>
-                      <p class="text-muted small mb-2">Ordered on: April 05, 2025</p>
-                    </div>
-                  </div>
-                  <!-- Price and Status -->
-                  <div class="col-md-4 text-end">
-                    <h4 class="fw-bold">$299.99</h4>
-                    <span class="text-success small fw-semibold">
-                      <i class="fas fa-check-circle me-1"></i> Shipped
-                    </span>
-                  </div>
-                </div>
-                <!-- View More Button -->
-                <div class="text-end mt-3">
-                  <a href="#" class="btn btn-link p-0 text-decoration-none">
-                    View More <i class="fas fa-arrow-right ms-1"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Order Card 3 -->
-            <div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-3">
-              <div class="card-body p-4">
-                <div class="row g-0 align-items-center">
-                  <!-- Order Image -->
-                  <div class="col-md-2">
-                    <img
-                      src="../assets/images/shopping16.jpg"
-                      alt="Order Image"
-                      class="img-fluid rounded-3 order-img"
-                    />
-                  </div>
-                  <!-- Order Details -->
-                  <div class="col-md-6 ps-4">
-                    <div>
-                      <h5 class="mb-1 fw-semibold">Order #12347</h5>
-                      <p class="text-muted small mb-2">Products: P8, P9, P10, P11</p>
-                      <p class="text-muted small mb-2">Ordered on: May 10, 2025</p>
-                    </div>
-                  </div>
-                  <!-- Price and Status -->
-                  <div class="col-md-4 text-end">
-                    <h4 class="fw-bold">$399.99</h4>
-                    <span class="text-success small fw-semibold">
-                      <i class="fas fa-check-circle me-1"></i> Shipped
-                    </span>
-                  </div>
-                </div>
-                <!-- View More Button -->
-                <div class="text-end mt-3">
-                  <a href="#" class="btn btn-link p-0 text-decoration-none">
-                    View Details <i class="fas fa-arrow-right ms-1"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
           </div>
           
           <!-- <div class="overview-section col-9 main d-none">
@@ -511,12 +309,12 @@
                   <label for="message-content">YOUR MESSAGE*</label>
                   <textarea id="message-content" rows="6" placeholder="Tell us how we can help you..." required></textarea>
                 </div>
-                
+<!--                 
                 <div class="form-group">
                   <label for="attach-file">ATTACHMENTS (OPTIONAL)</label>
                   <input type="file" id="attach-file" class="file-input" />
                   <p class="file-note">Max file size: 5MB. Supported formats: JPG, PNG, PDF</p>
-                </div>
+                </div> -->
                 
                 <button type="submit" class="save-btn" id="send-message-btn">Send Message</button>
               </form>
@@ -634,9 +432,23 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script type="module">
+    import { updateNavbar } from "../assets/js/global.js";
+
+    // Dynamically insert navbar HTML, then run the logic
+    fetch("../navBar.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar-container").innerHTML = html;
+        updateNavbar(); // Run your logic after navbar is in the DOM
+      });
+  </script>
+  
   <script type="module" src="../assets/js/auth.js"></script>
   <script type="module" src="../assets/js/global.js"></script>
   <script type="module" src="../assets/js/profile.js"></script>
+  <script type="module" src="../assets/js/myOrders.js"></script>
 </body>
 
 </html>
