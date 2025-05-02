@@ -239,17 +239,14 @@ function showDescription() {
 
 //add to cart button function
 document.getElementById("addTocart").addEventListener("click", function () {
- 
-  if(productCount<1){
-    productCount=1;
-    // console.log('from count 1')
-  }
-  CartManager.addToCart(product,productCount);
-  updateNavbar(); // Update the navbar to reflect the new cart count
-});
+    if (productCount < 1) {
+      productCount = 1;
+    }
+    CartManager.addToCart(product, parseInt(productCount)); // Pass the selected quantity to the cart
+    updateNavbar(); // Update the navbar to reflect the new cart count
+  });
 
 
- 
 // Redirect to checkout page when "Buy It Now" is clicked
 document.getElementById("buyItNow").addEventListener("click", function () {
   if (user == null) {
