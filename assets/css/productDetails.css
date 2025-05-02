@@ -107,6 +107,16 @@ cursor: pointer;
 scale: 1.1;
 transition: all 1s ease;
 }
+
+/*To make add-to-wishlist & add-to-cart buttons in the recommendation products section above the slider buttons */
+
+.carousel-control-next{
+  z-index: 10;                                 
+                                                    
+}
+.add-to-wishlist,.add-to-cart{
+   z-index: 11;                          
+}
 @media all and (min-width:950px){
   #reviewSection{
     position: relative;

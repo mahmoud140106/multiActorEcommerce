@@ -9,6 +9,9 @@ import { updateNavbar } from "./global.js";
 document.addEventListener("DOMContentLoaded", () => {
   const featuredProductsContainer = document.getElementById("featuredProducts");
 
+  console.log(ReviewManager.getAllReviews());
+  console.log(UserManager.getAllUsers());
+  
   // Load and display featured products
   function loadFeaturedProducts() {
     let products = ProductManager.getAllProducts();
@@ -135,6 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // });
 
 
+  
+
+
 
 
 
@@ -166,10 +172,10 @@ document.addEventListener("DOMContentLoaded", () => {
       let cardsHTML = slideItems.map(cat => {
         const products = ProductManager.getProductsByCategory(cat.id);
         return `
-        <div class="col d-flex justify-content-center w-100">
-          <div class="card cardItem position-relative w-100">
-            <img src="${cat.image}" class="rounded w-100" alt="${cat.name}">
-            <div class="cardCaption position-absolute text-center">
+        <div class="col d-flex justify-content-center w-100 ">
+          <div class="card cardItem position-relative w-100 ">
+            <img src="${cat.image}" class="rounded  w-100" alt="${cat.name}">
+            <div class="cardCaption position-absolute text-center ">
               <h5 class="imgContainer text-light">${cat.name}</h5>
               <div class="cardDetails text-light">
                 <p>${products.length} product</p>
@@ -213,16 +219,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let activeReviewUserId = reviews[0].userId;
     let activeReviewUserName = UserManager.getUserNameById(activeReviewUserId);
+    let activeUserImg = UserManager.getUser(activeReviewUserId);
+    console.log(activeUserImg.profilePicture);
+
+    if (activeUserImg.profilePicture == '') {
+      activeUserImg.profilePicture="https://static.vecteezy.com/system/resources/previews/023/932/501/original/anonymous-personal-icon-png.png"
+    }
+    
 
     activeCarouselItem.innerHTML += `
   <p class="my-3 lead">${reviews[0].comment.slice(0, 100)}...</p>
   <div class="d-flex justify-content-center">
-    <img class="rounded-circle"
-      src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01.jpg"
+    <img class="rounded-circle "
+      src="${activeUserImg.profilePicture}"
       alt="">
-    <div class="ms-3">
+    <div class="ms-3 d-flex align-items-center">
       <span>${activeReviewUserName}</span><br>
-      <span class="lead">Wedding Planner</span>
     </div>
   </div>
 `;
@@ -241,11 +253,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let carouselItems = document.getElementsByClassName('carouselItems');
 
+
     for (let i = 1; i < reviewLength; i++) {
 
    
       let reviewUserId = reviews[i].userId;
       let reviewUserName = UserManager.getUserNameById(reviewUserId);
+
+      let UserImg = UserManager.getUser(reviewUserId);
+    console.log(UserImg);
+
+    if (!UserImg.profilePicture) {
+      UserImg.profilePicture="https://static.vecteezy.com/system/resources/previews/023/932/501/original/anonymous-personal-icon-png.png"
+      }
 
   
       for (let index = 0; index < 5; index++) {
@@ -260,11 +280,10 @@ document.addEventListener("DOMContentLoaded", () => {
     <p class="my-3 lead">${reviews[i].comment.slice(0, 100)}...</p>
     <div class="d-flex justify-content-center">
       <img class="rounded-circle"
-        src="https://websitedemos.net/flower-shop-04/wp-content/uploads/sites/1414/2023/10/testimonial-skip-01-1.jpg"
+        src="${UserImg.profilePicture}"
         alt="">
-      <div class="ms-3">
-        <span>${reviewUserName}</span><br>
-        <span class="lead">Designer</span>
+      <div class="ms-3 d-flex align-items-center">
+        <span >${reviewUserName}</span><br>
       </div>
     </div>
   `;
