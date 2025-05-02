@@ -21,29 +21,23 @@ let CreatedTd5 = document.createElement("td");
 let CreatedTdActions = document.createElement("td");
 CreatedTdActions.innerHTML=`<i class="fa-solid fa-pen-to-square  text-primary fs-5" data-bs-toggle="modal"  data-bs-target="#myModal">`;
 
-    // console.log(CreatedTdActions);
-    
 
-
-
-
-
-
+let currentUsers = UserManager.getAllUsers();
 
 
 //Display All Users
 
-let currentUsers = UserManager.getAllUsers();
+
 let currentPage = 1;
 const usersPerPage = 5;
 // const tbody = document.querySelector("tbody");
 const paginationDiv = document.getElementById("pagination");
 
-function displayUsers(page = 1) {
+function displayUsers(usersArray, page = 1) {
     tbody.innerHTML = ""; // Clear table
     const start = (page - 1) * usersPerPage;
     const end = start + usersPerPage;
-    const usersToDisplay = currentUsers.slice(start, end);
+    const usersToDisplay = usersArray.slice(start, end);
 
     usersToDisplay.forEach(user => {
         let tr = document.createElement("tr");
@@ -60,10 +54,10 @@ function displayUsers(page = 1) {
         tbody.appendChild(tr);
     });
 
-    setupPagination(currentUsers.length, page);
+    setupPagination(usersArray.length, page, usersArray);
 }
 
-function setupPagination(totalUsers, currentPage) {
+function setupPagination(totalUsers, currentPage, usersArray) {
     const totalPages = Math.ceil(totalUsers / usersPerPage);
     paginationDiv.innerHTML = "";
 
@@ -72,7 +66,7 @@ function setupPagination(totalUsers, currentPage) {
     prevBtn.className = "btn btn-dark rounded-circle mx-1";
     prevBtn.innerText = "<";
     prevBtn.disabled = currentPage === 1;
-    prevBtn.addEventListener("click", () => displayUsers(currentPage - 1));
+    prevBtn.addEventListener("click", () => displayUsers(usersArray, currentPage - 1));
     paginationDiv.appendChild(prevBtn);
 
     // Page numbers
@@ -80,7 +74,7 @@ function setupPagination(totalUsers, currentPage) {
         const pageBtn = document.createElement("button");
         pageBtn.className = `btn mx-1 rounded-circle ${i === currentPage ? "btn-dark" : "btn-outline-dark"}`;
         pageBtn.innerText = i;
-        pageBtn.addEventListener("click", () => displayUsers(i));
+        pageBtn.addEventListener("click", () => displayUsers(usersArray, i));
         paginationDiv.appendChild(pageBtn);
     }
 
@@ -89,15 +83,32 @@ function setupPagination(totalUsers, currentPage) {
     nextBtn.className = "btn btn-dark rounded-circle mx-1";
     nextBtn.innerText = ">";
     nextBtn.disabled = currentPage === totalPages;
-    nextBtn.addEventListener("click", () => displayUsers(currentPage + 1));
+    nextBtn.addEventListener("click", () => displayUsers(usersArray, currentPage + 1));
     paginationDiv.appendChild(nextBtn);
 }
 
-// Call the function initially
-displayUsers();
+
+
+displayUsers(currentUsers); 
 
 
 
+
+
+
+let searchAboutUser = document.getElementById("searchAboutUser");
+
+searchAboutUser.addEventListener("keyup", function () {
+    let searchTerm = searchAboutUser.value.toLowerCase();
+
+   
+    let filteredUsers = currentUsers.filter(user =>
+        user.userName.toLowerCase().includes(searchTerm)
+    );
+
+  
+    displayUsers(filteredUsers);
+});
 
 
 
@@ -190,6 +201,7 @@ document.getElementById("addUsers").addEventListener("click", function () {
         
 // //     });
    
+
 
 // edit user (show current data of the user in the form)
 
