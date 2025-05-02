@@ -23,6 +23,10 @@ CreatedTdActions.innerHTML=`<i class="fa-solid fa-pen-to-square  text-primary fs
 
 
 let currentUsers = UserManager.getAllUsers();
+let currentUser = JSON.parse(localStorage.getItem('currentUser')) ;
+// console.log(currentUser.id);
+
+
 
 
 //Display All Users
@@ -40,7 +44,8 @@ function displayUsers(usersArray, page = 1) {
     const usersToDisplay = usersArray.slice(start, end);
 
     usersToDisplay.forEach(user => {
-        let tr = document.createElement("tr");
+        if (user.id != currentUser.id) {
+             let tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${user.id}</td>
             <td>${user.userName}</td>
@@ -52,6 +57,9 @@ function displayUsers(usersArray, page = 1) {
             </td>
         `;
         tbody.appendChild(tr);
+            
+        }
+       
     });
 
     setupPagination(usersArray.length, page, usersArray);
