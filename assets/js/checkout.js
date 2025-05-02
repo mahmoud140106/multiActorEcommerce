@@ -75,11 +75,27 @@ window.addEventListener("load", function() {
       });
     }
 
-    const cartSummary = CartManager.calculateOrderSummary();
+    // Update the calculation logic to handle "Buy It Now" scenario
+    if (productId && productCount) {
+      const product = ProductManager.getProduct(productId);
+      if (product) {
+        const subtotal = (product.discountedPrice || product.price) * productCount;
+        const shipping = 20; // Fixed shipping cost
+        const discount = 0; // No discount applied for "Buy It Now"
+        const total = subtotal + shipping - discount;
 
-    if (cartSummary) {
-      document.getElementById('Subtotal').textContent = `$${cartSummary.subtotal.toFixed(2)}`;
-      document.getElementById("totalPrice").textContent = `$${cartSummary.total.toFixed(2)}`;
+        document.getElementById('Subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('shipping').textContent = `$${shipping.toFixed(2)}`;
+        document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
+      }
+    } else {
+      // Existing cart-based calculation
+      const cartSummary = CartManager.calculateOrderSummary();
+      if (cartSummary) {
+        document.getElementById('Subtotal').textContent = `$${cartSummary.subtotal.toFixed(2)}`;
+        document.getElementById('shipping').textContent = `$${cartSummary.shipping.toFixed(2)}`;
+        document.getElementById("totalPrice").textContent = `$${cartSummary.total.toFixed(2)}`;
+      }
     }
 
     document.querySelectorAll(".summaryImg").forEach((img) => {
