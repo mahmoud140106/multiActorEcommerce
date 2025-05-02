@@ -110,6 +110,11 @@ export function initializeDefaultCategories() {
       "SHOES",
       "https://mensclubcollection.com/cdn/shop/files/0G9A0046_1024x1024.jpg?v=1745854594"
     ),
+    new Category(
+      12,
+      "SWEATER",
+      "https://mensclubcollection.com/cdn/shop/files/R6A5512_1024x1024.jpg?v=1744805191"
+    ),
   ];
   if (!StorageManager.load("categories")) {
     StorageManager.save("categories", defaultCategories);
