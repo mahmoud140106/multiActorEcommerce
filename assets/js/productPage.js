@@ -96,6 +96,21 @@ function product(items) {
       });
     });
 
+
+
+    
+  // search about product through home
+
+  
+  
+  
+  document.getElementById("searchGo").addEventListener("click", function (e) {
+
+    let searchInputData = document.getElementById("searchInput").value;
+  
+    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
+  })
     // Add event listeners to "Add to Wishlist" buttons
     document.querySelectorAll(".add-to-wishlist").forEach((button) => {
       button.addEventListener("click", (event) => {
@@ -299,16 +314,3 @@ window.previousPage=previousPage;
 
 
 
-
-  // search about product through home
-
-  
-  
-  
-  document.getElementById("searchGo").addEventListener("click", function (e) {
-
-    let searchInputData = document.getElementById("searchInput").value;
-  
-    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
- 
-  })
