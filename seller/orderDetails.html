@@ -24,353 +24,154 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
+    <link href="../assets/css/dashboard.css" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/css/orderDetails.css" />
   </head>
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
-      <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="/index.html">
-          <i class="fas fa-shopping-bag me-2"></i>
-          <span class="omnishop-logo">OmniShop</span>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <!-- JavaScript will populate this dynamically -->
-          </ul>
-        </div>
-      </div>
+    <!-- Sidebar Toggle Button -->
+    <button
+      class="sidebar-toggle"
+      aria-label="Toggle Sidebar"
+      title="Show Menu"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <main>
+      <!-- Sidebar -->
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Sidebar -->
+          <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="position-sticky">
+              <a
+                class="navbar-brand d-flex align-items-center text-white mb-2 pb-2"
+                style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                <span class="omnishop-logo">OmniShop</span>
+              </a>
+              <ul class="nav flex-column navbar-nav px-3">
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/dashboard.html">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/products.html">
+                    <i class="fas fa-box-open me-2"></i>Products
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/updates.html">
+                    <i class="fas fa-bell me-2"></i>Updates
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/seller/orders.html">
+                    <i class="fas fa-box-open me-2"></i>Orders
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
 
-      <!-- Login Modal -->
-      <div
-        class="modal fade"
-        id="loginModal"
-        tabindex="-1"
-        aria-labelledby="loginModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
-                Login
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="login-form">
-                <div class="mb-3">
-                  <label for="login-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="login-email"
-                    required
-                  />
-                  <div class="invalid-feedback" id="login-email-error"></div>
-                </div>
-                <div class="mb-3">
-                  <label for="login-password" class="form-label"
-                    >Password</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="login-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="login-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div class="invalid-feedback" id="login-password-error"></div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Login
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Don't have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#signupModal"
-                  data-bs-dismiss="modal"
-                  >Sign Up</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sign Up Modal -->
-      <div
-        class="modal fade"
-        id="signupModal"
-        tabindex="-1"
-        aria-labelledby="signupModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-centered">
-          <div
-            class="modal-content bgmodal rounded p-4"
-            style="width: 450px; min-height: 55vh;"
-          >
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
-                Sign Up
-              </h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="signup-form">
-                <div class="mb-3">
-                  <label for="signup-userName" class="form-label"
-                    >UserName</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="signup-userName"
-                    required
-                  />
-                  <div
-                    class="invalid-feedback"
-                    id="signup-userName-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-email" class="form-label">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="signup-email"
-                    required
-                  />
-                  <div class="invalid-feedback" id="signup-email-error"></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-password" class="form-label"
-                    >Password</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="signup-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="signup-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div
-                    class="invalid-feedback"
-                    id="signup-password-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label for="signup-confirm-password" class="form-label"
-                    >Confirm Password</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="signup-confirm-password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary toggle-password"
-                      data-target="signup-confirm-password"
-                    >
-                      <i class="fa fa-eye"></i>
-                    </button>
-                  </div>
-                  <div
-                    class="invalid-feedback"
-                    id="signup-confirm-password-error"
-                  ></div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Register as:</label>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="role"
-                      id="role-customer"
-                      value="customer"
-                      checked
-                    />
-                    <label class="form-check-label" for="role-customer">
-                      Customer
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="role"
-                      id="role-seller"
-                      value="seller"
-                    />
-                    <label class="form-check-label" for="role-seller">
-                      Seller
-                    </label>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  Sign Up
-                </button>
-              </form>
-              <p class="text-center mt-3">
-                Already have an account?
-                <a
-                  href="#"
-                  data-bs-toggle="modal"
-                  data-bs-target="#loginModal"
-                  data-bs-dismiss="modal"
-                  >Login</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        id="toast-container"
-        class="toast-container position-fixed bottom-0 end-0 p-3"
-      >
-        <!-- Toasts will be dynamically inserted here -->
-      </div>
-    </nav>
-
-    <div class="container py-5">
-      <div class="d-flex">
-      <div class="mb-3">
-        <input
-          class="btn btn-outline-dark"
-          type="button"
-          value="Back To Dashboard"
-        />
-      </div>
-      <div ><h2>Order Details</h2></div>
-    </div>
-      <div class="d-flex flex-column-reverse flex-lg-row g-5">
-        <!-- left side -->
-        <div
-          class="col-11 col-sm-12 col-lg-5 mx-auto mb-3 ms-lg-5 order-details"
-        >
-          <div>
-            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-              <div class="card-body p-0" id="order-items">
-                <!-- order items will be populated dynamically -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- right side -->
-        <div class="col-12 col-lg-5 h-50 deliveryData-summary">
-          <h4>Customer Delivery Data</h4>
-          <form class="row g-3">
-            <div class="col-md-12">
-              <input type="text" value="Egypt" class="form-control" />
-            </div>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="container py-5">
             <div class="d-flex">
-              <div class="col-md-6">
+              <div class="mb-3">
                 <input
-                  type="text"
-                  class="form-control deliveryData"
-                  id="firstName"
-                  readonly
+                  class="btn btn-outline-dark"
+                  type="button"
+                  value="Back To Dashboard"
                 />
               </div>
-              <div class="col-md-6">
-                <input
-                  type="text"
-                  class="form-control deliveryData"
-                  id="lastName"
-                  readonly
-                />
+              <div><h2>Order Details</h2></div>
+            </div>
+            <div class="d-flex flex-column-reverse flex-lg-row g-5">
+              <!-- left side -->
+              <div
+                class="col-11 col-sm-12 col-lg-5 mx-auto mb-3 ms-lg-5 order-details"
+              >
+                <div>
+                  <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
+                    <div class="card-body p-0" id="order-items">
+                      <!-- order items will be populated dynamically -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- right side -->
+              <div class="col-12 col-lg-5 h-50 deliveryData-summary">
+                <h4>Customer Delivery Data</h4>
+                <form class="row g-3">
+                  <div class="col-md-12">
+                    <input type="text" value="Egypt" class="form-control" />
+                  </div>
+                  <div class="d-flex">
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        class="form-control deliveryData"
+                        id="firstName"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        class="form-control deliveryData"
+                        id="lastName"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <input
+                      type="text"
+                      class="form-control deliveryData"
+                      id="address"
+                      readonly
+                    />
+                  </div>
+
+                  <div class="col-md-6">
+                    <input
+                      type="text"
+                      class="form-control deliveryData"
+                      id="City"
+                      readonly
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <input
+                      type="text"
+                      class="form-control deliveryData"
+                      id="Governorate"
+                      readonly
+                    />
+                  </div>
+
+                  <div class="col-12">
+                    <input
+                      type="text"
+                      class="form-control deliveryData"
+                      id="PhoneNumber"
+                      readonly
+                    />
+                  </div>
+                </form>
               </div>
             </div>
-            <div class="col-12">
-              <input
-                type="text"
-                class="form-control deliveryData"
-                id="address"
-                readonly
-              />
-            </div>
-
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control deliveryData"
-                id="City"
-                readonly
-              />
-            </div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control deliveryData"
-                id="Governorate"
-                readonly
-              />
-            </div>
-
-            <div class="col-12">
-              <input
-                type="text"
-                class="form-control deliveryData"
-                id="PhoneNumber"
-                readonly
-              />
-            </div>
-          </form>
-        </div>
+          </div>
+        </main>
       </div>
     </div>
 
-    
     <!-- custom js  -->
     <script type="module" src="../assets/js/auth.js"></script>
     <script type="module" src="../assets/js/global.js"></script>
