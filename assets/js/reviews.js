@@ -1,6 +1,6 @@
 import { ReviewManager } from "./reviewManager.js";
 import { StorageManager } from "./storageManager.js";
-import { showToast } from "./toast.js";
+import { CartManager } from "./cartManager.js";
 
 let reviews;
 let productId;
@@ -15,8 +15,8 @@ window.addEventListener('load', () =>{
       return;
     }
 
-let Allreviews = StorageManager.load('reviews');
-reviews=Allreviews.filter((review) => review.productId === productId);
+// let Allreviews = StorageManager.load('reviews');
+// reviews=Allreviews.filter((review) => review.productId === productId);
 // reviews = ReviewManager.getReviewsByProduct(productId); // Get reviews for the product
 console.log(reviews)
 
@@ -32,11 +32,11 @@ removeHighlight(); // Remove highlight from stars
 
 //get reviews for the product
 function getreviews(productId){
-
+let reviews = ReviewManager.getReviewsByProduct(productId);
   
  // Render carousel images dynamically
  const carouselReviews = document.getElementById("carouselReviews");
-//  carouselReviews.innerHTML = "";
+ carouselReviews.innerHTML = "";
 
  if (!reviews || reviews.length  === 0) {
   console.warn("No reviews found for product:", productId);
@@ -80,10 +80,6 @@ divReviewItem.appendChild(reviewUser); // Append review user name to review item
  });
 }
 
-
-
- 
-
 }
 
 
@@ -93,11 +89,11 @@ document.getElementById('submitBtn').addEventListener('click', function (){
     let user = StorageManager.load("currentUser"); // Get current user from storage
     let ratingValue = document.querySelectorAll('.star.selected').length; // Get selected rating value
     if(user==null){
-     showToast("Please login to add a review.",'error');
+         CartManager.showToast("Please log in first")
       return;
     }
     if(ratingValue<1){
-      showToast("Rating must be between 1 and 5 stars.",'error');
+      CartManager.showToast("Rating must be between 1 and 5 stars.")
       return;
     }
     let reviewComment= document.getElementById('reviewInput').value ;

@@ -106,20 +106,29 @@ export class ProductManager {
     extraOptions = {}
   ) {
     let products = StorageManager.load("products") || [];
-    products = products.map((product) =>
-      product.id === id
-        ? new Product(
-            id,
-            name,
-            categoryId,
-            price,
-            stock,
-            images,
-            sellerId,
-            extraOptions
-          )
-        : product
-    );
+    // products = products.map((product) =>
+    //   product.id === id
+    //     ? new Product(
+    //         id,
+    //         name,
+    //         categoryId,
+    //         price,
+    //         stock,
+    //         images,
+    //         sellerId,
+    //         extraOptions
+    //       )
+    //     : product
+    // );
+    let product=products.find(product=> product.id==id);
+    product.name=name;
+    product.categoryId=categoryId;
+    product.price=price;
+    product.stock=stock;
+    product.images=images;
+    product.sellerId=sellerId;
+    product.extraOptions=extraOptions;
+
     StorageManager.save("products", products);
   }
 
@@ -144,6 +153,11 @@ export class ProductManager {
     };
     notifications.push(notification);
     StorageManager.save("notifications", notifications);
+  }
+
+  static getNotificationsForSeller(userId) {
+    const notifications = StorageManager.load("notifications") || [];
+    return notifications.filter(notification => notification.userId === userId);
   }
 
   static deleteProduct(id) {
@@ -192,7 +206,6 @@ export class ProductManager {
       };
     }
   }
-  
 
   static updateStock(productId, quantityChange) {
     const products = StorageManager.load("products") || [];

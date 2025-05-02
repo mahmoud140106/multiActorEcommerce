@@ -1,5 +1,9 @@
 tr:hover{
     cursor: pointer;
-    opacity: 0.5;
-
+    scale: 1.01;
 }
+td select.form-control {
+    appearance: auto;
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+  }
