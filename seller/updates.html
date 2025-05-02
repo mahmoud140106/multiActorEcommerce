@@ -12,7 +12,7 @@
         border-left: 4px solid #007bff; 
       }
       .notification-card.rejected { 
-        border-left-color: #dc3545; 
+        border-left: #dc3545; 
       }
       .notification-card.accepted { 
         border-left-color: #28a745; 
@@ -39,13 +39,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .replied {
-        background-color: rgba(40, 167, 69, 0.1);
-      }
-      .replied-icon {
-        color: #28a745;
-        margin-left: 5px;
-      }
       /* Status styles */
       .status-open {
         background-color: #ffc107;
@@ -64,10 +57,6 @@
       th {
         cursor: pointer;
       }
-      .filter-toggle {
-        cursor: pointer;
-        margin-left: 10px;
-      }
     </style>
   </head>
   <body>
@@ -80,7 +69,7 @@
         <div class="row">
           <!-- Sidebar -->
           <nav class="col-md-3 col-lg-2 d-md-block sidebar">
-            <div class="position-sticky pt-0">
+            <div class="position-sticky">
               <a class="navbar-brand d-flex align-items-center text-white mb-2 pb-2" style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);">
                 <i class="fas fa-shopping-bag"></i>
                 <span class="omnishop-logo">OmniShop</span>
@@ -155,12 +144,7 @@
                     <div class="col-md-4 search-container">
                       <input type="text" id="searchInput" class="form-control" placeholder="Search by subject or type..." onkeyup="searchMessages()" />
                     </div>
-                    <div class="col-md-4">
-                      <div class="form-check form-switch filter-toggle">
-                        <input class="form-check-input" type="checkbox" id="unreadFilter" onchange="toggleUnreadFilter()">
-                        <label class="form-check-label" for="unreadFilter">Show Unread Only</label>
-                      </div>
-                    </div>
+                    <div class="col-md-4"></div>
                     <div class="col-md-4 text-end">
                       <button class="btn btn-primary btn-gradient" data-bs-toggle="modal" data-bs-target="#sendMessageModal">
                         Send Message
@@ -175,9 +159,9 @@
                             <th onclick="sortTable('id')">ID <span id="sort-id"></span></th>
                             <th onclick="sortTable('subject')">Subject <span id="sort-subject"></span></th>
                             <th onclick="sortTable('type')">Type <span id="sort-type"></span></th>
-                            <th onclick="sortTable('lastMessage')">Last Message <span id="sort-lastMessage"></span></th>
+                            <th onclick="sortTable('content')">Content <span id="sort-content"></span></th>
                             <th onclick="sortTable('date')">Date <span id="sort-date"></span></th>
-                            <th>Status</th>
+                            <th>Sender</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
@@ -243,7 +227,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Conversation Details</h5>
+            <h5 class="modal-title">Message Details</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -254,19 +238,17 @@
               <strong>Type:</strong> <span id="detail-type"></span>
             </div>
             <div class="mb-3">
-              <strong>Status:</strong> <span id="detail-status"></span>
+              <strong>Sender:</strong> <span id="detail-sender"></span>
             </div>
-            <div class="mb-3" id="detail-messages"></div>
-            <form>
-              <div class="mb-3">
-                <label for="seller-response" class="form-label">Reply</label>
-                <textarea class="form-control" id="seller-response" rows="3"></textarea>
-              </div>
-            </form>
+            <div class="mb-3">
+              <strong>Content:</strong> <span id="detail-content"></span>
+            </div>
+            <div class="mb-3">
+              <strong>Date:</strong> <span id="detail-date"></span>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="send-response-btn">Send Reply</button>
           </div>
         </div>
       </div>

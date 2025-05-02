@@ -80,4 +80,21 @@ class MessageManager {
 //   }
 // }
 
+
+document.addEventListener("DOMContentLoaded", function () {
+  const currentPath = window.location.pathname;
+
+  const navLinks = document.querySelectorAll(".sidebar .nav-link");
+
+  navLinks.forEach((link) => {
+    const linkPath = link.getAttribute("href");
+
+    if (currentPath.includes(linkPath) && linkPath !== "#") {
+      link.classList.add("active");
+    } else if (currentPath === "/" && linkPath.includes("index.html")) {
+      link.classList.add("active");
+    }
+  });
+});
+
 export { MessageManager };

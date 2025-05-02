@@ -284,7 +284,7 @@ document.querySelector("form").addEventListener("submit", function (e) {
         currentRow.querySelectorAll('td')[4].innerText = e.target[4].value;
 
         UserManager.updateUser(rowIndex + 1, e.target[1].value,e.target[2].value, e.target[3].value, e.target[4].value);
-        r = null;
+        rowIndex = null;
 
         bootstrap.Modal.getInstance(document.getElementById('myModal')).hide();
         
@@ -342,3 +342,18 @@ document.querySelector("form").addEventListener("submit", function (e) {
       
 })
 
+document.addEventListener("DOMContentLoaded", function () {
+    const currentPath = window.location.pathname;
+  
+    const navLinks = document.querySelectorAll(".sidebar .nav-link");
+  
+    navLinks.forEach((link) => {
+      const linkPath = link.getAttribute("href");
+  
+      if (currentPath.includes(linkPath) && linkPath !== "#") {
+        link.classList.add("active");
+      } else if (currentPath === "/" && linkPath.includes("index.html")) {
+        link.classList.add("active");
+      }
+    });
+  });

@@ -8,20 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="../assets/css/dashboard.css" rel="stylesheet" />
     <style>
-      .status-open {
-        background-color: #ffc107;
-        color: #fff;
-        padding: 2px 8px;
-        border-radius: 4px;
-        display: inline-block;
-      }
-      .status-responded {
-        background-color: #28a745;
-        color: #fff;
-        padding: 2px 8px;
-        border-radius: 4px;
-        display: inline-block;
-      }
       th {
         cursor: pointer;
       }
@@ -83,16 +69,16 @@
               <div class="row mb-2">
                 <div class="col-12">
                   <h1 class="display-5">Messages</h1>
-                  <p class="lead">View Messages from sellers and customers</p>
+                  <p class="lead">View and send messages to sellers and customers</p>
                 </div>
               </div>
               <div class="row mb-4 gap-2 gap-md-0">
                 <div class="col-md-4 search-container">
-                  <input type="text" id="searchInput" class="form-control" placeholder="Search by sender, subject, or type..." onkeyup="searchMessages()" />
+                  <input type="text" id="searchInput" class="form-control" placeholder="Search by sender, recipient, subject, or type..." onkeyup="searchMessages()" />
                 </div>
                 <div class="col-md-4">
                   <select id="senderFilter" class="form-select" onchange="filterBySender()">
-                    <option value="">All Senders</option>
+                    <option value="">All Users</option>
                   </select>
                 </div>
                 <div class="col-md-4 text-end">
@@ -114,9 +100,9 @@
                           <th onclick="sortTable('id')">ID <span id="sort-id"></span></th>
                           <th onclick="sortTable('subject')">Subject <span id="sort-subject"></span></th>
                           <th onclick="sortTable('type')">Type <span id="sort-type"></span></th>
-                          <th onclick="sortTable('sender')">Sender <span id="sort-sender"></span></th>
-                          <th onclick="sortTable('date')">Date <span id="sort-date"></span></th>
-                          <th>Status</th>
+                          <th class="d-none d-md-table-cell" onclick="sortTable('sender')">Sender <span id="sort-sender"></span></th>
+                          <th class="d-none d-md-table-cell" onclick="sortTable('recipient')">Recipient <span id="sort-recipient"></span></th>
+                          <th class="d-none d-md-table-cell" onclick="sortTable('date')">Date <span id="sort-date"></span></th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -195,7 +181,10 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <strong>With:</strong> <span id="detail-sender"></span>
+              <strong>Sender:</strong> <span id="detail-sender"></span>
+            </div>
+            <div class="mb-3">
+              <strong>Recipient:</strong> <span id="detail-recipient"></span>
             </div>
             <div class="mb-3">
               <strong>Subject:</strong> <span id="detail-subject"></span>
@@ -204,19 +193,14 @@
               <strong>Type:</strong> <span id="detail-type"></span>
             </div>
             <div class="mb-3">
-              <strong>Status:</strong> <span id="detail-status"></span>
+              <strong>Content:</strong> <span id="detail-content"></span>
             </div>
-            <div class="mb-3" id="detail-messages"></div>
-            <form>
-              <div class="mb-3">
-                <label for="admin-response" class="form-label">Reply</label>
-                <textarea class="form-control" id="admin-response" rows="3"></textarea>
-              </div>
-            </form>
+            <div class="mb-3">
+              <strong>Date:</strong> <span id="detail-date"></span>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="send-response-btn">Send Reply</button>
           </div>
         </div>
       </div>

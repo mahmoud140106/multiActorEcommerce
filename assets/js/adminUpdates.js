@@ -22,30 +22,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const itemsPerPage = 5;
   let sortColumn = "id";
   let sortDirection = "asc";
-  let selectedSender = "";
+  let selectedUser = "";
 
   function loadMessages() {
-    filterMessagesBySender();
+    filterMessagesByUser();
   }
 
-  function populateSenderFilter() {
+  function populateUserFilter() {
     const senderFilter = document.getElementById("senderFilter");
     const users = StorageManager.load("users") || [];
-    const senders = new Set();
+    const userIds = new Set();
     const messages = MessageManager.getMessagesForUser(currentUser.id);
     messages.forEach((message) => {
-      if (message.senderId !== currentUser.id) {
-        senders.add(message.senderId);
-      }
+      userIds.add(message.senderId);
+      userIds.add(message.recipientId);
     });
 
-    senders.forEach((senderId) => {
-      const sender = users.find((u) => u.id === senderId);
-      if (sender) {
-        const option = document.createElement("option");
-        option.value = senderId;
-        option.textContent = `${sender.userName} (${sender.role})`;
-        senderFilter.appendChild(option);
+    userIds.forEach((userId) => {
+      if (userId !== currentUser.id) {
+        const user = users.find((u) => u.id === userId);
+        if (user) {
+          const option = document.createElement("option");
+          option.value = userId;
+          option.textContent = `${user.userName} (${user.role})`;
+          senderFilter.appendChild(option);
+        }
       }
     });
   }
@@ -84,28 +85,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const users = StorageManager.load("users") || [];
     console.log("Messages loaded:", messages);
     return messages
-      .filter((message) => message.senderId !== currentUser.id)
+      .filter((message) => message.senderId === currentUser.id || message.recipientId === currentUser.id)
       .map((message, index) => ({
         id: index + 1,
         senderId: message.senderId,
-        sender:
-          users.find((u) => u.id === message.senderId)?.userName || "Unknown",
+        sender: users.find((u) => u.id === message.senderId)?.userName || "Unknown",
+        recipientId: message.recipientId,
+        recipient: users.find((u) => u.id === message.recipientId)?.userName || "Unknown",
         subject: message.subject || "No Subject",
         type: message.type || "other",
         content: message.content,
         timestamp: new Date(message.timestamp),
-        status: message.status || "Open",
-        reply: message.reply || null,
         originalMessageId: message.id,
       }));
   }
 
-  function filterMessagesBySender() {
+  function filterMessagesByUser() {
     const messages = getMessages();
     filteredMessages = messages.filter((message) =>
-      selectedSender === ""
+      selectedUser === ""
         ? true
-        : message.senderId === parseInt(selectedSender)
+        : message.senderId === parseInt(selectedUser) || message.recipientId === parseInt(selectedUser)
     );
     currentPage = 1;
     renderMessagesTable();
@@ -130,17 +130,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${message.id}</td>
         <td>${message.subject}</td>
         <td>${message.type}</td>
-        <td>${message.sender}</td>
-        <td>${message.timestamp.toLocaleString()}</td>
+        <td class="d-none d-md-table-cell">${message.sender}</td>
+        <td class="d-none d-md-table-cell">${message.recipient}</td>
+        <td class="d-none d-md-table-cell">${message.timestamp.toLocaleString()}</td>
         <td>
-          <span class="status-${message.status.toLowerCase()}">${
-        message.status
-      }</span>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-primary view-message-btn" data-id="${
-            message.id
-          }">View</button>
+          <button class="btn btn-sm btn-primary view-message-btn" data-id="${message.id}">View</button>
         </td>
       `;
       tbody.appendChild(row);
@@ -156,9 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const prevLi = document.createElement("li");
     prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
-    prevLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${
-      currentPage - 1
-    })"><i class="fas fa-chevron-left"></i></a>`;
+    prevLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${currentPage - 1})"><i class="fas fa-chevron-left"></i></a>`;
     pagination.appendChild(prevLi);
 
     for (let i = 1; i <= pageCount; i++) {
@@ -169,12 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const nextLi = document.createElement("li");
-    nextLi.className = `page-item ${
-      currentPage === pageCount ? "disabled" : ""
-    }`;
-    nextLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${
-      currentPage + 1
-    })"><i class="fas fa-chevron-right"></i></a>`;
+    nextLi.className = `page-item ${currentPage === pageCount ? "disabled" : ""}`;
+    nextLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${currentPage + 1})"><i class="fas fa-chevron-right"></i></a>`;
     pagination.appendChild(nextLi);
   }
 
@@ -186,8 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.filterBySender = () => {
-    selectedSender = document.getElementById("senderFilter").value;
-    filterMessagesBySender();
+    selectedUser = document.getElementById("senderFilter").value;
+    filterMessagesByUser();
   };
 
   window.sortTable = (column) => {
@@ -204,20 +192,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (column === "date") {
         valA = a.timestamp;
         valB = b.timestamp;
+      } else if (column === "recipient") {
+        valA = a.recipient;
+        valB = b.recipient;
       }
       if (typeof valA === "string") {
-        return sortDirection === "asc"
-          ? valA.localeCompare(valB)
-          : valB.localeCompare(valA);
+        return sortDirection === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
       }
       return sortDirection === "asc" ? valA - valB : valB - valA;
     });
 
-    document
-      .querySelectorAll("th span")
-      .forEach((span) => (span.innerHTML = ""));
-    document.getElementById(`sort-${column}`).innerHTML =
-      sortDirection === "asc" ? "↑" : "↓";
+    document.querySelectorAll("th span").forEach((span) => (span.innerHTML = ""));
+    document.getElementById(`sort-${column}`).innerHTML = sortDirection === "asc" ? "↑" : "↓";
 
     currentPage = 1;
     renderMessagesTable();
@@ -229,6 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredMessages = messages.filter(
       (message) =>
         message.sender.toLowerCase().includes(query) ||
+        message.recipient.toLowerCase().includes(query) ||
         message.subject.toLowerCase().includes(query) ||
         message.type.toLowerCase().includes(query) ||
         message.content.toLowerCase().includes(query)
@@ -245,65 +232,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.getElementById("detail-sender").textContent = message.sender;
+    document.getElementById("detail-recipient").textContent = message.recipient;
     document.getElementById("detail-subject").textContent = message.subject;
     document.getElementById("detail-type").textContent = message.type;
-    document.getElementById("detail-status").textContent = message.status;
-
-    const detailMessages = document.getElementById("detail-messages");
-    detailMessages.innerHTML = "<strong>Messages:</strong>";
-    detailMessages.innerHTML += `
-      <div class="message-item received p-3 bg-light rounded mb-2">
-        <p class="mb-1">${message.content}</p>
-        <small class="text-muted">${message.timestamp.toLocaleString()}</small>
-      </div>`;
-    if (message.reply) {
-      detailMessages.innerHTML += `
-        <div class="message-item sent p-3 bg-primary-subtle rounded mb-2">
-          <p class="mb-1">${message.reply}</p>
-          <small class="text-muted">${message.timestamp.toLocaleString()}</small>
-        </div>`;
-    }
-
-    document.getElementById("admin-response").value = "";
-    const sendResponseBtn = document.getElementById("send-response-btn");
-    sendResponseBtn.dataset.id = messageId;
+    document.getElementById("detail-content").textContent = message.content;
+    document.getElementById("detail-date").textContent = message.timestamp.toLocaleString();
 
     new bootstrap.Modal(document.getElementById("messageDetailModal")).show();
-  }
-
-  function sendAdminReply(messageId) {
-    const replyInput = document.getElementById("admin-response").value.trim();
-    if (!replyInput) {
-      showToast("Reply cannot be empty.", "error");
-      return;
-    }
-
-    const message = filteredMessages.find((m) => m.id === parseInt(messageId));
-    if (!message) {
-      showToast("Message not found.", "error");
-      return;
-    }
-
-    console.log("Sending reply for message:", message);
-    const messages = StorageManager.load("messages") || [];
-    const originalMessage = messages.find(
-      (m) => m.id === message.originalMessageId
-    );
-    if (originalMessage) {
-      originalMessage.reply = replyInput;
-      originalMessage.status = "Responded";
-      StorageManager.save("messages", messages);
-      console.log("Updated messages in storage:", messages);
-      showToast("Reply sent successfully!", "success");
-      loadMessages();
-      new bootstrap.Modal(document.getElementById("messageDetailModal")).hide();
-    } else {
-      console.log(
-        "Original message not found in storage:",
-        message.originalMessageId
-      );
-      showToast("Failed to send reply. Message not found.", "error");
-    }
   }
 
   function sendMessageFromModal() {
@@ -318,22 +253,19 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     if (!subject) {
-      document.getElementById("messageSubject-error").textContent =
-        "Subject cannot be empty.";
+      document.getElementById("messageSubject-error").textContent = "Subject cannot be empty.";
       document.getElementById("messageSubject-error").style.display = "block";
       document.getElementById("messageSubject").classList.add("is-invalid");
       return;
     }
     if (!type) {
-      document.getElementById("messageType-error").textContent =
-        "Type cannot be empty.";
+      document.getElementById("messageType-error").textContent = "Type cannot be empty.";
       document.getElementById("messageType-error").style.display = "block";
       document.getElementById("messageType").classList.add("is-invalid");
       return;
     }
     if (!content) {
-      document.getElementById("messageContent-error").textContent =
-        "Message cannot be empty.";
+      document.getElementById("messageContent-error").textContent = "Message cannot be empty.";
       document.getElementById("messageContent-error").style.display = "block";
       document.getElementById("messageContent").classList.add("is-invalid");
       return;
@@ -363,9 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadMessages();
   }
 
-  const confirmSendMessageBtn = document.getElementById(
-    "confirmSendMessageBtn"
-  );
+  const confirmSendMessageBtn = document.getElementById("confirmSendMessageBtn");
   if (confirmSendMessageBtn) {
     confirmSendMessageBtn.addEventListener("click", sendMessageFromModal);
   } else {
@@ -379,12 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  document.getElementById("send-response-btn").addEventListener("click", () => {
-    const messageId = document.getElementById("send-response-btn").dataset.id;
-    sendAdminReply(messageId);
-  });
-
-  populateSenderFilter();
+  populateUserFilter();
   populateRecipientFilter();
   loadMessages();
 });

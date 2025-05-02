@@ -8,9 +8,14 @@ let productPage = document.getElementById("productPage");
 let filterCategory = document.getElementById("filterCategory");
 let AllCategories = CategoryManager.getAllCategories();
 
+let displayedProducts = [...allProduct]; 
+
+
 product(allProduct);
 
+
 function product(items) {
+  displayedProducts = items;
   if (items.length == 0) {
     productPage.innerHTML = `<p class="h1 mt-5 text-center text-secondary w-100">No Products yet</p>`;
   } else {
@@ -91,6 +96,21 @@ function product(items) {
       });
     });
 
+
+
+    
+  // search about product through home
+
+  
+  
+  
+  document.getElementById("searchGo").addEventListener("click", function (e) {
+
+    let searchInputData = document.getElementById("searchInput").value;
+  
+    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
+  })
     // Add event listeners to "Add to Wishlist" buttons
     document.querySelectorAll(".add-to-wishlist").forEach((button) => {
       button.addEventListener("click", (event) => {
@@ -112,9 +132,12 @@ for (let i = 0; i < AllCategories.length; i++) {
   filterCategory.innerHTML += `<option value="${AllCategories[i].name}">${AllCategories[i].name}</option>`;
 }
 
+
 //from home page through category section show its products
 let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
-let categoryId = 0;
+if (window.location.href.includes("=")) {
+  
+  let categoryId = 0;
 
 for (let j = 0; j < AllCategories.length; j++) {
   if (item === AllCategories[j].name) {
@@ -123,12 +146,34 @@ for (let j = 0; j < AllCategories.length; j++) {
 }
 
 let filterProducts = ProductManager.getProductsByCategory(categoryId);
-product(filterProducts);
+  console.log(filterProducts);
+  product(filterProducts);
 
-//default page which will be shown in product page
-if (window.location.href.indexOf("=") == -1) {
+}
+
+
+
+
+
+
+
+
+// from home page through search input show its products
+let searchItem = window.location.href.slice(window.location.href.indexOf("$") + 1);
+if (window.location.href.includes("$")) {
+  let searchedProducts = ProductManager.getProductsByName(searchItem);
+ product(searchedProducts);
+}
+
+
+
+
+// Ensure all products are displayed by default
+if (window.location.href.indexOf("=") == -1 && window.location.href.indexOf("$") == -1 ) {
   product(allProduct);
 }
+
+
 
 //change products by option categories in product page
 filterCategory.addEventListener("change", function (e) {
@@ -146,19 +191,18 @@ filterCategory.addEventListener("change", function (e) {
   }
 });
 
-// search
-const searchInput = document.getElementById("searchInput");
 
+
+// search
 searchInput.addEventListener("input", () => {
   const searchValue = searchInput.value.toLowerCase();
-
   const filteredProducts = allProduct.filter(
     (product) =>
       product.name.toLowerCase().includes(searchValue) ||
       product.description?.toLowerCase().includes(searchValue)
   );
-
   product(filteredProducts);
+  changePage(1); 
 });
 
 //outer filter // change product by change price range
@@ -229,29 +273,25 @@ brands.forEach((brand) => {
 let currentPage =1;
 const itemsPerPage=6
 const totalPages=Math.ceil(allProduct.length/itemsPerPage);
-function changePage(page)
-{
-  if(page<1||page>totalPages)
-    return;
-    currentPage=page;
-    const start=(currentPage -1)*itemsPerPage;
-    const end=start +itemsPerPage;
-    const paginationItems=allProduct.slice(start,end);
+function changePage(page) {
+  const totalPages = Math.ceil(displayedProducts.length / itemsPerPage);
+  if (page < 1 || page > totalPages) return;
 
-    document.querySelectorAll(".pagination .page-link").forEach(link =>{
-      link.classList.remove("active");
-    });
+  currentPage = page;
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const paginationItems = displayedProducts.slice(start, end);
 
-const activeLink = document.querySelector(`.pagination .page-link[data-page="${page}"]`)
+  document.querySelectorAll(".pagination .page-link").forEach(link => {
+    link.classList.remove("active");
+  });
 
-if(activeLink){
-activeLink.classList.add("active");
+  const activeLink = document.querySelector(`.pagination .page-link[data-page="${page}"]`);
+  if (activeLink) activeLink.classList.add("active");
+
+  product(paginationItems);
 }
 
-    product(paginationItems)
-
-  
-}
  function previousPage(){
   if(currentPage >1){
     changePage(currentPage-1)
@@ -268,3 +308,9 @@ changePage(1);
 window.changePage=changePage;
 window.nextPage=nextPage;
 window.previousPage=previousPage;
+
+
+
+
+
+
