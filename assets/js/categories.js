@@ -126,5 +126,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+ // search about product through home
+
+  
+  
+  
+  document.getElementById("searchGo").addEventListener("click", function (e) {
+
+    let searchInputData = document.getElementById("searchInput").value;
+  
+    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
+  })
+
 
 
