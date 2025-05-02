@@ -6,7 +6,10 @@ let userPassword = "";
 let Role = "";
 let userId = 0;
 
-let tbody=document.querySelector("tbody");
+let tbody = document.querySelector("tbody");
+
+const myForm = document.querySelector('form');
+
 
 let CreatedTr = document.createElement("tr");
 let CreatedTd1 = document.createElement("td");
@@ -270,6 +273,9 @@ document.querySelector("form").addEventListener("submit", function (e) {
 
         UserManager.updateUser(rowIndex + 1, e.target[1].value,e.target[2].value, e.target[3].value, e.target[4].value);
         r = null;
+
+        bootstrap.Modal.getInstance(document.getElementById('myModal')).hide();
+        
     }
 
     //add user
@@ -312,7 +318,13 @@ document.querySelector("form").addEventListener("submit", function (e) {
         tbody.appendChild(CreatedTr);
         
 
-        UserManager.createUser( e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value);
+        UserManager.createUser(e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value);
+        
+          
+        
+              bootstrap.Modal.getInstance(document.getElementById('myModal')).hide();
+
+    
     }
  
       
