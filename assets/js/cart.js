@@ -82,7 +82,7 @@ function renderCart() {
   // Update order summary display
   subtotalLabel.textContent = `Subtotal (${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''})`;
   subtotalElement.textContent = `$${summary.subtotal.toFixed(2)}`;
-  shippingElement.textContent = `$${summary.shipping.toFixed(2)}`;
+  shippingElement.textContent = cart.length === 0 ? '$0.00' : `$${summary.shipping.toFixed(2)}`; // Set shipping to 0.00 when cart is empty
 
   // Handle promo code display
   if (summary.promoCode === 'OFF10') {
@@ -95,7 +95,8 @@ function renderCart() {
     originalTotalElement.classList.add('d-none');
   }
 
-  finalTotalElement.textContent = `$${summary.total.toFixed(2)}`;
+  // Update final total display
+  finalTotalElement.textContent = cart.length === 0 ? '$0.00' : `$${summary.total.toFixed(2)}`; // Set total to 0.00 when cart is empty
   
   // Add event listeners to the newly rendered cart items
   addCartEventListeners();
