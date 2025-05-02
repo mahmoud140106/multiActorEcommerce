@@ -1,7 +1,6 @@
 import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
 import { StorageManager } from "./storageManager.js";
-import { showToast } from "./toast.js";
 import { CartManager } from "./cartManager.js";
 import { updateNavbar } from "./global.js";
 
