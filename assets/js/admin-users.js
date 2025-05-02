@@ -62,27 +62,27 @@ function setupPagination(totalUsers, currentPage, usersArray) {
     paginationDiv.innerHTML = "";
 
     // Previous button
-    const prevBtn = document.createElement("button");
-    prevBtn.className = "btn btn-dark rounded-circle mx-1";
-    prevBtn.innerText = "<";
-    prevBtn.disabled = currentPage === 1;
+    const prevBtn = document.createElement("li");
+    prevBtn.className = "page-item border-0";
+    prevBtn.innerHTML = `<a class="page-link ms-1 rounded-circle"><i class="fas fa-chevron-left"></i></a>`;
+    prevBtn.disabled = currentPage === 1 ;
     prevBtn.addEventListener("click", () => displayUsers(usersArray, currentPage - 1));
     paginationDiv.appendChild(prevBtn);
 
     // Page numbers
     for (let i = 1; i <= totalPages; i++) {
-        const pageBtn = document.createElement("button");
-        pageBtn.className = `btn mx-1 rounded-circle ${i === currentPage ? "btn-dark" : "btn-outline-dark"}`;
-        pageBtn.innerText = i;
+        const pageBtn = document.createElement("li");
+        pageBtn.className = `border-0  page-item ${i === currentPage ? "active" : ""}`;
+        pageBtn.innerHTML = `<a class="page-link ms-1 rounded-circle " href="#" >${i}</a>`;
         pageBtn.addEventListener("click", () => displayUsers(usersArray, i));
         paginationDiv.appendChild(pageBtn);
     }
 
     // Next button
-    const nextBtn = document.createElement("button");
-    nextBtn.className = "btn btn-dark rounded-circle mx-1";
-    nextBtn.innerText = ">";
-    nextBtn.disabled = currentPage === totalPages;
+    const nextBtn = document.createElement("li");
+    nextBtn.className = " border-0 page-item";
+    nextBtn.innerHTML =  `<a class="page-link ms-1 rounded-circle"><i class="fas fa-chevron-right"></i></a>`;
+    nextBtn.disabled = currentPage === totalPages ;
     nextBtn.addEventListener("click", () => displayUsers(usersArray, currentPage + 1));
     paginationDiv.appendChild(nextBtn);
 }
