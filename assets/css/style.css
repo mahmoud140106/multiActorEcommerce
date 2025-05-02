@@ -26,7 +26,6 @@ main {
 .omnishop-logo {
   font-family: cursive;
   font-size: 1.5rem;
-  background: linear-gradient(90deg, #0000, #1f2937, #868585);
   padding: 5px 10px;
   border-radius: 10px;
 }
