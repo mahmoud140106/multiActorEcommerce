@@ -51,7 +51,7 @@ window.addEventListener("load", function() {
       document.getElementById('Subtotal').textContent = `$${(product.price.toFixed(2))*productCount}`;
     
       
-      document.getElementById("totalPrice").textContent = `$${(product.price + 90.00).toFixed(2)}`;
+      document.getElementById("totalPrice").textContent = `$${(product.price + 20.00).toFixed(2)}`;
        
       
     }
