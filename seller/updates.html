@@ -34,17 +34,39 @@
         vertical-align: middle;
       }
       .last-message {
-        max-width: 200px; /* تحديد عرض العمود */
+        max-width: 200px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
       .replied {
-        background-color: rgba(40, 167, 69, 0.1); /* خلفية خضرا باهتة */
+        background-color: rgba(40, 167, 69, 0.1);
       }
       .replied-icon {
-        color: #28a745; /* لون أخضر */
+        color: #28a745;
         margin-left: 5px;
+      }
+      /* Status styles */
+      .status-open {
+        background-color: #ffc107;
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 4px;
+        display: inline-block;
+      }
+      .status-responded {
+        background-color: #28a745;
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 4px;
+        display: inline-block;
+      }
+      th {
+        cursor: pointer;
+      }
+      .filter-toggle {
+        cursor: pointer;
+        margin-left: 10px;
       }
     </style>
   </head>
@@ -75,8 +97,8 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="/seller/updates.html">
-                    <i class="fas fa-bell me-2"></i>Updates
+                  <a class="nav-link" href="/seller/updates.html">
+                    <i class="fas fa-envelope me-2"></i>Updates
                   </a>
                 </li>
                 <li class="nav-item">
@@ -131,38 +153,35 @@
                   <h3>Messages</h3>
                   <div class="row mb-3 gap-2 gap-md-0">
                     <div class="col-md-4 search-container">
-                      <input type="text" id="searchInput" class="form-control" placeholder="Search by sender, role, or message..." onkeyup="searchConversations()" />
+                      <input type="text" id="searchInput" class="form-control" placeholder="Search by subject or type..." onkeyup="searchMessages()" />
                     </div>
                     <div class="col-md-4">
-                      <select id="senderFilter" class="form-select" onchange="filterBySender()">
-                        <option value="">All Senders</option>
-                      </select>
+                      <div class="form-check form-switch filter-toggle">
+                        <input class="form-check-input" type="checkbox" id="unreadFilter" onchange="toggleUnreadFilter()">
+                        <label class="form-check-label" for="unreadFilter">Show Unread Only</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                      <button class="btn btn-primary btn-gradient" data-bs-toggle="modal" data-bs-target="#sendMessageModal">
+                        Send Message
+                      </button>
                     </div>
                   </div>
                   <div class="card shadow-sm">
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                       <table class="table table-striped message-table">
                         <thead>
                           <tr>
-                            <th onclick="sortTable('id')" style="cursor: pointer;">
-                              ID <span id="sort-id"></span>
-                            </th>
-                            <th onclick="sortTable('sender')" style="cursor: pointer;">
-                              Sender <span id="sort-sender"></span>
-                            </th>
-                            <th onclick="sortTable('role')" style="cursor: pointer;">
-                              Role <span id="sort-role"></span>
-                            </th>
-                            <th onclick="sortTable('message')" style="cursor: pointer;">
-                              Last Message <span id="sort-message"></span>
-                            </th>
-                            <th onclick="sortTable('date')" style="cursor: pointer;">
-                              Date <span id="sort-date"></span>
-                            </th>
+                            <th onclick="sortTable('id')">ID <span id="sort-id"></span></th>
+                            <th onclick="sortTable('subject')">Subject <span id="sort-subject"></span></th>
+                            <th onclick="sortTable('type')">Type <span id="sort-type"></span></th>
+                            <th onclick="sortTable('lastMessage')">Last Message <span id="sort-lastMessage"></span></th>
+                            <th onclick="sortTable('date')">Date <span id="sort-date"></span></th>
+                            <th>Status</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
-                        <tbody id="conversationsTableBody"></tbody>
+                        <tbody id="messagesTableBody"></tbody>
                       </table>
                       <nav>
                         <ul class="pagination" id="pagination"></ul>
@@ -171,26 +190,53 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Send Message Section -->
-              <div class="row mb-4">
-                <div class="col-12">
-                  <h3>Send Message to Admin</h3>
-                  <form id="messageForm" class="message-form">
-                    <div class="mb-3">
-                      <label for="messageContent" class="form-label">Message</label>
-                      <textarea class="form-control" id="messageContent" rows="4" required></textarea>
-                      <div class="invalid-feedback" id="messageContent-error"></div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                  </form>
-                </div>
-              </div>
             </div>
           </main>
         </div>
       </div>
     </main>
+
+    <!-- Send Message Modal -->
+    <div class="modal fade" id="sendMessageModal" tabindex="-1" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="sendMessageModalLabel">Send Message</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="messageFormModal">
+              <div class="mb-3">
+                <label for="messageSubject" class="form-label">Subject</label>
+                <input type="text" class="form-control" id="messageSubject" required />
+                <div class="invalid-feedback" id="messageSubject-error">Subject cannot be empty.</div>
+              </div>
+              <div class="mb-3">
+                <label for="messageType" class="form-label">Message Type</label>
+                <select class="form-select" id="messageType" required>
+                  <option value="">Select a category</option>
+                  <option value="order">Order Issue</option>
+                  <option value="payment">Payment Problem</option>
+                  <option value="account">Account Question</option>
+                  <option value="product">Product Inquiry</option>
+                  <option value="other">Other</option>
+                </select>
+                <div class="invalid-feedback" id="messageType-error">Please select a message type.</div>
+              </div>
+              <div class="mb-3">
+                <label for="messageContentModal" class="form-label">Message</label>
+                <textarea class="form-control" id="messageContentModal" rows="4" required></textarea>
+                <div class="invalid-feedback" id="messageContentModal-error">Message cannot be empty.</div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmSendMessageBtn">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Message Detail Modal -->
     <div class="modal fade" id="messageDetailModal" tabindex="-1" aria-hidden="true">
@@ -202,7 +248,13 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <strong>With:</strong> <span id="detail-sender"></span>
+              <strong>Subject:</strong> <span id="detail-subject"></span>
+            </div>
+            <div class="mb-3">
+              <strong>Type:</strong> <span id="detail-type"></span>
+            </div>
+            <div class="mb-3">
+              <strong>Status:</strong> <span id="detail-status"></span>
             </div>
             <div class="mb-3" id="detail-messages"></div>
             <form>

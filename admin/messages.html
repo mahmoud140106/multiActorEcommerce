@@ -3,26 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin - Manage Updates</title>
+    <title>Admin - Manage Messages</title>
     <link href="../assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="../assets/css/dashboard.css" rel="stylesheet" />
     <style>
-      .status-select {
-        width: 120px;
-        padding: 2px;
-        font-size: 14px;
+      .status-open {
+        background-color: #ffc107;
+        color: #fff;
+        padding: 2px 8px;
         border-radius: 4px;
+        display: inline-block;
       }
-      .status-select option {
-        padding: 5px;
+      .status-responded {
+        background-color: #28a745;
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 4px;
+        display: inline-block;
       }
-      .replied {
-        background-color: rgba(40, 167, 69, 0.1);
-      }
-      .replied-icon {
-        color: #28a745; 
-        margin-left: 5px;
+      th {
+        cursor: pointer;
       }
     </style>
   </head>
@@ -37,11 +38,8 @@
           <!-- Sidebar -->
           <nav class="col-md-3 col-lg-2 d-md-block sidebar">
             <div class="position-sticky">
-              <a
-                class="navbar-brand d-flex align-items-center text-white mb-2 pb-2"
-                style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);"
-              >
-                <i class="fas fa-shopping-bag "></i>
+              <a class="navbar-brand d-flex align-items-center text-white mb-2 pb-2" style="border-bottom: 1px dashed rgba(153, 152, 152, 0.3);">
+                <i class="fas fa-shopping-bag"></i>
                 <span class="omnishop-logo">OmniShop</span>
               </a>
               <ul class="nav flex-column navbar-nav px-3">
@@ -50,7 +48,7 @@
                     <i class="fas fa-tachometer-alt me-2"></i>Dashboard
                   </a>
                 </li>
-                    <li class="nav-item">
+                <li class="nav-item">
                   <a class="nav-link" href="/admin/categories.html">
                     <i class="fa-solid fa-list me-2"></i>Categories
                   </a>
@@ -61,7 +59,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/admin/messages.html">
+                  <a class="nav-link active" href="/admin/messages.html">
                     <i class="fas fa-envelope me-2"></i>Messages
                   </a>
                 </li>
@@ -90,7 +88,7 @@
               </div>
               <div class="row mb-4 gap-2 gap-md-0">
                 <div class="col-md-4 search-container">
-                  <input type="text" id="searchInput" class="form-control" placeholder="Search by sender, role, or message..." onkeyup="searchConversations()" />
+                  <input type="text" id="searchInput" class="form-control" placeholder="Search by sender, subject, or type..." onkeyup="searchMessages()" />
                 </div>
                 <div class="col-md-4">
                   <select id="senderFilter" class="form-select" onchange="filterBySender()">
@@ -113,28 +111,17 @@
                     <table class="table table-striped">
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Subject</th>
-                          <th>Type</th>
-                          <th>Customer</th>
-                          <th>Date</th>
+                          <th onclick="sortTable('id')">ID <span id="sort-id"></span></th>
+                          <th onclick="sortTable('subject')">Subject <span id="sort-subject"></span></th>
+                          <th onclick="sortTable('type')">Type <span id="sort-type"></span></th>
+                          <th onclick="sortTable('sender')">Sender <span id="sort-sender"></span></th>
+                          <th onclick="sortTable('date')">Date <span id="sort-date"></span></th>
                           <th>Status</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody id="messagesTableBody">
                         <!-- Messages will load here -->
-                        <tr>
-                          <td>1</td>
-                          <td>Order Issue</td>
-                          <td>Order</td>
-                          <td>user@example.com</td>
-                          <td>May 1, 2025</td>
-                          <td><span class="badge bg-warning">Open</span></td>
-                          <td>
-                            <button class="btn btn-sm btn-primary">View</button>
-                          </td>
-                        </tr>
                       </tbody>
                     </table>
                     <nav>
@@ -164,11 +151,29 @@
                 <select class="form-select" id="recipientFilter" required>
                   <option value="">Select Recipient</option>
                 </select>
+                <div class="invalid-feedback" id="recipientFilter-error">Please select a recipient.</div>
+              </div>
+              <div class="mb-3">
+                <label for="messageSubject" class="form-label">Subject</label>
+                <input type="text" class="form-control" id="messageSubject" required />
+                <div class="invalid-feedback" id="messageSubject-error">Subject cannot be empty.</div>
+              </div>
+              <div class="mb-3">
+                <label for="messageType" class="form-label">Message Type</label>
+                <select class="form-select" id="messageType" required>
+                  <option value="">Select a category</option>
+                  <option value="order">Order Issue</option>
+                  <option value="payment">Payment Problem</option>
+                  <option value="account">Account Question</option>
+                  <option value="product">Product Inquiry</option>
+                  <option value="other">Other</option>
+                </select>
+                <div class="invalid-feedback" id="messageType-error">Please select a message type.</div>
               </div>
               <div class="mb-3">
                 <label for="messageContent" class="form-label">Message</label>
                 <textarea class="form-control" id="messageContent" rows="4" required></textarea>
-                <div class="invalid-feedback" id="messageContent-error"></div>
+                <div class="invalid-feedback" id="messageContent-error">Message cannot be empty.</div>
               </div>
             </form>
           </div>
@@ -185,12 +190,21 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Conversation Details</h5>
+            <h5 class="modal-title">Message Details</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
               <strong>With:</strong> <span id="detail-sender"></span>
+            </div>
+            <div class="mb-3">
+              <strong>Subject:</strong> <span id="detail-subject"></span>
+            </div>
+            <div class="mb-3">
+              <strong>Type:</strong> <span id="detail-type"></span>
+            </div>
+            <div class="mb-3">
+              <strong>Status:</strong> <span id="detail-status"></span>
             </div>
             <div class="mb-3" id="detail-messages"></div>
             <form>
