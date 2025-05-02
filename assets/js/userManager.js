@@ -15,7 +15,7 @@ export class User {
 
 export class UserManager {
   static getDefaultProfilePicture() {
-    return "./images/anonymous.png"; // THE DEFAULT PP WE'RE YET TO ADD IN THE IMAGES FILE
+    return "../images/anonymous.png"; // THE DEFAULT PP WE'RE YET TO ADD IN THE IMAGES FILE
   }
 
 

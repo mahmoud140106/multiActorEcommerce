@@ -560,7 +560,13 @@ h1 {
   }
 }
 
-@media (max-width: 1100px) {
+@media (min-width: 1000px) {
+  .cardItem {
+    width: 100% !important;
+  }
+
+}
+@media (max-width: 1000px) {
   .cardItem {
     width: 55% !important;
   }
