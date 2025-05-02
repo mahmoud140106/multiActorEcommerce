@@ -15,7 +15,7 @@ export const CartManager = {
     return JSON.parse(localStorage.getItem(`cart_${user.id}`)) || [];
   },
 
-  addToCart: function (product) {
+  addToCart: function (product, quantity = 1) {
     const user = this.getCurrentUser();
     if (!user) {
       this.showToast("Please log in first!");
@@ -31,7 +31,7 @@ export const CartManager = {
     );
 
     const currentQuantity = existingItemIndex !== -1 ? cart[existingItemIndex].quantity : 0;
-    const desiredQuantity = currentQuantity + 1;
+    const desiredQuantity = currentQuantity + quantity;
     const stockCheck = ProductManager.checkStockAvailability(product.id, desiredQuantity);
 
     if (!stockCheck.available) {
@@ -45,11 +45,11 @@ export const CartManager = {
       sku: product.sku || `SKU-${product.id}`,
       price: product.discountedPrice || product.price,
       image: product.images ? product.images[0] : product.image,
-      quantity: 1,
+      quantity: quantity,
     };
 
     if (existingItemIndex !== -1) {
-      cart[existingItemIndex].quantity += 1;
+      cart[existingItemIndex].quantity += quantity;
       this.showToast(`${cartItem.name} quantity updated in cart!`);
     } else {
       cart.push(cartItem);
