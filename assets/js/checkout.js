@@ -48,20 +48,12 @@ window.addEventListener("load", function() {
       </div>
     <br/>
       `
-
-      let subtotal = (product.discountedPrice?product.discountedPrice.toFixed(2):product.price.toFixed(2))*productCount;
-      document.getElementById('Subtotal').textContent=`$${subtotal}`;
-      
-      document.getElementById("totalPrice").textContent = `$${(subtotal + + 20.00).toFixed(2)}`;
-       
-      
     }
 
 
     else if(cart){
       console.log(cart)
       let summary= document.getElementById("summary");
-      let subtotal=0;
       cart.forEach((product,index)=>{
       summary.innerHTML += 
       `
@@ -80,16 +72,32 @@ window.addEventListener("load", function() {
       </div>
     <br/>
       `
-      subtotal += (product.discountedPrice?product.discountedPrice.toFixed(2):product.price.toFixed(2))*product.quantity;
-      document.getElementById('Subtotal').textContent = `$${subtotal.toFixed(2)}`;
-    
-      
-      document.getElementById("totalPrice").textContent = `$${(subtotal + 20.00).toFixed(2)}`;
-       
       });
-
-
     }
+
+    // Update the calculation logic to handle "Buy It Now" scenario
+    if (productId && productCount) {
+      const product = ProductManager.getProduct(productId);
+      if (product) {
+        const subtotal = (product.discountedPrice || product.price) * productCount;
+        const shipping = 20; // Fixed shipping cost
+        const discount = 0; // No discount applied for "Buy It Now"
+        const total = subtotal + shipping - discount;
+
+        document.getElementById('Subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('shipping').textContent = `$${shipping.toFixed(2)}`;
+        document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
+      }
+    } else {
+      // Existing cart-based calculation
+      const cartSummary = CartManager.calculateOrderSummary();
+      if (cartSummary) {
+        document.getElementById('Subtotal').textContent = `$${cartSummary.subtotal.toFixed(2)}`;
+        document.getElementById('shipping').textContent = `$${cartSummary.shipping.toFixed(2)}`;
+        document.getElementById("totalPrice").textContent = `$${cartSummary.total.toFixed(2)}`;
+      }
+    }
+
     document.querySelectorAll(".summaryImg").forEach((img) => {
       img.addEventListener("click", function () {
         const id = img.getAttribute("product-id");
