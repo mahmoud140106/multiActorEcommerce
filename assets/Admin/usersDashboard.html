@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,18 +11,47 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="usersDashboardStyle.css">
 </head>
-<body>
+<body> 
     
 
 
-    <section class="w75 m-auto my-5  d-flex justify-content-center">
-        <input placeholder="Search About User through Name , Id , Role" class="w-50 form-control me-5" type="search" name="searchAboutUser" id="searchAboutUser">
-        <button id="addUsers" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#myModal">Add</button>
-    </section>
-        <section class=" p-5 mt-5 card w-75 d-flex justify-content-center shadow border-0 m-auto">
-            <table class="table table-striped ">
+
+    <main>
+
+        <section class="w-75 mt-5 container m-auto  d-flex justify-content-center">
+        
+            <div class="w-100 my-4">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h1 class="display-5">Manage Users</h1>
+                        <p class="lead">Add, edit,Display Users products in store</p>
+                    </div>
+                </div>
+                <div class="row mb-4 gap-2 gap-md-0">
+                    <div class="row mb-4 gap-2 gap-md-0 justify-content-between">
+                        <div class="col-md-4 search-container w-50">
+                            <input placeholder="Search About User through Name , Id , Role" class="w-100 form-control me-5"
+                                type="search" name="searchAboutUser" id="searchAboutUser">
+        
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button id="addUsers" class="btn btn-primary btn-gradient" data-bs-toggle="modal"
+                                data-bs-target="#myModal">
+                                Add Product
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <input placeholder="Search About User through Name , Id , Role" class="w-50 form-control me-5" type="search" name="searchAboutUser" id="searchAboutUser">
+                    <button id="addUsers" class="btn btn-primary px-3 py-2" data-bs-toggle="modal" data-bs-target="#myModal">Add</button> -->
+        </section>
+        
+        <section class="card w-75 d-flex justify-content-center shadow-lg border-0 m-auto">
+        
+            <table class="table text-center table-striped ">
                 <thead>
-                    <tr >
+                    <tr>
                         <th>Id</th>
                         <th>UserName</th>
                         <th>Email</th>
@@ -32,10 +61,16 @@
                     </tr>
                 </thead>
                 <tbody>
- 
+        
                 </tbody>
             </table>
         </section>
+
+
+
+        <div class="d-flex justify-content-center my-3" id="pagination"></div>
+
+    </main>
 
 
 
@@ -53,23 +88,23 @@
 
 
                     <form action="" method="get">
-                            <div class="mb-3 d-flex">
+                            <div class="mb-3  d-flex">
                                 <label for="UserID" class="col-sm-2 col-form-label w-25">User ID</label>
                                 <div class="col-sm-10 w-75">
-                                    <input type="number" readonly class="form-control" id="UserID">
+                                    <input type="number" readonly class="form-control" id="UserID" name="UserID">
                                 </div>
                             </div>
                             <div class="mb-3 d-flex">
                                     <label for="UserName" class="col-sm-2 col-form-label w-25">User Name</label>
                                     <div class="col-sm-10 w-75">
-                                        <input type="text" required class="form-control" id="UserName">
+                                        <input type="text" required class="form-control" id="UserName" name="UserName">
                                 </div>
                            </div>
             
                             <div class="mb-3 d-flex">
                                 <label for="staticEmail" class="col-sm-2 col-form-label w-25">Email</label>
                                 <div class="col-sm-10 w-75">
-                                    <input type="email" required class="form-control" id="staticEmail"
+                                    <input type="email" required class="form-control" id="staticEmail" name="userEmail"
                                        >
                                 </div>
                             </div>
@@ -77,16 +112,16 @@
                             <div class="mb-3 d-flex">
                                 <label for="inputPassword" class="col-sm-2 col-form-label w-25">Password</label>
                                 <div class="col-sm-10 w-75">
-                                    <input type="password" required class="form-control" id="inputPassword">
+                                    <input type="password" required class="form-control" id="inputPassword" name="inputPassword"> 
                                 </div>
                             </div>
                             <div class="mb-3 d-flex">
                                 <label for="role" class="col-sm-2 col-form-label w-25">User Role</label>
                                 <div class="col-sm-10 w-75">
-                                    <select id="role" class="form-select" required aria-label="Default select example">
+                                    <select id="role" name="role" class="form-select" required aria-label="Default select example">
                                         <option disabled>Select Role</option>
-                                        <option value="Seller">Seller</option>
-                                        <option value="Customer">Customer</option>
+                                        <option value="seller">Seller</option>
+                                        <option value="customer">Customer</option>
                                     </select>
                                 </div>
                             </div>
@@ -128,11 +163,11 @@
 
     <script src="../../assets/libs/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="./usersDashboardScript.js"></script>
+    <script type="module" src="./usersDashboardScript.js"></script>
 </body>
 </html>
 
 
 
 
-
+ --> -->
