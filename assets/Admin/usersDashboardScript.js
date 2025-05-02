@@ -1,269 +1,275 @@
-import { UserManager } from "../js/userManager.js"
-import {StorageManager} from "../js/storageManager.js"
-let userName = "";
-let userEmail = "";
-let userPassword = "";
-let Role = "";
-let userId = 0;
+// import { UserManager } from "../js/userManager.js"
+// import {StorageManager} from "../js/storageManager.js"
+// let userName = "";
+// let userEmail = "";
+// let userPassword = "";
+// let Role = "";
+// let userId = 0;
 
-let tbody=document.querySelector("tbody");
+// let tbody=document.querySelector("tbody");
 
-let CreatedTr = document.createElement("tr");
-let CreatedTd1 = document.createElement("td");
+// let CreatedTr = document.createElement("tr");
+// let CreatedTd1 = document.createElement("td");
 
-let CreatedTd2 = document.createElement("td");
-let CreatedTd3 = document.createElement("td");
-let CreatedTd4 = document.createElement("td");
-let CreatedTd5 = document.createElement("td");
-let CreatedTdActions = document.createElement("td");
-CreatedTdActions.innerHTML=`<i class="fa-solid fa-pen-to-square  text-primary fs-5" data-bs-toggle="modal"  data-bs-target="#myModal">`;
+// let CreatedTd2 = document.createElement("td");
+// let CreatedTd3 = document.createElement("td");
+// let CreatedTd4 = document.createElement("td");
+// let CreatedTd5 = document.createElement("td");
+// let CreatedTdActions = document.createElement("td");
+// CreatedTdActions.innerHTML=`<i class="fa-solid fa-pen-to-square  text-primary fs-5" data-bs-toggle="modal"  data-bs-target="#myModal">`;
 
-    // console.log(CreatedTdActions);
+//     // console.log(CreatedTdActions);
     
 
 
-let currentUsers = UserManager.getAllUsers();
+// let currentUsers = UserManager.getAllUsers();
 
 
 
 
 
-//Display All Users
+// //Display All Users
 
-for (let index = 0; index < currentUsers.length; index++) {
-    let CreatedTr1 = document.createElement("tr");
-    CreatedTr1.innerHTML = `<td>${currentUsers[index].id}</td>
-   <td>${currentUsers[index].userName}</td>
-   <td>${currentUsers[index].email}</td>
-   <td>${currentUsers[index].password}</td>
-   <td>${currentUsers[index].role}</td>
-   <td><i class="fa-solid fa-pen-to-square  text-primary fs-5" data-bs-toggle="modal"  data-bs-target="#myModal"  ></i></td>  `
+// for (let index = 0; index < currentUsers.length; index++) {
+//     let CreatedTr1 = document.createElement("tr");
+//     CreatedTr1.innerHTML = `<td>${currentUsers[index].id}</td>
+//    <td>${currentUsers[index].userName}</td>
+//    <td>${currentUsers[index].email}</td>
+//    <td>${currentUsers[index].password}</td>
+//    <td>${currentUsers[index].role}</td>
+//    <td><i class="fa-solid fa-pen-to-square  text-primary fs-5" data-bs-toggle="modal"  data-bs-target="#myModal"  ></td>  `
 
-    tbody.append(CreatedTr1);
+//     tbody.append(CreatedTr1);
     
-}
+// }
 
 
 
 
 
-//on click on add product show empty form
+// //on click on add product show empty form
 
-document.getElementById("addUsers").addEventListener("click", function () {
-    let allInputs = document.querySelectorAll('input');
+// document.getElementById("addUsers").addEventListener("click", function () {
+//     let allInputs = document.querySelectorAll('input');
 
-    for (let index = 0; index < allInputs.length-1; index++) {
-        allInputs[index].value = '';
+//     for (let index = 0; index < allInputs.length-1; index++) {
+//         allInputs[index].value = '';
         
-    }
-    
-});
-
-
-
-
-
-//remove users
-
-
-//// let elementToDelete ;
-
-
-//// tbody.addEventListener("click", function (e) {
-//     if (e.target.classList.contains("fa-trash")) {
-//         elementToDelete = e.target.closest("tr");
-//         const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("deleteAlert"));
-//         modal.show();
 //     }
-//// });
+    
+// });
 
 
-//// document.getElementById("DeleteUser").addEventListener("click", function () {
-//     if (elementToDelete) {
-//         const userId = elementToDelete.querySelector("td").innerText;
-//         elementToDelete.remove();
-//         UserManager.deleteUser(userId);
-
-//         const modalElement = document.getElementById("deleteAlert");
-//         const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
-//         modal.hide();
-
-//         document.body.classList.remove("modal-open");
-//         document.querySelectorAll(".modal-backdrop").forEach(backdrop => backdrop.remove());
-
-//         elementToDelete = null; // reset
 
 
-//         let allTrs = document.getElementsByTagName('tr');
-//         for (let index = 0; index < allTrs.length; index++) {
-//             allTrs[index].document.querySelectorAll("td")[0] = index + 1;
+
+// //remove users
+
+
+// //// let elementToDelete ;
+
+
+// //// tbody.addEventListener("click", function (e) {
+// //     if (e.target.classList.contains("fa-trash")) {
+// //         elementToDelete = e.target.closest("tr");
+// //         const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("deleteAlert"));
+// //         modal.show();
+// //     }
+// //// });
+
+
+// //// document.getElementById("DeleteUser").addEventListener("click", function () {
+// //     if (elementToDelete) {
+// //         const userId = elementToDelete.querySelector("td").innerText;
+// //         elementToDelete.remove();
+// //         UserManager.deleteUser(userId);
+
+// //         const modalElement = document.getElementById("deleteAlert");
+// //         const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+// //         modal.hide();
+
+// //         document.body.classList.remove("modal-open");
+// //         document.querySelectorAll(".modal-backdrop").forEach(backdrop => backdrop.remove());
+
+// //         elementToDelete = null; // reset
+
+
+// //         let allTrs = document.getElementsByTagName('tr');
+// //         for (let index = 0; index < allTrs.length; index++) {
+// //             allTrs[index].document.querySelectorAll("td")[0] = index + 1;
             
-//         }
-//         for (let index = 0; index < UserManager.getAllUsers().length; index++) {
-//             UserManager.getAllUsers()[index].id = index + 1;
+// //         }
+// //         for (let index = 0; index < UserManager.getAllUsers().length; index++) {
+// //             UserManager.getAllUsers()[index].id = index + 1;
             
-//         }
+// //         }
 
 
-//     }
-//// });
-// // document.getElementById("DeleteUser").addEventListener('click', function (e) {
-// //         console.log(e);
-// //     console.log(element.getElementsByTagName('td')[0].innerText);
+// //     }
+// //// });
+// // // document.getElementById("DeleteUser").addEventListener('click', function (e) {
+// // //         console.log(e);
+// // //     console.log(element.getElementsByTagName('td')[0].innerText);
         
-// //     element.remove();
-// //     UserManager.deleteUser(element.getElementsByTagName('td')[0].innerText);
+// // //     element.remove();
+// // //     UserManager.deleteUser(element.getElementsByTagName('td')[0].innerText);
     
 
-// //     console.log(UserManager.getAllUsers());
+// // //     console.log(UserManager.getAllUsers());
     
 
-// //     // let allTr = document.getElementsByTagName('tr');
-// //     // for (let index = 0; index < allTr.length; index++) {
-// //     //     allTr[index].getElementsByTagName('td')[0].innerText = index + 1;
+// // //     // let allTr = document.getElementsByTagName('tr');
+// // //     // for (let index = 0; index < allTr.length; index++) {
+// // //     //     allTr[index].getElementsByTagName('td')[0].innerText = index + 1;
         
-// //     // }
+// // //     // }
 
 
-// //     UserManager.getAllUsers();
+// // //     UserManager.getAllUsers();
         
-// //       const modalElement = document.getElementById("deleteAlert");
-// //      const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
-// //       modal.hide();
+// // //       const modalElement = document.getElementById("deleteAlert");
+// // //      const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+// // //       modal.hide();
 
-// //     document.body.classList.remove("modal-open");
-// //     document.querySelectorAll(".modal-backdrop").forEach(backdrop => backdrop.remove());
+// // //     document.body.classList.remove("modal-open");
+// // //     document.querySelectorAll(".modal-backdrop").forEach(backdrop => backdrop.remove());
         
-// //     });
+// // //     });
    
 
-// edit user (show current data of the user in the form)
+// // edit user (show current data of the user in the form)
 
 
-let rowIndex=0;
+// let rowIndex=0;
 
     
-let pen = document.querySelectorAll(".fa-pen-to-square");
+// let pen = document.querySelectorAll(".fa-pen-to-square");
     
-for (let index = 0; index < pen.length; index++) {
+// for (let index = 0; index < pen.length; index++) {
         
-        pen[index].addEventListener("click", function (e) {
+//         pen[index].addEventListener("click", function (e) {
 
-    // Get the index of the row
+//     // Get the index of the row
     
             
 
-            let closeTr = this.closest('tr');
-            rowIndex = Array.from(closeTr.parentElement.children).indexOf(closeTr);
+//             let closeTr = this.closest('tr');
+//             rowIndex = Array.from(closeTr.parentElement.children).indexOf(closeTr);
 
-            let allTds = closeTr.querySelectorAll('td');
+//             let allTds = closeTr.querySelectorAll('td');
 
              
-            // console.log(allTds[1].innerText);
-            // document.getElementById("UserID").value = allTds[0].innerText;
-            document.getElementById("UserName").value = allTds[1].innerText;
-            document.getElementById("staticEmail").value = allTds[2].innerText;
-            document.getElementById("inputPassword").value = allTds[3].innerText;
-            document.getElementById("role").value = allTds[4].innerText;
+//             // console.log(allTds[1].innerText);
+//             // document.getElementById("UserID").value = allTds[0].innerText;
+//             document.getElementById("UserName").value = allTds[1].innerText;
+//             document.getElementById("staticEmail").value = allTds[2].innerText;
+//             document.getElementById("inputPassword").value = allTds[3].innerText;
+//             document.getElementById("role").value = allTds[4].innerText;
  
-        })
-}
+//         })
+// }
     
 
-let r;
-let v = document.querySelectorAll('pen');
-v.forEach(element => {
-    element.addEventListener("click", function () {
-        r = true;
-    })
+// let r=false;
+// let v = document.querySelectorAll('pen');
+// v.forEach(element => {
+//     element.addEventListener("click", function () {
+//         r = true;
+//     })
     
-});
+// });
 
 
-//add and update users 
+// //add and update users 
 
-document.querySelector("form").addEventListener("submit", function (e) {
-
-
+// document.querySelector("form").addEventListener("submit", function (e) {
 
 
 
-    console.log(e);
+
+
+//     console.log(e);
     
-    e.preventDefault();
-
-    
+//     e.preventDefault();
 
     
-     CreatedTr = document.createElement("tr");
-     CreatedTd1 = document.createElement("td");
 
-     CreatedTd2 = document.createElement("td");
-     CreatedTd3 = document.createElement("td");
-     CreatedTd4 = document.createElement("td");
-    CreatedTd5 = document.createElement("td");
     
-    //update user data
+//      CreatedTr = document.createElement("tr");
+//      CreatedTd1 = document.createElement("td");
 
-    if (rowIndex !== null) {
+//      CreatedTd2 = document.createElement("td");
+//      CreatedTd3 = document.createElement("td");
+//      CreatedTd4 = document.createElement("td");
+//     CreatedTd5 = document.createElement("td");
+    
+//     //update user data
 
-        // console.log(rowIndex);
+//     if (rowIndex !== null) {
+
+//         // console.log(rowIndex);
         
     
-        let currentRow = document.getElementsByTagName("tr")[rowIndex+1];
-        currentRow.querySelectorAll('td')[1].innerText = e.target[1].value;
-        currentRow.querySelectorAll('td')[2].innerText = e.target[2].value;
-        currentRow.querySelectorAll('td')[3].innerText = e.target[3].value;
-        currentRow.querySelectorAll('td')[4].innerText = e.target[4].value;
+//         let currentRow = document.getElementsByTagName("tr")[rowIndex+1];
+//         currentRow.querySelectorAll('td')[1].innerText = e.target[1].value;
+//         currentRow.querySelectorAll('td')[2].innerText = e.target[2].value;
+//         currentRow.querySelectorAll('td')[3].innerText = e.target[3].value;
+//         currentRow.querySelectorAll('td')[4].innerText = e.target[4].value;
 
 
-        UserManager.updateUser(rowIndex + 1, e.target[1].value,e.target[2].value, e.target[3].value, e.target[4].value);
-        r = null;
-    }
+//         UserManager.updateUser(rowIndex + 1, e.target[1].value,e.target[2].value, e.target[3].value, e.target[4].value);
+//         r = null;
+//     }
 
-    //add user
+//     //add user
 
-    else {
-        let CreatedTdActions = document.createElement("td");
-        CreatedTdActions.innerHTML=`<i class="fa-solid fa-pen-to-square  text-primary fs-5" data-bs-toggle="modal"  data-bs-target="#myModal"  >`;
+//     else {
+//         let CreatedTdActions = document.createElement("td");
+//         CreatedTdActions.innerHTML=`<i class="fa-solid fa-pen-to-square  text-primary fs-5" data-bs-toggle="modal"  data-bs-target="#myModal"  >`;
 
-        currentUsers = UserManager.getAllUsers();
-    userId=currentUsers[currentUsers.length-1].id+1;
-    userName = e.target[1].value;
-    userEmail = e.target[2].value; 
-    userPassword = e.target[3].value; 
-    Role = e.target[4].value;
+//         currentUsers = UserManager.getAllUsers();
+//     userId=currentUsers[currentUsers.length-1].id+1;
+//     userName = e.target[1].value;
+//     userEmail = e.target[2].value; 
+//     userPassword = e.target[3].value; 
+//     Role = e.target[4].value;
     
 
         
-    CreatedTd1.innerText = (++userId);
-    CreatedTr.appendChild(CreatedTd1);
+//     CreatedTd1.innerText = (++userId);
+//     CreatedTr.appendChild(CreatedTd1);
     
     
-    CreatedTd2.innerText = userName;
-    CreatedTr.appendChild(CreatedTd2);
+//     CreatedTd2.innerText = userName;
+//     CreatedTr.appendChild(CreatedTd2);
     
     
-    CreatedTd3.innerText = userEmail;
-    CreatedTr.appendChild(CreatedTd3);
+//     CreatedTd3.innerText = userEmail;
+//     CreatedTr.appendChild(CreatedTd3);
     
     
-    CreatedTd4.innerText = userPassword;
-    CreatedTr.appendChild(CreatedTd4);
+//     CreatedTd4.innerText = userPassword;
+//     CreatedTr.appendChild(CreatedTd4);
     
     
-    CreatedTd5.innerText = Role;
-    CreatedTr.appendChild(CreatedTd5);
+//     CreatedTd5.innerText = Role;
+//     CreatedTr.appendChild(CreatedTd5);
 
 
-    CreatedTr.appendChild(CreatedTdActions);
+//     CreatedTr.appendChild(CreatedTdActions);
 
-        tbody.appendChild(CreatedTr);
+//         tbody.appendChild(CreatedTr);
         
 
-        UserManager.createUser( e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value);
-    }
+//         UserManager.createUser( e.target[1].value, e.target[2].value, e.target[3].value, e.target[4].value);
+    
+        
+  
+        
+
+
+//     }
  
       
-})
+// })
 
