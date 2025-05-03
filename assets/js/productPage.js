@@ -215,16 +215,25 @@ function handleSearch() {
 }
 
 // From home page through category section show its products
-let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
+// let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
+// let categoryId = 0;
+
+// for (let j = 0; j < allCategories.length; j++) {
+//   if (item === allCategories[j].name) {
+//     categoryId = allCategories[j].id;
+//   }
+// }
+
+const urlParams = new URLSearchParams(window.location.search);
+const categoryName = decodeURIComponent(urlParams.get("categoryType") || "");
 let categoryId = 0;
 
 for (let j = 0; j < allCategories.length; j++) {
-  if (item === allCategories[j].name) {
+  if (categoryName === allCategories[j].name) {
     categoryId = allCategories[j].id;
+    break;
   }
 }
-
-
 
 let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
 if (window.location.href.includes("categoryType=")) {
