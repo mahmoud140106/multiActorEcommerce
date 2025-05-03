@@ -105,7 +105,7 @@ function relateCategoryAndProducts() {
     console.log(ALLCards[index].innerText);
     
 
-     window.location.href=`../../customer/product.html?category=${ALLCards[index].innerText}`
+     window.location.href=`../../customer/product.html?categoryType=${ALLCards[index].innerText}`
   
 })
   
