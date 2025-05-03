@@ -1,4 +1,3 @@
-import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
 import { ReviewManager } from "./reviewManager.js";
 import { OrderManager } from "./orderManager.js";
@@ -7,6 +6,8 @@ import { StorageManager } from "./storageManager.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     let sellerId;
+    let sellerOrders =[];
+
   // Render dashboard
   function renderDashboard() {
     // Get current seller's ID (assuming it's available from auth context)
@@ -24,14 +25,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let totalReviewsEl= document.getElementById('totalReviews');
      const reviews=  ProductManager.getProductsBySeller(sellerId).reduce((sum, p) => sum + ReviewManager.getReviewsByProduct(p.id).length, 0)
-    console.log(reviews)
      totalReviewsEl.textContent = reviews;
 
-    
     const allOrders = OrderManager.getOrdersBySeller();
-    const pendingOrders = allOrders.filter(order => order.status === "pending").length;
+    const pendingOrders = allOrders.filter(order => order.status === "pending");
+    pendingOrders.forEach((order)=>
+      {
+        let productFromStorage
+          order.items.forEach((item)=>{
+               productFromStorage=products.find(product=>product.id==item.productId)    //filter products from storage to get seller id
+  
+             if(productFromStorage != undefined){
+  
+                  if(productFromStorage.sellerId==sellerId ){
+                    if(!sellerOrders.includes(order)){
+                      sellerOrders.push(order);         //filter all orders to get the seller orders
+  
+                    }
+                    
+                }
+            }
+          })
+         
+      })
+      
+    // const sellerPendingOrders = pendingOrders.filter(order=>order)
 
-    document.getElementById("pendingOrders").innerText=pendingOrders;
+    document.getElementById("pendingOrders").innerText=sellerOrders.length;
     // Chart 1:Total Products  (Bar Chart)
  
 
