@@ -302,6 +302,12 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCategorySlides();
   });
 
+  // Update wishlist button state for featured products on the home page
+  document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+    const productId = parseInt(button.getAttribute("data-id"));
+    CartManager.isProductInWishlist(productId, button);
+  });
+
 }
 )
   //   // for (let i = 0; i < 4; i++) {

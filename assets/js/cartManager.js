@@ -283,6 +283,25 @@ export const CartManager = {
     return addedCount;
   },
 
+  isProductInWishlist: function (productId, wishlistButton) {
+    const user = this.getCurrentUser();
+    if (!user) {
+      return;
+    }
+    const wishlist = this.getWishlist();
+    const existingItem = wishlist.find((item) => item.id === productId);
+
+    if (existingItem) {
+      wishlistButton.innerHTML = '<i class="fas fa-heart"></i>';
+      wishlistButton.classList.remove("btn-light");
+      wishlistButton.classList.add("btn-clicked");
+    } else {
+      wishlistButton.innerHTML = '<i class="far fa-heart"></i>';
+      wishlistButton.classList.remove("btn-clicked");
+      wishlistButton.classList.add("btn-light");
+    }
+  },
+
   showToast: function (message) {
     const toastContainer = document.getElementById("toast-container");
     if (!toastContainer) {

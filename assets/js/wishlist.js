@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
   renderWishlist();
   renderRecommendedProducts();
   updateNavbar();
+
+  // Update wishlist button state for all items in the wishlist
+  document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+    const productId = parseInt(button.getAttribute("data-id"));
+    CartManager.isProductInWishlist(productId, button);
+  });
 });
 
 function renderWishlist() {

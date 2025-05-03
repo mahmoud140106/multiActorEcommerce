@@ -1,6 +1,7 @@
 import { ProductManager } from "./productManager.js";
 import { CategoryManager } from "./categoryManager.js";
 import { CartManager } from "./cartManager.js";
+import { updateNavbar } from "./global.js";
 
 let allProducts = ProductManager.getAllProducts();
 let productPage = document.getElementById("productPage");
@@ -66,6 +67,7 @@ function product(items) {
       const product = items.find((p) => p.id === productId);
       if (product) {
         CartManager.addToCart(product);
+        updateNavbar();
       }
     });
   });
@@ -77,8 +79,15 @@ function product(items) {
       const product = items.find((p) => p.id === productId);
       if (product) {
         CartManager.addToWishlist(product, event);
+        updateNavbar();
       }
     });
+  });
+
+  // Update wishlist button state
+  document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+    const productId = parseInt(button.getAttribute("data-id"));
+    CartManager.isProductInWishlist(productId, button);
   });
 
   updatePagination(items.length);
