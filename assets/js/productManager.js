@@ -355,7 +355,7 @@ function initializeDefaultProducts() {
         "/assets/images/denim pants (5).jpg",
         "/assets/images/denim pants (6).jpg",
       ],
-      1, // Seller: 1
+      2, // Seller: 1
       {
         description:
           "Trendy distressed denim pants with a relaxed fit, perfect for a casual streetwear aesthetic.",
@@ -425,7 +425,7 @@ function initializeDefaultProducts() {
         "/assets/images/blazer (8).jpg",
         "/assets/images/blazer (9).jpg",
       ],
-      1, // Seller: 1
+      3, // Seller: 1
       {
         description:
           "Refined herringbone blazer with a slim-cut design, perfect for business meetings or upscale events.",
@@ -496,7 +496,7 @@ function initializeDefaultProducts() {
         "/assets/images/sweatshirt (7).jpg",
         "/assets/images/sweatshirt (8).jpg",
       ],
-      1, // Seller: 1
+      3, // Seller: 1
       {
         description:
           "Trendy printed sweatshirt designed for urban streetwear fashion, offering comfort and style.",
@@ -567,7 +567,7 @@ function initializeDefaultProducts() {
         "/assets/images/shirt (2).jpg",
         "/assets/images/shirt (3).jpg",
       ],
-      1, // Seller: 1
+      3, // Seller: 1
       {
         description:
           "Classic formal cotton shirt with a tailored fit, ideal for office wear or special occasions.",
@@ -639,7 +639,7 @@ function initializeDefaultProducts() {
         "/assets/images/shoes (5).jpg",
         "/assets/images/shoes (6).jpg",
       ],
-      1, // Seller: 1
+      8, // Seller: 1
       {
         description:
           "Comfortable everyday sneakers with a stylish design, perfect for casual outings.",
