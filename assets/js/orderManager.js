@@ -209,8 +209,8 @@ function initializeDefaultOrders() {
       3,
       6, // Ibrahim Shaban
       [
-        new OrderItem(4, 1, "S", "Blue", 29.99),
-        new OrderItem(5, 3, "M", "Black", 19.99),
+        new OrderItem(15, 1, "S", "Blue", 29.99),
+        new OrderItem(14, 3, "M", "Black", 19.99),
       ],
       89.96, // 29.99 + 3 * 19.99
       "pending",
