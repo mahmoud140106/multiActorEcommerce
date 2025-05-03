@@ -1,25 +1,26 @@
 // Import the CartManager and ProductManager modules
-import { CartManager } from './cartManager.js';
-import { ProductManager } from './productManager.js';
-import{updateNavbar} from './global.js';
+import { CartManager } from "./cartManager.js";
+import { ProductManager } from "./productManager.js";
+import { updateNavbar } from "./global.js";
 
 // Render the cart items
 function renderCart() {
   const cart = CartManager.getCart();
-  const cartItemsContainer = document.getElementById('cart-items');
-  const subtotalLabel = document.getElementById('subtotal-label');
-  const subtotalElement = document.getElementById('subtotal');
-  const shippingElement = document.getElementById('shipping');
-  const finalTotalElement = document.getElementById('final-total');
-  const originalTotalElement = document.getElementById('original-total');
-  const promoAlert = document.getElementById('promo-alert');
-  const promoSavings = document.getElementById('promo-savings');
+  const cartItemsContainer = document.getElementById("cart-items");
+  const subtotalLabel = document.getElementById("subtotal-label");
+  const subtotalElement = document.getElementById("subtotal");
+  const shippingElement = document.getElementById("shipping");
+  const finalTotalElement = document.getElementById("final-total");
+  const originalTotalElement = document.getElementById("original-total");
+  const promoAlert = document.getElementById("promo-alert");
+  const promoSavings = document.getElementById("promo-savings");
 
-  console.log(cart); // Debugging log to inspect cart items
-  cartItemsContainer.innerHTML = '';
+  // console.log(cart); // Debugging log to inspect cart items
+  cartItemsContainer.innerHTML = "";
 
   if (cart.length === 0) {
-    cartItemsContainer.innerHTML = '<p class="p-4 text-center">Your cart is empty.</p>';
+    cartItemsContainer.innerHTML =
+      '<p class="p-4 text-center">Your cart is empty.</p>';
   } else {
     cart.forEach((item, index) => {
       const price = item.price ?? item.originalPrice ?? 0;
@@ -27,12 +28,14 @@ function renderCart() {
 
       // Check stock
       const stockInfo = ProductManager.checkStockAvailability(item.id);
-      const isOutOfStock = (stockInfo.stock - quantity) <= 0;
+      const isOutOfStock = stockInfo.stock - quantity <= 0;
 
       const cartItemHTML = `
         <div class="row g-0 align-items-center p-4 cart-item">
           <div class="col-md-2 productDetailsItem" product-id="${item.id}">
-            <img src="${item.image}" alt="${item.name}" class="img-fluid rounded-3" />
+            <img src="${item.image}" alt="${
+        item.name
+      }" class="img-fluid rounded-3" />
           </div>
           <div class="col-md-6 ps-4">
             <div class="d-flex justify-content-between align-items-start">
@@ -48,32 +51,43 @@ function renderCart() {
             <div class="d-flex align-items-center">
               <div class="input-group input-group-sm w-auto">
                 <button class="btn btn-outline-secondary border-end-0 rounded-start decrease-quantity"
-                        data-index="${index}" ${quantity <= 0 ? 'disabled' : ''}>-</button>
+                        data-index="${index}" ${
+        quantity <= 0 ? "disabled" : ""
+      }>-</button>
                 <input type="text" class="form-control text-center border-left-0 border-right-0"
                        value="${quantity}" style="width: 40px;" readonly />
                 <button class="btn btn-outline-secondary border-start-0 rounded-end increase-quantity"
-                        data-index="${index}" ${isOutOfStock ? 'disabled' : ''}>+</button>
+                        data-index="${index}" ${
+        isOutOfStock ? "disabled" : ""
+      }>+</button>
               </div>
               <span class="ms-3 fw-semibold">
-                ${item.discountAmount && item.discountAmount > 0
-                  ? `<span class="text-decoration-line-through text-muted me-2">$${item.originalPrice.toFixed(2)}</span>
+                ${
+                  item.discountAmount && item.discountAmount > 0
+                    ? `<span class="text-decoration-line-through text-muted me-2">$${item.originalPrice.toFixed(
+                        2
+                      )}</span>
                     <span class="text-danger">$${price.toFixed(2)}</span>`
-                  : `$${price.toFixed(2)}`
+                    : `$${price.toFixed(2)}`
                 }
               </span>
             </div>
           </div>
           <div class="col-md-4 text-end">
             <h4 class="fw-bold">$${(price * quantity).toFixed(2)}</h4>
-            <span class="${isOutOfStock ? 'text-danger' : 'text-success'} small fw-semibold">
-              <i class="fas fa-${isOutOfStock ? 'times' : 'check'}-circle me-1"></i>
-              ${isOutOfStock ? 'Out of Stock' : 'In Stock'}
+            <span class="${
+              isOutOfStock ? "text-danger" : "text-success"
+            } small fw-semibold">
+              <i class="fas fa-${
+                isOutOfStock ? "times" : "check"
+              }-circle me-1"></i>
+              ${isOutOfStock ? "Out of Stock" : "In Stock"}
             </span>
           </div>
         </div>
-        ${index < cart.length - 1 ? '<div class="divider"></div>' : ''}
+        ${index < cart.length - 1 ? '<div class="divider"></div>' : ""}
       `;
-      cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHTML);
+      cartItemsContainer.insertAdjacentHTML("beforeend", cartItemHTML);
     });
   }
 
@@ -81,50 +95,56 @@ function renderCart() {
   const summary = CartManager.calculateOrderSummary();
 
   // Update order summary display
-  subtotalLabel.textContent = `Subtotal (${summary.totalItems} item${summary.totalItems !== 1 ? 's' : ''})`;
+  subtotalLabel.textContent = `Subtotal (${summary.totalItems} item${
+    summary.totalItems !== 1 ? "s" : ""
+  })`;
   subtotalElement.textContent = `$${summary.subtotal.toFixed(2)}`;
-  shippingElement.textContent = cart.length === 0 ? '$0.00' : `$${summary.shipping.toFixed(2)}`; // Set shipping to 0.00 when cart is empty
+  shippingElement.textContent =
+    cart.length === 0 ? "$0.00" : `$${summary.shipping.toFixed(2)}`; // Set shipping to 0.00 when cart is empty
 
   // Handle promo code display
-  if (summary.promoCode === 'OFF10') {
-    promoAlert.classList.remove('d-none');
+  if (summary.promoCode === "OFF10") {
+    promoAlert.classList.remove("d-none");
     promoSavings.textContent = `$${summary.discount.toFixed(2)}`;
-    originalTotalElement.textContent = `$${(summary.total + summary.discount).toFixed(2)}`;
-    originalTotalElement.classList.remove('d-none');
+    originalTotalElement.textContent = `$${(
+      summary.total + summary.discount
+    ).toFixed(2)}`;
+    originalTotalElement.classList.remove("d-none");
   } else {
-    promoAlert.classList.add('d-none');
-    originalTotalElement.classList.add('d-none');
+    promoAlert.classList.add("d-none");
+    originalTotalElement.classList.add("d-none");
   }
 
   // Update final total display
-  finalTotalElement.textContent = cart.length === 0 ? '$0.00' : `$${summary.total.toFixed(2)}`; // Set total to 0.00 when cart is empty
-  
+  finalTotalElement.textContent =
+    cart.length === 0 ? "$0.00" : `$${summary.total.toFixed(2)}`; // Set total to 0.00 when cart is empty
+
   // Add event listeners to the newly rendered cart items
   addCartEventListeners();
 }
 
 function addCartEventListeners() {
-  document.querySelectorAll('.remove-item').forEach(button => {
-    button.addEventListener('click', () => {
-      const index = parseInt(button.getAttribute('data-index'));
+  document.querySelectorAll(".remove-item").forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = parseInt(button.getAttribute("data-index"));
       CartManager.removeFromCart(index);
       renderCart();
       updateNavbar();
     });
   });
 
-  document.querySelectorAll('.increase-quantity').forEach(button => {
-    button.addEventListener('click', () => {
-      const index = parseInt(button.getAttribute('data-index'));
+  document.querySelectorAll(".increase-quantity").forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = parseInt(button.getAttribute("data-index"));
       CartManager.updateQuantity(index, 1);
       renderCart();
       updateNavbar();
     });
   });
 
-  document.querySelectorAll('.decrease-quantity').forEach(button => {
-    button.addEventListener('click', () => {
-      const index = parseInt(button.getAttribute('data-index'));
+  document.querySelectorAll(".decrease-quantity").forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = parseInt(button.getAttribute("data-index"));
       CartManager.updateQuantity(index, -1);
       renderCart();
       updateNavbar();
@@ -133,9 +153,9 @@ function addCartEventListeners() {
 }
 
 function addProductDetailsNavigation() {
-  document.querySelectorAll('.productDetailsItem').forEach(item => {
-    item.addEventListener('click', function () {
-      let itemId = item.getAttribute('product-id');
+  document.querySelectorAll(".productDetailsItem").forEach((item) => {
+    item.addEventListener("click", function () {
+      let itemId = item.getAttribute("product-id");
       window.location.href = `productDetails.html?id=${itemId}`;
     });
   });
@@ -143,25 +163,28 @@ function addProductDetailsNavigation() {
 
 function renderWishlistPeek() {
   const wishlist = CartManager.getWishlist();
-  const wishlistItemsContainer = document.getElementById('wishlist-items');
+  const wishlistItemsContainer = document.getElementById("wishlist-items");
 
-  wishlistItemsContainer.innerHTML = '';
+  wishlistItemsContainer.innerHTML = "";
 
   if (wishlist.length === 0) {
-    wishlistItemsContainer.innerHTML = '<p class="p-4 text-center">Your wishlist is empty.</p>';
+    wishlistItemsContainer.innerHTML =
+      '<p class="p-4 text-center">Your wishlist is empty.</p>';
     return;
   }
 
   const randomItems = wishlist.sort(() => 0.5 - Math.random()).slice(0, 3);
 
-  randomItems.forEach(item => {
+  randomItems.forEach((item) => {
     const stockInfo = ProductManager.checkStockAvailability(item.id);
     const isOutOfStock = stockInfo.stock <= 0;
 
     const itemHTML = `
       <div class="row g-0 align-items-center p-3 cart-item">
         <div class="col-md-2 productDetailsItem" product-id="${item.id}">
-          <img src="${item.image}" alt="${item.name}" class="img-fluid rounded-3" />
+          <img src="${item.image}" alt="${
+      item.name
+    }" class="img-fluid rounded-3" />
         </div>
         <div class="col-md-6 ps-4">
           <div class="d-flex justify-content-between align-items-start">
@@ -173,74 +196,82 @@ function renderWishlistPeek() {
           </div>
           <div class="d-flex mt-1">
             <span class="fw-semibold">$${item.price.toFixed(2)}</span>
-            <span class="${isOutOfStock ? 'text-danger' : 'text-success'} ms-3 small fw-semibold">
-              <i class="fas fa-${isOutOfStock ? 'times' : 'check'}-circle me-1"></i>
-              ${isOutOfStock ? 'Out of Stock' : 'In Stock'}
+            <span class="${
+              isOutOfStock ? "text-danger" : "text-success"
+            } ms-3 small fw-semibold">
+              <i class="fas fa-${
+                isOutOfStock ? "times" : "check"
+              }-circle me-1"></i>
+              ${isOutOfStock ? "Out of Stock" : "In Stock"}
             </span>
           </div>
         </div>
         <div class="col-md-4 text-end">
           <div class="d-flex flex-column flex-sm-row justify-content-end gap-2">
-            <button class="btn btn-sm btn-outline-danger remove-wishlist-item" data-id="${item.id}">
+            <button class="btn btn-sm btn-outline-danger remove-wishlist-item" data-id="${
+              item.id
+            }">
               <i class="fas fa-trash-alt me-1"></i> Remove
             </button>
-            <button class="btn btn-sm btn-dark add-to-cart" data-id="${item.id}" ${isOutOfStock ? 'disabled' : ''}>
+            <button class="btn btn-sm btn-dark add-to-cart" data-id="${
+              item.id
+            }" ${isOutOfStock ? "disabled" : ""}>
               <i class="fas fa-shopping-cart me-1"></i> Add to Cart
             </button>
           </div>
         </div>
       </div>
     `;
-    wishlistItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+    wishlistItemsContainer.insertAdjacentHTML("beforeend", itemHTML);
   });
 
-  document.querySelectorAll('.remove-wishlist-item').forEach(button => {
-    button.addEventListener('click', function () {
-      const productId = this.getAttribute('data-id');
+  document.querySelectorAll(".remove-wishlist-item").forEach((button) => {
+    button.addEventListener("click", function () {
+      const productId = this.getAttribute("data-id");
       CartManager.removeFromWishlist(productId);
       renderWishlistPeek();
       updateNavbar();
     });
   });
 
-  document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', function () {
-      const productId = this.getAttribute('data-id');
+  document.querySelectorAll(".add-to-cart").forEach((button) => {
+    button.addEventListener("click", function () {
+      const productId = this.getAttribute("data-id");
       CartManager.addToCartFromWishlist(productId);
       renderWishlistPeek();
       renderCart();
       updateNavbar();
     });
   });
-
 }
 
 // Setup on DOM load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   renderCart();
   renderWishlistPeek();
   updateNavbar();
 
-  document.getElementById('clear-cart')?.addEventListener('click', () => {
+  document.getElementById("clear-cart")?.addEventListener("click", () => {
     CartManager.clearCart();
     renderCart();
     updateNavbar();
   });
 
-  document.getElementById('apply-promo')?.addEventListener('click', () => {
-    const promoInput = document.getElementById('promo-code').value.trim();
+  document.getElementById("apply-promo")?.addEventListener("click", () => {
+    const promoInput = document.getElementById("promo-code").value.trim();
     CartManager.applyPromoCode(promoInput);
     renderCart();
   });
 
-  document.getElementById('checkout-button')?.addEventListener('click', () => {
+  document.getElementById("checkout-button")?.addEventListener("click", () => {
     const cart = CartManager.getCart();
     if (cart.length === 0) {
-      CartManager.showToast('Your cart is empty. Please add items to your cart before checking out.');
+      CartManager.showToast(
+        "Your cart is empty. Please add items to your cart before checking out."
+      );
     } else {
-      window.location.href = './checkout.html';
+      window.location.href = "./checkout.html";
     }
   });
   addProductDetailsNavigation();
-
 });

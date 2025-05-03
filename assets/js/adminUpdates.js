@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function populateRecipientFilter() {
     const recipientFilter = document.getElementById("recipientFilter");
     const users = StorageManager.load("users") || [];
-    console.log("Users loaded for recipient filter:", users);
+    // console.log("Users loaded for recipient filter:", users);
     const sellersAndCustomers = users.filter(
       (user) => user.role === "seller" || user.role === "customer"
     );
@@ -83,15 +83,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function getMessages() {
     const messages = MessageManager.getMessagesForUser(currentUser.id);
     const users = StorageManager.load("users") || [];
-    console.log("Messages loaded:", messages);
+    // console.log("Messages loaded:", messages);
     return messages
-      .filter((message) => message.senderId === currentUser.id || message.recipientId === currentUser.id)
+      .filter(
+        (message) =>
+          message.senderId === currentUser.id ||
+          message.recipientId === currentUser.id
+      )
       .map((message, index) => ({
         id: index + 1,
         senderId: message.senderId,
-        sender: users.find((u) => u.id === message.senderId)?.userName || "Unknown",
+        sender:
+          users.find((u) => u.id === message.senderId)?.userName || "Unknown",
         recipientId: message.recipientId,
-        recipient: users.find((u) => u.id === message.recipientId)?.userName || "Unknown",
+        recipient:
+          users.find((u) => u.id === message.recipientId)?.userName ||
+          "Unknown",
         subject: message.subject || "No Subject",
         type: message.type || "other",
         content: message.content,
@@ -105,7 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredMessages = messages.filter((message) =>
       selectedUser === ""
         ? true
-        : message.senderId === parseInt(selectedUser) || message.recipientId === parseInt(selectedUser)
+        : message.senderId === parseInt(selectedUser) ||
+          message.recipientId === parseInt(selectedUser)
     );
     currentPage = 1;
     renderMessagesTable();
@@ -134,7 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <td class="d-none d-md-table-cell">${message.recipient}</td>
         <td class="d-none d-md-table-cell">${message.timestamp.toLocaleString()}</td>
         <td>
-          <button class="btn btn-sm btn-primary view-message-btn" data-id="${message.id}">View</button>
+          <button class="btn btn-sm btn-primary view-message-btn" data-id="${
+            message.id
+          }">View</button>
         </td>
       `;
       tbody.appendChild(row);
@@ -150,7 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const prevLi = document.createElement("li");
     prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
-    prevLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${currentPage - 1})"><i class="fas fa-chevron-left"></i></a>`;
+    prevLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${
+      currentPage - 1
+    })"><i class="fas fa-chevron-left"></i></a>`;
     pagination.appendChild(prevLi);
 
     for (let i = 1; i <= pageCount; i++) {
@@ -161,8 +173,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const nextLi = document.createElement("li");
-    nextLi.className = `page-item ${currentPage === pageCount ? "disabled" : ""}`;
-    nextLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${currentPage + 1})"><i class="fas fa-chevron-right"></i></a>`;
+    nextLi.className = `page-item ${
+      currentPage === pageCount ? "disabled" : ""
+    }`;
+    nextLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${
+      currentPage + 1
+    })"><i class="fas fa-chevron-right"></i></a>`;
     pagination.appendChild(nextLi);
   }
 
@@ -197,13 +213,18 @@ document.addEventListener("DOMContentLoaded", () => {
         valB = b.recipient;
       }
       if (typeof valA === "string") {
-        return sortDirection === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        return sortDirection === "asc"
+          ? valA.localeCompare(valB)
+          : valB.localeCompare(valA);
       }
       return sortDirection === "asc" ? valA - valB : valB - valA;
     });
 
-    document.querySelectorAll("th span").forEach((span) => (span.innerHTML = ""));
-    document.getElementById(`sort-${column}`).innerHTML = sortDirection === "asc" ? "↑" : "↓";
+    document
+      .querySelectorAll("th span")
+      .forEach((span) => (span.innerHTML = ""));
+    document.getElementById(`sort-${column}`).innerHTML =
+      sortDirection === "asc" ? "↑" : "↓";
 
     currentPage = 1;
     renderMessagesTable();
@@ -236,7 +257,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("detail-subject").textContent = message.subject;
     document.getElementById("detail-type").textContent = message.type;
     document.getElementById("detail-content").textContent = message.content;
-    document.getElementById("detail-date").textContent = message.timestamp.toLocaleString();
+    document.getElementById(
+      "detail-date"
+    ).textContent = message.timestamp.toLocaleString();
 
     new bootstrap.Modal(document.getElementById("messageDetailModal")).show();
   }
@@ -253,19 +276,22 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     if (!subject) {
-      document.getElementById("messageSubject-error").textContent = "Subject cannot be empty.";
+      document.getElementById("messageSubject-error").textContent =
+        "Subject cannot be empty.";
       document.getElementById("messageSubject-error").style.display = "block";
       document.getElementById("messageSubject").classList.add("is-invalid");
       return;
     }
     if (!type) {
-      document.getElementById("messageType-error").textContent = "Type cannot be empty.";
+      document.getElementById("messageType-error").textContent =
+        "Type cannot be empty.";
       document.getElementById("messageType-error").style.display = "block";
       document.getElementById("messageType").classList.add("is-invalid");
       return;
     }
     if (!content) {
-      document.getElementById("messageContent-error").textContent = "Message cannot be empty.";
+      document.getElementById("messageContent-error").textContent =
+        "Message cannot be empty.";
       document.getElementById("messageContent-error").style.display = "block";
       document.getElementById("messageContent").classList.add("is-invalid");
       return;
@@ -295,7 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
     loadMessages();
   }
 
-  const confirmSendMessageBtn = document.getElementById("confirmSendMessageBtn");
+  const confirmSendMessageBtn = document.getElementById(
+    "confirmSendMessageBtn"
+  );
   if (confirmSendMessageBtn) {
     confirmSendMessageBtn.addEventListener("click", sendMessageFromModal);
   } else {
