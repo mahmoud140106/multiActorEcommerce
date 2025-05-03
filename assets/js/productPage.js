@@ -10,17 +10,8 @@ let allCategories = CategoryManager.getAllCategories();
 let currentPage = 1;
 const itemsPerPage = 6;
 let filteredProducts = allProducts;
-
-
- document.getElementById("searchGo").addEventListener("click", function (e) {
-
-   let searchInputData = document.getElementById("searchInput").value;
-   console.log(searchInputData);
-   
-  
-    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
- 
-  })
+// Define urlParams once at the top
+const urlParams = new URLSearchParams(window.location.search);
 
 function product(items) {
   if (items.length === 0) {
@@ -37,8 +28,8 @@ function product(items) {
   paginatedProducts.forEach((product, index) => {
     const card = document.createElement("div");
     card.className = "col";
-    console.log("product:", product);
-    console.log("image Url", product.images[0]);
+    // console.log("product:", product);
+    // console.log("image Url", product.images[0]);
     card.innerHTML = `
       <div class="card position-relative mx-5 mx-md-0">
         <div class="position-relative imgcontainer">
@@ -172,26 +163,6 @@ for (let i = 0; i < allCategories.length; i++) {
   filterCategory.innerHTML += `<option value="${allCategories[i].name}">${allCategories[i].name}</option>`;
 }
 
-
-
-
-
-
-
-
-
-
-// Set default option for filterCategory
-filterCategory.innerHTML = '<option value="AllCategories">All Categories</option>';
-for (let i = 0; i < allCategories.length; i++) {
-  filterCategory.innerHTML += `<option value="${allCategories[i].name}">${allCategories[i].name}</option>`;
-}
-
-
-
-
-
-
 // Change products by option categories in product page
 filterCategory.addEventListener("change", function (e) {
   applyFilters();
@@ -199,76 +170,91 @@ filterCategory.addEventListener("change", function (e) {
 
 // Search
 function handleSearch() {
-  const searchValue = document.getElementById("searchInput").value.toLowerCase() || document.getElementById("searchInputModal").value.toLowerCase();
+  let searchValue = (
+    document.getElementById("searchInputModal")?.value.toLowerCase() ||
+    document.getElementById("searchInput")?.value.toLowerCase() ||
+    ""
+  );
 
-  filteredProducts = allProducts.filter((product) => {
-    const category = CategoryManager.getCategory(product.categoryId);
-    return (
-      product.name.toLowerCase().includes(searchValue) ||
-      (product.description && product.description.toLowerCase().includes(searchValue)) ||
-      (category && category.name.toLowerCase().includes(searchValue))
-    );
-  });
+  // Check if there's a search query in the URL
+  const urlSearchQuery = urlParams.get("products")?.toLowerCase() || "";
+
+  // Prioritize URL search query if present, otherwise use input/modal
+  searchValue = urlSearchQuery || searchValue;
+
+  // console.log("Search value:", searchValue); // Debugging
+
+  // If no search value, reset to all products
+  if (!searchValue) {
+    filteredProducts = allProducts;
+  } else {
+    filteredProducts = allProducts.filter((product) => {
+      const category = CategoryManager.getCategory(product.categoryId);
+      return (
+        product.name.toLowerCase().includes(searchValue) ||
+        (product.description && product.description.toLowerCase().includes(searchValue)) ||
+        (category && category.name.toLowerCase().includes(searchValue))
+      );
+    });
+  }
+
+  // console.log("Filtered products:", filteredProducts); // Debugging
 
   currentPage = 1;
-  applyFilters();
+  product(filteredProducts); // Directly call product to show results
 }
 
-// // From home page through category section show its products
-// let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
-// let categoryId = 0;
-
-// for (let j = 0; j < allCategories.length; j++) {
-//   if (item === allCategories[j].name) {
-//     categoryId = allCategories[j].id;
-//   }
-// }
-
-
-
-// let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
-// if (window.location.href.includes("categoryType=")) {
-//   filteredProducts = urlFilteredProducts;
-//   product(filteredProducts);
-// } 
-
-const urlParams = new URLSearchParams(window.location.search);
-const categoryName = decodeURIComponent(urlParams.get("categoryType") || "");
-let categoryId = 0;
-
-for (let j = 0; j < allCategories.length; j++) {
-  if (categoryName === allCategories[j].name) {
-    categoryId = allCategories[j].id;
-    break;
+// document.getElementById("searchGo").addEventListener("click", function () {
+//   handleSearch();
+//   new bootstrap.Modal(document.getElementById("SearchHomeModal")).hide();
+// });
+function bindSearchGoEvent() {
+  const searchGoButton = document.getElementById("searchGo");
+  if (searchGoButton) {
+    searchGoButton.addEventListener("click", () => {
+      // console.log("searchGo clicked"); // Debugging
+      const searchInputData = document.getElementById("searchInputModal")?.value || document.getElementById("searchInput")?.value;
+      if (searchInputData) {
+        // console.log("Search input data:", searchInputData); // Debugging
+        // Update URL without reloading the page
+        window.history.pushState({}, '', `?products=${encodeURIComponent(searchInputData.toLowerCase())}`);
+        handleSearch();
+        // Hide modal
+        const modalElement = document.getElementById("SearchHomeModal");
+        if (modalElement) {
+          const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+          modal.hide();
+        } else {
+          // console.error("Modal element not found"); // Debugging
+        }
+      } else {
+        // console.log("No search input data"); // Debugging
+      }
+    });
+  } else {
+    // console.error("searchGo button not found"); // Debugging
   }
 }
 
-let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
-if (window.location.href.includes("categoryType=")) {
-  filteredProducts = urlFilteredProducts;
+// Handle URL-based search on page load
+const searchQuery = urlParams.get("products")?.toLowerCase();
+if (searchQuery) {
+  filteredProducts = ProductManager.getProductsByName(searchQuery);
   product(filteredProducts);
 }
 
-// from home page through search input show its products
-let searchItem = window.location.href.slice(window.location.href.indexOf("$") + 1);
-if (window.location.href.includes("$")) {
-  let searchedProducts = ProductManager.getProductsByName(searchItem);
- product(searchedProducts);
-}
-
-
-
-// Ensure all products are displayed by default
-if (window.location.href.indexOf("=") == -1 && window.location.href.indexOf("$") == -1 ) {
-  product(allProducts);
-}
-
-document.getElementById("searchInput").addEventListener("input", handleSearch);
-document.getElementById("searchInputModal").addEventListener("input", handleSearch);
-document.getElementById("searchGo").addEventListener("click", function () {
+// Input listeners for real-time search
+document.getElementById("searchInput")?.addEventListener("input", () => {
+  // console.log("searchInput input event"); // Debugging
   handleSearch();
-  new bootstrap.Modal(document.getElementById("SearchHomeModal")).hide();
 });
+document.getElementById("searchInputModal")?.addEventListener("input", () => {
+  // console.log("searchInputModal input event"); // Debugging
+  handleSearch();
+});
+
+// Bind searchGo event after DOM is fully loaded
+document.addEventListener("DOMContentLoaded", bindSearchGoEvent);
 
 // Outer filter: change product by change price range, size, or brand
 const minPriceInput = document.getElementById("minPrice");
@@ -277,6 +263,19 @@ const brandSelect = document.getElementById("filterBrand");
 const productSize = document.getElementById("filterSize");
 
 function applyFilters() {
+  // Reset search when applying filters
+  filteredProducts = allProducts; // Reset to all products to remove search filter
+  if (document.getElementById("searchInput")) {
+    document.getElementById("searchInput").value = ""; // Clear search input
+  }
+  if (document.getElementById("searchInputModal")) {
+    document.getElementById("searchInputModal").value = ""; // Clear modal search input
+  }
+  // Remove 'products' parameter from URL
+  const newUrl = new URL(window.location);
+  newUrl.searchParams.delete("products");
+  window.history.pushState({}, "", newUrl);
+
   const selectedCategory = filterCategory.value;
   const selectedSize = productSize.value;
   const minPrice = parseFloat(minPriceInput.value);
@@ -333,5 +332,24 @@ brands.forEach((brand) => {
   brandSelect.innerHTML += `<option value="${brand}">${brand}</option>`;
 });
 
+// Handle category-based filtering from URL
+const categoryName = decodeURIComponent(urlParams.get("categoryType") || "");
+let categoryId = 0;
 
- 
+for (let j = 0; j < allCategories.length; j++) {
+  if (categoryName === allCategories[j].name) {
+    categoryId = allCategories[j].id;
+    break;
+  }
+}
+
+let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
+if (window.location.href.includes("categoryType=")) {
+  filteredProducts = urlFilteredProducts;
+  product(filteredProducts);
+}
+
+// Ensure all products are displayed by default
+if (window.location.href.indexOf("=") == -1 && window.location.href.indexOf("$") == -1 ) {
+  product(allProducts);
+}

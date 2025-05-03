@@ -193,7 +193,46 @@ function loadNavbar() {
     .catch((err) => console.error("Failed to load navbar:", err));
 }
 
+
+
+
+
+
+
+
+
+
+
+
+function bindSearchGoEvent() {
+  const searchGoButton = document.getElementById("searchGo");
+  if (searchGoButton) {
+    searchGoButton.addEventListener("click", () => {
+      // console.log("searchGo clicked"); // Debugging
+      const searchInputData = document.getElementById("searchInputModal")?.value || document.getElementById("searchInput")?.value;
+      if (searchInputData) {
+        // console.log("Search input data:", searchInputData); // Debugging
+        // Update URL and redirect to product page
+        window.location.href = `/customer/product.html?products=${encodeURIComponent(searchInputData.toLowerCase())}`;
+        // Hide modal
+        const modalElement = document.getElementById("SearchHomeModal");
+        if (modalElement) {
+          const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+          modal.hide();
+        } else {
+          // console.error("Modal element not found"); // Debugging
+        }
+      } else {
+        // console.log("No search input data"); // Debugging
+      }
+    });
+  } else {
+    console.error("searchGo button not found"); // Debugging
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  bindSearchGoEvent();
   loadNavbar();
 
   const sidebar = document.querySelector(".sidebar");

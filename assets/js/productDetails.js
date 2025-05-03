@@ -12,12 +12,12 @@ let r;
 let productCountInput;
 let productCount;
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("product details.js loaded");
+  // console.log("product details.js loaded");
   try {
     const urlParams = new URLSearchParams(window.location.search);
     productId = parseInt(urlParams.get("id"));
     productCountInput = document.getElementById("productCount");
-    productCount= productCountInput.value;
+    productCount = productCountInput.value;
     AllProducts = ProductManager.getAllProducts();
     if (isNaN(productId)) {
       console.error("Invalid product ID:", urlParams.get("id"));
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-     product = ProductManager.getProduct(productId);
-    
+    product = ProductManager.getProduct(productId);
+
     if (!product) {
       console.error("Product not found for ID:", productId);
       document.querySelector(".container.mt-4").innerHTML =
@@ -184,26 +184,22 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   );
 
-
-  //product count 
-  productCountInput.addEventListener('change',function(e){
-   productCountInput.setAttribute('value',`${e.target.value}`);
-   productCount=productCountInput.value;
-    console.log(productCountInput)
-    console.log(productCount)
-
-  })
+  //product count
+  productCountInput.addEventListener("change", function (e) {
+    productCountInput.setAttribute("value", `${e.target.value}`);
+    productCount = productCountInput.value;
+    // console.log(productCountInput);
+    // console.log(productCount);
+  });
   // Add event listeners to "Add to Cart" buttons
-  document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', () => {
-      const productId = parseInt(button.getAttribute('data-id'));
-      const product = AllProducts.find(p => p.id === productId);
+  document.querySelectorAll(".add-to-cart").forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = parseInt(button.getAttribute("data-id"));
+      const product = AllProducts.find((p) => p.id === productId);
       CartManager.addToCart(product);
     });
   });
 
-
-  
   // Add event listeners to "Add to Wishlist" buttons
   document.querySelectorAll(".add-to-wishlist").forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -239,22 +235,21 @@ function showDescription() {
 
 //add to cart button function
 document.getElementById("addTocart").addEventListener("click", function () {
-    if (productCount < 1) {
-      productCount = 1;
-    }
-    CartManager.addToCart(product, parseInt(productCount)); // Pass the selected quantity to the cart
-    updateNavbar(); // Update the navbar to reflect the new cart count
-  });
-
+  if (productCount < 1) {
+    productCount = 1;
+  }
+  CartManager.addToCart(product, parseInt(productCount)); // Pass the selected quantity to the cart
+  updateNavbar(); // Update the navbar to reflect the new cart count
+});
 
 // Redirect to checkout page when "Buy It Now" is clicked
 document.getElementById("buyItNow").addEventListener("click", function () {
   if (user == null) {
-    CartManager.showToast("Please log in first")
+    CartManager.showToast("Please log in first");
     return;
   }
-  if(productCount<1){
-    productCount=1;
+  if (productCount < 1) {
+    productCount = 1;
   }
   window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
 });

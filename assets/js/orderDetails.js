@@ -15,7 +15,7 @@ let currentUser=StorageManager.load('currentUser');
 
 //display customer delivery data
 let customerDeliveryData = StorageManager.load(`${order.customerId}`);
-console.log(customerDeliveryData)
+// console.log(customerDeliveryData)
 
 if(customerDeliveryData){
 document.getElementById('firstName').value=customerDeliveryData.firstName;
@@ -36,8 +36,8 @@ orderItemsContainer.innerHTML = '';
 order.items.forEach((item,index)=>{
     let products= StorageManager.load('products')
     let product= products.find(product=>product.id==item.productId);
-    console.log(product.sellerId)
-    console.log(item.sellerId)
+    // console.log(product.sellerId)
+    // console.log(item.sellerId)
   if(product.sellerId==currentUser.id){
     const orderItemHTML = `
     <div class="row g-0 align-items-center p-4 cart-item">

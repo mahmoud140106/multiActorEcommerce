@@ -35,14 +35,14 @@ export class UserManager {
   }
 
   static createUser(userName, email, password, role, profilePicture = "") {
-    console.log(
-      "createUser: Attempting to create user with userName:",
-      userName,
-      "email:",
-      email,
-      "role:",
-      role
-    );
+    // console.log(
+    //   "createUser: Attempting to create user with userName:",
+    //   userName,
+    //   "email:",
+    //   email,
+    //   "role:",
+    //   role
+    // );
     // Validate inputs
     if (!userName || !email || !password || !role) {
       console.error(
@@ -78,34 +78,34 @@ export class UserManager {
     let users = StorageManager.load("users") || [];
     users.push(user);
     StorageManager.save("users", users);
-    console.log("createUser: User created successfully:", user);
+    // console.log("createUser: User created successfully:", user);
     return user;
   }
 
   static getUser(id) {
-    console.log("getUser: Fetching user with id:", id);
+    // console.log("getUser: Fetching user with id:", id);
     const users = StorageManager.load("users") || [];
     const user = users.find((user) => user.id === id);
-    console.log("getUser: Found user:", user);
+    // console.log("getUser: Found user:", user);
     return user;
   }
 
   static getUserNameById(id) {
-    console.log("getUserNameById: Fetching username for id:", id);
+    // console.log("getUserNameById: Fetching username for id:", id);
     const user = UserManager.getUser(id);
     return user ? user.userName : null;
   }
 
   static getUserByEmail(email) {
-    console.log("getUserByEmail: Fetching user with email:", email);
+    // console.log("getUserByEmail: Fetching user with email:", email);
     const users = StorageManager.load("users") || [];
     const user = users.find((user) => user.email === email);
-    console.log("getUserByEmail: Found user:", user);
+    // console.log("getUserByEmail: Found user:", user);
     return user;
   }
 
   static updateUser(id, userName, email, password, role, profilePicture = "") {
-    console.log("updateUser: Updating user with id:", id);
+    // console.log("updateUser: Updating user with id:", id);
     let users = StorageManager.load("users") || [];
     // Get the current user data to keep values (like createdAt and the existing profilePicture)
     const oldUser = users.find((user) => user.id == id);
@@ -131,26 +131,26 @@ export class UserManager {
         : user
     );
     StorageManager.save("users", users);
-    console.log("updateUser: User updated successfully:", {
-      id,
-      userName,
-      email,
-      role,
-    });
+    // console.log("updateUser: User updated successfully:", {
+    //   id,
+    //   userName,
+    //   email,
+    //   role,
+    // });
   }
 
   static deleteUser(id) {
-    console.log("deleteUser: Deleting user with id:", id);
+    // console.log("deleteUser: Deleting user with id:", id);
     let users = StorageManager.load("users") || [];
     users = users.filter((user) => user.id != id);
     StorageManager.save("users", users);
-    console.log("deleteUser: User deleted successfully:", id);
+    // console.log("deleteUser: User deleted successfully:", id);
   }
 
   static getAllUsers() {
-    console.log("getAllUsers: Fetching all users");
+    // console.log("getAllUsers: Fetching all users");
     const users = StorageManager.load("users") || [];
-    console.log("getAllUsers: Found users:", users);
+    // console.log("getAllUsers: Found users:", users);
     return users;
   }
 
@@ -160,7 +160,7 @@ export class UserManager {
     const adminPassword = "admin123";
     const adminRole = "admin";
 
-    console.log("initializeDefaultAdmin: Checking for default admin");
+    // console.log("initializeDefaultAdmin: Checking for default admin");
     //   const exists = UserManager.getUserByEmail(adminEmail);
     //   if (!exists) {
     //     UserManager.createUser(

@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Summary cards
     const products = ProductManager.getProductsBySeller(sellerId);
-    console.log("Rendering seller dashboard with products:", products);
+    // console.log("Rendering seller dashboard with products:", products);
     const totalProductsEl = document.getElementById("totalProducts");
     if (totalProductsEl) totalProductsEl.textContent = products.length;
 

@@ -5,7 +5,7 @@ import { ReviewManager } from "./reviewManager.js";
 import { showToast } from "./toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Seller Updates page loaded.");
+  // console.log("Seller Updates page loaded.");
 
   const currentUser = StorageManager.load("currentUser");
   if (!currentUser || currentUser.role !== "seller") {
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "/index.html";
     return;
   }
-  console.log("Current user:", currentUser);
+  // console.log("Current user:", currentUser);
 
   const navLinks = document.querySelectorAll(".sidebar .nav-link");
   navLinks.forEach((link) => {
@@ -38,8 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
       notificationsList.innerHTML = "";
 
       const notifications =
-        ProductManager.getNotificationsForSeller(currentUser.id).slice(0, 5) || [];
-      console.log("Notifications fetched:", notifications);
+        ProductManager.getNotificationsForSeller(currentUser.id).slice(0, 5) ||
+        [];
+      // console.log("Notifications fetched:", notifications);
 
       if (!Array.isArray(notifications) || notifications.length === 0) {
         notificationsList.innerHTML =
@@ -104,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ProductManager.getProductsBySeller(currentUser.id).filter(
           (product) => product.status === "accepted"
         ) || [];
-      console.log("Products fetched for seller:", products);
+      // console.log("Products fetched for seller:", products);
 
       let allReviews = [];
       products.forEach((product) => {
@@ -112,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
         const reviews = ReviewManager.getReviewsByProduct(product.id) || [];
-        console.log(`Reviews for product ${product.id}:`, reviews);
+        // console.log(`Reviews for product ${product.id}:`, reviews);
         reviews.forEach((review) => {
           allReviews.push({ product, review });
         });
@@ -154,23 +155,25 @@ document.addEventListener("DOMContentLoaded", () => {
   function getMessages() {
     const messages = MessageManager.getMessagesForUser(currentUser.id);
     const users = StorageManager.load("users") || [];
-    const admin = users.find(u => u.role === "admin");
+    const admin = users.find((u) => u.role === "admin");
     const adminId = admin ? admin.id : null;
-    console.log("Messages loaded:", messages);
+    // console.log("Messages loaded:", messages);
 
     return messages
-      .filter(message => 
-        message.recipientId === currentUser.id || 
-        (message.senderId === currentUser.id && message.recipientId === adminId)
+      .filter(
+        (message) =>
+          message.recipientId === currentUser.id ||
+          (message.senderId === currentUser.id &&
+            message.recipientId === adminId)
       )
-      .map(message => ({
+      .map((message) => ({
         id: message.id,
         subject: message.subject || "No Subject",
         type: message.type || "other",
         content: message.content,
         timestamp: new Date(message.timestamp),
         senderId: message.senderId,
-        senderName: message.senderId === currentUser.id ? "You" : "Admin"
+        senderName: message.senderId === currentUser.id ? "You" : "Admin",
       }));
   }
 
@@ -193,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const end = start + itemsPerPage;
     const paginatedMessages = filteredMessages.slice(start, end);
 
-    paginatedMessages.forEach(message => {
+    paginatedMessages.forEach((message) => {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${message.id}</td>
@@ -203,7 +206,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${message.timestamp.toLocaleString()}</td>
         <td>${message.senderName}</td>
         <td>
-          <button class="btn btn-sm btn-primary view-message-btn" data-id="${message.id}">View</button>
+          <button class="btn btn-sm btn-primary view-message-btn" data-id="${
+            message.id
+          }">View</button>
         </td>
       `;
       tbody.appendChild(row);
@@ -219,7 +224,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const prevLi = document.createElement("li");
     prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
-    prevLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${currentPage - 1})"><i class="fas fa-chevron-left"></i></a>`;
+    prevLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${
+      currentPage - 1
+    })"><i class="fas fa-chevron-left"></i></a>`;
     pagination.appendChild(prevLi);
 
     for (let i = 1; i <= pageCount; i++) {
@@ -230,13 +237,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const nextLi = document.createElement("li");
-    nextLi.className = `page-item ${currentPage === pageCount ? "disabled" : ""}`;
-    nextLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${currentPage + 1})"><i class="fas fa-chevron-right"></i></a>`;
+    nextLi.className = `page-item ${
+      currentPage === pageCount ? "disabled" : ""
+    }`;
+    nextLi.innerHTML = `<a class="page-link ms-1 rounded-circle" href="#" onclick="changePage(${
+      currentPage + 1
+    })"><i class="fas fa-chevron-right"></i></a>`;
     pagination.appendChild(nextLi);
   }
 
   window.changePage = (page) => {
-    if (page < 1 || page > Math.ceil(filteredMessages.length / itemsPerPage)) return;
+    if (page < 1 || page > Math.ceil(filteredMessages.length / itemsPerPage))
+      return;
     currentPage = page;
     renderMessagesTable();
   };
@@ -263,13 +275,18 @@ document.addEventListener("DOMContentLoaded", () => {
         valB = b.senderName;
       }
       if (typeof valA === "string") {
-        return sortDirection === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        return sortDirection === "asc"
+          ? valA.localeCompare(valB)
+          : valB.localeCompare(valA);
       }
       return sortDirection === "asc" ? valA - valB : valB - valA;
     });
 
-    document.querySelectorAll("th span").forEach(span => (span.innerHTML = ""));
-    document.getElementById(`sort-${column}`).innerHTML = sortDirection === "asc" ? "↑" : "↓";
+    document
+      .querySelectorAll("th span")
+      .forEach((span) => (span.innerHTML = ""));
+    document.getElementById(`sort-${column}`).innerHTML =
+      sortDirection === "asc" ? "↑" : "↓";
 
     currentPage = 1;
     renderMessagesTable();
@@ -278,18 +295,19 @@ document.addEventListener("DOMContentLoaded", () => {
   window.searchMessages = () => {
     const query = document.getElementById("searchInput").value.toLowerCase();
     const messages = getMessages();
-    filteredMessages = messages.filter(message =>
-      message.subject.toLowerCase().includes(query) ||
-      message.type.toLowerCase().includes(query) ||
-      message.content.toLowerCase().includes(query) ||
-      message.senderName.toLowerCase().includes(query)
+    filteredMessages = messages.filter(
+      (message) =>
+        message.subject.toLowerCase().includes(query) ||
+        message.type.toLowerCase().includes(query) ||
+        message.content.toLowerCase().includes(query) ||
+        message.senderName.toLowerCase().includes(query)
     );
     currentPage = 1;
     renderMessagesTable();
   };
 
   function viewMessage(messageId) {
-    const message = filteredMessages.find(m => m.id === parseInt(messageId));
+    const message = filteredMessages.find((m) => m.id === parseInt(messageId));
     if (!message) {
       showToast("Message not found.", "error");
       return;
@@ -299,7 +317,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("detail-type").textContent = message.type;
     document.getElementById("detail-sender").textContent = message.senderName;
     document.getElementById("detail-content").textContent = message.content;
-    document.getElementById("detail-date").textContent = message.timestamp.toLocaleString();
+    document.getElementById(
+      "detail-date"
+    ).textContent = message.timestamp.toLocaleString();
 
     new bootstrap.Modal(document.getElementById("messageDetailModal")).show();
   }
@@ -310,31 +330,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const content = document.getElementById("messageContentModal").value.trim();
 
     if (!subject) {
-      document.getElementById("messageSubject-error").textContent = "Subject cannot be empty.";
+      document.getElementById("messageSubject-error").textContent =
+        "Subject cannot be empty.";
       document.getElementById("messageSubject-error").style.display = "block";
       document.getElementById("messageSubject").classList.add("is-invalid");
       return;
     }
     if (!type) {
-      document.getElementById("messageType-error").textContent = "Type cannot be empty.";
+      document.getElementById("messageType-error").textContent =
+        "Type cannot be empty.";
       document.getElementById("messageType-error").style.display = "block";
       document.getElementById("messageType").classList.add("is-invalid");
       return;
     }
     if (!content) {
-      document.getElementById("messageContentModal-error").textContent = "Message cannot be empty.";
-      document.getElementById("messageContentModal-error").style.display = "block";
-      document.getElementById("messageContentModal").classList.add("is-invalid");
+      document.getElementById("messageContentModal-error").textContent =
+        "Message cannot be empty.";
+      document.getElementById("messageContentModal-error").style.display =
+        "block";
+      document
+        .getElementById("messageContentModal")
+        .classList.add("is-invalid");
       return;
     }
 
-    const admin = StorageManager.load("users").find(u => u.role === "admin");
+    const admin = StorageManager.load("users").find((u) => u.role === "admin");
     if (!admin) {
       showToast("No admin found to send message.", "error");
       return;
     }
 
-    MessageManager.sendMessage(currentUser.id, admin.id, subject, type, content);
+    MessageManager.sendMessage(
+      currentUser.id,
+      admin.id,
+      subject,
+      type,
+      content
+    );
     showToast("Message sent successfully!", "success");
     document.getElementById("messageSubject").value = "";
     document.getElementById("messageType").value = "";
@@ -344,7 +376,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("messageContentModal-error").style.display = "none";
     document.getElementById("messageSubject").classList.remove("is-invalid");
     document.getElementById("messageType").classList.remove("is-invalid");
-    document.getElementById("messageContentModal").classList.remove("is-invalid");
+    document
+      .getElementById("messageContentModal")
+      .classList.remove("is-invalid");
     new bootstrap.Modal(document.getElementById("sendMessageModal")).hide();
     loadMessages();
   }
@@ -372,7 +406,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const confirmSendMessageBtn = document.getElementById("confirmSendMessageBtn");
+  const confirmSendMessageBtn = document.getElementById(
+    "confirmSendMessageBtn"
+  );
   if (confirmSendMessageBtn) {
     confirmSendMessageBtn.addEventListener("click", sendMessageFromModal);
   } else {
