@@ -8,6 +8,12 @@ document.addEventListener("DOMContentLoaded", function () {
   renderWishlist();
   renderRecommendedProducts();
   updateNavbar();
+
+  // Update wishlist button state for all items in the wishlist
+  document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+    const productId = parseInt(button.getAttribute("data-id"));
+    CartManager.isProductInWishlist(productId, button);
+  });
 });
 
 function renderWishlist() {
@@ -65,9 +71,8 @@ function renderWishlist() {
                     <div class="d-flex justify-content-between align-items-start">
                         <div>
                             <h5 class="mb-1 fw-semibold">${item.name}</h5>
-                            <p class="text-muted small mb-2">SKU: ${
-                              item.sku
-                            }</p>
+                            <br>
+                            <br>
                         </div>
                     </div>
                     <div class="d-flex mt-2">
