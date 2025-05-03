@@ -11,6 +11,17 @@ let currentPage = 1;
 const itemsPerPage = 6;
 let filteredProducts = allProducts;
 
+
+ document.getElementById("searchGo").addEventListener("click", function (e) {
+
+   let searchInputData = document.getElementById("searchInput").value;
+   console.log(searchInputData);
+   
+  
+    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
+  })
+
 function product(items) {
   if (items.length === 0) {
     productPage.innerHTML = `<p class="h1 mt-5 text-center text-secondary w-100">No Products Founded</p>`;
@@ -305,3 +316,6 @@ const brands = [...new Set(allProducts.map((p) => p.brand).filter(Boolean))];
 brands.forEach((brand) => {
   brandSelect.innerHTML += `<option value="${brand}">${brand}</option>`;
 });
+
+
+ 
