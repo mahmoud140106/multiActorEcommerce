@@ -11,6 +11,17 @@ let currentPage = 1;
 const itemsPerPage = 6;
 let filteredProducts = allProducts;
 
+
+ document.getElementById("searchGo").addEventListener("click", function (e) {
+
+   let searchInputData = document.getElementById("searchInput").value;
+   console.log(searchInputData);
+   
+  
+    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+ 
+  })
+
 function product(items) {
   if (items.length === 0) {
     productPage.innerHTML = `<p class="h1 mt-5 text-center text-secondary w-100">No Products Founded</p>`;
@@ -161,24 +172,25 @@ for (let i = 0; i < allCategories.length; i++) {
   filterCategory.innerHTML += `<option value="${allCategories[i].name}">${allCategories[i].name}</option>`;
 }
 
-// From home page through category section show its products
-let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
-let categoryId = 0;
 
-for (let j = 0; j < allCategories.length; j++) {
-  if (item === allCategories[j].name) {
-    categoryId = allCategories[j].id;
-  }
+
+
+
+
+
+
+
+
+// Set default option for filterCategory
+filterCategory.innerHTML = '<option value="AllCategories">All Categories</option>';
+for (let i = 0; i < allCategories.length; i++) {
+  filterCategory.innerHTML += `<option value="${allCategories[i].name}">${allCategories[i].name}</option>`;
 }
 
-let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
-if (window.location.href.includes("category=")) {
-  filteredProducts = urlFilteredProducts;
-  product(filteredProducts);
-} else {
-  filteredProducts = allProducts;
-  product(filteredProducts);
-}
+
+
+
+
 
 // Change products by option categories in product page
 filterCategory.addEventListener("change", function (e) {
@@ -200,6 +212,39 @@ function handleSearch() {
 
   currentPage = 1;
   applyFilters();
+}
+
+// From home page through category section show its products
+let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
+let categoryId = 0;
+
+for (let j = 0; j < allCategories.length; j++) {
+  if (item === allCategories[j].name) {
+    categoryId = allCategories[j].id;
+  }
+}
+
+
+
+let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
+if (window.location.href.includes("categoryType=")) {
+  filteredProducts = urlFilteredProducts;
+  product(filteredProducts);
+} 
+
+
+// from home page through search input show its products
+let searchItem = window.location.href.slice(window.location.href.indexOf("$") + 1);
+if (window.location.href.includes("$")) {
+  let searchedProducts = ProductManager.getProductsByName(searchItem);
+ product(searchedProducts);
+}
+
+
+
+// Ensure all products are displayed by default
+if (window.location.href.indexOf("=") == -1 && window.location.href.indexOf("$") == -1 ) {
+  product(allProducts);
 }
 
 document.getElementById("searchInput").addEventListener("input", handleSearch);
@@ -271,3 +316,6 @@ const brands = [...new Set(allProducts.map((p) => p.brand).filter(Boolean))];
 brands.forEach((brand) => {
   brandSelect.innerHTML += `<option value="${brand}">${brand}</option>`;
 });
+
+
+ 
