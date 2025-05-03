@@ -11,23 +11,6 @@ let currentPage = 1;
 const itemsPerPage = 6;
 let filteredProducts = allProducts;
 
-// Search
-function handleSearch() {
-  const searchValue = document.getElementById("searchIn").value.toLowerCase() || document.getElementById("searchInputModal").value.toLowerCase();
-
-  filteredProducts = allProducts.filter((product) => {
-    const category = CategoryManager.getCategory(product.categoryId);
-    return (
-      product.name.toLowerCase().includes(searchValue) ||
-      (product.description && product.description.toLowerCase().includes(searchValue)) ||
-      (category && category.name.toLowerCase().includes(searchValue))
-    );
-  });
-
-  currentPage = 1;
-  applyFilters();
-}
-
 
  document.getElementById("searchGo").addEventListener("click", function (e) {
 
@@ -35,7 +18,7 @@ function handleSearch() {
    console.log(searchInputData);
    
   
-    window.location.href =`../../customer/product.html?products$${searchInputData.toLowerCase()}`;
+    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
  
   })
 
@@ -77,8 +60,8 @@ function product(items) {
           <p class="card-text text-secondary mb-2">${CategoryManager.getCategory(product.categoryId).name}</p>
           <div class="p-3 border-top position-relative border-1 d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
-              <span class="">${product.discountedPrice ? product.discountedPrice.toFixed(2) : product.price.toFixed(2)}</span>
-              ${product.discountedPrice ? <span class="text-muted text-decoration-line-through ms-2">$${product.price.toFixed(2)}</span> : ""}
+              <span class="">$${product.discountedPrice ? product.discountedPrice.toFixed(2) : product.price.toFixed(2)}</span>
+              ${product.discountedPrice ? `<span class="text-muted text-decoration-line-through ms-2">$${product.price.toFixed(2)}</span>` : ""}
             </div>
             <button class="btn btn-dark add-to-cart" data-id="${product.id}">Add to cart</button>
           </div>
@@ -167,7 +150,7 @@ function updatePagination(totalItems) {
 
   // Next page
   const nextLi = document.createElement("li");
-  nextLi.className =` page-item ${currentPage === totalPages ? "disabled" : ""}`;
+  nextLi.className = `page-item ${currentPage === totalPages ? "disabled" : ""}`;
   nextLi.innerHTML = `
     <a class="page-link" href="#" aria-label="Next">
       <span aria-hidden="true">»</span>
@@ -209,9 +192,27 @@ for (let i = 0; i < allCategories.length; i++) {
 
 
 
+// Change products by option categories in product page
+filterCategory.addEventListener("change", function (e) {
+  applyFilters();
+});
 
+// Search
+function handleSearch() {
+  const searchValue = document.getElementById("searchInput").value.toLowerCase() || document.getElementById("searchInputModal").value.toLowerCase();
 
+  filteredProducts = allProducts.filter((product) => {
+    const category = CategoryManager.getCategory(product.categoryId);
+    return (
+      product.name.toLowerCase().includes(searchValue) ||
+      (product.description && product.description.toLowerCase().includes(searchValue)) ||
+      (category && category.name.toLowerCase().includes(searchValue))
+    );
+  });
 
+  currentPage = 1;
+  applyFilters();
+}
 
 // From home page through category section show its products
 // let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
@@ -249,21 +250,13 @@ if (window.location.href.includes("$")) {
 }
 
 
-// Change products by option categories in product page
-filterCategory.addEventListener("change", function (e) {
-  applyFilters();
-});
-
-
-
-
 
 // Ensure all products are displayed by default
 if (window.location.href.indexOf("=") == -1 && window.location.href.indexOf("$") == -1 ) {
   product(allProducts);
 }
 
-document.getElementById("searchIn").addEventListener("input", handleSearch);
+document.getElementById("searchInput").addEventListener("input", handleSearch);
 document.getElementById("searchInputModal").addEventListener("input", handleSearch);
 document.getElementById("searchGo").addEventListener("click", function () {
   handleSearch();
@@ -330,5 +323,8 @@ brandSelect.addEventListener("change", applyFilters);
 // Populate brands
 const brands = [...new Set(allProducts.map((p) => p.brand).filter(Boolean))];
 brands.forEach((brand) => {
-  brandSelect.innerHTML += <option value="${brand}">${brand}</option>;
+  brandSelect.innerHTML += `<option value="${brand}">${brand}</option>`;
 });
+
+
+ 
