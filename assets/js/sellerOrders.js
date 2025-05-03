@@ -44,20 +44,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // console.log(allOrders)
 
     let products = StorageManager.load('products');         //get all products to get products for each seller by seller id
+    // console.log(products)
+
     allOrders.forEach((order)=>
     {
       let productFromStorage
         order.items.forEach((item)=>{
-             productFromStorage=products.find(product=>product.id===item.productId)    //filter products from storage to get seller id
-          //  console.log(productFromStorage)
-          if(productFromStorage.sellerId==currentUser.id ){
+             productFromStorage=products.find(product=>product.id==item.productId)    //filter products from storage to get seller id
+           console.log(item)
 
-            if(!sellerOrders.includes(order)){
-              sellerOrders.push(order);         //filter all orders to get the seller orders
+           if(productFromStorage != undefined){
+            console.log(productFromStorage.sellerId)
+            console.log(currentUser.id)
 
-            }
-            
-        }
+                if(productFromStorage.sellerId==currentUser.id ){
+                  if(!sellerOrders.includes(order)){
+                    sellerOrders.push(order);         //filter all orders to get the seller orders
+
+                  }
+                  
+              }
+          }
         })
        
     })

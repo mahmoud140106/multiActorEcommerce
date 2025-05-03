@@ -33,7 +33,7 @@ if(Number.isNaN(productId)){
 cart.forEach((item,index)=>{
      productCopy={...item}                        // make a copy of the product object to send in the order and keep the main product in my products
 items[index]=productCopy;
-
+// console.log(items)
 
 })
 
