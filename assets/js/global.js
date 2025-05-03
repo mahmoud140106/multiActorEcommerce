@@ -227,7 +227,7 @@ function bindSearchGoEvent() {
       }
     });
   } else {
-    console.error("searchGo button not found"); // Debugging
+    // console.error("searchGo button not found"); // Debugging
   }
 }
 
