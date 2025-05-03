@@ -1,6 +1,7 @@
 import { StorageManager } from "./storageManager.js";
 import { ProductManager } from "./productManager.js";
 import { UserManager } from "./userManager.js";
+import { CartManager } from "./cartManager.js";
 
 export class OrderItem {
   constructor(productId, quantity, size, color, priceAtPurchase) {
@@ -98,7 +99,7 @@ export class OrderManager {
     let orders = StorageManager.load("orders") || [];
     orders.push(order);
     StorageManager.save("orders", orders);
-
+    CartManager.clearCart();
     return order;
   }
 
