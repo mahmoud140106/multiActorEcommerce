@@ -214,7 +214,7 @@ function handleSearch() {
   applyFilters();
 }
 
-// From home page through category section show its products
+// // From home page through category section show its products
 // let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
 // let categoryId = 0;
 
@@ -223,6 +223,14 @@ function handleSearch() {
 //     categoryId = allCategories[j].id;
 //   }
 // }
+
+
+
+// let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
+// if (window.location.href.includes("categoryType=")) {
+//   filteredProducts = urlFilteredProducts;
+//   product(filteredProducts);
+// } 
 
 const urlParams = new URLSearchParams(window.location.search);
 const categoryName = decodeURIComponent(urlParams.get("categoryType") || "");
@@ -239,8 +247,7 @@ let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
 if (window.location.href.includes("categoryType=")) {
   filteredProducts = urlFilteredProducts;
   product(filteredProducts);
-} 
-
+}
 
 // from home page through search input show its products
 let searchItem = window.location.href.slice(window.location.href.indexOf("$") + 1);
