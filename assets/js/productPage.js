@@ -161,24 +161,25 @@ for (let i = 0; i < allCategories.length; i++) {
   filterCategory.innerHTML += `<option value="${allCategories[i].name}">${allCategories[i].name}</option>`;
 }
 
-// From home page through category section show its products
-let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
-let categoryId = 0;
 
-for (let j = 0; j < allCategories.length; j++) {
-  if (item === allCategories[j].name) {
-    categoryId = allCategories[j].id;
-  }
+
+
+
+
+
+
+
+
+// Set default option for filterCategory
+filterCategory.innerHTML = '<option value="AllCategories">All Categories</option>';
+for (let i = 0; i < allCategories.length; i++) {
+  filterCategory.innerHTML += `<option value="${allCategories[i].name}">${allCategories[i].name}</option>`;
 }
 
-let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
-if (window.location.href.includes("category=")) {
-  filteredProducts = urlFilteredProducts;
-  product(filteredProducts);
-} else {
-  filteredProducts = allProducts;
-  product(filteredProducts);
-}
+
+
+
+
 
 // Change products by option categories in product page
 filterCategory.addEventListener("change", function (e) {
@@ -200,6 +201,39 @@ function handleSearch() {
 
   currentPage = 1;
   applyFilters();
+}
+
+// From home page through category section show its products
+let item = window.location.href.slice(window.location.href.indexOf("=") + 1);
+let categoryId = 0;
+
+for (let j = 0; j < allCategories.length; j++) {
+  if (item === allCategories[j].name) {
+    categoryId = allCategories[j].id;
+  }
+}
+
+
+
+let urlFilteredProducts = ProductManager.getProductsByCategory(categoryId);
+if (window.location.href.includes("categoryType=")) {
+  filteredProducts = urlFilteredProducts;
+  product(filteredProducts);
+} 
+
+
+// from home page through search input show its products
+let searchItem = window.location.href.slice(window.location.href.indexOf("$") + 1);
+if (window.location.href.includes("$")) {
+  let searchedProducts = ProductManager.getProductsByName(searchItem);
+ product(searchedProducts);
+}
+
+
+
+// Ensure all products are displayed by default
+if (window.location.href.indexOf("=") == -1 && window.location.href.indexOf("$") == -1 ) {
+  product(allProducts);
 }
 
 document.getElementById("searchInput").addEventListener("input", handleSearch);
