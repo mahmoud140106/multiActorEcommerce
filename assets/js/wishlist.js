@@ -186,9 +186,9 @@ function renderRecommendedProducts() {
 
   // Get all products
   let products = ProductManager.getAllProducts();
-  // Filter out wishlist items and get random products
+  // Filter out wishlist items, products with stock 0, and get random products
   products = products
-    .filter((product) => !wishlistIds.includes(product.id))
+    .filter((product) => !wishlistIds.includes(product.id) && product.stock > 0)
     .sort(() => 0.5 - Math.random())
     .slice(0, 8); // Get 8 products for carousel
 
