@@ -14,6 +14,9 @@ let filteredProducts = allProducts;
 const urlParams = new URLSearchParams(window.location.search);
 
 function product(items) {
+  // Filter out products with stock 0
+  items = items.filter(product => product.stock > 0);
+  
   if (items.length === 0) {
     productPage.innerHTML = `<p class="h1 mt-5 text-center text-secondary w-100">No Products Founded</p>`;
     updatePagination(0);
