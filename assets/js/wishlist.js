@@ -14,6 +14,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const productId = parseInt(button.getAttribute("data-id"));
     CartManager.isProductInWishlist(productId, button);
   });
+
+  // add event listener to product img to redirect to product details onclic
+
+  document.querySelectorAll("img").forEach((img)=>{
+    img.addEventListener('click',function(){
+     let productId= img.getAttribute('data-id');
+     window.location.href = `productDetails.html?id=${productId}`;
+    })
+  })
 });
 
 function renderWishlist() {
@@ -61,9 +70,9 @@ function renderWishlist() {
     totalValue += item.price * (item.quantity || 1);
 
     const itemHTML = `
-            <div class="row g-0 align-items-center p-4 wishlist-item w-100" data-id="${productId}">
+            <div class="row g-0 align-items-center p-4 wishlist-item w-100" >
                 <div class="col-3 text-center">
-                    <img src="${item.image}" alt="${item.name}" class="img-fluid rounded-3">
+                    <img src="${item.image}" alt="${item.name}" data-id="${productId}" class="img-fluid rounded-3">
                 </div>
                 <div class="col-6 ps-4">
                     <div class="d-flex justify-content-between align-items-start">
@@ -232,6 +241,7 @@ function renderRecommendedProducts() {
               <a href="/customer/productDetails.html?id=${product.id}">
                 <img src="${product.images[0]}" class="card-img-top" alt="${product.name}" 
                      style="height: 300px; object-fit: cover;" 
+                     product-id="${product.id}"
                      onerror="this.src='https://dummyimage.com/500x250/cccccc/000000&text=No+Image';">
               </a>
               <div class="card-icons position-absolute top-0 end-0 p-2">
