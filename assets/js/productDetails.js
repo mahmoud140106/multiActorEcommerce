@@ -274,3 +274,4 @@ document.getElementById("buyItNow").addEventListener("click", function () {
   }
   window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
 });
+console.log(window.innerWidth)
