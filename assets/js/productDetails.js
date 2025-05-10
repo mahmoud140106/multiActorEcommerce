@@ -152,16 +152,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
           td.innerHTML = `
             <div class="card border-0 shadow-sm rounded-3 overflow-hidden" > 
-                <div class="card-body p-0" product-id='${AllProducts[r].id}'>
+                <div class="card-body p-0" >
                       <div >
-                          <img src="${AllProducts[r].images[0]}" class="cursol-img card-img-top d-block w-100" alt="No Image" style="height: 250px;  object-fit: cover;"  >
+                          <img src="${AllProducts[r].images[0]}" class="cursol-img card-img-top d-block w-100" alt="No Image" style="height: 250px;  object-fit: cover;"  product-id='${AllProducts[r].id}'>
                           <div id ="wishlist-html" class="card-icons position-absolute top-0 end-0 p-2 d-flex flex-column">
-                            <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" ><i class="far fa-heart"></i></button>
+                            <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${AllProducts[r].id}"><i class="far fa-heart"></i></button>
                             <button title="Add to Cart" class="add-to-cart btn btn-light btn-sm rounded-circle m-1" data-id="${AllProducts[r].id}"><i class="fas fa-shopping-cart"></i></button>
                           </div>
+                           ${
+                              AllProducts[r].isOnSale
+                                ? '<span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">SALE</span>'
+                                : ""
+                            }
                       </div>
                       <div class="RecomndProduct-name">${AllProducts[r].name}</div>
-                      <div class="RecomndProduct-price text-muted" >$${AllProducts[r].price}</div>
+                      <div class="RecomndProduct-price " >
+                       <span class="">$${
+                          AllProducts[r].discountedPrice
+                            ? AllProducts[r].discountedPrice.toFixed(2)
+                            : AllProducts[r].price.toFixed(2)
+                        }</span>
+                        ${
+                          AllProducts[r].discountedPrice
+                            ? `<span class="text-muted text-decoration-line-through ms-2">$${AllProducts[r].price.toFixed(2)}</span>`
+                            : ""
+                        }
+                     </div>
                   </div>
              </div>
          
@@ -180,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //add event listener to recommendation cards to link with product details
-  document.querySelectorAll(".card-body").forEach((card) =>
+  document.querySelectorAll(".cursol-img ").forEach((card) =>
     card.addEventListener("click", function () {
       const id = card.getAttribute("product-id");
       if (id) {
