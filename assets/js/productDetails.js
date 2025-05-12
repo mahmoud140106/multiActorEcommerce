@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       </div>
                       <div class="RecomndProduct-name">${AllProducts[r].name}</div>
                       <div class="RecomndProduct-price " >
-                       <span class="">$${
+                       <span class="text-danger">$${
                           AllProducts[r].discountedPrice
                             ? AllProducts[r].discountedPrice.toFixed(2)
                             : AllProducts[r].price.toFixed(2)
