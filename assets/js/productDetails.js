@@ -42,9 +42,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("category").textContent = `Category: ${
       CategoryManager.getCategory(product.categoryId).name || "N/A"
     }`;
-    document.getElementById("price").textContent = product.discountedPrice
-      ? `$${product.discountedPrice.toFixed(2)}`
-      : `$${product.price.toFixed(2)}`;
+    document.getElementById("price").innerHTML =    `<span class="text-danger">$${
+                          product.discountedPrice
+                            ? product.discountedPrice.toFixed(2)
+                            : product.price.toFixed(2)
+                        }</span>
+                        ${
+                          product.discountedPrice
+                            ? `<span class="text-muted text-decoration-line-through ms-2">$${product.price.toFixed(2)}</span>`
+                            : ""
+                        }`
     document
       .getElementById("productCount")
       .setAttribute("max", `${product.stock}`);
@@ -241,6 +248,9 @@ function showReviews() {
   let reviewSection = document.getElementById("reviewSection");
   reviewSection.classList.remove("d-none");
   descriptionSection.classList.add("d-none");
+  document.getElementById("reviewsBtn").disabled=true;
+  document.getElementById("descriptionBtn").disabled=false;
+  
 }
 
 document
@@ -252,6 +262,9 @@ function showDescription() {
   let descriptionSection = document.getElementById("descriptionSection");
   descriptionSection.classList.remove("d-none");
   reviewSection.classList.add("d-none");
+    document.getElementById("descriptionBtn").disabled=true;
+  document.getElementById("reviewsBtn").disabled=false;
+
 }
 
 //add to cart button function
@@ -274,4 +287,4 @@ document.getElementById("buyItNow").addEventListener("click", function () {
   }
   window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
 });
-console.log(window.innerWidth)
+// console.log(window.innerWidth)
