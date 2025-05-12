@@ -10,10 +10,10 @@ function appendCategories() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedCategories = categories.slice(startIndex, endIndex);
-  
+
   container.innerHTML = "";
   let row;
-  
+
   paginatedCategories.forEach((category, index) => {
     if (index % 4 === 0) {
       // Create new row every 4 items
@@ -93,51 +93,30 @@ function updatePagination(totalItems) {
   pagination.appendChild(nextLi);
 }
 
-
-
-
 function relateCategoryAndProducts() {
-    let ALLCards = document.getElementsByClassName("card");
-  
+  let ALLCards = document.getElementsByClassName("card");
 
   for (let index = 0; index < ALLCards.length; index++) {
-  ALLCards[index].addEventListener("click", function (e) {
-    console.log(ALLCards[index].innerText);
-    
+    ALLCards[index].addEventListener("click", function (e) {
+      // console.log(ALLCards[index].innerText);
 
-     window.location.href=`../../customer/product.html?categoryType=${ALLCards[index].innerText}`
-  
-})
-  
-  
-}
+      window.location.href = `../../customer/product.html?categoryType=${ALLCards[index].innerText}`;
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   appendCategories();
 
-  relateCategoryAndProducts()
-
-  
-
+  relateCategoryAndProducts();
 });
 
+// search about product through home
 
+// document.getElementById("searchGo").addEventListener("click", function (e) {
 
+//   let searchInputData = document.getElementById("searchInput").value;
 
+//   window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
 
- // search about product through home
-
-  
-  
-  
-  document.getElementById("searchGo").addEventListener("click", function (e) {
-
-    let searchInputData = document.getElementById("searchInput").value;
-  
-    window.location.href = `../../customer/product.html?products$${searchInputData.toLowerCase()}`;
- 
-  })
-
-
-
+// })

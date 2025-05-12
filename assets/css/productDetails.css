@@ -98,11 +98,9 @@ td{
   text-align: center;
   padding-right: 30px;
 }
-#carouselrecommendationInner{
-height: 300px;
-}
 
-.cursol-img:hover{
+
+.card:hover{
 cursor: pointer;
 scale: 1.1;
 transition: all 1s ease;
@@ -117,15 +115,51 @@ transition: all 1s ease;
 .add-to-wishlist,.add-to-cart{
    z-index: 11;                          
 }
+
+@media all and (min-width:700px){
+
+   #carouselrecommendationInner{
+height: 350px;
+}
+
+
+}
+
 @media all and (min-width:950px){
   #reviewSection{
     position: relative;
     right: 200px;
   }
+
 }
 @media all and (min-width:200px){
   #reviewSection{
     position: relative;
-    right: 200px;
+    right: 180px;
   }
+  
+}
+@media all and (min-width:991px) and (max-width: 1202px){
+
+ #reviewsBtn{
+  margin-left: 60px;
+}
+}
+@media all and (min-width:1203px) and (max-width: 1400px){
+
+ #reviewsBtn{
+  margin-left: 30px;
+}
+}
+
+@media all and (min-width:768px) and (max-width: 990px){
+
+ #reviewsBtn{
+  position: relative;
+  right: 11vw;
+}
+#descriptionBtn{
+  position: relative;
+  left: 4vw;
+}
 }

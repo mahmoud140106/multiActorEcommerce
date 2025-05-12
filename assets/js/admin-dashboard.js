@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderDashboard() {
     // Summary cards
     const products = ProductManager.getAllProductsForAdmin();
-    console.log("Rendering dashboard with products:", products);
+    // console.log("Rendering dashboard with products:", products);
     const totalProductsEl = document.getElementById("totalProducts");
     if (totalProductsEl) totalProductsEl.textContent = products.length;
 
