@@ -25,6 +25,8 @@ export class Product {
       numReviews = 0,
       soldCount = 0,
       status = "pending",
+      isDeleted = false,
+      deletedAt = null,
     } = {}
   ) {
     this.id = id;
@@ -37,7 +39,7 @@ export class Product {
     this.description = description;
     this.isOnSale = discount > 0;
     this.discount = discount > 1 ? discount / 100 : discount;
-    this.discountedPrice = this.discount > 0 ? price * (1 - this.discount) : null;
+    this.discountedPrice = this.discount > 0 ? this.price * (1 - this.discount) : null;
     this.isFeatured = isFeatured;
     this.brand = brand;
     this.colors = colors;
@@ -50,6 +52,8 @@ export class Product {
     this.numReviews = numReviews;
     this.soldCount = soldCount;
     this.status = status;
+    this.isDeleted = isDeleted;
+    this.deletedAt = deletedAt;
   }
 
   getCategory() {
@@ -88,17 +92,14 @@ export class ProductManager {
   }
 
   static getProduct(id) {
-    const products =
-      StorageManager.load("products").filter(
-        (product) => product.status === "accepted"
-      ) || [];
-    return products.find((product) => product.id === id);
+    const products = StorageManager.load("products") || [];
+    return products.find((product) => product.id === id && !product.isDeleted);
   }
 
   static getProductsByName(searchName) {
     const productsName =
       StorageManager.load("products").filter(
-        (product) => product.status === "accepted"
+        (product) => product.status === "accepted" && !product.isDeleted
       ) || [];
     return productsName.filter((product) =>
       product.name.toLowerCase().includes(searchName.toLowerCase())
@@ -179,26 +180,27 @@ export class ProductManager {
 
   static deleteProduct(id) {
     let products = StorageManager.load("products") || [];
-    products = products.filter((product) => product.id !== id);
-    try {
-      StorageManager.save("products", products);
-    } catch (error) {
-      console.error("Failed to save products:", error);
+    const product = products.find(p => p.id === id);
+    if (product) {
+      product.isDeleted = true;
+      product.deletedAt = new Date();
+      try {
+        StorageManager.save("products", products);
+      } catch (error) {
+        console.error("Failed to save products:", error);
+      }
     }
   }
 
   static getAllProducts() {
-    return (
-      StorageManager.load("products").filter(
-        (product) => product.status === "accepted"
-      ) || []
-    );
+    let products = StorageManager.load("products") || [];
+    return products.filter(product => !product.isDeleted);
   }
 
   static getProductsByCategory(categoryId) {
     const products =
       StorageManager.load("products").filter(
-        (product) => product.status === "accepted"
+        (product) => product.status === "accepted" && !product.isDeleted
       ) || [];
     return products.filter((product) => product.categoryId === categoryId);
   }
@@ -215,7 +217,7 @@ export class ProductManager {
   static checkStockAvailability(productId, desiredQuantity = 1) {
     const products = StorageManager.load("products") || [];
     const product = products.find(
-      (p) => p.id === productId && p.status === "accepted"
+      (p) => p.id === productId && p.status === "accepted" && !p.isDeleted
     );
 
     if (!product) {
@@ -270,7 +272,7 @@ export class ProductManager {
       return b.rating - a.rating;
     });
     products = products.map((product, index) => {
-      product.isFeatured = index < 8 && product.status === "accepted";
+      product.isFeatured = index < 8 && product.status === "accepted" && !product.isDeleted;
       product.updatedAt = new Date();
       return product;
     });
@@ -288,9 +290,33 @@ export class ProductManager {
   static getFeaturedProducts() {
     return (
       StorageManager.load("products").filter(
-        (product) => product.status === "accepted" && product.isFeatured
+        (product) => product.status === "accepted" && product.isFeatured && !product.isDeleted
       ) || []
     );
+  }
+
+  static restoreProduct(id) {
+    let products = StorageManager.load("products") || [];
+    const product = products.find(p => p.id === id);
+    if (product) {
+      product.isDeleted = false;
+      product.deletedAt = null;
+      try {
+        StorageManager.save("products", products);
+      } catch (error) {
+        console.error("Failed to save products:", error);
+      }
+    }
+  }
+
+  static hardDeleteProduct(id) {
+    let products = StorageManager.load("products") || [];
+    products = products.filter(product => product.id !== id);
+    try {
+      StorageManager.save("products", products);
+    } catch (error) {
+      console.error("Failed to hard delete product:", error);
+    }
   }
 }
 

@@ -34,7 +34,7 @@ function product(items) {
     // console.log("product:", product);
     // console.log("image Url", product.images[0]);
     card.innerHTML = `
-      <div class="card position-relative mx-5 mx-md-0">
+      <div class="card position-relative mx-2 mx-md-0">
         <div class="position-relative imgcontainer">
           <a href="/customer/productDetails.html?id=${product.id}">
             <img src="${product.images[0]}" class="card-img-top" alt="${product.name}" 
@@ -175,7 +175,7 @@ filterCategory.addEventListener("change", function (e) {
 function handleSearch() {
   let searchValue = (
     document.getElementById("searchInputModal")?.value.toLowerCase() ||
-    document.getElementById("searchInput")?.value.toLowerCase() ||
+    document.getElementById("searchIn")?.value.toLowerCase() ||
     ""
   );
 
@@ -184,8 +184,6 @@ function handleSearch() {
 
   // Prioritize URL search query if present, otherwise use input/modal
   searchValue = urlSearchQuery || searchValue;
-
-  // console.log("Search value:", searchValue); // Debugging
 
   // If no search value, reset to all products
   if (!searchValue) {
@@ -201,8 +199,6 @@ function handleSearch() {
     });
   }
 
-  // console.log("Filtered products:", filteredProducts); // Debugging
-
   currentPage = 1;
   product(filteredProducts); // Directly call product to show results
 }
@@ -216,7 +212,7 @@ function bindSearchGoEvent() {
   if (searchGoButton) {
     searchGoButton.addEventListener("click", () => {
       // console.log("searchGo clicked"); // Debugging
-      const searchInputData = document.getElementById("searchInputModal")?.value || document.getElementById("searchInput")?.value;
+      const searchInputData = document.getElementById("searchInputModal")?.value || document.getElementById("searchIn")?.value;
       if (searchInputData) {
         // console.log("Search input data:", searchInputData); // Debugging
         // Update URL without reloading the page
@@ -247,12 +243,10 @@ if (searchQuery) {
 }
 
 // Input listeners for real-time search
-document.getElementById("searchInput")?.addEventListener("input", () => {
-  // console.log("searchInput input event"); // Debugging
+document.getElementById("searchIn")?.addEventListener("input", () => {
   handleSearch();
 });
 document.getElementById("searchInputModal")?.addEventListener("input", () => {
-  // console.log("searchInputModal input event"); // Debugging
   handleSearch();
 });
 
@@ -268,8 +262,8 @@ const productSize = document.getElementById("filterSize");
 function applyFilters() {
   // Reset search when applying filters
   filteredProducts = allProducts; // Reset to all products to remove search filter
-  if (document.getElementById("searchInput")) {
-    document.getElementById("searchInput").value = ""; // Clear search input
+  if (document.getElementById("searchIn")) {
+    document.getElementById("searchIn").value = ""; // Clear search input
   }
   if (document.getElementById("searchInputModal")) {
     document.getElementById("searchInputModal").value = ""; // Clear modal search input

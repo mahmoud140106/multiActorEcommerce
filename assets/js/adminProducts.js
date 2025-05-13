@@ -40,9 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function filterProductsByStatus() {
     const products = ProductManager.getAllProductsForAdmin();
-    filteredProducts = products.filter((p) =>
-      selectedStatus === "all" ? true : p.status === selectedStatus
-    );
+    filteredProducts = products.filter((p) => {
+      if (selectedStatus === "all") return true;
+      if (selectedStatus === "deleted") return p.isDeleted === true;
+      return p.status === selectedStatus && !p.isDeleted;
+    });
     currentPage = 1;
     renderProductsTable();
   }
@@ -66,39 +68,37 @@ document.addEventListener("DOMContentLoaded", () => {
       const category = CategoryManager.getCategory(product.categoryId);
       const users = StorageManager.load("users") || [];
       const seller = users.find((u) => u.id === product.sellerId);
-      const actions = `
-  <div class="dropdown">
-    <button class="btn btn-sm dropdown-toggle ${
-      product.status === "pending"
-        ? "bg-warning text-dark"
-        : product.status === "accepted"
-        ? "bg-success text-white"
-        : product.status === "rejected"
-        ? "bg-danger text-white"
-        : "btn-secondary"
-    }" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      ${product.status || "Change Status"}
-    </button>
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#" onclick="openChangeStatusModal(${
-        product.id
-      }, '${product.name.replace(/'/g, "\\'")}', ${
-        product.sellerId
-      }, 'pending')">Pending</a></li>
-      <li><a class="dropdown-item" href="#" onclick="openChangeStatusModal(${
-        product.id
-      }, '${product.name.replace(/'/g, "\\'")}', ${
-        product.sellerId
-      }, 'accepted')">Accepted</a></li>
-      <li><a class="dropdown-item" href="#" onclick="openChangeStatusModal(${
-        product.id
-      }, '${product.name.replace(/'/g, "\\'")}', ${
-        product.sellerId
-      }, 'rejected')">Rejected</a></li>
-    </ul>
-  </div>
-`;
+      let actions = "";
+      if (!product.isDeleted) {
+        actions = `
+          <div class="dropdown">
+            <button class="btn btn-sm dropdown-toggle ${
+              product.status === "pending"
+                ? "bg-warning text-dark"
+                : product.status === "accepted"
+                ? "bg-success text-white"
+                : product.status === "rejected"
+                ? "bg-danger text-white"
+                : "btn-secondary"
+            }" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              ${product.status || "Change Status"}
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#" onclick="openChangeStatusModal(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.sellerId}, 'pending')">Pending</a></li>
+              <li><a class="dropdown-item" href="#" onclick="openChangeStatusModal(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.sellerId}, 'accepted')">Accepted</a></li>
+              <li><a class="dropdown-item" href="#" onclick="openChangeStatusModal(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.sellerId}, 'rejected')">Rejected</a></li>
+            </ul>
+          </div>
+          <button class="btn btn-sm btn-danger rounded-circle mt-1" onclick="softDeleteProduct(${product.id})" title="Soft Delete"><i class="fas fa-trash-alt"></i></button>
+        `;
+      } else {
+        actions = `
+          <button class="btn btn-sm btn-success rounded-circle m-1 m-md-0" onclick="restoreProduct(${product.id})" title="Restore"><i class="fas fa-undo"></i></button>
+          <button class="btn btn-sm btn-danger rounded-circle m-1 m-md-0 mt-2" onclick="openHardDeleteModal(${product.id})" title="Hard Delete"><i class="fas fa-trash"></i></button>
+        `;
+      }
       const row = document.createElement("tr");
+      row.className = product.isDeleted ? "table-danger" : "";
       row.innerHTML = `
         <td>...${product.id % 1000}</td>
         <td class="d-none d-md-table-cell"><img src="${
@@ -247,9 +247,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.searchProducts = () => {
     const query = document.getElementById("searchInput").value.toLowerCase();
-    const products = ProductManager.getAllProductsForAdmin().filter((p) =>
-      selectedStatus === "all" ? true : p.status === selectedStatus
-    );
+    const products = ProductManager.getAllProductsForAdmin().filter((p) => {
+      if (selectedStatus === "all") return true;
+      if (selectedStatus === "deleted") return p.isDeleted === true;
+      return p.status === selectedStatus && !p.isDeleted;
+    });
     const users = StorageManager.load("users") || [];
     filteredProducts = products.filter((p) => {
       const category = CategoryManager.getCategory(p.categoryId);
@@ -262,6 +264,55 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     currentPage = 1;
     renderProductsTable();
+  };
+
+  // Soft delete
+  window.softDeleteProduct = (id) => {
+    const productIdToDelete = parseInt(id);
+    const confirmDeleteModal = new bootstrap.Modal(
+      document.getElementById("confirmDeleteModal")
+    );
+    confirmDeleteModal.show();
+
+    document.getElementById("confirmDeleteBtn").onclick = () => {
+      ProductManager.deleteProduct(productIdToDelete);
+      showToast("Product soft deleted successfully", "success");
+      filterProductsByStatus();
+      confirmDeleteModal.hide();
+    };
+  };
+
+  // Restore
+  window.restoreProduct = (id) => {
+    ProductManager.restoreProduct(id);
+    showToast("Product restored successfully", "success");
+    filterProductsByStatus();
+  };
+
+  // Hard delete
+  window.openHardDeleteModal = (id) => {
+    const productIdToDelete = parseInt(id);
+    const confirmHardDeleteModal = new bootstrap.Modal(
+      document.getElementById("confirmHardDeleteModal")
+    );
+    // Check if product is linked to any orders
+    const orders = (window.OrderManager ? window.OrderManager.getAllOrders() : (JSON.parse(localStorage.getItem('orders')) || []));
+    const isLinked = orders.some(order => order.items.some(item => item.productId === productIdToDelete));
+    const hardDeleteBody = document.getElementById("confirmHardDeleteBody");
+    if (isLinked) {
+      hardDeleteBody.innerHTML = `<span class='text-danger fw-bold'>Cannot hard delete: This product is linked to existing orders.</span>`;
+      document.getElementById("confirmHardDeleteBtn").style.display = "none";
+    } else {
+      hardDeleteBody.innerHTML = `Are you sure you want to <b>permanently delete</b> this product? This action cannot be undone.`;
+      document.getElementById("confirmHardDeleteBtn").style.display = "inline-block";
+      document.getElementById("confirmHardDeleteBtn").onclick = () => {
+        ProductManager.hardDeleteProduct(productIdToDelete);
+        showToast("Product permanently deleted", "success");
+        filterProductsByStatus();
+        confirmHardDeleteModal.hide();
+      };
+    }
+    confirmHardDeleteModal.show();
   };
 
   loadProducts();
