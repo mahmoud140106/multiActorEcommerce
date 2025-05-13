@@ -121,6 +121,9 @@ color: #fff;
     margin: 10px auto 8px;
     font-size: 20px;
   }
+  .sidebar .profile-name{
+    font-size: 12px;
+  }
 }
 
 /* main (sections) */
