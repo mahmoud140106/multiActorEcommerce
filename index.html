@@ -37,1025 +37,769 @@
     <link href="assets/css/cart.css" rel="stylesheet" />
     <link href="assets/css/navBar.css" rel="stylesheet" />
   </head>
-  <body class="overflow-x-hidden">
-    <!-- Navbar -->
-    <div id="navbar-container"></div>
-
-    <!-- Login Modal -->
-    <div
-      class="modal fade"
-      id="loginModal"
-      tabindex="-1"
-      aria-labelledby="loginModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div
-          class="modal-content bgmodal rounded p-4"
-          style="width: 450px; min-height: 55vh;"
-        >
-          <div class="modal-header border-0">
-            <h5 class="modal-title w-100 text-center" id="loginModalLabel">
-              Login
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="login-form">
-              <div class="mb-3">
-                <label for="login-email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="login-email"
-                  required
-                />
-                <div class="invalid-feedback" id="login-email-error"></div>
-              </div>
-              <div class="mb-3">
-                <label for="login-password" class="form-label">Password</label>
-                <div class="input-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="login-password"
-                    required
-                  />
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary toggle-password"
-                    data-target="login-password"
-                  >
-                    <i class="fa fa-eye"></i>
-                  </button>
+  <body class="overflow-x-hidden vw-100 ">
+    <div class="d-flex flex-column justify-content-center overflow-x-hidden " >
+      <!-- Navbar -->
+      <div class="w-100" id="navbar-container"></div>
+      
+      <!-- Login Modal -->
+      <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bgmodal rounded p-4" style="width: 450px; min-height: 55vh;">
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="loginModalLabel">
+                Login
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="login-form">
+                <div class="mb-3">
+                  <label for="login-email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="login-email" required />
+                  <div class="invalid-feedback" id="login-email-error"></div>
                 </div>
-                <div class="invalid-feedback" id="login-password-error"></div>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Login</button>
-            </form>
-            <p class="text-center mt-3">
-              Don't have an account?
-              <a
-                href="#"
-                data-bs-toggle="modal"
-                data-bs-target="#signupModal"
-                data-bs-dismiss="modal"
-                >Sign Up</a
-              >
-            </p>
+                <div class="mb-3">
+                  <label for="login-password" class="form-label">Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="login-password" required />
+                    <button type="button" class="btn btn-outline-secondary toggle-password" data-target="login-password">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="login-password-error"></div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+              </form>
+              <p class="text-center mt-3">
+                Don't have an account?
+                <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Sign Up</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Sign Up Modal -->
-    <div
-      class="modal fade"
-      id="signupModal"
-      tabindex="-1"
-      aria-labelledby="signupModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div
-          class="modal-content bgmodal rounded p-4"
-          style="width: 450px; min-height: 55vh;"
-        >
-          <div class="modal-header border-0">
-            <h5 class="modal-title w-100 text-center" id="signupModalLabel">
-              Sign Up
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="signup-form">
-              <div class="mb-3">
-                <label for="signup-userName" class="form-label">UserName</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="signup-userName"
-                  required
-                />
-                <div class="invalid-feedback" id="signup-userName-error"></div>
-              </div>
-              <div class="mb-3">
-                <label for="signup-email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="signup-email"
-                  required
-                />
-                <div class="invalid-feedback" id="signup-email-error"></div>
-              </div>
-              <div class="mb-3">
-                <label for="signup-password" class="form-label">Password</label>
-                <div class="input-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signup-password"
-                    required
-                  />
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary toggle-password"
-                    data-target="signup-password"
-                  >
-                    <i class="fa fa-eye"></i>
-                  </button>
-                </div>
-                <div class="invalid-feedback" id="signup-password-error"></div>
-              </div>
-              <div class="mb-3">
-                <label for="signup-confirm-password" class="form-label"
-                  >Confirm Password</label
-                >
-                <div class="input-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="signup-confirm-password"
-                    required
-                  />
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary toggle-password"
-                    data-target="signup-confirm-password"
-                  >
-                    <i class="fa fa-eye"></i>
-                  </button>
-                </div>
-                <div
-                  class="invalid-feedback"
-                  id="signup-confirm-password-error"
-                ></div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Register as:</label>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="role"
-                    id="role-customer"
-                    value="customer"
-                    checked
-                  />
-                  <label class="form-check-label" for="role-customer"
-                    >Customer</label
-                  >
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="role"
-                    id="role-seller"
-                    value="seller"
-                  />
-                  <label class="form-check-label" for="role-seller"
-                    >Seller</label
-                  >
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">
+      
+      <!-- Sign Up Modal -->
+      <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bgmodal rounded p-4" style="width: 450px; min-height: 55vh;">
+            <div class="modal-header border-0">
+              <h5 class="modal-title w-100 text-center" id="signupModalLabel">
                 Sign Up
-              </button>
-            </form>
-            <p class="text-center mt-3">
-              Already have an account?
-              <a
-                href="#"
-                data-bs-toggle="modal"
-                data-bs-target="#loginModal"
-                data-bs-dismiss="modal"
-                >Login</a
-              >
-            </p>
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="signup-form">
+                <div class="mb-3">
+                  <label for="signup-userName" class="form-label">UserName</label>
+                  <input type="text" class="form-control" id="signup-userName" required />
+                  <div class="invalid-feedback" id="signup-userName-error"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="signup-email" required />
+                  <div class="invalid-feedback" id="signup-email-error"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-password" class="form-label">Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="signup-password" required />
+                    <button type="button" class="btn btn-outline-secondary toggle-password" data-target="signup-password">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="signup-password-error"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="signup-confirm-password" required />
+                    <button type="button" class="btn btn-outline-secondary toggle-password"
+                      data-target="signup-confirm-password">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                  </div>
+                  <div class="invalid-feedback" id="signup-confirm-password-error"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Register as:</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="role" id="role-customer" value="customer" checked />
+                    <label class="form-check-label" for="role-customer">Customer</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="role" id="role-seller" value="seller" />
+                    <label class="form-check-label" for="role-seller">Seller</label>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Sign Up
+                </button>
+              </form>
+              <p class="text-center mt-3">
+                Already have an account?
+                <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Search Modal in Home-->
-
-    <section
-      id="SearchHomeModal"
-      class="modal fade w-100 vh-100"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog h-100">
-        <div class="modal-content h-100 p-5">
-          <button
-            id="closeButton"
-            type="button"
-            class="btn-close fs-5"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-
-          <div class="modal-body p-0">
-            <div class="d-flex justify-content-center align-items-center h-100">
-              <div class="input-group mb-3 w-50">
-                <input
-                  id="searchInput"
-                  type="search"
-                  class="form-control rounded-0 fs-5"
-                  placeholder="Write Product U Want to Search About"
-                  aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
-                />
-                <div class="input-group-append">
-                  <button
-                    id="searchGo"
-                    class="btn btn-outline-dark fs-4"
-                    type="button"
-                  >
-                    Search
-                  </button>
+      
+      <!-- Search Modal in Home-->
+      
+      <section id="SearchHomeModal" class="modal fade w-100 vh-100" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog h-100">
+          <div class="modal-content h-100 p-5">
+            <button id="closeButton" type="button" class="btn-close fs-5" data-bs-dismiss="modal" aria-label="Close"></button>
+      
+            <div class="modal-body p-0">
+              <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="input-group mb-3 w-50">
+                  <input id="searchInput" type="search" class="form-control rounded-0 fs-5"
+                    placeholder="Write Product U Want to Search About" aria-label="Recipient's username"
+                    aria-describedby="basic-addon2" />
+                  <div class="input-group-append">
+                    <button id="searchGo" class="btn btn-outline-dark fs-4" type="button">
+                      Search
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Hero Section (only for unauthenticated users or customers on homepage) -->
-    <section
-      class="row container-fluid mx-auto mt-0 mt-md-4 bg-light"
-      id="hero-section"
-    >
-      <div id="headerDetails" class="w-40 ms-auto">
-        <h1 class="mb-5 fw-bolder maincaption text-black">
-          Discover Quality Products for Every Need
-        </h1>
-        <p class="lead text-muted fs-4 herocaption text-black">
-          Browse our wide range of products designed to enhance your lifestyle.
-        </p>
-        <div
-          id="headerBtns"
-          class="row justify-content-start gap-3 container-fluid"
-        >
-          <button
-            class="w-30 btn btn-outline-dark p-3 my-4 heroBtn ShopNow"
-            style="min-width: max-content;"
-          >
-            Shop now
-          </button>
-          <button
-            id="learnMore"
-            class="w-30 btn btn-outline-dark p-3 my-4 heroBtn"
-            style="min-width: max-content;"
-          >
-            Learn More
-          </button>
-        </div>
-
-        <!-- Counter Section -->
-        <div
-          class="row justify-content-between mt-5 flex-nowrap"
-          id="counterSection"
-        >
-          <div class="col-4 p-2 p-sm-1">
-            <span class="fw-bold fs-2 counter" data-target="250000">0</span>
-            <p class="lead text-muted herocaption text-nowrap">Users</p>
-          </div>
-          <div class="col-4 p-2 p-sm-1">
-            <span class="fw-bold fs-2 counter" data-target="300">0</span>
-            <p class="lead text-muted herocaption text-nowrap">
-              Reviews
-            </p>
-          </div>
-          <div class="col-4 p-2 p-sm-1">
-            <span class="fw-bold fs-2 counter" data-target="30">0</span>
-            <p class="lead text-muted herocaption text-nowrap">
-              Categories
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="w-40 me-auto d-none d-md-block">
-        <!-- https://mensclubcollection.com/cdn/shop/files/UntitledSession20387copy.jpg?v=1745338851&width=1066 -->
-        <img
-          class="w-100"
-          src="https://mensclubcollection.com/cdn/shop/files/0E9A5556copy_540x.jpg?v=1745338947"
-          alt="Kids Collection"
-        />
-      </div>
-    </section>
-
-    <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" data-bs-interval="100">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="./assets/images/amex.png" class="d-block w-25" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="./assets/images/banner.jpg" class="d-block w-25" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="./assets/images/shopping16.jpg" class="d-block w-25" alt="...">
-        </div>
-      </div>
-    </div> -->
-
-    <!-- carouselSlides after header  -->
-    <section class="mt-2 w-100">
-      <div id="carouselSlidesOnly">
-        <div class="carouselSlideContent w-100">
-          <div class="d-flex justify-content-between w-100 car">
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <div class="w-25 text-center d-flex mx-3 px-3">
-                <span class="text-light fs-2">MOFASA </span>
-                <span class="textStroke fs-2"> :)CONFLICT</span>
-              </div>
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-            <div class="w-25 text-center d-flex mx-3 px-3">
-              <span class="text-light fs-2">MOFASA </span>
-              <span class="textStroke fs-2"> :)CONFLICT</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Featured Products -->
-    <section class="container mt-5">
-      <div
-        class="d-flex justify-content-center justify-content-md-between align-items-center gap-2 mx-1 mb-4 flex-wrap"
-      >
-        <h2 class="mb-0">Featured Products</h2>
-        <a
-          href="customer/product.html"
-          class="sectionbtn btn btn-outline-dark py-2 border border-1"
-        >
-          View All Products <i class="fas fa-arrow-right ms-1"></i>
-        </a>
-      </div>
-      <div
-        id="featuredProducts"
-        class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4"
-      >
-        <!-- Products will be populated by JavaScript -->
-      </div>
-    </section>
-
-    <!-- categories section -->
-
-    <section
-      class="container-fluid vh-100 d-flex align-items-center categoryItems"
-    >
-      <div id="categoriesSection" class="carousel slide m-auto">
-        <div class="d-flex justify-content-between px-4 my-4 container">
-          <h2>Categories</h2>
-          <button
-            id="viewCategories"
-            class="btn btn-light p-2 border-1 border-dark"
-          >
-            View All
-          </button>
-        </div>
-
-        <div class="carousel-inner" id="showCategories"></div>
-
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#categoriesSection"
-          data-bs-slide="prev"
-        >
-          <span
-            class="carousel-control-prev-icon rounded-5 bg-secondary"
-            aria-hidden="true"
-          ></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#categoriesSection"
-          data-bs-slide="next"
-        >
-          <span
-            class="carousel-control-next-icon rounded-5 bg-secondary"
-            aria-hidden="true"
-          ></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- Sale Section -->
-
-    <section id="saleSection">
-      <div
-        class="container d-flex align-items-center container-fluid vh-100 saleSection"
-      >
-        <div
-          id="saleSectionDetails"
-          class="d-flex flex-column w-50 text-light p-5"
-        >
-          <span class="p-3 fs-5">Limited Time Offer</span>
-          <h2 class="text-light p-3 fs-1">Special Edition</h2>
-          <p class="p-3 lead text-light">
-            SALE UP TO 70% OFF FOR ALL CLOTHES & FASHION ITEMS, ON ALL BRANDS.
-          </p>
-          <p class="p-3 fs-5">
-            Buy This T-shirt At 20% Discount, Use Code OFF20
-          </p>
-          <button
-            id="shopNow"
-            class="btn d-inline border border-3 w-50 btn-outline-light fs-5 ms-3 ShopNow"
-          >
-            Shop Now
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Reviews section  -->
-
-    <section
-      id="reviews"
-      class="p-0 d-flex align-items-center container vh-100 bg-light Reviews"
-    >
-      <div class="text-center w-100 p-5" id="ReviewSection">
-        <p class="headingStyle">TESTIMONAIL</p>
-        <p class="h3 text-black">Hear From Our Happy Customers</p>
-        <p class="h5 text-black">
-          Share some details here. This is Flexible section where you can share
-          anything you want.
-        </p>
-
-        <div id="carouselReview" class="carousel slide m-auto p-5">
-          <div
-            id="carouselAllReviews"
-            class="carousel-inner carouselReviews text-center"
-          >
-            <!-- handle through home.js  -->
-          </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselReview"
-            data-bs-slide="prev"
-          >
-            <span
-              class="carousel-control-prev-icon bg-secondary rounded-circle"
-              aria-hidden="true"
-            ></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselReview"
-            data-bs-slide="next"
-          >
-            <span
-              class="carousel-control-next-icon bg-secondary rounded-circle"
-              aria-hidden="true"
-            ></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <main>
-      <!-- Hero Banner (Carousel)
-      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#heroCarousel"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img
-              src="https://images.unsplash.com/photo-1555529771-835f59fc5efe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-              class="d-block w-100"
-              alt="Summer Sale"
-              style="height: 80vh; object-fit: cover;"
-            />
-            <div class="carousel-caption d-none d-md-flex">
-              <h1>Summer Sale - Up to 50% Off</h1>
-              <p>Discover the latest fashion trends at unbeatable prices.</p>
-              <a
-                href="customer/catalog.html"
-                class="btn btn-primary btn-lg btn-gradient"
-                >Shop Now</a
-              >
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-              class="d-block w-100"
-              alt="New Arrivals"
-              style="height: 80vh; object-fit: cover;"
-            />
-            <div class="carousel-caption d-none d-md-flex">
-              <h1>New Arrivals</h1>
-              <p>Explore our latest collection of stylish clothing.</p>
-              <a
-                href="customer/catalog.html"
-                class="btn btn-primary btn-lg btn-gradient"
-                >Browse Collection</a
-              >
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-              class="d-block w-100"
-              alt="Free Shipping"
-              style="height: 80vh; object-fit: cover;"
-            />
-            <div class="carousel-caption d-none d-md-flex">
-              <h1>Shop the Latest Trends</h1>
-              <p>Unleash your style with our new arrivals!</p>
-              <a
-                href="customer/catalog.html"
-                class="btn btn-primary btn-lg btn-gradient"
-                >Start Shopping</a
-              >
-            </div>
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#heroCarousel"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div> -->
-
-      <!-- Why Shop With Us -->
-      <section class="bg-light py-5">
-        <div class="container">
-          <h2 class="text-center mb-4">Why Shop With Us?</h2>
-          <div class="row text-center">
-            <div class="col-md-4">
-              <i
-                class="fas fa-tshirt fa-3x mb-3"
-                style="color: var(--primary-color);"
-              ></i>
-              <h5>Wide Variety</h5>
-              <p>Outfits for every style and occasion</p>
-            </div>
-            <div class="col-md-4">
-              <i
-                class="fas fa-check-circle fa-3x mb-3"
-                style="color: var(--primary-color);"
-              ></i>
-              <h5>Quality Guarantee</h5>
-              <p>High-quality products</p>
-            </div>
-            <div class="col-md-4">
-              <i
-                class="fas fa-headset fa-3x mb-3"
-                style="color: var(--primary-color);"
-              ></i>
-              <h5>24/7 Support</h5>
-              <p>We're here to help</p>
             </div>
           </div>
         </div>
       </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-light pt-5 pb-0">
-      <div class="container">
-        <div class="row gy-4">
-          <!-- About Section -->
-          <div class="col-md-3 col-12">
-            <h5 class="mb-3">About Us</h5>
-            <ul class="list-unstyled">
-              <li>
-                <a
-                  href="#"
-                  class="text-secondary text-decoration-none hover-light"
-                  >History</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-secondary text-decoration-none hover-light"
-                  >Team</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-secondary text-decoration-none hover-light"
-                  >Services</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="text-secondary text-decoration-none hover-light"
-                  >Company</a
-                >
-              </li>
-            </ul>
+      
+      <!-- Hero Section (only for unauthenticated users or customers on homepage) -->
+      <section class="row container-fluid mx-auto mt-0 mt-md-4 bg-light" id="hero-section">
+        <div id="headerDetails" class="w-40 ms-auto">
+          <h1 class="mb-5 fw-bolder maincaption text-black">
+            Discover Quality Products for Every Need
+          </h1>
+          <p class="lead text-muted fs-4 herocaption text-black">
+            Browse our wide range of products designed to enhance your lifestyle.
+          </p>
+          <div id="headerBtns" class="row justify-content-start gap-3 container-fluid">
+            <button class="w-30 btn btn-outline-dark p-3 my-4 heroBtn ShopNow" style="min-width: max-content;">
+              Shop now
+            </button>
+            <button id="learnMore" class="w-30 btn btn-outline-dark p-3 my-4 heroBtn" style="min-width: max-content;">
+              Learn More
+            </button>
           </div>
-          <!-- Contact Us Section -->
-          <div class="col-md-3 col-12">
-            <h5 class="mb-3">Contact Us</h5>
-            <ul class="list-unstyled">
-              <li class="text-secondary">
-                811 Egypt. Capitol Heights, MD 2743
-              </li>
-              <li>
-                <a
-                  href="tel:+5662374687"
-                  class="text-secondary text-decoration-none hover-light"
-                  >(566) 237-4687</a
-                >
-              </li>
-              <li>
-                <a
-                  href="mailto:info@email.com"
-                  class="text-secondary text-decoration-none hover-light"
-                  >info@email.com</a
-                >
-              </li>
-            </ul>
-          </div>
-          <!-- Quick Links Section -->
-          <div class="col-md-3 col-12">
-            <h5 class="mb-3">Quick Links</h5>
-            <ul class="list-unstyled">
-              <li>
-                <a
-                  href="./index.html"
-                  class="text-secondary text-decoration-none hover-light"
-                  >Home</a
-                >
-              </li>
-              <li>
-                <a
-                  href="./customer/product.html"
-                  class="text-secondary text-decoration-none hover-light"
-                  >Products</a
-                >
-              </li>
-              <li>
-                <a
-                  href="./customer/categories.html"
-                  class="text-secondary text-decoration-none hover-light"
-                  >Categories</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#reviews"
-                  class="text-secondary text-decoration-none hover-light"
-                  >Testimonials</a
-                >
-              </li>
-            </ul>
-          </div>
-          <!-- Social Media Section -->
-          <div class="col-md-3 col-12">
-            <h5 class="mb-3">Follow Us</h5>
-            <div class="d-flex gap-3">
-              <a href="#" class="text-secondary hover-light"
-                ><i class="fab fa-facebook-f fa-lg"></i
-              ></a>
-              <a href="#" class="text-secondary hover-light"
-                ><i class="fab fa-twitter fa-lg"></i
-              ></a>
-              <a href="#" class="text-secondary hover-light"
-                ><i class="fab fa-instagram fa-lg"></i
-              ></a>
-              <a href="#" class="text-secondary hover-light"
-                ><i class="fab fa-linkedin-in fa-lg"></i
-              ></a>
+      
+          <!-- Counter Section -->
+          <div class="row justify-content-between mt-5 flex-nowrap" id="counterSection">
+            <div class="col-4 p-2 p-sm-1">
+              <span class="fw-bold fs-2 counter" data-target="250000">0</span>
+              <p class="lead text-muted herocaption text-nowrap">Users</p>
+            </div>
+            <div class="col-4 p-2 p-sm-1">
+              <span class="fw-bold fs-2 counter" data-target="300">0</span>
+              <p class="lead text-muted herocaption text-nowrap">
+                Reviews
+              </p>
+            </div>
+            <div class="col-4 p-2 p-sm-1">
+              <span class="fw-bold fs-2 counter" data-target="30">0</span>
+              <p class="lead text-muted herocaption text-nowrap">
+                Categories
+              </p>
             </div>
           </div>
         </div>
-        <!-- Copyright Section -->
-        <div class="row mt-3 py-3 border-top border-1">
-          <div class="col-12 text-center">
-            <p class="text-secondary mb-0">
-              © 2025 Team4 ITI All Rights Reserved.
-            </p>
+      
+        <div class="w-40 me-auto d-none d-md-block">
+          <!-- https://mensclubcollection.com/cdn/shop/files/UntitledSession20387copy.jpg?v=1745338851&width=1066 -->
+          <img class="w-100" src="https://mensclubcollection.com/cdn/shop/files/0E9A5556copy_540x.jpg?v=1745338947"
+            alt="Kids Collection" />
+        </div>
+      </section>
+      
+      <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" data-bs-interval="100">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="./assets/images/amex.png" class="d-block w-25" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="./assets/images/banner.jpg" class="d-block w-25" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="./assets/images/shopping16.jpg" class="d-block w-25" alt="...">
+              </div>
+            </div>
+          </div> -->
+      
+      <!-- carouselSlides after header  -->
+      <section class="mt-2 w-100">
+        <div id="carouselSlidesOnly">
+          <div class="carouselSlideContent w-100">
+            <div class="d-flex justify-content-between w-100 car">
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2">CONFLICT:)</span>
+              </div>
+      
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+                <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                  <span class="textStroke fs-2"> CONFLICT:)</span>
+                </div>
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+              <div class="w-25 text-center d-flex mx-3 px-3">
+      
+                <span class="textStroke fs-2"> CONFLICT:)</span>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
+      
+      <!-- Featured Products -->
+      <section class="container mt-5">
+        <div class="d-flex justify-content-center justify-content-md-between align-items-center gap-2 mx-1 mb-4 flex-wrap">
+          <h2 class="mb-0">Featured Products</h2>
+          <a href="customer/product.html" class="sectionbtn btn btn-outline-dark py-2 border border-1">
+            View All Products <i class="fas fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+        <div id="featuredProducts" class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+          <!-- Products will be populated by JavaScript -->
+        </div>
+      </section>
+      
+      <!-- categories section -->
+      
+      <section class="container-fluid vh-100 d-flex align-items-center categoryItems">
+        <div id="categoriesSection" class="carousel slide m-auto">
+          <div class="d-flex justify-content-between px-4 my-4 container">
+            <h2>Categories</h2>
+            <button id="viewCategories" class="btn btn-light p-2 border-1 border-dark">
+              View All
+            </button>
+          </div>
+      
+          <div class="carousel-inner" id="showCategories"></div>
+      
+          <button class="carousel-control-prev" type="button" data-bs-target="#categoriesSection" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon rounded-5 bg-secondary" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#categoriesSection" data-bs-slide="next">
+            <span class="carousel-control-next-icon rounded-5 bg-secondary" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </section>
+      
+      <!-- Sale Section -->
+      
+      <section class="vh-100 w-100" id="saleSection">
+        <div class="container d-flex align-items-center container-fluid vh-100 saleSection">
+          <div id="saleSectionDetails" class="d-flex flex-column w-50 text-light p-5">
+            <span class="p-3 fs-5">Limited Time Offer</span>
+            <h2 class="text-light p-3 fs-1">Special Edition</h2>
+            <p class="p-3 lead text-light">
+              SALE UP TO 70% OFF FOR ALL CLOTHES & FASHION ITEMS, ON ALL BRANDS.
+            </p>
+            <p class="p-3 fs-5">
+              Buy This T-shirt At 20% Discount, Use Code OFF20
+            </p>
+            <button id="shopNow" class="btn d-inline border border-3 w-50 btn-outline-light fs-5 ms-3 ShopNow">
+              Shop Now
+            </button>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Reviews section  -->
+      
+      <section id="reviews" class="p-0 d-flex align-items-center container vh-100  bg-light Reviews">
+        <div class="text-center w-100 p-5" id="ReviewSection">
+          <p class="headingStyle">TESTIMONAIL</p>
+          <p class="h3 text-black">Hear From Our Happy Customers</p>
+          <p class="h5 text-black">
+            Share some details here. This is Flexible section where you can share
+            anything you want.
+          </p>
+      
+          <div id="carouselReview" class="carousel slide m-auto p-5">
+            <div id="carouselAllReviews" class="carousel-inner carouselReviews text-center">
+              <!-- handle through home.js  -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselReview" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon bg-secondary rounded-circle" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselReview" data-bs-slide="next">
+              <span class="carousel-control-next-icon bg-secondary rounded-circle" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      
+      <main>
+        <!-- Hero Banner (Carousel)
+            <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <button
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to="0"
+                  class="active"
+                  aria-current="true"
+                  aria-label="Slide 1"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to="1"
+                  aria-label="Slide 2"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#heroCarousel"
+                  data-bs-slide-to="2"
+                  aria-label="Slide 3"
+                ></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img
+                    src="https://images.unsplash.com/photo-1555529771-835f59fc5efe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                    class="d-block w-100"
+                    alt="Summer Sale"
+                    style="height: 80vh; object-fit: cover;"
+                  />
+                  <div class="carousel-caption d-none d-md-flex">
+                    <h1>Summer Sale - Up to 50% Off</h1>
+                    <p>Discover the latest fashion trends at unbeatable prices.</p>
+                    <a
+                      href="customer/catalog.html"
+                      class="btn btn-primary btn-lg btn-gradient"
+                      >Shop Now</a
+                    >
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                    class="d-block w-100"
+                    alt="New Arrivals"
+                    style="height: 80vh; object-fit: cover;"
+                  />
+                  <div class="carousel-caption d-none d-md-flex">
+                    <h1>New Arrivals</h1>
+                    <p>Explore our latest collection of stylish clothing.</p>
+                    <a
+                      href="customer/catalog.html"
+                      class="btn btn-primary btn-lg btn-gradient"
+                      >Browse Collection</a
+                    >
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <img
+                    src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                    class="d-block w-100"
+                    alt="Free Shipping"
+                    style="height: 80vh; object-fit: cover;"
+                  />
+                  <div class="carousel-caption d-none d-md-flex">
+                    <h1>Shop the Latest Trends</h1>
+                    <p>Unleash your style with our new arrivals!</p>
+                    <a
+                      href="customer/catalog.html"
+                      class="btn btn-primary btn-lg btn-gradient"
+                      >Start Shopping</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide="prev"
+              >
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#heroCarousel"
+                data-bs-slide="next"
+              >
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div> -->
+      
+        <!-- Why Shop With Us -->
+        <section class="bg-light py-5 w-100">
+          <div class="container">
+            <h2 class="text-center mb-4">Why Shop With Us?</h2>
+            <div class="row text-center">
+              <div class="col-md-4">
+                <i class="fas fa-tshirt fa-3x mb-3" style="color: var(--primary-color);"></i>
+                <h5>Wide Variety</h5>
+                <p>Outfits for every style and occasion</p>
+              </div>
+              <div class="col-md-4">
+                <i class="fas fa-check-circle fa-3x mb-3" style="color: var(--primary-color);"></i>
+                <h5>Quality Guarantee</h5>
+                <p>High-quality products</p>
+              </div>
+              <div class="col-md-4">
+                <i class="fas fa-headset fa-3x mb-3" style="color: var(--primary-color);"></i>
+                <h5>24/7 Support</h5>
+                <p>We're here to help</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      
+      <!-- Footer -->
+      <footer class="bg-dark text-light pt-5 pb-0 w-100">
+        <div class="container">
+          <div class="row gy-4">
+            <!-- About Section -->
+            <div class="col-md-3 col-12">
+              <h5 class="mb-3">About Us</h5>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">History</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Team</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Services</a>
+                </li>
+                <li>
+                  <a href="#" class="text-secondary text-decoration-none hover-light">Company</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Contact Us Section -->
+            <div class="col-md-3 col-12">
+              <h5 class="mb-3">Contact Us</h5>
+              <ul class="list-unstyled">
+                <li class="text-secondary">
+                  811 Egypt. Capitol Heights, MD 2743
+                </li>
+                <li>
+                  <a href="tel:+5662374687" class="text-secondary text-decoration-none hover-light">(566) 237-4687</a>
+                </li>
+                <li>
+                  <a href="mailto:info@email.com" class="text-secondary text-decoration-none hover-light">info@email.com</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Quick Links Section -->
+            <div class="col-md-3 col-12">
+              <h5 class="mb-3">Quick Links</h5>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="./index.html" class="text-secondary text-decoration-none hover-light">Home</a>
+                </li>
+                <li>
+                  <a href="./customer/product.html" class="text-secondary text-decoration-none hover-light">Products</a>
+                </li>
+                <li>
+                  <a href="./customer/categories.html" class="text-secondary text-decoration-none hover-light">Categories</a>
+                </li>
+                <li>
+                  <a href="#reviews" class="text-secondary text-decoration-none hover-light">Testimonials</a>
+                </li>
+              </ul>
+            </div>
+            <!-- Social Media Section -->
+            <div class="col-md-3 col-12">
+              <h5 class="mb-3">Follow Us</h5>
+              <div class="d-flex gap-3">
+                <a href="#" class="text-secondary hover-light"><i class="fab fa-facebook-f fa-lg"></i></a>
+                <a href="#" class="text-secondary hover-light"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-secondary hover-light"><i class="fab fa-instagram fa-lg"></i></a>
+                <a href="#" class="text-secondary hover-light"><i class="fab fa-linkedin-in fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+          <!-- Copyright Section -->
+          <div class="row mt-3 py-3 border-top border-1">
+            <div class="col-12 text-center">
+              <p class="text-secondary mb-0">
+                © 2025 Team4 ITI All Rights Reserved.
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
       </div>
-    </footer>
 
     <!-- Bootstrap JS (Local File) -->
     <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
