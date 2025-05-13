@@ -234,14 +234,14 @@ section h2 {
   }
 }
 
-.cardItem {
+/* .cardItem {
   width: 90% !important;
-}
+} */
 
 @media (max-width: 790px) {
-  .cardItem {
+  /* .cardItem {
     width: 60% !important;
-  }
+  } */
 
   .car > div > span {
     font-size: 0.8rem !important;
@@ -341,7 +341,7 @@ h1 {
 }
 
 .cardItem {
-  width: 22%;
+  /* width: 22%; */
   padding: 0;
 }
 
@@ -510,7 +510,7 @@ h1 {
   }
 
   .cardItem {
-    width: 35% !important;
+    /* width: 35% !important; */
   }
   .categoryItems,
   .saleSection {
@@ -539,9 +539,9 @@ h1 {
 
 
 @media (min-width: 768px) {
-  .cardItem {
+  /* .cardItem {
     width: 70% !important;
-  }
+  } */
 }
 
 @media (min-width: 950px) {
@@ -552,9 +552,9 @@ h1 {
 
 
 @media (max-width: 769px) {
-  .cardItem {
+  /* .cardItem {
     width: 60% !important;
-  }
+  } */
 }
 
 
