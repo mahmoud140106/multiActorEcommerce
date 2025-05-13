@@ -301,6 +301,15 @@ function loadFeaturedProducts() {
     renderCategorySlides();
   });
 
+
+
+
+
+  
+
+
+
+
   // Update wishlist button state for featured products on the home page
   document.querySelectorAll(".add-to-wishlist").forEach((button) => {
     const productId = parseInt(button.getAttribute("data-id"));
