@@ -201,10 +201,10 @@ document.addEventListener("DOMContentLoaded", () => {
       row.innerHTML = `
         <td>${message.id}</td>
         <td>${message.subject}</td>
-        <td>${message.type}</td>
-        <td class="last-message">${message.content}</td>
-        <td>${message.timestamp.toLocaleString()}</td>
-        <td>${message.senderName}</td>
+        <td  class="d-none d-md-table-cell">${message.type}</td>
+        <td class="last-message d-none d-md-table-cell">${message.content}</td>
+        <td  class="d-none d-md-table-cell">${message.timestamp.toLocaleString()}</td>
+        <td  class="d-none d-md-table-cell">${message.senderName}</td>
         <td>
           <button class="btn btn-sm btn-primary view-message-btn" data-id="${
             message.id
