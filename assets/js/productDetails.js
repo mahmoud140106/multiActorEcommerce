@@ -131,19 +131,117 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // set recommendation products
+   
+  } catch (error) {
+    console.error("Error loading product details:", error);
+    document.querySelector(".container.mt-4").innerHTML =
+      "<p>Error loading product details.</p>";
+  }
+
+  //add event listener to recommendation cards to link with product details
+  document.querySelectorAll(".cursol-img ").forEach((card) =>
+    card.addEventListener("click", function () {
+      const id = card.getAttribute("product-id");
+      if (id) {
+        window.location.href = `productDetails.html?id=${id}`;
+      }
+    })
+  );
+
+  //product count
+  productCountInput.addEventListener("change", function (e) {
+    productCountInput.setAttribute("value", `${e.target.value}`);
+    productCount = productCountInput.value;
+    // console.log(productCountInput);
+    // console.log(productCount);
+  });
+  // Add event listeners to "Add to Cart" buttons
+  document.querySelectorAll(".add-to-cart").forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = parseInt(button.getAttribute("data-id"));
+      const product = AllProducts.find((p) => p.id === productId);
+      CartManager.addToCart(product);
+    });
+  });
+
+  renderRecommendedProducts();
+
+  // Add event listeners to "Add to Wishlist" buttons
+  document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const productId = parseInt(button.getAttribute("data-id"));
+      const product = AllProducts.find((p) => p.id === productId);
+      if (product) {
+        CartManager.addToWishlist(product, event);
+        updateNavbar(); // Update the navbar to reflect the new wishlist count
+      }
+    });
+  });
+}); //end of load
+ 
+document.getElementById("reviewsBtn").addEventListener("click", showReviews); //show reviews section
+
+function showReviews() {
+  //show reviews section
+  let reviewSection = document.getElementById("reviewSection");
+  reviewSection.classList.remove("d-none");
+  descriptionSection.classList.add("d-none");
+  document.getElementById("reviewsBtn").disabled=true;
+  document.getElementById("descriptionBtn").disabled=false;
+  
+}
+
+document
+  .getElementById("descriptionBtn")
+  .addEventListener("click", showDescription);
+
+function showDescription() {
+  //show description section
+  let descriptionSection = document.getElementById("descriptionSection");
+  descriptionSection.classList.remove("d-none");
+  reviewSection.classList.add("d-none");
+    document.getElementById("descriptionBtn").disabled=true;
+  document.getElementById("reviewsBtn").disabled=false;
+
+}
+
+//add to cart button function
+document.getElementById("addTocart").addEventListener("click", function () {
+  if (productCount < 1) {
+    productCount = 1;
+  }
+  CartManager.addToCart(product, parseInt(productCount)); // Pass the selected quantity to the cart
+  updateNavbar(); // Update the navbar to reflect the new cart count
+});
+
+// Redirect to checkout page when "Buy It Now" is clicked
+document.getElementById("buyItNow").addEventListener("click", function () {
+  if (user == null) {
+    CartManager.showToast("Please log in first");
+    return;
+  }
+  if (productCount < 1) {
+    productCount = 1;
+  }
+  window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
+});
+
+function renderRecommendedProducts(){
+   // set recommendation products
     const carouselrecommendationInner = document.getElementById(
       "carouselrecommendationInner"
     );
     carouselrecommendationInner.innerHTML = "";
-
+    const xsScreen = window.innerWidth<772;
+    let NumOfTdPerRow = xsScreen? 2 :4 ;
+    
     for (let j = 0; j < 2; j++) {
       const carouselItem = document.createElement("div");
       carouselItem.className = `carousel-item ${j === 0 ? "active" : ""}`;
       let table = document.createElement("table");
       let tr = document.createElement("tr");
       let td;
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < NumOfTdPerRow; i++) {
         r = Math.floor(Math.random() * AllProducts.length);
         if (!AllProducts[r].images || AllProducts[r].images.length === 0) {
           console.warn("No images found for product:", AllProducts[r].id);
@@ -196,95 +294,10 @@ document.addEventListener("DOMContentLoaded", () => {
       carouselItem.appendChild(table);
       carouselrecommendationInner.appendChild(carouselItem);
     }
-  } catch (error) {
-    console.error("Error loading product details:", error);
-    document.querySelector(".container.mt-4").innerHTML =
-      "<p>Error loading product details.</p>";
-  }
-
-  //add event listener to recommendation cards to link with product details
-  document.querySelectorAll(".cursol-img ").forEach((card) =>
-    card.addEventListener("click", function () {
-      const id = card.getAttribute("product-id");
-      if (id) {
-        window.location.href = `productDetails.html?id=${id}`;
-      }
-    })
-  );
-
-  //product count
-  productCountInput.addEventListener("change", function (e) {
-    productCountInput.setAttribute("value", `${e.target.value}`);
-    productCount = productCountInput.value;
-    // console.log(productCountInput);
-    // console.log(productCount);
-  });
-  // Add event listeners to "Add to Cart" buttons
-  document.querySelectorAll(".add-to-cart").forEach((button) => {
-    button.addEventListener("click", () => {
-      const productId = parseInt(button.getAttribute("data-id"));
-      const product = AllProducts.find((p) => p.id === productId);
-      CartManager.addToCart(product);
-    });
-  });
-
-  // Add event listeners to "Add to Wishlist" buttons
-  document.querySelectorAll(".add-to-wishlist").forEach((button) => {
-    button.addEventListener("click", (event) => {
-      const productId = parseInt(button.getAttribute("data-id"));
-      const product = AllProducts.find((p) => p.id === productId);
-      if (product) {
-        CartManager.addToWishlist(product, event);
-        updateNavbar(); // Update the navbar to reflect the new wishlist count
-      }
-    });
-  });
-}); //end of load
-
-document.getElementById("reviewsBtn").addEventListener("click", showReviews); //show reviews section
-
-function showReviews() {
-  //show reviews section
-  let reviewSection = document.getElementById("reviewSection");
-  reviewSection.classList.remove("d-none");
-  descriptionSection.classList.add("d-none");
-  document.getElementById("reviewsBtn").disabled=true;
-  document.getElementById("descriptionBtn").disabled=false;
+}
+window.addEventListener("resize",function(){
   
-}
+      renderRecommendedProducts();
 
-document
-  .getElementById("descriptionBtn")
-  .addEventListener("click", showDescription);
-
-function showDescription() {
-  //show description section
-  let descriptionSection = document.getElementById("descriptionSection");
-  descriptionSection.classList.remove("d-none");
-  reviewSection.classList.add("d-none");
-    document.getElementById("descriptionBtn").disabled=true;
-  document.getElementById("reviewsBtn").disabled=false;
-
-}
-
-//add to cart button function
-document.getElementById("addTocart").addEventListener("click", function () {
-  if (productCount < 1) {
-    productCount = 1;
-  }
-  CartManager.addToCart(product, parseInt(productCount)); // Pass the selected quantity to the cart
-  updateNavbar(); // Update the navbar to reflect the new cart count
-});
-
-// Redirect to checkout page when "Buy It Now" is clicked
-document.getElementById("buyItNow").addEventListener("click", function () {
-  if (user == null) {
-    CartManager.showToast("Please log in first");
-    return;
-  }
-  if (productCount < 1) {
-    productCount = 1;
-  }
-  window.location.href = `checkout.html?id=${productId}&count=${productCount} `; // Redirect to checkout page with product ID
-});
-// console.log(window.innerWidth)
+})
+console.log(window.innerWidth)
