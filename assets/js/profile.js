@@ -1,6 +1,7 @@
 import { showToast } from "./toast.js";
 import { MessageManager } from "./messageManager.js";
 import { StorageManager } from "./storageManager.js";
+import { UserManager } from "./userManager.js";
 
 const form = document.querySelector('.account-details form');
 const paymentBtn = document.getElementById('payment-btn');
@@ -14,9 +15,16 @@ document.addEventListener("DOMContentLoaded", () => {
     : null;
   
   if (storedProfile) {
-    document.getElementById("first-name").value = storedProfile.firstName;
-    document.getElementById("last-name").value = storedProfile.lastName;
-    document.getElementById("dob").value = storedProfile.dob;
+    document.getElementById("first-name").value = storedProfile.firstName || "";
+    document.getElementById("last-name").value = storedProfile.lastName || "";
+    document.getElementById("dob").value = storedProfile.dob || "";
+    
+    // Set the profile picture if it exists
+    const profilePicContainer = document.getElementById("profile-pic-container");
+    if (storedProfile.profilePicture) {
+      profilePicContainer.style.backgroundImage = `url('${storedProfile.profilePicture}')`;
+      profilePicContainer.textContent = "";
+    }
   }
   
   if (currentUser) {
@@ -32,7 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     console.warn("No logged-in user found.");
   }
+  
+  // Initialize the profile picture upload functionality after loading the profile
+  enableProfilePictureUpload();
 });
+
 
 // Handle form submission (prevent page reload and update the sidebar / account overview)
 form.addEventListener('submit', (event) => {
@@ -122,29 +134,96 @@ function updateSidebarName() {
 }
 
 // Enable profile picture upload functionality
+// Assumes that you know the current user's id (for example, stored in a variable `currentUserId`)
 function enableProfilePictureUpload() {
-  const profilePicInput = document.getElementById('profile-pic-input');
-  const profilePicContainer = document.getElementById('profile-pic-container');
+  const profilePicInput = document.getElementById("profile-pic-input");
+  const profilePicContainer = document.getElementById("profile-pic-container");
 
-  profilePicInput.addEventListener('change', (event) => {
+  // On page load, initialize the profile picture
+  if (currentUser) {
+    const storedProfile = JSON.parse(localStorage.getItem(`userProfile_${currentUser.email}`));
+    if (storedProfile && storedProfile.profilePicture) {
+      profilePicContainer.style.backgroundImage = `url('${storedProfile.profilePicture}')`;
+      profilePicContainer.textContent = "";
+    } else {
+      profilePicContainer.textContent = "U";
+    }
+  }
+
+  profilePicInput.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        profilePicContainer.style.backgroundImage = `url('${e.target.result}')`;
-        profilePicContainer.textContent = '';
+        const dataURL = e.target.result; // The base64 string for the image
+
+        // Update the UI immediately
+        profilePicContainer.style.backgroundImage = `url('${dataURL}')`;
+        profilePicContainer.textContent = "";
+
+        // Update the current user's profile data in localStorage
+        if (currentUser) {
+          const userKey = `userProfile_${currentUser.email}`;
+          // Retrieve the current profile object (or initialize one) and update the profilePicture property.
+          const storedProfile = JSON.parse(localStorage.getItem(userKey)) || {};
+          storedProfile.profilePicture = dataURL;
+          localStorage.setItem(userKey, JSON.stringify(storedProfile));
+        }
       };
       reader.readAsDataURL(file);
     } else {
-      profilePicContainer.style.backgroundImage = '';
-      profilePicContainer.textContent = 'U';
+      // Reset to default if no file is provided
+      profilePicContainer.style.backgroundImage = "";
+      profilePicContainer.textContent = "U";
+      if (currentUser) {
+        const userKey = `userProfile_${currentUser.email}`;
+        const storedProfile = JSON.parse(localStorage.getItem(userKey)) || {};
+        delete storedProfile.profilePicture;
+        localStorage.setItem(userKey, JSON.stringify(storedProfile));
+      }
     }
   });
 
-  profilePicContainer.addEventListener('click', () => {
+  // Allow clicking on the picture container to open the file chooser
+  profilePicContainer.addEventListener("click", () => {
     profilePicInput.click();
   });
+  // And in your file upload callback:
+profilePicInput.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const newProfilePicture = e.target.result;
+      updateProfilePicture(newProfilePicture);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
 }
+
+// Example: updating the profile picture along with the profile object
+function updateProfilePicture(newProfilePictureDataUrl) {
+  if (!currentUser) return; // Make sure you have a logged in user
+
+  // Retrieve the stored profile or create a new object if none found
+  const storedKey = `userProfile_${currentUser.email}`;
+  const storedProfile = JSON.parse(localStorage.getItem(storedKey)) || {};
+
+  // Update the profile picture property
+  storedProfile.profilePicture = newProfilePictureDataUrl;
+
+  // Save the updated profile object
+  localStorage.setItem(storedKey, JSON.stringify(storedProfile));
+
+  // Update the UI
+  const profilePicContainer = document.getElementById("profile-pic-container");
+  profilePicContainer.style.backgroundImage = `url('${newProfilePictureDataUrl}')`;
+  profilePicContainer.textContent = "";
+}
+
+
 
 // Birthday check: if today's the user's birthday, show a message.
 function checkBirthday() {
