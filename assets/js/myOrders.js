@@ -34,17 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Generate order cards
     orders.forEach((order) => {
+      // Get all products (including deleted)
+      const allProducts = StorageManager.load("products") || [];
       // Get product names for display
       const productNames = order.items
         .map((item) => {
-          const product = ProductManager.getProduct(item.productId);
-          if (!product) {
-            // Try to get the product even if it's deleted
-            const allProducts = StorageManager.load("products") || [];
-            const deletedProduct = allProducts.find(p => p.id === item.productId);
-            return deletedProduct ? deletedProduct.name : "Unknown Product";
-          }
-          return product.name;
+          const product = allProducts.find(p => p.id === item.productId);
+          return product ? product.name : "Unknown Product";
         })
         .join(", ");
 
@@ -57,8 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Get the first product's image for display (or a default image)
       const firstItem = order.items[0];
-      const product = firstItem ? ProductManager.getProduct(firstItem.productId) : null;
-      const imageUrl = product?.images[0] || "../assets/images/shopping16.jpg";
+      const product = firstItem ? allProducts.find(p => p.id === firstItem.productId) : null;
+      const imageUrl = product?.images?.[0] || "../assets/images/shopping16.jpg";
 
       // Determine status styling
       const statusClass =
