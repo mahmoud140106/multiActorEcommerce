@@ -228,74 +228,164 @@ document.getElementById("buyItNow").addEventListener("click", function () {
 });
 
 function renderRecommendedProducts(){
-   // set recommendation products
-    const carouselrecommendationInner = document.getElementById(
-      "carouselrecommendationInner"
-    );
-    carouselrecommendationInner.innerHTML = "";
-    const xsScreen = window.innerWidth<772;
-    let NumOfTdPerRow = xsScreen? 2 :4 ;
-    
-    for (let j = 0; j < 2; j++) {
-      const carouselItem = document.createElement("div");
-      carouselItem.className = `carousel-item ${j === 0 ? "active" : ""}`;
-      let table = document.createElement("table");
-      let tr = document.createElement("tr");
-      let td;
-      for (let i = 0; i < NumOfTdPerRow; i++) {
-        r = Math.floor(Math.random() * AllProducts.length);
-        if (!AllProducts[r].images || AllProducts[r].images.length === 0) {
-          console.warn("No images found for product:", AllProducts[r].id);
-          carouselrecommendationInner.innerHTML = `
-    <div class="carousel-item active">
-      <img src="https://dummyimage.com/500x250/cccccc/000000&text=No+Image" class="d-block w-100" alt="No Image" style="height: 250px; object-fit: cover;">
-    </div>
+  // set recommendation products
+  const recommendationsContainer = document.getElementById("recommendationSection");
+  if (!recommendationsContainer) return;
+
+  // Clear existing recommendations
+  recommendationsContainer.innerHTML = "";
+
+  // Get all products
+  let products = ProductManager.getAllProducts();
+  // Filter out current product and products with stock 0, and get random products
+  products = products
+    .filter((product) => product.id !== productId && product.stock > 0)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 8); // Get 8 products for carousel
+
+  // Title for the section
+  const sectionTitle = document.createElement("div");
+  sectionTitle.className = "col-12 mb-4";
+  sectionTitle.innerHTML = `
+      <h3 class="fw-semibold">Recommendation For You</h3>
   `;
-        } else {
-          // Carousel recommendation item
+  recommendationsContainer.appendChild(sectionTitle);
 
-          td = document.createElement("td");
+  // Create carousel structure
+  const carouselContainer = document.createElement("div");
+  carouselContainer.id = "recommendedCarousel";
+  carouselContainer.className = "carousel slide";
+  carouselContainer.setAttribute("data-bs-ride", "carousel");
 
-          td.innerHTML = `
-            <div class="card border-0 shadow-sm rounded-3 overflow-hidden" > 
-                <div class="card-body p-0" >
-                      <div >
-                          <img src="${AllProducts[r].images[0]}" class="cursol-img card-img-top d-block w-100" alt="No Image" style="height: 250px;  object-fit: cover;"  product-id='${AllProducts[r].id}'>
-                          <div id ="wishlist-html" class="card-icons position-absolute top-0 end-0 p-2 d-flex flex-column">
-                            <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${AllProducts[r].id}"><i class="far fa-heart"></i></button>
-                            <button title="Add to Cart" class="add-to-cart btn btn-light btn-sm rounded-circle m-1" data-id="${AllProducts[r].id}"><i class="fas fa-shopping-cart"></i></button>
-                          </div>
-                           ${
-                              AllProducts[r].isOnSale
-                                ? '<span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">SALE</span>'
-                                : ""
-                            }
-                      </div>
-                      <div class="RecomndProduct-name">${AllProducts[r].name}</div>
-                      <div class="RecomndProduct-price " >
-                       <span class="text-danger">$${
-                          AllProducts[r].discountedPrice
-                            ? AllProducts[r].discountedPrice.toFixed(2)
-                            : AllProducts[r].price.toFixed(2)
-                        }</span>
-                        ${
-                          AllProducts[r].discountedPrice
-                            ? `<span class="text-muted text-decoration-line-through ms-2">$${AllProducts[r].price.toFixed(2)}</span>`
-                            : ""
-                        }
-                     </div>
-                  </div>
-             </div>
-         
-    `;
-          tr.appendChild(td);
-        }
-      }
-      table.appendChild(tr);
-      carouselItem.appendChild(table);
-      carouselrecommendationInner.appendChild(carouselItem);
-    }
+  const carouselInner = document.createElement("div");
+  carouselInner.className = "carousel-inner";
+
+  // Determine number of products per slide based on screen size
+  const isMobile = window.innerWidth <= 768;
+  const productsPerSlide = isMobile ? 1 : 4;
+
+  // Group products into slides
+  for (let i = 0; i < products.length; i += productsPerSlide) {
+    const slideProducts = products.slice(i, i + productsPerSlide);
+    const carouselItem = document.createElement("div");
+    carouselItem.className = `carousel-item ${i === 0 ? "active" : ""}`;
+
+    // Create row for product cards
+    const rowContainer = document.createElement("div");
+    rowContainer.className = `row row-cols-1 ${isMobile ? '' : 'row-cols-md-2 row-cols-lg-4'} g-4`;
+
+    slideProducts.forEach((product) => {
+      const card = document.createElement("div");
+      card.className = "col";
+      card.innerHTML = `
+          <div class="card position-relative mx-2 mx-md-0">
+            <div class="position-relative imgcontainer">
+              <a href="/customer/productDetails.html?id=${product.id}">
+                <img src="${product.images[0]}" class="card-img-top" alt="${product.name}" 
+                     style="height: 300px; object-fit: cover;" 
+                     product-id="${product.id}"
+                     onerror="this.src='https://dummyimage.com/500x250/cccccc/000000&text=No+Image';">
+              </a>
+              <div class="card-icons position-absolute top-0 end-0 p-2">
+                <button title="Add to Wishlist" class="add-to-wishlist btn btn-light btn-sm rounded-circle m-1" data-id="${product.id}">
+                  <i class="far fa-heart"></i>
+                </button>
+                <button title="Add to Cart" class="btn btn-light btn-sm rounded-circle m-1 add-to-cart" data-id="${product.id}">
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </div>
+              ${
+                product.isOnSale
+                  ? '<span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">SALE</span>'
+                  : ""
+              }
+            </div>
+            <div class="card-body p-0 my-3 text-center">
+              <a href="/customer/productDetails.html?id=${product.id}" class="text-decoration-none">
+                <h5 class="card-title mb-1">${product.name}</h5>
+              </a>
+              <p class="card-text text-secondary mb-2">${CategoryManager.getCategory(product.categoryId).name}</p>
+              <div class="p-3 border-top position-relative border-1 d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                  <span class="">$${
+                    product.discountedPrice
+                      ? product.discountedPrice.toFixed(2)
+                      : product.price.toFixed(2)
+                  }</span>
+                  ${
+                    product.discountedPrice
+                      ? `<span class="text-muted text-decoration-line-through ms-2">$${product.price.toFixed(2)}</span>`
+                      : ""
+                  }
+                </div>
+                <button class="btn btn-dark add-to-cart" data-id="${product.id}">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        `;
+      rowContainer.appendChild(card);
+    });
+
+    carouselItem.appendChild(rowContainer);
+    carouselInner.appendChild(carouselItem);
+  }
+
+  carouselContainer.appendChild(carouselInner);
+
+  // Add carousel controls
+  carouselContainer.innerHTML += `
+    <button class="carousel-control-prev" type="button" data-bs-target="#recommendedCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#recommendedCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  `;
+
+  recommendationsContainer.appendChild(carouselContainer);
+
+  // Add event listeners for the new buttons
+  attachRecommendationEventListeners();
 }
+
+function attachRecommendationEventListeners() {
+  // Add event listeners to "Add to Cart" buttons in recommendations
+  document
+    .querySelectorAll("#recommendedCarousel .add-to-cart")
+    .forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        const productId = parseInt(button.getAttribute("data-id"));
+        let products = ProductManager.getAllProducts();
+        const product = products.find((p) => p.id === productId);
+
+        if (product) {
+          CartManager.addToCart(product);
+          updateNavbar();
+        }
+      });
+    });
+
+  // Add event listeners to "Add to Wishlist" buttons
+  document
+    .querySelectorAll("#recommendedCarousel .add-to-wishlist")
+    .forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        const productId = parseInt(button.getAttribute("data-id"));
+        const products = ProductManager.getAllProducts();
+        const product = products.find((p) => p.id === productId);
+
+        if (product) {
+          CartManager.addToWishlist(product, event);
+          updateNavbar();
+        }
+      });
+    });
+}
+
 window.addEventListener("resize",function(){
   
       renderRecommendedProducts();
