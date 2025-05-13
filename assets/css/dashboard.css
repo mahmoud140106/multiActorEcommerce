@@ -186,6 +186,46 @@ main {
   font-weight: 600;
 }
 
+/* Chart Container Styles */
+.card .card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card .card-body .d-flex {
+  flex: 1;
+  min-height: 300px;
+  width: 100%;
+}
+
+.card .card-body canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 300px;
+}
+
+/* Responsive Chart Containers */
+@media (max-width: 768px) {
+  .card .card-body .d-flex {
+    min-height: 250px;
+  }
+  
+  .card .card-body canvas {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card .card-body .d-flex {
+    min-height: 200px;
+  }
+  
+  .card .card-body canvas {
+    max-height: 200px;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 769px) {
   .sidebar {

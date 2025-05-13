@@ -166,6 +166,10 @@ table th:hover {
   justify-content: center;
   font-size: 0.9rem;
   transition: var(--transition);
+  -webkit-transition: var(--transition);
+  -moz-transition: var(--transition);
+  -ms-transition: var(--transition);
+  -o-transition: var(--transition);
 }
 
 .pagination .page-item.active .page-link {
