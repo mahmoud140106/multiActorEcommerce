@@ -301,6 +301,25 @@ function loadFeaturedProducts() {
     renderCategorySlides();
   });
 
+
+
+let carttt = document.getElementsByClassName("car")[0];
+let content = "";
+
+for (let index = 0; index < 50; index++) {
+  content += `
+    <div class="w-25 text-center d-flex mx-3 px-3">
+      <span class="textStroke fs-2">CONFLICT:)</span>
+    </div>`;
+}
+
+carttt.innerHTML += content;
+
+  
+
+
+
+
   // Update wishlist button state for featured products on the home page
   document.querySelectorAll(".add-to-wishlist").forEach((button) => {
     const productId = parseInt(button.getAttribute("data-id"));
