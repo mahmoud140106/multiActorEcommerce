@@ -100,11 +100,11 @@ td{
 }
 
 
-.card:hover{
+/* .card:hover{
 cursor: pointer;
 scale: 1.1;
 transition: all 1s ease;
-}
+} */
 
 /*To make add-to-wishlist & add-to-cart buttons in the recommendation products section above the slider buttons */
 
