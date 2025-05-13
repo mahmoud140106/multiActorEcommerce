@@ -142,6 +142,57 @@ window.addEventListener("load", function () {
   document.querySelector("select[name=Governorate]").value = "";
   this.document.querySelector(`input[name=PhoneNumber]`).value = "";
 
+  //validate delivery data
+
+const nameRegex = /^[\u0621-\u064Aa-zA-Z]{3,30}([ -][\u0621-\u064Aa-zA-Z]{2,30})?$/;
+const cityRegex = /^[\u0621-\u064Aa-zA-Z]{5,30}(?:[ -][\u0621-\u064Aa-zA-Z]{2,30})?$/;
+const addressRegex = /^[\u0621-\u064Aa-zA-Z0-9\s,.-]{5,100}$/;
+
+// First Name & Last Name Validation
+["firstName", "lastName"].forEach((fieldName) => {
+  document.querySelector(`input[name=${fieldName}]`).addEventListener("input", function (e) {
+    const input = e.target;
+    if (!nameRegex.test(input.value.trim())) {
+      input.setCustomValidity("Name at least 3 chars.");
+    } else {
+      input.setCustomValidity("");
+    }
+  });
+});
+
+// City Validation
+document.querySelector("input[name=City]").addEventListener("input", function (e) {
+  const input = e.target;
+  if (!cityRegex.test(input.value.trim())) {
+    input.setCustomValidity("City at least 5 chars.");
+  } else {
+    input.setCustomValidity("");
+  }
+});
+
+// Address Validation
+document.querySelector("input[name=address]").addEventListener("input", function (e) {
+  const input = e.target;
+  if (!addressRegex.test(input.value.trim())) {
+    input.setCustomValidity("Enter a valid address.");
+  } else {
+    input.setCustomValidity("");
+  }
+});
+
+  
+document.querySelector("input[name=PhoneNumber]").addEventListener("input", function (e) {
+  const phoneInput = e.target;
+  const phoneValue = phoneInput.value.trim();
+  const egyptPhoneRegex = /^01[0125][0-9]{8}$/;
+
+  if (!egyptPhoneRegex.test(phoneValue)) {
+    phoneInput.setCustomValidity("Please enter a valid Egyptian mobile number (e.g., 01012345678).");
+  } else {
+    phoneInput.setCustomValidity("");
+  }
+});
+
   // console.log(deliveryData)
   if (deliveryData) {
     // console.log('from delivery')
