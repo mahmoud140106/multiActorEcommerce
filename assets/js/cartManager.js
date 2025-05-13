@@ -19,6 +19,7 @@ export const CartManager = {
     const user = this.getCurrentUser();
     if (!user) {
       this.showToast("Please log in first!");
+      this.openLoginModal(); // Open login modal
       return null;
     }
     let cart = this.getCart();
@@ -143,6 +144,7 @@ export const CartManager = {
     const user = this.getCurrentUser();
     if (!user) {
       this.showToast("Please log in first!");
+      this.openLoginModal(); // Open login modal
       return null;
     }
     let wishlist = this.getWishlist();
@@ -360,5 +362,16 @@ export const CartManager = {
       total,
       promoCode,
     };
+  },
+
+  // New method to open login modal
+  openLoginModal: function () {
+    const loginModal = document.getElementById("loginModal");
+    if (loginModal) {
+      const bootstrapModal = new bootstrap.Modal(loginModal);
+      bootstrapModal.show();
+    } else {
+      console.error("Login modal not found");
+    }
   },
 };
