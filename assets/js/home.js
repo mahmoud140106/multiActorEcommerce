@@ -150,57 +150,70 @@ function loadFeaturedProducts() {
   function renderCategorySlides() {
     const categories = CategoryManager.getAllCategories();
     const showCategories = document.getElementById("showCategories");
-
+  
     let cardsPerSlide = 1;
     const width = window.innerWidth;
-
-    if (width >= 1000) {
+  
+    if (width >= 950) {
       cardsPerSlide = 4;
     } else if (width >= 768) {
       cardsPerSlide = 2;
     } else {
       cardsPerSlide = 1;
     }
-
+  
     let slidesHTML = "";
     let totalSlides = Math.ceil(categories.length / cardsPerSlide);
-
+  
     for (let i = 0; i < totalSlides; i++) {
       const start = i * cardsPerSlide;
       const end = start + cardsPerSlide;
       const slideItems = categories.slice(start, end);
-
+  
       let cardsHTML = slideItems
         .map((cat) => {
           const products = ProductManager.getProductsByCategory(cat.id);
           return `
-        <div class="col d-flex justify-content-center w-100 ">
-          <div class="card cardItem position-relative w-100 ">
-            <img src="${cat.image}" class="rounded  w-100" alt="${cat.name}">
-            <div class="cardCaption position-absolute text-center ">
-              <h5 class="imgContainer text-light">${cat.name}</h5>
-              <div class="cardDetails text-light">
-                <p>${products.length} product</p>
-                <button class="btn btn-light viewProductsOfCategory" value="${cat.name}">View</button>
+            <div class="col h-100 d-flex justify-content-center">
+              <div class="card cardItem w-100 h-100">
+                <img src="${cat.image}" class="rounded w-100"  alt="${cat.name}">
+                <div class="cardCaption position-absolute text-center">
+                  <h5 class="imgContainer text-light">${cat.name}</h5>
+                  <div class="cardDetails text-light">
+                    <p>${products.length} product</p>
+                    <button class="btn btn-light viewProductsOfCategory" value="${cat.name}">View</button>
+                  </div>
+                </div>
               </div>
             </div>
+          `;
+        })
+        .join("");
+  
+      slidesHTML += `
+        <div class="carousel-item ${i === 0 ? "active" : ""}">
+          <div class="row justify-content-center gap-3">
+            ${cardsHTML}
           </div>
         </div>
       `;
-        })
-        .join("");
-
-      slidesHTML += `
-      <div class="carousel-item ${i === 0 ? "active" : ""}">
-        <div class="row justify-content-center gap-3">
-          ${cardsHTML}
-        </div>
-      </div>
-    `;
     }
-
+  
     showCategories.innerHTML = slidesHTML;
   }
+  
+  // Run on page load
+  renderCategorySlides();
+  
+  // Run again on resize (with slight delay)
+  let resizeTimeout;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      renderCategorySlides();
+    }, 300);
+  });
+  
 
   function renderReviewSection() {
     let reviews = ReviewManager.getAllReviews();
