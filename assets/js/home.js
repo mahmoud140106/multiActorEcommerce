@@ -204,82 +204,80 @@ function loadFeaturedProducts() {
 
   function renderReviewSection() {
     let reviews = ReviewManager.getAllReviews();
+    if (!reviews || reviews.length === 0) {
+      console.warn("No reviews found");
+      return;
+    }
+
     let carouselAllReviews = document.getElementById("carouselAllReviews");
     carouselAllReviews.innerHTML += `<div id="activeCarouselItem" class=" carousel-item active p-5 m-auto bg-light"></div>`;
     let activeCarouselItem = document.getElementById("activeCarouselItem");
 
+    // Handle first review
+    const firstReview = reviews[0];
     for (let index = 0; index < 5; index++) {
-      if (index < reviews[0].rating) {
+      if (index < firstReview.rating) {
         activeCarouselItem.innerHTML += `<span><i class="fa-solid fa-star text-warning"></i></span>`;
       } else {
         activeCarouselItem.innerHTML += `<span><i class="fa-solid fa-star"></i></span>`;
       }
     }
 
-    let activeReviewUserId = reviews[0].userId;
-    let activeReviewUserName = UserManager.getUserNameById(activeReviewUserId);
+    let activeReviewUserId = firstReview.userId;
+    let activeReviewUserName = UserManager.getUserNameById(activeReviewUserId) || 'Anonymous User';
     let activeUserImg = UserManager.getUser(activeReviewUserId);
-    // console.log(activeUserImg.profilePicture);
-
-    if (activeUserImg.profilePicture == "") {
-      activeUserImg.profilePicture =
-        "https://static.vecteezy.com/system/resources/previews/023/932/501/original/anonymous-personal-icon-png.png";
+    
+    let profilePicture = "https://static.vecteezy.com/system/resources/previews/023/932/501/original/anonymous-personal-icon-png.png";
+    if (activeUserImg && activeUserImg.profilePicture) {
+      profilePicture = activeUserImg.profilePicture;
     }
 
     activeCarouselItem.innerHTML += `
-  <p class="my-3 lead">${reviews[0].comment.slice(0, 100)}...</p>
-  <div class="d-flex justify-content-center">
-    <img class="rounded-circle "
-      src="${activeUserImg.profilePicture}"
-      alt="">
-    <div class="ms-3 d-flex align-items-center">
-      <span>${activeReviewUserName}</span><br>
-    </div>
-  </div>
-`;
+      <p class="my-3 lead">${firstReview.comment.slice(0, 100)}...</p>
+      <div class="d-flex justify-content-center">
+        <img class="rounded-circle" src="${profilePicture}" alt="${activeReviewUserName}">
+        <div class="ms-3 d-flex align-items-center">
+          <span>${activeReviewUserName}</span><br>
+        </div>
+      </div>
+    `;
 
+    // Handle remaining reviews
     let reviewLength = reviews.length;
     for (let index = 1; index < reviewLength; index++) {
-      carouselAllReviews.innerHTML += `<div class="carousel-item carouselItems p-5   m-auto bg-light"></div>`;
+      carouselAllReviews.innerHTML += `<div class="carousel-item carouselItems p-5 m-auto bg-light"></div>`;
     }
 
     let carouselItems = document.getElementsByClassName("carouselItems");
 
     for (let i = 1; i < reviewLength; i++) {
-      let reviewUserId = reviews[i].userId;
-      let reviewUserName = UserManager.getUserNameById(reviewUserId);
-
-      let UserImg = UserManager.getUser(reviewUserId);
-      // console.log(UserImg);
-
-      if (!UserImg.profilePicture) {
-        UserImg.profilePicture =
-          "https://static.vecteezy.com/system/resources/previews/023/932/501/original/anonymous-personal-icon-png.png";
+      let review = reviews[i];
+      let reviewUserId = review.userId;
+      let reviewUserName = UserManager.getUserNameById(reviewUserId) || 'Anonymous User';
+      let userImg = UserManager.getUser(reviewUserId);
+      
+      let userProfilePicture = "https://static.vecteezy.com/system/resources/previews/023/932/501/original/anonymous-personal-icon-png.png";
+      if (userImg && userImg.profilePicture) {
+        userProfilePicture = userImg.profilePicture;
       }
 
       for (let index = 0; index < 5; index++) {
-        if (index < reviews[i].rating) {
-          carouselItems[
-            i - 1
-          ].innerHTML += `<span><i class="fa-solid fa-star text-warning"></i></span>`;
+        if (index < review.rating) {
+          carouselItems[i - 1].innerHTML += `<span><i class="fa-solid fa-star text-warning"></i></span>`;
         } else {
-          carouselItems[
-            i - 1
-          ].innerHTML += `<span><i class="fa-solid fa-star"></i></span>`;
+          carouselItems[i - 1].innerHTML += `<span><i class="fa-solid fa-star"></i></span>`;
         }
       }
 
       carouselItems[i - 1].innerHTML += `
-    <p class="my-3 lead">${reviews[i].comment.slice(0, 100)}...</p>
-    <div class="d-flex justify-content-center">
-      <img class="rounded-circle"
-        src="${UserImg.profilePicture}"
-        alt="">
-      <div class="ms-3 d-flex align-items-center">
-        <span >${reviewUserName}</span><br>
-      </div>
-    </div>
-  `;
+        <p class="my-3 lead">${review.comment.slice(0, 100)}...</p>
+        <div class="d-flex justify-content-center">
+          <img class="rounded-circle" src="${userProfilePicture}" alt="${reviewUserName}">
+          <div class="ms-3 d-flex align-items-center">
+            <span>${reviewUserName}</span><br>
+          </div>
+        </div>
+      `;
     }
   }
 

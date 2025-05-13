@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <li><a class="dropdown-item" href="#" onclick="openChangeStatusModal(${product.id}, '${product.name.replace(/'/g, "\\'")}', ${product.sellerId}, 'rejected')">Rejected</a></li>
             </ul>
           </div>
-          <button class="btn btn-sm btn-danger rounded-circle m-1 m-md-0" onclick="softDeleteProduct(${product.id})" title="Soft Delete"><i class="fas fa-trash-alt"></i></button>
+          <button class="btn btn-sm btn-danger rounded-circle mt-1" onclick="softDeleteProduct(${product.id})" title="Soft Delete"><i class="fas fa-trash-alt"></i></button>
         `;
       } else {
         actions = `

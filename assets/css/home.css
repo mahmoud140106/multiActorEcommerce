@@ -263,8 +263,9 @@ section h2 {
   #hero-section .w-40 {
     width: 100% !important;
     margin: 0 auto;
-    background-image: url("https://mensclubcollection.com/cdn/shop/files/0E9A5556copy_540x.jpg?v=1745338947") !important;
-    background-attachment: fixed;
+    height: 100%;
+    background-image: url("https://mensclubcollection.com/cdn/shop/files/0E9A5556copy_540x.jpg?v=1745338947");
+    /* background-attachment: fixed; */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -367,13 +368,16 @@ h1 {
 
 #categoriesSection .carousel-control-prev-icon,
 #categoriesSection .carousel-control-next-icon {
-  transform: translateY(50%);
+  
+
+  top: 50%;
+
+
 }
 
 #categoriesSection .carousel-control-next,
 #categoriesSection .carousel-control-prev {
-  top: 55%;
-  bottom: 50%;
+  top: 60%;
 }
 
 #categoriesSection .carousel-control-next {
@@ -424,6 +428,7 @@ h1 {
 #carouselReview .carousel-control-prev {
   top: 50%;
   bottom: 50%;
+
 }
 
 #carouselAllReviews .carousel-item {
@@ -448,11 +453,13 @@ h1 {
 /* https://mensclubcollection.com/cdn/shop/collections/cover-collection-for-hoodie.jpg?v=1735559439 */
 
 .saleSection {
-  background-image: url("https://mensclubcollection.com/cdn/shop/files/new-in-summer-25-web-cover_1950x.jpg?v=1744108517");
+  background-image: url("../images/new-in-summer-25-web-cover_1950x.jpg");
   background-position: center;
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  height: 100vh;
 }
 
 /* Search Style Modal in Home */
@@ -564,3 +571,7 @@ h1 {
     color: #ffff !important;
   }
 }
+
+
+
+
