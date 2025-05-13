@@ -535,20 +535,22 @@ h1 {
   }
 }
 
-@media (min-width: 1000px) {
+
+
+@media (min-width: 768px) {
+  .cardItem {
+    width: 70% !important;
+  }
+}
+
+@media (min-width: 950px) {
   .cardItem {
     width: 100% !important;
   }
 }
-@media (max-width: 1000px) {
-  .cardItem {
-    width: 55% !important;
-  }
 
-  h1 {
-    font-size: 2rem !important;
-  }
-}
+
+
 
 @media (max-width: 950px) {
   #headerDetails span,
@@ -573,5 +575,21 @@ h1 {
 }
 
 
+@media (max-width: 1000px) {
+  h1 {
+    font-size: 2rem !important;
+  }
+}
 
 
+
+.categoryItems img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+
+.carousel-item {
+  text-align: center;
+}
