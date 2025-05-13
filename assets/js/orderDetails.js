@@ -40,26 +40,26 @@ order.items.forEach((item,index)=>{
     // console.log(item.sellerId)
   if(product.sellerId==currentUser.id){
     const orderItemHTML = `
-    <div class="row g-0 align-items-center p-4 cart-item">
-      <div class="col-md-2 productDetailsItem" product-id="${item.productId}">
+    <div class="row g-0 align-items-center p-3 cart-item">
+      <div class="col-md-3 productDetailsItem" product-id="${item.productId}">
         <img src="${product.images[0]}" alt="${item.name}" class="img-fluid rounded-3" />
       </div>
-      <div class="col-8 col-md-6 ps-4">
-        <div class="d-flex justify-content-between align-items-start">
+      <div class="col-8 col-md-9 ps-4">
+        
           <div>
             <h5 class="mb-1 fw-semibold">${product.name}</h5>
           </div>
-         
-        </div>
-        <div class="d-flex align-items-center">
+          <div >
           <h4 class="fw-bold">Orderd Pieces:${item.quantity}</h4>
          
         </div>
-      </div>
-      <div class="col-3 col-md-4 text-end">
-        <h5 class="fw-bold">$${(product.discountedPrice?product.discountedPrice.toFixed(2):product.price.toFixed(2))}</h5>
+        <div class="col-3 col-md-4 text-end">
+        <h5 class="fw-bold text-danger">$${(product.discountedPrice?product.discountedPrice.toFixed(2):product.price.toFixed(2))}</h5>
        
       </div>
+       
+      </div>
+      
     </div>
     ${index < order.items.length - 1 ? '<div class="divider"></div>' : ''}
     `;
@@ -67,7 +67,7 @@ order.items.forEach((item,index)=>{
   }
 })
 
-document.querySelector('input[type="button"]').addEventListener('click',function(){
-    window.location.href='orders.html';
+// document.querySelector('input[type="button"]').addEventListener('click',function(){
+//     window.location.href='orders.html';
 
-})
+// })
