@@ -138,15 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "<p>Error loading product details.</p>";
   }
 
-  //add event listener to recommendation cards to link with product details
-  document.querySelectorAll(".cursol-img ").forEach((card) =>
-    card.addEventListener("click", function () {
-      const id = card.getAttribute("product-id");
-      if (id) {
-        window.location.href = `productDetails.html?id=${id}`;
-      }
-    })
-  );
+ 
 
   //product count
   productCountInput.addEventListener("change", function (e) {
@@ -165,6 +157,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   renderRecommendedProducts();
+  //add event listener to recommendation cards to link with product details
+  document.querySelectorAll(".cursol-img ").forEach((card) =>
+    card.addEventListener("click", function () {
+      const id = card.getAttribute("product-id");
+      if (id) {
+        window.location.href = `productDetails.html?id=${id}`;
+      }
+    })
+  );
 
   // Add event listeners to "Add to Wishlist" buttons
   document.querySelectorAll(".add-to-wishlist").forEach((button) => {
@@ -300,4 +301,6 @@ window.addEventListener("resize",function(){
       renderRecommendedProducts();
 
 })
-console.log(window.innerWidth)
+
+
+// console.log(window.innerWidth)
