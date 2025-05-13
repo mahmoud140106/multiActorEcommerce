@@ -58,7 +58,7 @@ export function initializeDefaultCategories() {
     new Category(
       1,
       "COAT",
-      "https://mensclubcollection.com/cdn/shop/files/DSC07454_1024x1024.jpg?v=1745854144"
+      "../images/coat (3).jpg"
     ),
     new Category(
       2,

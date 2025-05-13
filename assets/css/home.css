@@ -22,7 +22,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  /* background: none; */
+  background: none;
 }
 #hero-section .w-40 h1,
 #hero-section .w-40 p {
@@ -92,7 +92,7 @@ section h2 {
   border-radius: 9px;
   background: #fff;
   box-shadow: none;
-  /*height: 300px;
+  /* height: 300px;
   */ /*width: 300px;
   */
   overflow: hidden;
@@ -537,6 +537,7 @@ h1 {
 
 
 
+
 @media (min-width: 768px) {
   /* .cardItem {
     width: 70% !important;
@@ -549,6 +550,12 @@ h1 {
   }
 }
 
+
+@media (max-width: 769px) {
+  /* .cardItem {
+    width: 60% !important;
+  } */
+}
 
 
 
@@ -582,14 +589,3 @@ h1 {
 }
 
 
-
-.categoryItems img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-
-.carousel-item {
-  text-align: center;
-}
