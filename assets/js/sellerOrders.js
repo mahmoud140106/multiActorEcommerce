@@ -260,18 +260,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   //add event listener to each row(order) in seller orders to show order details
-  document.querySelectorAll("tr").forEach((row) => {
-    row.addEventListener("click", function (e) {
-      const clickedCell = e.target.closest("td");
-      const lastCell = row.querySelector("td:last-child");
+ document
+  .getElementById("ordersTableBody")
+  .addEventListener("click", function (e) {
+    const row = e.target.closest("tr");
+    const clickedCell = e.target.closest("td");
 
-      if (clickedCell === lastCell) {
-        // Don't trigger the action for the last cell
-        return;
-      }
-      let orderId = row.getAttribute("orderId");
+    if (!row || !clickedCell) return;
+
+    const lastCell = row.querySelector("td:last-child");
+
+    if (clickedCell === lastCell) {
+      // Don't trigger the action for the last cell (e.g., status dropdown)
+      return;
+    }
+
+    const orderId = row.getAttribute("orderId");
+    if (orderId) {
       window.location.href = `orderDetails.html?orderId=${orderId}`;
-    });
+    }
   });
 
   //change the status of the order
@@ -327,5 +334,6 @@ document.addEventListener("DOMContentLoaded", () => {
           window.location.reload(); //reload the page to refresh the status
         }
       }
+   
     });
 }); // end of load
