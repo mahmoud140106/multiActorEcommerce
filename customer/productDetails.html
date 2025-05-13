@@ -26,6 +26,8 @@
     <link href="../assets/css/home.css" rel="stylesheet" />
     <link href="../assets/css/productDetails.css" rel="stylesheet" />
     <link href="../assets/css/navBar.css" rel="stylesheet" />
+    <link href="../assets/css/home.css" rel="stylesheet" />
+    <link href="../assets/css/cart.css" rel="stylesheet" />
 
     <script type="module" src="../assets/js/reviews.js"></script>
   </head>
@@ -131,51 +133,32 @@
 </div>
 </div>
 
-<!-- Search Modal in Home-->
-
-<section
-  id="SearchHomeModal"
-  class="modal fade w-100 vh-100"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog h-100">
-    <div class="modal-content h-100 p-5">
-      <button
-        id="closeButton"
-        type="button"
-        class="btn-close fs-5"
-        data-bs-dismiss="modal"
-        aria-label="Close"
-      ></button>
-
-      <div class="modal-body p-0">
-        <div class="d-flex justify-content-center align-items-center h-100">
-          <div class="input-group mb-3 w-50">
-            <input
-              id="searchInput"
-              type="search"
-              class="form-control rounded-0 fs-5"
-              placeholder="Write Product U Want to Search About"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
-            <div class="input-group-append">
-              <button
-                id="searchGo"
-                class="btn btn-outline-dark fs-4"
-                type="button"
-              >
-                Search
-              </button>
+    <!-- Search Modal in Home-->
+    <section id="SearchHomeModal" class="modal fade w-100 vh-100" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog h-100">
+        <div class="modal-content h-100 p-5">
+          <button id="closeButton" type="button" class="btn-close fs-5" data-bs-dismiss="modal" aria-label="Close"></button>
+    
+          <div class="modal-body p-0">
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <div class="col-12 col-md-6">
+                <div class="input-group mb-3">
+                  <input id="searchInputModal" type="search" class="form-control rounded-0 fs-5"
+                    placeholder="Write Product U Want to Search About" aria-label="Recipient's username"
+                    aria-describedby="basic-addon2" />
+                  <div class="input-group-append">
+                    <button id="searchGo" class="btn btn-outline-dark fs-4" type="button">
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <form method="get" action="cart.html" class="container mt-4">
       <div class="row align-items-center justify-content-center">
@@ -396,44 +379,7 @@
     </form>
 
     <section id="recommendationSection" class="container mt-2 mb-5">
-      <h2>Recommendation For You</h2>
-
-      <div
-        class="carousel slide w-100 pt-4"
-        id="carouselrecommendationControls"
-        data-bs-ride="carousel"
-      >
-        <div
-          class="carousel-inner ratio ratio-1x1"
-          id="carouselrecommendationInner"
-        ></div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselrecommendationControls"
-          data-bs-slide="prev"
-        >
-          <span
-            class="carousel-control-prev-icon btn-dark rounded-3"
-            aria-hidden="true"
-          ></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselrecommendationControls"
-          data-bs-slide="next"
-          style="width: 50px;"
-        >
-          <span
-            class="carousel-control-next-icon btn-dark rounded-3"
-            aria-hidden="true"
-            style="position: relative; right: 70px;"
-          ></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+      <!-- Will be populated dynamically by productDetails.js -->
     </section>
 
     <!-- Footer -->
