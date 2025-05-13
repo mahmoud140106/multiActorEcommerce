@@ -58,14 +58,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     paginatedProducts.forEach((product) => {
       const category = CategoryManager.getCategory(product.categoryId);
-      const statusClass = product.status === "pending" ? "bg-warning text-dark" :
+      const statusClass = product.isDeleted ? "bg-danger text-white" :
+                         product.status === "pending" ? "bg-warning text-dark" :
                          product.status === "accepted" ? "bg-success text-white" :
                          product.status === "rejected" ? "bg-danger text-white" : "bg-secondary text-white";
-      const statusText = product.status ? product.status.charAt(0).toUpperCase() + product.status.slice(1) : "Unknown";
+      const statusText = product.isDeleted ? "Deleted" :
+                        product.status ? product.status.charAt(0).toUpperCase() + product.status.slice(1) : "Unknown";
       const statusContent = product.status === "rejected" && product.rejectReason
         ? `<span class="badge ${statusClass}" data-bs-toggle="tooltip" data-bs-placement="top" title="${product.rejectReason}">${statusText}</span>`
         : `<span class="badge ${statusClass}">${statusText}</span>`;
+
       const row = document.createElement("tr");
+      row.className = product.isDeleted ? "table-danger" : "";
       row.innerHTML = `
         <td>...${product.id % 1000}</td>
         <td class="d-none d-md-table-cell"><img src="${
@@ -81,12 +85,18 @@ document.addEventListener("DOMContentLoaded", () => {
         <td class="d-none d-md-table-cell">${product.stock}</td>
         <td>${statusContent}</td>
         <td>
-          <button class="btn btn-sm btn-outline-primary rounded-circle m-1 m-md-0" onclick="openEditProductModal(${
-            product.id
-          })"><i class="fas fa-edit"></i></button>
-          <button class="btn btn-sm btn-danger rounded-circle m-1 m-md-0" onclick="deleteProduct(${
-            product.id
-          })"><i class="fas fa-trash-alt"></i></button>
+          ${!product.isDeleted ? `
+            <button class="btn btn-sm btn-outline-primary rounded-circle m-1 m-md-0" onclick="openEditProductModal(${product.id})">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger rounded-circle m-1 m-md-0" onclick="deleteProduct(${product.id})">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          ` : `
+            <button class="btn btn-sm btn-success rounded-circle m-1 m-md-0" onclick="restoreProduct(${product.id})">
+              <i class="fas fa-undo"></i>
+            </button>
+          `}
         </td>
       `;
       tbody.appendChild(row);
@@ -187,7 +197,14 @@ document.addEventListener("DOMContentLoaded", () => {
         p.name.toLowerCase().includes(query) ||
         (category && category.name.toLowerCase().includes(query)) ||
         (p.status && p.status.toLowerCase().includes(query));
-      const matchesStatus = selectedStatus === "all" || p.status === selectedStatus;
+      let matchesStatus = false;
+      if (selectedStatus === "all") {
+        matchesStatus = true;
+      } else if (selectedStatus === "deleted") {
+        matchesStatus = p.isDeleted === true;
+      } else {
+        matchesStatus = p.status === selectedStatus && !p.isDeleted;
+      }
       return matchesQuery && matchesStatus;
     });
     currentPage = 1;
@@ -205,7 +222,14 @@ document.addEventListener("DOMContentLoaded", () => {
         p.name.toLowerCase().includes(query) ||
         (category && category.name.toLowerCase().includes(query)) ||
         (p.status && p.status.toLowerCase().includes(query));
-      const matchesStatus = selectedStatus === "all" || p.status === selectedStatus;
+      let matchesStatus = false;
+      if (selectedStatus === "all") {
+        matchesStatus = true;
+      } else if (selectedStatus === "deleted") {
+        matchesStatus = p.isDeleted === true;
+      } else {
+        matchesStatus = p.status === selectedStatus && !p.isDeleted;
+      }
       return matchesQuery && matchesStatus;
     });
     currentPage = 1;
@@ -492,6 +516,15 @@ document.addEventListener("DOMContentLoaded", () => {
       renderProductsTable();
       confirmDeleteModal.hide();
     };
+  };
+
+  // Add restore product function
+  window.restoreProduct = (id) => {
+    ProductManager.restoreProduct(id);
+    showToast("Product restored successfully", "success");
+    const currentUser = StorageManager.load("currentUser");
+    filteredProducts = [...ProductManager.getProductsBySeller(currentUser.id)];
+    renderProductsTable();
   };
 
   loadProducts();

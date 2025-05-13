@@ -38,7 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const productNames = order.items
         .map((item) => {
           const product = ProductManager.getProduct(item.productId);
-          return product ? product.name : "Unknown Product";
+          if (!product) {
+            // Try to get the product even if it's deleted
+            const allProducts = StorageManager.load("products") || [];
+            const deletedProduct = allProducts.find(p => p.id === item.productId);
+            return deletedProduct ? deletedProduct.name : "Unknown Product";
+          }
+          return product.name;
         })
         .join(", ");
 

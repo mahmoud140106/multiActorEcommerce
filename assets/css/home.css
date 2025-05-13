@@ -22,7 +22,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  background: none;
+  /* background: none; */
 }
 #hero-section .w-40 h1,
 #hero-section .w-40 p {
@@ -263,7 +263,7 @@ section h2 {
   #hero-section .w-40 {
     width: 100% !important;
     margin: 0 auto;
-    background-image: url("https://mensclubcollection.com/cdn/shop/files/0E9A5556copy_540x.jpg?v=1745338947");
+    background-image: url("https://mensclubcollection.com/cdn/shop/files/0E9A5556copy_540x.jpg?v=1745338947") !important;
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
