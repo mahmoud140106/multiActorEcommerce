@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         onerror="this.onerror=null; this.src='https://dummyimage.com/50x50/cccccc/000000&text=No+Img';" 
         style="height: 50px; width: 50px;"></td>
         <td>${product.name}</td>
-        <td>${category ? category.name : "Unknown"}</td>
+        <td  class="d-none d-md-table-cell">${category ? category.name : "Unknown"}</td>
         <td class="d-none d-md-table-cell">$${product.price.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">$${product.discount.toFixed(2)}</td>
         <td class="d-none d-md-table-cell">${product.stock}</td>
