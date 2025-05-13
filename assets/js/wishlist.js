@@ -236,7 +236,7 @@ function renderRecommendedProducts() {
       const card = document.createElement("div");
       card.className = "col";
       card.innerHTML = `
-          <div class="card position-relative mx-5 mx-md-0">
+          <div class="card position-relative mx-2 mx-md-0">
             <div class="position-relative imgcontainer">
               <a href="/customer/productDetails.html?id=${product.id}">
                 <img src="${product.images[0]}" class="card-img-top" alt="${product.name}" 
