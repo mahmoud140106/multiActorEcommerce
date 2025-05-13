@@ -38,11 +38,12 @@ order.items.forEach((item,index)=>{
     let product= products.find(product=>product.id==item.productId);
     // console.log(product.sellerId)
     // console.log(item.sellerId)
-  if(product.sellerId==currentUser.id){
+  if(product && product.sellerId==currentUser.id){
     const orderItemHTML = `
     <div class="row g-0 align-items-center p-3 cart-item">
       <div class="col-md-3 productDetailsItem" product-id="${item.productId}">
-        <img src="${product.images[0]}" alt="${item.name}" class="img-fluid rounded-3" />
+        <img src="${product.images[0]}" alt="${product.name}" class="img-fluid rounded-3" 
+          onerror="this.onerror=null; this.src='../assets/images/shopping16.jpg';" />
       </div>
       <div class="col-8 col-md-9 ps-4">
         
