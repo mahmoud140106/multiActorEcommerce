@@ -43,9 +43,9 @@ function displayUsers(usersArray, page = 1) {
       tr.innerHTML = `
             <td>${user.id}</td>
             <td>${user.userName}</td>
-            <td>${user.email}</td>
-            <td>${user.password}</td>
-            <td>${user.role}</td>
+            <td  class="d-none d-md-table-cell">${user.email}</td>
+            <td  class="d-none d-md-table-cell">${user.password}</td>
+            <td  class="d-none d-md-table-cell">${user.role}</td>
             <td>
                 <i class="fa-solid fa-pen-to-square text-primary fs-5" data-bs-toggle="modal" data-bs-target="#myModal"></i>
             </td>
