@@ -1,5 +1,6 @@
 import { CategoryManager } from "./categoryManager.js";
 import { showToast } from "./toast.js";
+import { StorageManager } from "./storageManager.js";
 
 const ITEMS_PER_PAGE = 5;
 let currentPage = 1;
@@ -10,6 +11,12 @@ let products = JSON.parse(localStorage.getItem("products")) || [];
 let selectedImage = null; // Store single selected image (file or path)
 
 function loadCategories() {
+  const currentUser = StorageManager.load("currentUser");
+  if (!currentUser || currentUser.role !== "admin") {
+    showToast("You must be logged in as an Admin to view categories.", "error");
+    window.location.href = "/index.html";
+    return;
+  }
   categories = CategoryManager.getAllCategories();
   renderCategories();
 }

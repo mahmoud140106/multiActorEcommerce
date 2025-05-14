@@ -12,22 +12,41 @@ document.addEventListener("DOMContentLoaded", () => {
   // console.log(UserManager.getAllUsers());
 
   // Load and display featured products
-// Load and display featured products
-function loadFeaturedProducts() {
-  let products = ProductManager.getAllProducts();
+  function loadFeaturedProducts() {
+    let products = ProductManager.getAllProducts();
 
-  products = products
-    .filter((product) => product.isFeatured && product.stock > 0)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 8);
+    // First filter out invalid products
+    products = products.filter(product => 
+      !product.isDeleted && 
+      product.status === "accepted" && 
+      product.stock > 0
+    );
 
-  // console.log(products);
+    // Sort products by featured status first, then by other criteria
+    products.sort((a, b) => {
+      // First sort by featured status
+      if (a.isFeatured !== b.isFeatured) {
+        return b.isFeatured ? 1 : -1;
+      }
+      // Then by sold count
+      if (b.soldCount !== a.soldCount) {
+        return b.soldCount - a.soldCount;
+      }
+      // Then by rating
+      return b.rating - a.rating;
+    });
 
-  products.forEach((product, index) => {
-    // console.log("object", CategoryManager.getCategory(product.categoryId));
-    const card = document.createElement("div");
-    card.className = "col";
-    card.innerHTML = `
+    // Take first 8 products
+    products = products.slice(0, 8);
+
+    // Clear the container before adding new products
+    featuredProductsContainer.innerHTML = '';
+
+    products.forEach((product, index) => {
+      // console.log("object", CategoryManager.getCategory(product.categoryId));
+      const card = document.createElement("div");
+      card.className = "col";
+      card.innerHTML = `
 <div class="card position-relative mx-2 mx-md-0">
   <div class="position-relative imgcontainer">
     <a href="/customer/productDetails.html?id=${product.id}">
@@ -82,31 +101,31 @@ function loadFeaturedProducts() {
   </div>
 </div>
 `;
-    featuredProductsContainer.appendChild(card);
-  });
-
-  // Add event listeners to "Add to Cart" buttons
-  document.querySelectorAll(".add-to-cart").forEach((button) => {
-    button.addEventListener("click", () => {
-      const productId = parseInt(button.getAttribute("data-id"));
-      const product = products.find((p) => p.id === productId);
-      CartManager.addToCart(product);
-      updateNavbar();
+      featuredProductsContainer.appendChild(card);
     });
-  });
 
-  // Add event listeners to "Add to Wishlist" buttons
-  document.querySelectorAll(".add-to-wishlist").forEach((button) => {
-    button.addEventListener("click", (event) => {
-      const productId = parseInt(button.getAttribute("data-id"));
-      const product = products.find((p) => p.id === productId);
-      if (product) {
-        CartManager.addToWishlist(product, event);
+    // Add event listeners to "Add to Cart" buttons
+    document.querySelectorAll(".add-to-cart").forEach((button) => {
+      button.addEventListener("click", () => {
+        const productId = parseInt(button.getAttribute("data-id"));
+        const product = products.find((p) => p.id === productId);
+        CartManager.addToCart(product);
         updateNavbar();
-      }
+      });
     });
-  });
-}
+
+    // Add event listeners to "Add to Wishlist" buttons
+    document.querySelectorAll(".add-to-wishlist").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const productId = parseInt(button.getAttribute("data-id"));
+        const product = products.find((p) => p.id === productId);
+        if (product) {
+          CartManager.addToWishlist(product, event);
+          updateNavbar();
+        }
+      });
+    });
+  }
 
   // Initialize
   loadFeaturedProducts();

@@ -2,8 +2,17 @@ import { CategoryManager } from "./categoryManager.js";
 import { ProductManager } from "./productManager.js";
 import { ReviewManager } from "./reviewManager.js";
 import { UserManager } from "./userManager.js";
+import { StorageManager } from "./storageManager.js";
+import { showToast } from "./toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  const currentUser = StorageManager.load("currentUser");
+  if (!currentUser || currentUser.role !== "admin") {
+    showToast("You must be logged in as an Admin to view the dashboard.", "error");
+    window.location.href = "/index.html";
+    return;
+  }
+
   // Render dashboard
   function renderDashboard() {
     // Summary cards
