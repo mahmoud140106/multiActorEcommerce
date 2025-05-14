@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let allOrders;
   let sellerOrders = [];
   let filteredOrders;
-
+  let totalForSeller;
   // get products for each seller
 
   loadOrders();
@@ -43,26 +43,31 @@ document.addEventListener("DOMContentLoaded", () => {
     let products = StorageManager.load("products"); //get all products to get products for each seller by seller id
     // console.log(products)
 
-    allOrders.forEach((order) => {
-      let productFromStorage;
-      order.items.forEach((item) => {
-        productFromStorage = products.find(
-          (product) => product.id == item.productId
-        ); //filter products from storage to get seller id
-        // console.log(item);
+   allOrders.forEach((order) => {
+  let totalForSeller = 0;
+  let hasSellerItems = false;
 
-        if (productFromStorage != undefined) {
-          // console.log(productFromStorage.sellerId);
-          // console.log(currentUser.id);
+  order.items.forEach((item) => {
+    const productFromStorage = products.find(
+      (product) => product.id == item.productId
+    );
 
-          if (productFromStorage.sellerId == currentUser.id) {
-            if (!sellerOrders.includes(order)) {
-              sellerOrders.push(order); //filter all orders to get the seller orders
-            }
-          }
-        }
-      });
+    if (productFromStorage && productFromStorage.sellerId == currentUser.id) {
+      hasSellerItems = true;
+
+      const price = productFromStorage.discountedPrice ?? productFromStorage.price;
+      totalForSeller += price * item.quantity;
+    }
+  });
+
+  if (hasSellerItems) {
+    sellerOrders.push({
+      ...order,
+      totalForSeller: totalForSeller.toFixed(2),
     });
+  }
+});
+
     // console.log(sellerOrders)
     renderOrdersTable();
   }
@@ -116,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>...${order.id % 1000}</td>
         <td>${UserManager.getUserNameById(order.customerId)}</td>
         <td class="d-none d-md-table-cell">${formattedDate}</td>
-        <td class="d-none d-md-table-cell">$${order.total.toFixed(2)}</td>
+        <td class="d-none d-md-table-cell">$${order.totalForSeller}</td>
         <td >${statusContent}</td>
         <td order-id='${order.id}'> 
             <select class="form-control orderNewStatus " >
