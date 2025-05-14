@@ -2,16 +2,23 @@ import { ProductManager } from "./productManager.js";
 import { ReviewManager } from "./reviewManager.js";
 import { OrderManager } from "./orderManager.js";
 import { StorageManager } from "./storageManager.js";
-
+import { showToast } from "./toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    let sellerId;
-    let sellerOrders =[];
+  const currentUser = StorageManager.load("currentUser");
+  if (!currentUser || currentUser.role !== "seller") {
+    showToast("You must be logged in as a Seller to view the dashboard.", "error");
+    window.location.href = "/index.html";
+    return;
+  }
+
+  let sellerId;
+  let sellerOrders = [];
 
   // Render dashboard
   function renderDashboard() {
     // Get current seller's ID (assuming it's available from auth context)
-     sellerId = StorageManager.load('currentUser')?.id;
+    sellerId = StorageManager.load('currentUser')?.id;
 
     // Summary cards
     const products = ProductManager.getProductsBySeller(sellerId);
@@ -24,8 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (totalSalesEl) totalSalesEl.textContent = totalSales;
 
     let totalReviewsEl= document.getElementById('totalReviews');
-     const reviews=  ProductManager.getProductsBySeller(sellerId).reduce((sum, p) => sum + ReviewManager.getReviewsByProduct(p.id).length, 0)
-     totalReviewsEl.textContent = reviews;
+    const reviews=  ProductManager.getProductsBySeller(sellerId).reduce((sum, p) => sum + ReviewManager.getReviewsByProduct(p.id).length, 0)
+    totalReviewsEl.textContent = reviews;
 
     const allOrders = OrderManager.getOrdersBySeller();
     const pendingOrders = allOrders.filter(order => order.status === "pending");

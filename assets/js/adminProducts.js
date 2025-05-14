@@ -5,6 +5,13 @@ import { showToast } from "./toast.js";
 
 // Active link
 document.addEventListener("DOMContentLoaded", () => {
+  const currentUser = StorageManager.load("currentUser");
+  if (!currentUser || currentUser.role !== "admin") {
+    showToast("You must be logged in as an Admin to view products.", "error");
+    window.location.href = "/index.html";
+    return;
+  }
+
   const currentPath = window.location.pathname;
 
   const navLinks = document.querySelectorAll(".sidebar .nav-link");

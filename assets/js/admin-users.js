@@ -1,5 +1,7 @@
 import { UserManager } from "../js/userManager.js";
 import { StorageManager } from "../js/storageManager.js";
+import { showToast } from "./toast.js";
+
 let userName = "";
 let userEmail = "";
 let userPassword = "";
@@ -32,6 +34,13 @@ const usersPerPage = 5;
 const paginationDiv = document.getElementById("pagination");
 
 function displayUsers(usersArray, page = 1) {
+  const currentUser = StorageManager.load("currentUser");
+  if (!currentUser || currentUser.role !== "admin") {
+    showToast("You must be logged in as an Admin to view users.", "error");
+    window.location.href = "/index.html";
+    return;
+  }
+
   tbody.innerHTML = ""; // Clear table
   const start = (page - 1) * usersPerPage;
   const end = start + usersPerPage;
